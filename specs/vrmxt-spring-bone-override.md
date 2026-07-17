@@ -1,5 +1,5 @@
 ---
-title: VRMEX_springBone_override
+title: VRMXT_springBone_override
 aliases:
   - spring bone override
   - VRM spring bone runtime override
@@ -14,7 +14,7 @@ type: specification
 status: draft
 ---
 
-# VRMEX_springBone_override
+# VRMXT_springBone_override
 
 Root glTF extension for selecting an optional engine-specific simulation backend for
 VRM 1.0 spring definitions. `VRMC_springBone` remains the portable source and fallback.
@@ -27,9 +27,9 @@ BoneSpring at runtime. Unsupported consumers continue using their normal
 
 | Item | Value |
 |------|-------|
-| Extension name | `VRMEX_springBone_override` |
+| Extension name | `VRMXT_springBone_override` |
 | Target | VRM 1.0 (`VRMC_vrm` 1.0) only |
-| Attachment | Root `extensions.VRMEX_springBone_override` |
+| Attachment | Root `extensions.VRMXT_springBone_override` |
 | Source data | Root `extensions.VRMC_springBone` |
 | Engine entries | `overrides[]` |
 | UniVRM / stock importer | no required change |
@@ -37,9 +37,9 @@ BoneSpring at runtime. Unsupported consumers continue using their normal
 
 ## Normative requirements
 
-1. Files that use this extension MUST list `VRMEX_springBone_override` in
+1. Files that use this extension MUST list `VRMXT_springBone_override` in
    `extensionsUsed`.
-2. The extension object MUST appear at root `extensions.VRMEX_springBone_override`.
+2. The extension object MUST appear at root `extensions.VRMXT_springBone_override`.
 3. The file MUST also contain a valid root `VRMC_springBone` extension.
 4. The extension object MUST contain `specVersion` with value `"1.0"` for this draft.
 5. The extension object MUST contain a non-empty `overrides` array.
@@ -53,7 +53,7 @@ BoneSpring at runtime. Unsupported consumers continue using their normal
 11. If an override or binding cannot be applied, the consumer MUST preserve normal
     `VRMC_springBone` behavior. It MAY fall back for that spring when its runtime supports
     mixed backends; otherwise it MUST fall back for the whole model.
-12. Files using this fallback design MUST NOT list `VRMEX_springBone_override` in
+12. Files using this fallback design MUST NOT list `VRMXT_springBone_override` in
     `extensionsRequired`.
 
 ## Extension properties
@@ -81,7 +81,7 @@ Non-normative. Engine, backend, and preset identifiers are provisional.
   "extensionsUsed": [
     "VRMC_vrm",
     "VRMC_springBone",
-    "VRMEX_springBone_override"
+    "VRMXT_springBone_override"
   ],
   "extensions": {
     "VRMC_springBone": {
@@ -112,7 +112,7 @@ Non-normative. Engine, backend, and preset identifiers are provisional.
         }
       ]
     },
-    "VRMEX_springBone_override": {
+    "VRMXT_springBone_override": {
       "specVersion": "1.0",
       "overrides": [
         {

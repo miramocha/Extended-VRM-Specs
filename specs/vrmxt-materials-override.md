@@ -1,5 +1,5 @@
 ---
-title: VRMEX_materials_override
+title: VRMXT_materials_override
 aliases:
   - materials override
   - VRM material override
@@ -13,7 +13,7 @@ type: specification
 status: draft
 ---
 
-# VRMEX_materials_override
+# VRMXT_materials_override
 
 Per-material glTF extension. Lets an author mark a VRM 1.0 material for optional
 consumer-side override. Stock VRM 1.0 importers that ignore the extension MUST still
@@ -26,9 +26,9 @@ a target shader and MAY bind MToon shade values to that shader's parameters.
 
 | Item | Value |
 |------|-------|
-| Extension name | `VRMEX_materials_override` |
+| Extension name | `VRMXT_materials_override` |
 | Target | VRM 1.0 (`VRMC_vrm` 1.0) only |
-| Attachment | `materials[i].extensions.VRMEX_materials_override` |
+| Attachment | `materials[i].extensions.VRMXT_materials_override` |
 | Engine entries | `overrides[]` |
 | Root `extensions` | not used for this extension |
 | UniVRM / stock importer | no required change |
@@ -36,10 +36,10 @@ a target shader and MAY bind MToon shade values to that shader's parameters.
 
 ## Normative requirements
 
-1. Files that use this extension MUST list `VRMEX_materials_override` in
+1. Files that use this extension MUST list `VRMXT_materials_override` in
    `extensionsUsed`.
 2. The extension object MUST appear on a glTF `materials[]` entry under
-   `extensions.VRMEX_materials_override`.
+   `extensions.VRMXT_materials_override`.
 3. The extension object MUST contain `specVersion` with value `"1.0"` for this draft.
 4. The extension object MUST contain a non-empty `overrides` array.
 5. Each `overrides` entry MUST contain an `engine` string identifying its target engine.
@@ -135,7 +135,7 @@ provisional.
   "extensionsUsed": [
     "VRMC_vrm",
     "VRMC_materials_mtoon",
-    "VRMEX_materials_override"
+    "VRMXT_materials_override"
   ],
   "materials": [
     {
@@ -147,14 +147,14 @@ provisional.
         "VRMC_materials_mtoon": {
           "specVersion": "1.0"
         },
-        "VRMEX_materials_override": {
+        "VRMXT_materials_override": {
           "specVersion": "1.0",
           "overrides": [
             {
               "engine": "unity",
               "shader": {
                 "name": "Example/SkinToon",
-                "packageId": "com.example.vrmex-materials",
+                "packageId": "com.example.vrmxt-materials",
                 "packageVersion": "1.0.0",
                 "renderPipeline": "urp"
               },
@@ -200,7 +200,7 @@ provisional.
 - Core glTF material fields remain the portable base (base color, alpha, normals,
   emissive, double-sided).
 - `VRMC_materials_mtoon` remains the VRM 1.0 toon material extension when present.
-- `VRMEX_materials_override` is a sibling under `materials[i].extensions`. It does not
+- `VRMXT_materials_override` is a sibling under `materials[i].extensions`. It does not
   replace MToon JSON.
 - `bindings` describe how a supporting engine adapter transfers existing MToon shade
   values to target shader parameters. They do not redefine MToon values.

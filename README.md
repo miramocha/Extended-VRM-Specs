@@ -17,5 +17,5 @@ the Blender add-on; this vault defines portable file behavior.
 
 | Note | Extension / topic | Status |
 |------|-------------------|--------|
-| [[VRMEX_materials_override]] | `VRMEX_materials_override` | draft |
-| [[VRMEX_springBone_override]] | `VRMEX_springBone_override` | draft |
+| [[VRMXT_materials_override]] | `VRMXT_materials_override` | draft |
+| [[VRMXT_springBone_override]] | `VRMXT_springBone_override` | draft |
