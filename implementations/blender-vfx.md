@@ -15,27 +15,32 @@ status: draft
 # Blender VFX
 
 Blender add-on implementation profile for [VRMXT_vfx](../specs/vrmxt-vfx.md).
-Support belongs in Extended-VRM-Addon-for-Blender. VRM 1.0 only.
-
-Canonical authored data lives on the armature as property groups. Import and export
-read and write those groups. Blender particle systems are not the source of truth.
+Support belongs in
+[VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender),
+which registers on VRM1 hooks from
+[Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender)
+(see [Blender Extension Hooks](blender-extension-hooks.md)). VRM 1.0 only.
 
 ## Supported Blender versions
 
-The add-on declares:
+VRMXT extension declares the same window as Extended VRM:
 
 | Manifest field | Value | Meaning |
 |----------------|-------|---------|
 | `blender_version_min` | `4.2.0` | Inclusive lower bound |
 | `blender_version_max` | `5.3.0` | Exclusive upper bound |
 
-Source: `src/io_scene_vrm/blender_manifest.toml`. VFX support follows the same range:
-Blender **4.2** inclusive through **&lt;5.3**.
+Source: `src/io_scene_vrmxt/blender_manifest.toml`. Blender **4.2** inclusive through
+**&lt;5.3**.
 
 ## Canonical data model
 
-Store emitters on `Armature` via `VrmAddonArmatureExtensionPropertyGroup`, same
-pattern as `spring_bone1`.
+Store emitters on the armature via VRMXT-owned property groups in
+`io_scene_vrmxt` (not the stock VRM armature extension). Same CollectionProperty
+pattern as spring bone lists.
+
+Import and export read and write those groups. Blender particle systems are not the
+source of truth.
 
 Proposed layout (implementation identifiers MAY be adjusted; keep semantics):
 
@@ -193,22 +198,19 @@ Minimum coverage (mirror existing importer/exporter and spring-bone editor tests
 | Empty `emitters` | Valid file; no required extension entry |
 | UI operators | Add / remove / reorder update the collection |
 
-Exact test module paths are **TBD** until code lands.
+Exact test module paths: `tests/test_format_vfx.py` and hook tests in the VRMXT repo.
+UI operator coverage is **TBD** until panels land.
 
 ## Likely code touch points
 
-Non-normative; reflects current add-on layout:
+Non-normative; [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender):
 
-- `editor/vfx/property_group.py`, `panel.py`, `ops.py` (new)
-- `editor/extension.py` (pointer on armature extension)
-- `registration.py`
-- `importer/vrm1_importer.py` (`load_gltf_extensions`; also invokes
-  `extension_hooks`)
-- `exporter/vrm1_exporter.py` (`add_vrm_extension_to_glb`; also invokes
-  `extension_hooks`)
-- `extension_hooks.py` (public third-party API)
-- Tests under `tests/editor/` and `tests/exporter/` or `tests/test_vrm_import_export.py`
-- Hook registry tests: `tests/test_extension_hooks.py`
+- `src/io_scene_vrmxt/vfx/` (property groups, import/export hooks)
+- `src/io_scene_vrmxt/hooks/vrm1_hooks.py`
+- `src/io_scene_vrmxt/format/vfx.py`
+- Tests: `tests/test_format_vfx.py`, `tests/test_hooks_registration.py`
+
+Host hooks remain in Extended-VRM-Addon-for-Blender (`extension_hooks.py`).
 
 ## Open questions
 
@@ -219,4 +221,4 @@ Non-normative; reflects current add-on layout:
 | Warn on skipped export emitters | TBD |
 | VFX texture sampler defaults | TBD |
 | Axis conversion if preview gizmos are added | TBD |
-| UniVRM / VRM4U consumer packages | Separate implementation notes |
+| UniVRM / VRM4U consumer packages | See [UniVRM VFX](univrm-vfx.md); VRM4U TBD |

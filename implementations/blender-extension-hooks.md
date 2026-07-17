@@ -14,9 +14,14 @@ status: draft
 
 # Blender Extension Hooks
 
-Public VRM 1.0 import/export hooks in Extended-VRM-Addon-for-Blender. They let a
-separate Blender add-on handle `VRMXT_*` (and similar) root extensions after stock
-VRM maps exist.
+Public VRM 1.0 import/export hooks in
+[Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender).
+They let a separate Blender add-on handle `VRMXT_*` (and similar) root extensions
+after stock VRM maps exist.
+
+Primary consumer:
+[VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender)
+(`io_scene_vrmxt`).
 
 Module: `io_scene_vrm.extension_hooks`.
 
@@ -136,9 +141,10 @@ def unregister() -> None:
 
 ## Relation to VFX
 
-[Blender VFX](blender-vfx.md) may implement `VRMXT_vfx` either in-tree or through these
-hooks from a separate add-on. Hooks are the prerequisite for a clean separate add-on
-with bone-attached emitters.
+[Blender VFX](blender-vfx.md) is implemented by
+[VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender)
+through these hooks. Hooks are the prerequisite for a clean separate add-on with
+bone-attached emitters.
 
 ## Open questions
 
