@@ -19,8 +19,8 @@ Per-material glTF extension. Lets an author mark a VRM 1.0 material for optional
 consumer-side override. Stock VRM 1.0 importers that ignore the extension MUST still
 load the material through normal glTF / MToon / unlit / PBR rules.
 
-The extension stores one or more engine-specific override entries. Override properties
-beyond the target engine are **TBD**.
+The extension stores one or more engine-specific override entries. Each entry MAY name
+a target shader and MAY bind MToon shade values to that shader's parameters.
 
 ## Scope
 
@@ -51,15 +51,19 @@ beyond the target engine are **TBD**.
    (`VRMC_materials_mtoon`, `KHR_materials_unlit`, core PBR, in that existing precedence).
 9. Implementations MUST NOT require this extension in `extensionsRequired` unless the
    file is intentionally unusable without a supporting consumer.
-10. An override MAY contain `mtoonBindings`. Each binding maps one MToon source semantic
-    to one engine-specific target material parameter.
-11. A supporting implementation MUST resolve MToon source values from the sibling
+10. An override MAY contain a `shader` object. When present, `shader.name` MUST be a
+    non-empty string identifying the engine-local shader to resolve.
+11. When `shader` is present and the named shader cannot be resolved, a supporting
+    implementation MUST fall back to stock VRM 1.0 material import for that material.
+12. An override MAY contain `bindings`. Each binding maps one MToon source semantic to
+    one engine-specific target material parameter.
+13. A supporting implementation MUST resolve MToon source values from the sibling
     `VRMC_materials_mtoon` extension. When a source property is omitted, it MUST use the
     default defined by the supported `VRMC_materials_mtoon` version.
-12. A supporting implementation MUST ignore an MToon binding when the material has no
+14. A supporting implementation MUST ignore a binding when the material has no
     `VRMC_materials_mtoon` extension or does not recognize the binding's source semantic.
-13. Override properties other than `engine` and `mtoonBindings` are **TBD** and MUST NOT
-    be treated as stable until this specification marks them accepted.
+15. Override properties other than `engine`, `shader`, and `bindings` are **TBD** and
+    MUST NOT be treated as stable until this specification marks them accepted.
 
 ## Extension properties
 
@@ -68,12 +72,40 @@ beyond the target engine are **TBD**.
 | `specVersion` | string | yes | Version of this extension; currently `"1.0"` |
 | `overrides` | object[] | yes | Non-empty list of engine-specific overrides |
 | `overrides[].engine` | string | yes | Case-sensitive engine identifier |
-| `overrides[].mtoonBindings` | object[] | no | MToon semantic-to-target bindings |
-| `mtoonBindings[].source` | string | yes | MToon source semantic listed below |
-| `mtoonBindings[].target` | string | yes | Engine-specific material parameter identifier |
+| `overrides[].shader` | object | no | Target shader definition |
+| `shader.name` | string | yes if `shader` present | Engine-local shader identifier |
+| `shader.packageId` | string | no | Optional package or module that provides the shader |
+| `shader.packageVersion` | string | no | Exporter-observed package version hint |
+| `shader.renderPipeline` | string | no | Optional render-pipeline hint |
+| `overrides[].bindings` | object[] | no | MToon semantic-to-target bindings |
+| `bindings[].source` | string | yes | MToon source semantic listed below |
+| `bindings[].target` | string | yes | Engine-specific material parameter identifier |
 
 Engine identifiers are **TBD**. Examples use `unity` and `unreal` provisionally; this
 draft does not register either value.
+
+## Shader definition
+
+`shader` tells a supporting consumer which engine-local shader to use for the material.
+
+| Field | Type | Required | Meaning |
+|-------|------|----------|---------|
+| `name` | string | yes | Case-sensitive shader identifier used by the target engine |
+| `packageId` | string | no | Package, plugin, or module expected to provide the shader |
+| `packageVersion` | string | no | Package version observed by the exporter |
+| `renderPipeline` | string | no | Pipeline hint such as `builtin`, `urp`, or `hdrp` |
+
+Rules:
+
+- `name` is engine-local. For Unity examples, it is the string passed to `Shader.Find`.
+- `packageId` is a discovery hint only. A supporting implementation MAY use it to detect
+  an optional package before resolving `name`. It MUST NOT treat package absence as a
+  hard error; it falls back per requirement 11.
+- `packageVersion` is advisory metadata, not an installation request or compatibility
+  range. A consumer MAY warn when its installed version differs.
+- `renderPipeline` values are **TBD**. Examples are provisional.
+- When `shader` is omitted, a supporting implementation MAY still use `bindings` against
+  a locally chosen override material, or ignore the override entirely.
 
 ## MToon shading source semantics
 
@@ -95,7 +127,8 @@ handling, and target type compatibility are **TBD**.
 
 ## Attachment example
 
-Non-normative. Engine identifiers and target parameter names are provisional.
+Non-normative. Engine identifiers, shader names, and target parameter names are
+provisional.
 
 ```json
 {
@@ -119,7 +152,13 @@ Non-normative. Engine identifiers and target parameter names are provisional.
           "overrides": [
             {
               "engine": "unity",
-              "mtoonBindings": [
+              "shader": {
+                "name": "Example/SkinToon",
+                "packageId": "com.example.vrmex-materials",
+                "packageVersion": "1.0.0",
+                "renderPipeline": "urp"
+              },
+              "bindings": [
                 {
                   "source": "shadeColorFactor",
                   "target": "_ShadeColor"
@@ -143,7 +182,10 @@ Non-normative. Engine identifiers and target parameter names are provisional.
               ]
             },
             {
-              "engine": "unreal"
+              "engine": "unreal",
+              "shader": {
+                "name": "/Game/Materials/SkinToon"
+              }
             }
           ]
         }
@@ -160,16 +202,16 @@ Non-normative. Engine identifiers and target parameter names are provisional.
 - `VRMC_materials_mtoon` remains the VRM 1.0 toon material extension when present.
 - `VRMEX_materials_override` is a sibling under `materials[i].extensions`. It does not
   replace MToon JSON.
-- MToon bindings describe how a supporting engine adapter transfers existing MToon shade
-  values to target material parameters. They do not redefine MToon values.
+- `bindings` describe how a supporting engine adapter transfers existing MToon shade
+  values to target shader parameters. They do not redefine MToon values.
 - Precedence when a supporting consumer is present: **TBD** (override vs MToon vs
   coexistence).
 
 ## Optional consumer interpretation
 
-Supporting tools MAY read the matching engine entry and apply a local override (material
-remap, custom generator, project mapping, and so on). How that override is resolved is
-outside this draft until properties are defined.
+Supporting tools MAY read the matching engine entry, resolve `shader`, apply `bindings`,
+and construct a local override material. Missing package, unresolved shader, or unknown
+engine leaves stock VRM 1.0 import intact.
 
 Unity consumers MAY implement support in a separate package by supplying
 `IMaterialDescriptorGenerator` / `MaterialDescriptorGeneratorFactory` without modifying
@@ -178,7 +220,7 @@ UniVRM. When that package is absent, load behavior stays stock VRM 1.0.
 ## Open questions
 
 - [ ] Stable engine identifier registry and naming rules
-- [ ] Override identity and package / shader discovery
+- [ ] Stable `renderPipeline` values
 - [ ] Binding conversions, texture transforms, and target type compatibility
 - [ ] Precedence vs `VRMC_materials_mtoon` and `KHR_materials_unlit`
 - [ ] Whether `extensionsRequired` is ever appropriate
