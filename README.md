@@ -27,3 +27,5 @@ VRM4U, and the Blender add-on; this vault defines portable file behavior.
 |------|--------|--------|
 | [UniVRM Materials Override](implementations/univrm-materials-override.md) | Unity / UniVRM | draft |
 | [VRM4U Materials Override](implementations/vrm4u-materials-override.md) | Unreal / VRM4U | draft |
+| [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender add-on third-party VRM1 hooks | draft |
+| [Blender VFX](implementations/blender-vfx.md) | Blender add-on / `VRMXT_vfx` | draft |
