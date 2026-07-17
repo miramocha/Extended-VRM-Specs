@@ -13,7 +13,8 @@ status: draft
 
 # VRM4U Materials Override
 
-Unreal implementation profile for [[VRMXT_materials_override]]. A separate plugin can
+Unreal implementation profile for
+[VRMXT_materials_override](../specs/vrmxt-materials-override.md). A separate plugin can
 support wrapped runtime loads and post-processing. VRM4U currently has no callback for
 custom material extensions during its normal conversion flow.
 

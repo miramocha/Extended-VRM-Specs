@@ -13,7 +13,8 @@ status: draft
 
 # UniVRM Materials Override
 
-Unity implementation profile for [[VRMXT_materials_override]]. Support belongs in an
+Unity implementation profile for
+[VRMXT_materials_override](../specs/vrmxt-materials-override.md). Support belongs in an
 optional package that depends on UniVRM. UniVRM source changes are not required.
 
 ## Supported entry

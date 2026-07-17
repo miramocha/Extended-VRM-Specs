@@ -88,8 +88,8 @@ This draft defines two case-sensitive engine identifiers:
 
 | Engine | Profile |
 |--------|---------|
-| `unity` | [[UniVRM Materials Override]] |
-| `unreal` | [[VRM4U Materials Override]] |
+| `unity` | [UniVRM Materials Override](../implementations/univrm-materials-override.md) |
+| `unreal` | [VRM4U Materials Override](../implementations/vrm4u-materials-override.md) |
 
 New engines require a separate profile. Adding a profile does not change this base
 extension version unless it changes common fields or behavior.
@@ -181,8 +181,9 @@ Supporting tools MAY read the matching engine entry, resolve `material`, apply
 `bindings`, and create a local material instance. Missing providers, unresolved assets,
 unsupported kinds, or unknown engines leave stock VRM 1.0 import intact.
 
-Engine integration details are documented in [[UniVRM Materials Override]] and
-[[VRM4U Materials Override]].
+Engine integration details are documented in
+[UniVRM Materials Override](../implementations/univrm-materials-override.md) and
+[VRM4U Materials Override](../implementations/vrm4u-materials-override.md).
 
 ## Open questions
 
@@ -197,5 +198,5 @@ Engine integration details are documented in [[UniVRM Materials Override]] and
 
 - Upstream MToon: `VRMC_materials_mtoon` in the VRM 1.0 specification
 - Core materials: glTF 2.0 `materials` schema
-- [[UniVRM Materials Override]]
-- [[VRM4U Materials Override]]
+- [UniVRM Materials Override](../implementations/univrm-materials-override.md)
+- [VRM4U Materials Override](../implementations/vrm4u-materials-override.md)
