@@ -19,6 +19,7 @@ VRM4U, and the Blender add-on; this vault defines portable file behavior.
 |------|-------------------|--------|
 | [VRMXT_materials_override](specs/vrmxt-materials-override.md) | `VRMXT_materials_override` | draft |
 | [VRMXT_springBone_override](specs/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
+| [VRMXT_vfx](specs/vrmxt-vfx.md) | `VRMXT_vfx` (particles) | draft |
 
 ## Implementation profiles
 
