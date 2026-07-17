@@ -1,0 +1,45 @@
+---
+description: How to author Extended VRM specs, ADRs, and schema docs
+globs: "**/*.md"
+alwaysApply: false
+---
+
+# Specs documentation
+
+This repository holds Extended VRM specifications and related design decisions.
+Prefer clarity for implementers over essay voice.
+
+## Normative writing
+
+- Separate **requirements** from **rationale** and **examples**. Label examples as non-normative.
+- Prefer concrete field names, types, units, defaults, and version bounds over adjectives.
+- Use consistent requirement strength (MUST / SHOULD / MAY, or an equivalent house convention).
+  Do not mix soft marketing language into normative sections.
+- State compatibility explicitly: which VRM/glTF versions, packages, or tools a change targets.
+- When a requirement is undecided, write `TBD` or `[ADD: …]` — do not invent a decision.
+
+## Structure
+
+- Format authored notes for Obsidian using `obsidian-markdown.mdc`, including YAML
+  properties and controlled tags.
+- One concern per document when practical. Link related specs instead of duplicating rules.
+- Keep headings scannable: purpose, scope, normative text, data model / schema, examples,
+  compatibility, open questions.
+- Prefer tables for fields, enums, and matrices. Prefer diagrams only when they clarify
+  relationships that prose would bury.
+- Preserve stable anchors and filenames once published; renames need intentional migration.
+
+## Accuracy and provenance
+
+- Do not invent citations to VRM, glTF, UniVRM, or Blender docs. Link real sections or mark
+  placeholders.
+- Distinguish Extended VRM extensions from upstream VRM/glTF behavior.
+- Record breaking changes and migration notes when changing published fields or semantics.
+- Match identifiers used in Extended-UniVRM and Extended-VRM-Addon-for-Blender when those
+  names already exist; do not invent parallel names for the same concept.
+
+## Related
+
+- Voice / AI-tell cleanup: `deslop-markdown.mdc` and the **deslop** skill.
+- Note metadata and vault conventions: `obsidian-markdown.mdc`.
+- Repo handoff: `handoff-and-git.mdc`.

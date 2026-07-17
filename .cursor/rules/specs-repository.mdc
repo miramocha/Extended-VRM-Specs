@@ -1,0 +1,16 @@
+---
+description: Extended-VRM-Specs repository purpose and agent boundaries
+alwaysApply: true
+---
+
+# Extended-VRM-Specs repository
+
+- This repo is for **specifications and design decisions** for Extended VRM — not Unity
+  package source and not the Blender add-on implementation.
+- Prefer documenting behavior, schemas, compatibility, and migration rules that UniVRM and
+  the Blender add-on can implement consistently.
+- Do not invent product scope, version history, or upstream VRM/glTF requirements.
+- Keep implementation details in the owning code repos unless the spec needs them to be
+  normative.
+- When naming concepts, reuse identifiers already established in Extended-UniVRM or
+  Extended-VRM-Addon-for-Blender when those exist.

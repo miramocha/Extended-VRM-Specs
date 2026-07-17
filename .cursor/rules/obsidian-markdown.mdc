@@ -1,0 +1,50 @@
+---
+description: Obsidian-compatible Markdown properties, tags, links, and structure
+globs: "**/*.md"
+alwaysApply: false
+---
+
+# Obsidian Markdown
+
+New documentation must work as an Obsidian vault note and remain readable on GitHub.
+
+## Required properties
+
+Start each authored documentation note with YAML properties:
+
+```yaml
+---
+title: Extended VRM Example
+aliases: []
+tags:
+  - extended-vrm
+  - spec/example
+type: specification
+status: draft
+---
+```
+
+- `title`: human-readable title; match the first `#` heading.
+- `aliases`: alternate names; use `[]` when none.
+- `tags`: include `extended-vrm` plus specific hierarchical tags.
+- `type`: `specification`, `decision`, `guide`, `reference`, or `index`.
+- `status`: `draft`, `proposed`, `accepted`, `deprecated`, or `superseded`.
+- README and generated files may omit properties when metadata would add no value.
+
+## Tags and links
+
+- Tags use lowercase kebab-case. Prefer stable namespaces such as `spec/*`, `format/*`,
+  `compatibility/*`, `implementation/*`, and `decision/*`. Do not invent near-duplicates.
+- Put classification tags in properties; avoid decorative inline `#tags`.
+- Use `[[Note Name]]` or `[[Note Name#Section|label]]` for vault-internal concepts.
+- Use standard Markdown links for external URLs and when repository-relative portability
+  matters. Never leave unresolved links in accepted specs.
+
+## Note structure
+
+- Use one H1 matching `title`, then ordered H2/H3 sections; do not skip heading levels.
+- Use kebab-case filenames. Keep stable filenames and aliases after publication.
+- Use Obsidian callouts sparingly: `> [!NOTE]`, `> [!WARNING]`, `> [!EXAMPLE]`.
+- Use fenced code blocks with language identifiers and Markdown tables with header rows.
+- Do not add empty metadata, decorative emoji headings, Dataview queries, or plugin-only
+  syntax unless the repository explicitly adopts that plugin.

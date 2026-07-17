@@ -1,0 +1,46 @@
+---
+description: Run deslop pass on authored markdown prose before handoff
+globs: "**/*.md"
+alwaysApply: false
+---
+
+# Deslop markdown
+
+Authority: [deslop skill](../skills/deslop/SKILL.md), [tells catalog](../skills/deslop/references/tells.md), [register guide](../skills/deslop/references/voices.md).
+
+## When to run
+
+After you **draft or materially edit prose** in a `.md` file (specs, ADRs, README narrative, issue/PR bodies saved as markdown), **before handoff or commit**:
+
+1. Read and follow **deslop** — Phase 0 (genre/register) → Phase 1 scan → Phase 2 rewrite → Phase 3 verify loop → Phase 4 register check.
+2. Apply fixes to the **changed sections** (or full doc if you rewrote most of it).
+3. Deliver a brief change log when the user asked for a deslop pass or the edit was agent-authored publishable prose.
+
+## Skip (do not deslop)
+
+| Case | Why |
+|------|-----|
+| Link-only, heading moves, anchor fixes | No prose change |
+| Typo / single-word fix in otherwise human text | Noise |
+| Mechanical tables (IDs, field lists, checkboxes, schema tables with no narrative) | Structure, not voice |
+| Normative keyword / enum / path renames only | Spec precision, not voice |
+| User explicitly asked to keep wording | Respect intent |
+| Editing `.cursor/skills/**/SKILL.md` or agent instructions | Meta; don't loop-deslop the deslop skill |
+
+## Genre defaults (Extended-VRM-Specs)
+
+| Path | Register |
+|------|----------|
+| Specs, extensions, schema docs, `decisions/**` / ADRs | Technical specification — precise claims, no puffery |
+| Root `README.md`, contributor/setup docs | Technical docs — imperative where appropriate |
+| Design notes / rationale essays | Essay / technical docs — commit to claims; no marketing voice |
+
+## Triggers
+
+User says **deslop**, **de-slop**, `/deslop`, **remove AI tells**, or **humanize** — run the full skill on the named file or selection.
+
+## Do not
+
+- Invent facts, citations, or specifics to sound human — use `[ADD: …]` placeholders per skill.
+- Replace locked IDs, schema names, field names, or version numbers with vaguer wording.
+- Trade technical precision for casual voice in specifications.

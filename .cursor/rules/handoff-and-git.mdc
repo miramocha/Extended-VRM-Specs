@@ -1,0 +1,19 @@
+---
+description: Safe verification and git handoff for Extended-VRM-Specs
+alwaysApply: true
+---
+
+# Handoff and git
+
+- Before handoff, inspect `git diff` and verify only task-scoped files changed.
+- After drafting or materially editing markdown prose, run **deslop** per
+  `deslop-markdown.mdc` on changed narrative sections.
+- For new or materially restructured notes, verify Obsidian properties, controlled tags,
+  heading order, and links against `obsidian-markdown.mdc`.
+- Check specs against `specs-documentation.mdc`: normative vs example, stable names,
+  real citations, no invented decisions.
+- Prefer small, reviewable doc diffs. Avoid unrelated rewrites of published specs.
+- Report checks actually run and any verification not run.
+- Never commit unless explicitly asked. Never push unless explicitly asked.
+- Do not update git config, skip hooks, force-push, hard-reset, or discard user changes.
+- Review diffs for accuracy and implementability first; style nits second.
