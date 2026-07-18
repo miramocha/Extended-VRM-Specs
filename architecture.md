@@ -3,19 +3,22 @@ title: Extended VRM Architecture
 aliases:
   - VRMXT architecture
   - authoring and consumers
+  - multi-engine authoring
 tags:
   - extended-vrm
   - compatibility/vrm1
   - implementation/optional-consumer
+  - implementation/authoring
 type: guide
 status: draft
 ---
 
 # Extended VRM Architecture
 
-Layering of Extended VRM (`VRMXT_*` glTF extensions) for **authoring** and
-**runtime consumers** relative to stock VRM 1.0. Normative field rules live in
-[specs/](specs/); this note covers compatibility and integration seams only.
+Layering of Extended VRM (`VRMXT_*` glTF extensions) for **multi-engine authoring**
+(import/export) and **runtime consumers** relative to stock VRM 1.0. Normative field
+rules live in [specs/](specs/); this note covers compatibility and integration seams
+only.
 
 ## Claims
 
@@ -32,35 +35,43 @@ Layering of Extended VRM (`VRMXT_*` glTF extensions) for **authoring** and
    or an npm package beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)).
    Baseline avatar import keeps the stock VRM loader; replacing or forking that
    loader is not required.
+5. Authoring is multi-engine. Any host with stock VRM 1.0 import/export MAY add an
+   optional Extended package that reads and writes `VRMXT_*` on the same `.vrm` /
+   `.glb`. Blender is the first shipping authoring path; Unity, Three.js, Unreal,
+   Godot, and others are in scope for the same file contract.
 
 ## Layers
 
 ```mermaid
 flowchart TB
-  subgraph authoring [Authoring]
-    blenderStock[Blender VRM add-on<br/>stock VRM 1.0 I/O]
-    hooks[optional VRM1 extension hooks]
-    vrmxtBlender[VRMXT Blender extension<br/>VRMXT_* write]
-    blenderStock --> hooks --> vrmxtBlender
+  subgraph authoring [Authoring — any engine]
+    stockAuth[Stock VRM 1.0 I/O<br/>Blender / UniVRM / VRM4U / three-vrm / godot-vrm / …]
+    extAuth[optional Extended package<br/>VRMXT_* import + export]
+    stockAuth --> extAuth
   end
 
   file["File: .vrm / .glb<br/>glTF 2.0 + VRMC_* (+ optional VRMXT_*)"]
 
-  subgraph consumers [Consumers]
-    stockLoaders[Stock UniVRM / VRM4U / other VRM1 loaders]
+  subgraph consumers [Runtime consumers — any engine]
+    stockLoaders[Stock VRM 1.0 loader]
     extPkg[optional Extended package<br/>parse + attach]
     stockLoaders --> extPkg
   end
 
-  authoring --> file --> consumers
+  authoring --> file
+  file --> consumers
 ```
+
+The same optional Extended package on an engine often covers **both** editor
+authoring (import/export) and runtime consume. Profiles document which directions
+are implemented.
 
 | Layer | Owns | Does not own |
 |-------|------|--------------|
 | Stock VRM 1.0 (`VRMC_vrm`, spring bone, …) | Humanoid, look-at, expressions, materials baseline | `VRMXT_*` semantics |
 | Extended VRM specs (this repo) | Portable `VRMXT_*` schemas and compatibility rules | Engine-specific APIs |
-| Authoring hooks | Call sites after stock VRM maps exist | Replacing stock VRM export |
-| Optional consumer package | Parse `VRMXT_*`, map to engine runtime | Replacing stock VRM import |
+| Authoring (per engine) | Edit + serialize `VRMXT_*` beside stock VRM export; re-import into editor data | Replacing stock VRM export; a second file format |
+| Optional runtime package | Parse `VRMXT_*`, map to engine runtime | Replacing stock VRM import |
 
 ## File model
 
@@ -80,7 +91,33 @@ is skipped.
 
 ## Authoring
 
-Authoring splits into stock VRM I/O and an optional Extended writer.
+Authoring is **stock VRM 1.0 I/O + optional Extended I/O** on whatever engine the
+creator uses. The file remains one `.vrm` / `.glb`. Engines MUST NOT invent a
+parallel Extended-only format.
+
+### Common rules (all engines)
+
+1. Stock VRM import/export stays the baseline. Extended packages MUST NOT replace it.
+2. Export order: write stock `VRMC_*` (and related) first, then append `VRMXT_*` and
+   matching `extensionsUsed` entries.
+3. Do **not** list optional `VRMXT_*` names in `extensionsRequired`.
+4. Import: after stock node/bone (or equivalent) maps exist, parse `VRMXT_*` into
+   editor-owned data. Skip invalid emitters / overrides per each spec; do not fail
+   the whole avatar load.
+5. Round-trip goal: portable fields survive export → import on the same engine and,
+   where implemented, across engines. Exact editor UI and native preview differ per
+   host.
+
+| Host | Stock VRM I/O | Extended authoring package | Import `VRMXT_*` | Export `VRMXT_*` |
+|------|---------------|----------------------------|------------------|------------------|
+| Blender | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Profile: [Blender VFX](implementations/blender-vfx.md) (and other Blender profiles) | Same |
+| Unity | UniVRM | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Runtime/editor import in progress per profile | **TBD** |
+| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | three-vrmxt (planned) | Planned: [three-vrm VFX](implementations/three-vrm-vfx.md) | **TBD** |
+| Unreal | VRM4U | Extended package **TBD** | **TBD** | **TBD** |
+| Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VFX](implementations/godot-vfx.md) | **TBD** |
+| Other | Any VRM 1.0 tool | Optional Extended package | Implement specs | Implement specs |
+
+### Blender (first shipping authoring path)
 
 | Piece | Repo | Role |
 |-------|------|------|
@@ -92,7 +129,7 @@ Hooks exist because glTF2 user extensions run too early to receive final VRM bon
 and object index maps. Details:
 [Blender Extension Hooks](implementations/blender-extension-hooks.md).
 
-Authoring flow (non-normative):
+Blender flow (non-normative):
 
 1. User builds a VRM 1.0 avatar with the stock VRM add-on.
 2. Optional: enable the VRMXT Blender extension and author Extended data (emitters,
@@ -103,10 +140,19 @@ Authoring flow (non-normative):
 
 Without the VRMXT Blender extension, export stays stock VRM. Hooks stay idle.
 
-## Consumers
+### Other engines (authoring direction)
 
-A **consumer** reads `VRMXT_*` after (or beside) a stock VRM load and maps portable
-fields onto engine types.
+Unity, Three.js, Unreal, Godot, and similar hosts follow the same file contract.
+Implementation profiles under `implementations/` state whether export is shipped or
+**TBD**. Until an engine’s Extended export lands, Blender remains the recommended
+authoring path for writing `VRMXT_*`; that engine’s package still MAY import and
+run the data.
+
+## Consumers (runtime)
+
+A **runtime consumer** reads `VRMXT_*` after (or beside) a stock VRM load and maps
+portable fields onto engine types. When the same package also supports editor
+export, see [Authoring](#authoring).
 
 | Consumer | Host | Integration style |
 |----------|------|-------------------|
@@ -188,7 +234,8 @@ Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
 | Fork UniVRM, godot-vrm, or three-vrm as the only way to get Extended features | Breaks drop-in use; forces replace of a maintained upstream |
 | Put `VRMXT_*` in `extensionsRequired` for optional extras | Stock loaders would refuse the file |
 | Separate binary format instead of glTF extensions | Splits the ecosystem; breaks “one avatar file” |
-| Require Blender VRMXT extension for all VRM export | Stock authoring must stay available |
+| Require Blender (or any single DCC) for all Extended export | Multi-engine authoring is in scope; stock VRM authoring must stay available without Extended |
+| Engine-private Extended side-car files | Breaks “one avatar file” and cross-engine round-trip |
 
 ## Document map
 
@@ -207,4 +254,5 @@ Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
 |-------|--------|
 | Shared post-load registry inside upstream UniVRM | TBD (UniVRMXT uses explicit attach today) |
 | Editor `.vrm` import callback for UniVRM `VrmScriptedImporter` | Tracked in UniVRMXT (issue #4) |
-| Cross-engine conformance tests for each `VRMXT_*` | TBD |
+| Unity / Three.js / Unreal / Godot Extended **export** timelines | TBD per engine profile |
+| Cross-engine authoring round-trip conformance tests for each `VRMXT_*` | TBD |

@@ -28,7 +28,7 @@ Optional `VRMXT_*` consumers:
 
 | Note | Topic | Status |
 |------|-------|--------|
-| [Extended VRM Architecture](architecture.md) | Authoring + consumers; stock VRM stays as-is; Extended is optional per engine | draft |
+| [Extended VRM Architecture](architecture.md) | Multi-engine authoring + runtime consumers; stock VRM stays as-is; Extended optional per engine | draft |
 
 ## Drafts
 
