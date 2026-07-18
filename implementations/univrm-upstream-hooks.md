@@ -1,0 +1,223 @@
+---
+title: UniVRM upstream hooks
+aliases:
+  - UniVRM ScriptedImporter hooks
+  - UniVRMXT AssetDatabase workaround
+tags:
+  - extended-vrm
+  - implementation/unity
+  - implementation/univrm
+  - spec/vfx
+  - compatibility/vrm1
+type: guide
+status: draft
+---
+
+# UniVRM upstream hooks
+
+Working notes from UniVRMXT `VRMXT_vfx` Editor integration. Record what blocked
+patching the **original** imported `.vrm` prefab, what UniVRMXT does instead, and
+concrete hooks worth requesting from [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM)
+(or carrying in [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM)).
+
+Related: [univrm-vfx.md](univrm-vfx.md), UniVRMXT
+[architecture.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/architecture.md),
+[vfx-particle-mapping.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/vfx-particle-mapping.md).
+
+## Symptoms
+
+### 1. Cannot mutate the ScriptedImporter main asset after import
+
+UniVRM builds the avatar in `VrmScriptedImporter` → `VrmScriptedImporterImpl.Import` /
+`Process`, via `AssetImportContext` (`AddObjectToAsset`, `SetMainObject`).
+
+After import, `AssetPostprocessor.OnPostprocessAllAssets` can load the `.vrm` with
+`AssetDatabase.LoadAssetAtPath<GameObject>`, but:
+
+- `GameObject.AddComponent<T>()` on that main object returns **null** (or otherwise fails).
+- Hierarchy edits on that object are not a supported extension point.
+- The next reimport **rebuilds** the asset from the file, so any fragile patch would be wiped
+  unless applied inside `OnImportAsset`.
+
+So UniVRMXT cannot attach `VrmxtVfxInstance` / `ParticleSystem` children onto the stock
+`.vrm` prefab from an optional consumer package alone.
+
+See [Current workaround](#current-workaround-univrmxt-mvp) (companion `*.vrmxt.prefab`).
+
+`Object.Instantiate` of the importer asset was tried and rejected: it broke sub-asset
+material references (null `sharedMaterials`), which then NRE’d in
+`Vrm10InstanceEditor.OnEnable` when indexing `m.name`. Prefer `PrefabUtility.InstantiatePrefab`.
+
+### 2. Imported prefabs drop `RuntimeGltfInstance`
+
+Runtime loads keep `RuntimeGltfInstance.Nodes` (stable glTF node index → `Transform`).
+AssetDatabase imports do **not** (UniVRM treats missing `RuntimeGltfInstance` as “prefab
+instance”). Node indices for `VRMXT_vfx` must be resolved another way (UniVRMXT uses
+`nodes[].name` matching).
+
+### 3. VFX-only `textures[]` are never imported
+
+`Vrm10TextureDescriptorGenerator` enumerates textures from:
+
+- materials (MToon / PBR / unlit)
+- VRM meta thumbnail
+
+It does **not** walk root extensions. A texture referenced only by
+`extensions.VRMXT_vfx.emitters[].particle.texture` never becomes a `Texture2D` sub-asset.
+
+Example: `vfx_smoke.vrm` has `materials: []`, one mesh with no material index, and one
+`textures[]` / `images[]` entry used solely by a particle emitter. Stock import has no
+usable particle albedo.
+
+See [Current workaround](#current-workaround-univrmxt-mvp) (second GLB read / `TryAttachFromGlb`).
+
+### 4. Runtime hosts (Warudo, loaders) never see companion prefabs
+
+Character Source / `LoadGltfDataAsync` paths ignore AssetDatabase companions. They need
+the same post-load attach + optional second file read. Companion prefabs are an Editor
+convenience only.
+
+## Current workaround (UniVRMXT MVP)
+
+No UniVRM fork. Two supported paths share the same attach/decode code in
+[UniVRMXT](https://github.com/miramocha/UniVRMXT).
+
+### Editor AssetDatabase (companion prefab)
+
+| Step | What |
+|------|------|
+| 1 | User imports / reimports `Model.vrm` (stock UniVRM ScriptedImporter). |
+| 2 | `VrmxtVfxAssetPostprocessor` runs on `.vrm` import. |
+| 3 | Read file bytes once: `GlbChunks` → JSON; `VrmxtVfx.TryParse` (no-op if extension missing). |
+| 4 | `PrefabUtility.InstantiatePrefab` the imported root (keeps material sub-asset links). |
+| 5 | Resolve `emitters[].node` by `nodes[].name` → `Transform` (`VrmxtVfxNodeResolver`). |
+| 6 | `VrmxtVfxRuntime.TryAttachFromGlb` — parse emitters, decode VFX-only images from BIN, build `ParticleSystem` children under bones/helpers. |
+| 7 | `PrefabUtility.SaveAsPrefabAsset` → sibling **`Model.vrmxt.prefab`**; decoded `Texture2D`s `AddObjectToAsset` onto that prefab. |
+| 8 | Scenes / preview use **`Model.vrmxt.prefab`**. Raw `Model.vrm` stays avatar-only. |
+
+Code: UniVRMXT `Editor/Vfx/VrmxtVfxAssetPostprocessor.cs`.
+
+**Do not** place the raw `.vrm` in the scene expecting particles.
+
+### Runtime / Warudo (no companion)
+
+| Step | What |
+|------|------|
+| 1 | Host loads `.vrm` with stock UniVRM (`Vrm10.LoadGltfDataAsync` / Character Source). |
+| 2 | Keep or re-read the same file **bytes**. |
+| 3 | `TryAttachFromGlb(root, bytes, RuntimeGltfInstance.Nodes, …)` (or name resolver if no node list). |
+| 4 | Dispose `VrmxtVfxGlbTextures` when the avatar is destroyed (or `ReleaseOwnership` if textures were saved into an asset). |
+
+```csharp
+var bytes = File.ReadAllBytes(path);
+// … stock Vrm10.LoadGltfDataAsync …
+var nodes = vrm.GetComponent<RuntimeGltfInstance>().Nodes;
+VrmxtVfxRuntime.TryAttachFromGlb(
+    vrm.gameObject, bytes, nodes, out var vfx, out var glbTextures);
+```
+
+### Shared pieces (UniVRMXT)
+
+| Piece | Role |
+|-------|------|
+| `VrmxtVfxRuntime.TryAttach` / `TryAttachFromGlb` | Parse + attach + optional `ParticleSystem` build |
+| `VrmxtVfxParticleSystemMapper` | Field map, billboard, BIRP/URP unlit material |
+| `VrmxtVfxGlbTextures` | Second-read decode of extension-only textures |
+| `VrmxtVfxOwnedParticleMaterial` | Own-file MonoBehaviour; destroys owned particle materials |
+
+Until upstream hooks land, this is the supported UniVRMXT behavior.
+
+## What we want from UniVRM (hook asks)
+
+Prioritized for “VFX (and other root extensions) on the original `.vrm` prefab.”
+
+### A. Post-import / in-import extension callback (highest value)
+
+Allow optional packages to participate in `OnImportAsset` **while** `AssetImportContext`
+is alive, after the stock hierarchy exists.
+
+Sketch (names illustrative):
+
+```csharp
+// Called from VrmScriptedImporterImpl.Process after Load + ownership transfer,
+// before or after SetMainObject — must still have a live AssetImportContext.
+public interface IVrm10ImportExtension
+{
+    void OnVrmImported(Vrm10ImportExtensionContext ctx);
+}
+
+public sealed class Vrm10ImportExtensionContext
+{
+    public AssetImportContext AssetContext { get; }
+    public GameObject Root { get; }
+    public GltfData Data { get; }          // or at least Json + Nodes list
+    public IReadOnlyList<Transform> Nodes { get; } // import-time node map
+    public void AddObjectToAsset(string name, Object obj);
+}
+```
+
+Discovery options (any one is enough to start):
+
+| Mechanism | Notes |
+|-----------|--------|
+| `ScriptableObject` + project settings list | Explicit, versionable |
+| `TypeCache` / attribute scan of `IVrm10ImportExtension` | Zero config for UPM packages |
+| Static event on `VrmScriptedImporterImpl` | Simplest; harder to order |
+
+**Why:** UniVRMXT could `AddComponent`, parent emitter objects under `Nodes[i]`, and
+`AddObjectToAsset` particle materials/textures onto the **same** `.vrm` asset. No companion
+prefab. Reimport stays coherent.
+
+### B. Preserve or expose import-time node index map
+
+Even without a full extension callback:
+
+- Keep a serialized `IReadOnlyList<Transform>` (or instance ID map) on the imported root, or
+- Document a stable public API to rebuild index → `Transform` after import.
+
+Today name matching works for unique bone/helper names but is weaker than
+`RuntimeGltfInstance.Nodes`.
+
+### C. Texture enumeration hook or “include unused textures”
+
+Either:
+
+1. `ITextureDescriptorGenerator` wrapper already exists for materials — extend the default
+   VRM10 generator (or add a second pass) so packages can **register extra texture indices**
+   to import; or
+2. Optional importer flag / setting: import all `textures[]` / `images[]` even if unreferenced
+   by materials (heavier; simple).
+
+**Why:** Removes the second GLB decode for particle (and future extension) images. Sub-assets
+would share UniVRM’s normal remap / extract workflow.
+
+### D. Retain glTF JSON (or extension blobs) on the loaded instance (runtime)
+
+Runtime hosts dispose `GltfData` after load; JSON is gone. A retained
+`extensions.VRMXT_*` blob (or full JSON) on `Vrm10Instance` / `RuntimeGltfInstance` would
+avoid re-opening the file for Warudo-style post-load apply.
+
+Lower priority for AssetDatabase prefab editing; high value for runtime hosts.
+
+## Non-goals / out of scope for upstream asks
+
+- Full Unity VFX authoring/export UI (Blender remains preferred authoring).
+- Forcing `VRMXT_vfx` into `extensionsRequired` (must stay optional).
+- Changing stock load success when UniVRMXT is absent.
+
+## Decision log (UniVRMXT)
+
+| Date | Decision |
+|------|----------|
+| 2026-07 | No UniVRM fork required for MVP: companion `*.vrmxt.prefab` + `TryAttachFromGlb` second read. |
+| 2026-07 | Prefer upstream **A + C** (import callback + texture enum) to put VFX on the original `.vrm`. |
+
+## Links into UniVRM source (0.131.x / Extended-UniVRM)
+
+| Area | Path |
+|------|------|
+| ScriptedImporter entry | `Packages/VRM10/Editor/ScriptedImporter/VrmScriptedImporter.cs` |
+| Import implementation | `Packages/VRM10/Editor/ScriptedImporter/VrmScriptedImporterImpl.cs` |
+| Texture enumeration | `Packages/VRM10/Runtime/IO/Texture/Vrm10TextureDescriptorGenerator.cs` |
+| Runtime node list | `Packages/UniGLTF/Runtime/UniGLTF/RuntimeGltfInstance.cs` |
+| Prefab vs runtime detect | `Packages/VRM10/Runtime/Components/Vrm10Instance/Vrm10Instance.cs` (comments on missing `RuntimeGltfInstance`) |

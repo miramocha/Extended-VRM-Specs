@@ -70,14 +70,21 @@ the hierarchy).
 - Runtime / Warudo: stock load, then `TryAttachFromGlb` with the same file bytes
 - VFX-only textures: second GLB image decode (UniVRM texture enum is material/meta only)
 
-Full write-up (symptoms, workaround steps, hook asks): UniVRMXT
-[univrm-upstream-hooks.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/univrm-upstream-hooks.md).
+Full write-up (symptoms, workaround steps, hook asks):
+[univrm-upstream-hooks.md](univrm-upstream-hooks.md).
 
 ## Open questions
 
 | Topic | Status |
 |-------|--------|
-| Editor `.vrm` ScriptedImporter integration | Workaround: companion prefab; prefer upstream import callback — see UniVRMXT upstream-hooks doc |
+| Editor `.vrm` ScriptedImporter integration | Workaround: companion prefab; prefer upstream import callback — see [univrm-upstream-hooks.md](univrm-upstream-hooks.md) |
 | VFX-only `textures[]` import | Workaround: re-read GLB; prefer texture enumeration hook |
 | Unknown `specVersion` policy | TBD (shared with base spec) |
 | Trigger / play mode | TBD |
+
+## Related
+
+- Spec: [VRMXT_vfx](../specs/vrmxt-vfx.md)
+- Upstream hooks / AssetDatabase workaround: [univrm-upstream-hooks.md](univrm-upstream-hooks.md)
+- UniVRMXT: https://github.com/miramocha/UniVRMXT
+- [Blender VFX](blender-vfx.md)
