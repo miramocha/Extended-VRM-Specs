@@ -111,7 +111,7 @@ parallel Extended-only format.
 | Host | Stock VRM I/O | Extended authoring package | Import `VRMXT_*` | Export `VRMXT_*` |
 |------|---------------|----------------------------|------------------|------------------|
 | Blender | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Profile: [Blender VFX](implementations/blender-vfx.md) (and other Blender profiles) | Same |
-| Unity | UniVRM | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Runtime/editor import in progress per profile | **TBD** |
+| Unity | [UniVRM](https://github.com/vrm-c/UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Runtime/editor import in progress per profile | **TBD** |
 | Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | three-vrmxt (planned) | Planned: [three-vrm VFX](implementations/three-vrm-vfx.md) | **TBD** |
 | Unreal | VRM4U | Extended package **TBD** | **TBD** | **TBD** |
 | Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VFX](implementations/godot-vfx.md) | **TBD** |
@@ -156,7 +156,7 @@ export, see [Authoring](#authoring).
 
 | Consumer | Host | Integration style |
 |----------|------|-------------------|
-| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity + UniVRM | Optional UPM package. Parse extension JSON; attach after `Vrm10` load. Runtime does not replace UniVRM. |
+| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity + [UniVRM](https://github.com/vrm-c/UniVRM) | Optional UPM package. Parse extension JSON; attach after `Vrm10` load. Runtime does not replace UniVRM. |
 | Godot VRMXT addon (planned) | Godot + [godot-vrm](https://github.com/V-Sekai/godot-vrm) | Optional addon. Register `GLTFDocumentExtension` beside stock VRM plugins; runtime attach when `EditorPlugin` is absent. Does not replace godot-vrm. |
 | three-vrmxt (planned) | Three.js + [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | Optional npm package. Peer `GLTFLoaderPlugin` beside `VRMLoaderPlugin`; optional explicit `tryAttach`. Does not replace three-vrm. |
 | VRM4U path | Unreal + VRM4U | Optional profile docs under `implementations/`; stock VRM4U load remains baseline. |
@@ -164,9 +164,11 @@ export, see [Authoring](#authoring).
 
 ### Unity / UniVRM
 
-UniVRM remains the VRM 1.0 importer. UniVRMXT is additive:
+[UniVRM](https://github.com/vrm-c/UniVRM) remains the stock VRM 1.0 importer. UniVRMXT
+is additive:
 
-1. Project keeps UniVRM (`com.vrmc.gltf`, `com.vrmc.vrm`).
+1. Project keeps UniVRM (`com.vrmc.gltf`, `com.vrmc.vrm`) from
+   [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM).
 2. Project MAY add UniVRMXT (`com.miramocha.univrmxt`).
 3. After stock load (`Vrm10.LoadGltfDataAsync` or equivalent), the app calls UniVRMXT
    helpers (for example `VrmxtVfxRuntime.TryAttach`) with glTF JSON and node

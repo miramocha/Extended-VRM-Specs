@@ -10,8 +10,9 @@ status: draft
 
 # Extended VRM Specs
 
-Specifications and design notes for Extended VRM. Implementations target UniVRM,
-VRM4U, Godot (godot-vrm), Three.js (three-vrm), and the
+Specifications and design notes for Extended VRM. Implementations target
+[UniVRM](https://github.com/vrm-c/UniVRM), VRM4U, Godot (godot-vrm), Three.js
+(three-vrm), and the
 [Blender add-on](https://github.com/miramocha/Extended-VRM-Addon-for-Blender);
 this repository defines portable file behavior.
 
@@ -20,7 +21,7 @@ Optional `VRMXT_*` consumers:
 | Repo | Role |
 |------|------|
 | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Blender authoring / I/O via VRM1 hooks |
-| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity UPM package on UniVRM |
+| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity UPM package on [UniVRM](https://github.com/vrm-c/UniVRM) |
 | Godot VRMXT addon (planned) | Optional Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm) |
 | three-vrmxt (planned) | Optional npm package beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) |
 

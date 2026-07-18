@@ -15,8 +15,8 @@ status: draft
 # UniVRM VFX
 
 Unity implementation profile for [VRMXT_vfx](../specs/vrmxt-vfx.md). Support belongs in
-[UniVRMXT](https://github.com/miramocha/UniVRMXT) (`com.miramocha.univrmxt`). UniVRM
-source changes are not required.
+[UniVRMXT](https://github.com/miramocha/UniVRMXT) (`com.miramocha.univrmxt`). Stock
+[UniVRM](https://github.com/vrm-c/UniVRM) source changes are not required.
 
 VRM 1.0 only. The extension is optional: stock UniVRM load MUST succeed when UniVRMXT
 is absent or when `VRMXT_vfx` is missing.
@@ -26,7 +26,8 @@ is absent or when `VRMXT_vfx` is missing.
 | Item | Value |
 |------|-------|
 | UPM id | `com.miramocha.univrmxt` |
-| Host | [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) / UniVRM `0.131.1`+ |
+| Stock VRM I/O | [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) (`0.131.1`+) |
+| Optional host fork | [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) |
 | Unity | `2022.3` |
 
 ## Import seam
