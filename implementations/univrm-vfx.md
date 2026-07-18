@@ -33,18 +33,23 @@ is absent or when `VRMXT_vfx` is missing.
 
 UniVRM has no general root-extension registry. UniVRMXT foundation:
 
-1. Parse root `extensions.VRMXT_vfx` from glTF JSON (`specVersion` `"1.0"`).
+1. Parse root `extensions.VRMXT_vfx` from glTF JSON (`specVersion` `"1.0"`) via
+   `VrmxtVfx.TryParse`.
 2. Skip invalid emitters per the base spec.
 3. After `Vrm10.LoadGltfDataAsync` (or equivalent), map `emitters[].node` through
    `RuntimeGltfInstance.Nodes`.
-4. Attach portable emitter data on a UniVRMXT component / ScriptableObject.
+4. Call `VrmxtVfxRuntime.TryAttach(root, gltfJson, nodes, out instance)` to store
+   resolved emitters on `VrmxtVfxInstance` (avatar root). `VrmxtVfxData` remains
+   available as a ScriptableObject mirror for asset workflows.
 
-Unresolved nodes skip that emitter only.
+Unresolved nodes skip that emitter only. UniVRMXT Runtime does not hard-reference
+UniGLTF/VRM10 asmdefs; the load caller supplies JSON and the node Transform list.
 
 ## Runtime behavior (foundation)
 
-MVP stores parsed emitter data. Native `ParticleSystem` mapping, billboard materials,
-and texture policy are **TBD**.
+MVP stores parsed emitter data on `VrmxtVfxInstance` (node index, `Transform`, local
+TR, particle scalars, texture index). Native `ParticleSystem` mapping, billboard
+materials, and texture-to-`Texture2D` resolution are **TBD**.
 
 ## Export
 
