@@ -58,10 +58,26 @@ See UniVRMXT [vfx-particle-mapping.md](https://github.com/miramocha/UniVRMXT/blo
 Export of authored VFX from Unity is **TBD**. Prefer Blender
 ([Blender VFX](blender-vfx.md)) as the authoring path until a Unity exporter lands.
 
+## AssetDatabase limits (UniVRMXT findings)
+
+Optional consumer packages cannot patch the stock imported `.vrm` prefab after
+`VrmScriptedImporter` finishes (`AddComponent` on the main asset fails; reimport rebuilds
+the hierarchy).
+
+**Current UniVRMXT workaround** (no upstream change):
+
+- Editor: sibling companion prefab `*.vrmxt.prefab` (postprocessor + `TryAttachFromGlb`)
+- Runtime / Warudo: stock load, then `TryAttachFromGlb` with the same file bytes
+- VFX-only textures: second GLB image decode (UniVRM texture enum is material/meta only)
+
+Full write-up (symptoms, workaround steps, hook asks): UniVRMXT
+[univrm-upstream-hooks.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/univrm-upstream-hooks.md).
+
 ## Open questions
 
 | Topic | Status |
 |-------|--------|
-| Editor `.vrm` ScriptedImporter integration | TBD (UniVRM importer has no post-extension callback) |
+| Editor `.vrm` ScriptedImporter integration | Workaround: companion prefab; prefer upstream import callback — see UniVRMXT upstream-hooks doc |
+| VFX-only `textures[]` import | Workaround: re-read GLB; prefer texture enumeration hook |
 | Unknown `specVersion` policy | TBD (shared with base spec) |
 | Trigger / play mode | TBD |
