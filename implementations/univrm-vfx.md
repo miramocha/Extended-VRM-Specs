@@ -64,14 +64,14 @@ Optional consumer packages cannot patch the stock imported `.vrm` prefab after
 `VrmScriptedImporter` finishes (`AddComponent` on the main asset fails; reimport rebuilds
 the hierarchy).
 
-**Current UniVRMXT workaround** (no upstream change):
+**Current UniVRMXT workaround** (dual path):
 
-- Editor: sibling companion prefab `*.vrmxt.prefab` (postprocessor + `TryAttachFromGlb`)
-- Runtime / Warudo: stock load, then `TryAttachFromGlb` with the same file bytes
-- VFX-only textures: second GLB image decode (UniVRM texture enum is material/meta only)
+- **Extended-UniVRM:** import hooks (Preferences/VRM10 enable) → VFX on original `.vrm`
+- **Stock UniVRM / hooks disabled:** sibling companion prefab `*.vrmxt.prefab`
+- Runtime / Warudo: stock load, then `TryAttachFromGlb`
+- VFX-only textures: second GLB image decode (texture enum hook still open)
 
-Full write-up (symptoms, workaround steps, hook asks):
-[univrm-upstream-hooks.md](univrm-upstream-hooks.md).
+Full write-up: [univrm-upstream-hooks.md](univrm-upstream-hooks.md).
 
 ## Open questions
 
