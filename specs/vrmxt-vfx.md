@@ -178,6 +178,14 @@ Later drafts MAY:
 Adding optional fields with defaults does not by itself require a `specVersion` bump.
 Removing or redefining an existing field does.
 
+## Related
+
+- [VRMXT_materials_override](vrmxt-materials-override.md)
+- [VRMXT_springBone_override](vrmxt-spring-bone-override.md)
+- [VRMXT_lattice](vrmxt-lattice.md) (research draft)
+- [Blender VFX](../implementations/blender-vfx.md)
+- [UniVRM VFX](../implementations/univrm-vfx.md)
+
 ## Open questions
 
 | Topic | Status |

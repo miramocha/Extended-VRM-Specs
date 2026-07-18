@@ -17,7 +17,8 @@ status: draft
 Public VRM 1.0 import/export hooks in
 [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender).
 They let a separate Blender add-on handle `VRMXT_*` (and similar) root extensions
-after stock VRM maps exist.
+after stock VRM maps exist. Examples: [VRMXT_vfx](../specs/vrmxt-vfx.md),
+[VRMXT_lattice](../specs/vrmxt-lattice.md).
 
 Primary consumer:
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender)

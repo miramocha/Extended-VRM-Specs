@@ -209,6 +209,12 @@ to `IMaterialDescriptorGenerator`.
 - [MagicaCloth2 runtime construction](https://magicasoft.jp/en/mc2_runtime_build/)
 - [MagicaCloth2 BoneSpring guide](https://magicasoft.jp/en/mc2_bonespring_startguide/)
 
+## Related
+
+- [VRMXT_materials_override](vrmxt-materials-override.md)
+- [VRMXT_vfx](vrmxt-vfx.md)
+- [VRMXT_lattice](vrmxt-lattice.md) (research draft; may reuse override-engine pattern)
+
 ## Open questions
 
 - [ ] Stable engine and backend identifier registry
