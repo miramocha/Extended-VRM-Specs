@@ -87,8 +87,8 @@ Two Editor paths; runtime unchanged. Attach/decode code is shared in
 Extended-UniVRM ships `IVrm10ImportExtension` / `Vrm10ImportExtensionRegistry` and invokes
 handlers from `VrmScriptedImporterImpl.Process` while `AssetImportContext` is live.
 
-Invocation is gated by **Preferences → VRM10 → Enable VRM import extensions**
-(`Vrm10Preference.EnableImportExtensions`, default on). When that preference is off,
+Invocation is gated by **Project Settings → VRM10 → Enable VRM Import Extensions**
+(`Vrm10ProjectEditorSettings.enableImportExtensions`, default on). When that setting is off,
 `InvokeAll` is a no-op and UniVRMXT treats hooks as unavailable (companion prefab path).
 
 UniVRMXT soft-detects the registry type (`VRM10.Editor`) and `IsEnabled`, then registers a
@@ -98,7 +98,7 @@ reimport when hooks are enabled.
 
 ### Editor + stock UniVRM or hooks disabled (companion prefab)
 
-When `Vrm10ImportExtensionRegistry` is absent, or Preferences disable import extensions:
+When `Vrm10ImportExtensionRegistry` is absent, or Project Settings disable import extensions:
 
 | Step | What |
 |------|------|
@@ -149,8 +149,9 @@ Hook **A** is implemented in **Extended-UniVRM**. Remaining asks for stock
 
 `IVrm10ImportExtension`, `Vrm10ImportExtensionContext`, `Vrm10ImportExtensionRegistry`
 (`Register` / `RegisterHandler(Action<object>)` for soft consumers; `IsEnabled` reads
-`Vrm10Preference.EnableImportExtensions`). Invoked from `VrmScriptedImporterImpl.Process`
-after ownership transfer, before `RuntimeGltfInstance` destroy, only when the preference is on.
+`Vrm10ProjectEditorSettings.EnableImportExtensions`). Invoked from
+`VrmScriptedImporterImpl.Process` after ownership transfer, before `RuntimeGltfInstance`
+destroy, only when the project setting is on.
 
 Upstream vrm-c adoption would let stock UniVRM hosts use the same path without the fork.
 
@@ -198,7 +199,7 @@ Lower priority for AssetDatabase prefab editing; high value for runtime hosts.
 | 2026-07 | MVP without fork: companion `*.vrmxt.prefab` + `TryAttachFromGlb`. |
 | 2026-07 | Prefer upstream **A + C**; implement **A** in Extended-UniVRM first. |
 | 2026-07 | Extended-UniVRM ships import extension registry; UniVRMXT soft-detects and dual-paths. |
-| 2026-07 | Preferences/VRM10 gate for import extensions; off → companion prefab. |
+| 2026-07 | Project Settings/VRM10 gate for import extensions; off → companion prefab. |
 
 ## Links into UniVRM source (0.131.x / Extended-UniVRM)
 
@@ -207,7 +208,7 @@ Lower priority for AssetDatabase prefab editing; high value for runtime hosts.
 | ScriptedImporter entry | `Packages/VRM10/Editor/ScriptedImporter/VrmScriptedImporter.cs` |
 | Import implementation | `Packages/VRM10/Editor/ScriptedImporter/VrmScriptedImporterImpl.cs` |
 | Import extension API | `Packages/VRM10/Editor/ScriptedImporter/Vrm10ImportExtension.cs` |
-| Import extension preference | `Packages/VRM10/Editor/Vrm10Preference.cs` |
+| Import extension project setting | `Packages/VRM10/Editor/Settings/Vrm10ProjectEditorSettings.cs` |
 | Texture enumeration | `Packages/VRM10/Runtime/IO/Texture/Vrm10TextureDescriptorGenerator.cs` |
 | Runtime node list | `Packages/UniGLTF/Runtime/UniGLTF/RuntimeGltfInstance.cs` |
 | Prefab vs runtime detect | `Packages/VRM10/Runtime/Components/Vrm10Instance/Vrm10Instance.cs` (comments on missing `RuntimeGltfInstance`) |

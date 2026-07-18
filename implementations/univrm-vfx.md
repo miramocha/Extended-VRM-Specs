@@ -66,7 +66,7 @@ the hierarchy).
 
 **Current UniVRMXT workaround** (dual path):
 
-- **Extended-UniVRM:** import hooks (Preferences/VRM10 enable) → VFX on original `.vrm`
+- **Extended-UniVRM:** import hooks (Project Settings/VRM10 enable) → VFX on original `.vrm`
 - **Stock UniVRM / hooks disabled:** sibling companion prefab `*.vrmxt.prefab`
 - Runtime / Warudo: stock load, then `TryAttachFromGlb`
 - VFX-only textures: second GLB image decode (texture enum hook still open)
