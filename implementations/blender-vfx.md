@@ -221,4 +221,4 @@ Host hooks remain in Extended-VRM-Addon-for-Blender (`extension_hooks.py`).
 | Warn on skipped export emitters | TBD |
 | VFX texture sampler defaults | TBD |
 | Axis conversion if preview gizmos are added | TBD |
-| UniVRM / VRM4U consumer packages | See [UniVRM VFX](univrm-vfx.md); VRM4U TBD |
+| UniVRM / Godot / VRM4U consumer packages | See [UniVRM VFX](univrm-vfx.md), [Godot VFX](godot-vfx.md); VRM4U TBD |

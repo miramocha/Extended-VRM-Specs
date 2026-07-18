@@ -26,10 +26,11 @@ Layering of Extended VRM (`VRMXT_*` glTF extensions) for **authoring** and
    `extensionsRequired` rules).
 3. Extended behavior is optional. Consumers MAY ignore every `VRMXT_*` extension
    and still treat the file as ordinary VRM 1.0.
-4. Unity Extended support ships as an add-on package (for example
-   [UniVRMXT](https://github.com/miramocha/UniVRMXT)). Baseline avatar import
-   keeps [UniVRM](https://github.com/vrm-c/UniVRM); replacing UniVRM or forking
-   its load path is not required.
+4. Extended support ships as an optional add-on package on each engine (for
+   example [UniVRMXT](https://github.com/miramocha/UniVRMXT) on Unity, or a
+   separate Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm)).
+   Baseline avatar import keeps the stock VRM loader; replacing or forking that
+   loader is not required.
 
 ## Layers
 
@@ -109,6 +110,7 @@ fields onto engine types.
 | Consumer | Host | Integration style |
 |----------|------|-------------------|
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity + UniVRM | Optional UPM package. Parse extension JSON; attach after `Vrm10` load. Runtime does not replace UniVRM. |
+| Godot VRMXT addon (planned) | Godot + [godot-vrm](https://github.com/V-Sekai/godot-vrm) | Optional addon. Register `GLTFDocumentExtension` beside stock VRM plugins; runtime attach when `EditorPlugin` is absent. Does not replace godot-vrm. |
 | VRM4U path | Unreal + VRM4U | Optional profile docs under `implementations/`; stock VRM4U load remains baseline. |
 | Other engines | Any VRM 1.0 loader | Implement the specs; ignore unknown `VRMXT_*` if unsupported. |
 
@@ -133,6 +135,23 @@ Implementation notes:
 [UniVRM Materials Override](implementations/univrm-materials-override.md),
 package [architecture](https://github.com/miramocha/UniVRMXT/blob/main/docs/architecture.md).
 
+### Godot / godot-vrm
+
+godot-vrm remains the VRM 1.0 importer. Extended support is a separate addon:
+
+1. Project keeps [godot-vrm](https://github.com/V-Sekai/godot-vrm) (`addons/vrm` + MToon).
+2. Project MAY enable a VRMXT addon that registers its own `GLTFDocumentExtension`
+   instances with `GLTFDocument.register_gltf_document_extension`.
+3. Editor `.vrm` import runs stock VRM extensions and VRMXT extensions in the same
+   `GLTFDocument` pass (`_import_preflight` / `_import_post`).
+4. Runtime loads MUST register the VRMXT extension (or call an explicit attach helper)
+   because `EditorPlugin` does not run in exported games.
+5. Missing extension or missing addon → no Extended nodes; avatar still valid.
+
+Do not nest the VRMXT addon under `addons/vrm` or replace `import_vrm.gd`.
+
+Implementation notes: [Godot VFX](implementations/godot-vfx.md).
+
 ### Compatibility matrix
 
 | Scenario | Stock VRM load | Extended features |
@@ -146,7 +165,7 @@ package [architecture](https://github.com/miramocha/UniVRMXT/blob/main/docs/arch
 
 | Approach | Why rejected |
 |----------|--------------|
-| Fork UniVRM as the only way to get Extended features | Breaks drop-in use; forces replace of a maintained upstream |
+| Fork UniVRM or godot-vrm as the only way to get Extended features | Breaks drop-in use; forces replace of a maintained upstream |
 | Put `VRMXT_*` in `extensionsRequired` for optional extras | Stock loaders would refuse the file |
 | Separate binary format instead of glTF extensions | Splits the ecosystem; breaks “one avatar file” |
 | Require Blender VRMXT extension for all VRM export | Stock authoring must stay available |
@@ -158,6 +177,7 @@ package [architecture](https://github.com/miramocha/UniVRMXT/blob/main/docs/arch
 | Extension schemas | [specs/](specs/) |
 | Blender hook API | [implementations/blender-extension-hooks.md](implementations/blender-extension-hooks.md) |
 | Unity VFX profile | [implementations/univrm-vfx.md](implementations/univrm-vfx.md) |
+| Godot VFX profile | [implementations/godot-vfx.md](implementations/godot-vfx.md) |
 | Repo index | [README.md](README.md) |
 
 ## Open questions

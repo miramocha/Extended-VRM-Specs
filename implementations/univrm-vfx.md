@@ -48,8 +48,9 @@ UniGLTF/VRM10 asmdefs; the load caller supplies JSON and the node Transform list
 ## Runtime behavior (foundation)
 
 MVP stores parsed emitter data on `VrmxtVfxInstance` (node index, `Transform`, local
-TR, particle scalars, texture index). Native `ParticleSystem` mapping, billboard
-materials, and texture-to-`Texture2D` resolution are **TBD**.
+TR, particle scalars, texture index). `VrmxtVfxParticleSystemMapper` maps portable
+fields onto Unity `ParticleSystem` (billboard, local +Y velocity, optional texture).
+See UniVRMXT [vfx-particle-mapping.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/vfx-particle-mapping.md).
 
 ## Export
 
@@ -60,8 +61,6 @@ Export of authored VFX from Unity is **TBD**. Prefer Blender
 
 | Topic | Status |
 |-------|--------|
-| `ParticleSystem` field mapping | TBD |
-| Billboard / texture material | TBD |
 | Editor `.vrm` ScriptedImporter integration | TBD (UniVRM importer has no post-extension callback) |
 | Unknown `specVersion` policy | TBD (shared with base spec) |
 | Trigger / play mode | TBD |

@@ -160,7 +160,7 @@ Non-normative.
 | Consumer | Expected behavior |
 |----------|-------------------|
 | Stock VRM 1.0 importer | Ignore extension; avatar loads without VFX |
-| Supporting UniVRM / VRM4U / Blender package | Build native particles from portable fields |
+| Supporting UniVRM / Godot / VRM4U / Blender package | Build native particles from portable fields |
 | Unknown `type` or bad `node` | Skip that emitter only |
 
 Exact visual parity across engines is not required. Field meaning and units are.
@@ -185,6 +185,7 @@ Removing or redefining an existing field does.
 - [VRMXT_lattice](vrmxt-lattice.md) (research draft)
 - [Blender VFX](../implementations/blender-vfx.md)
 - [UniVRM VFX](../implementations/univrm-vfx.md)
+- [Godot VFX](../implementations/godot-vfx.md)
 
 ## Open questions
 
