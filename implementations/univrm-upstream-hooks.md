@@ -16,9 +16,9 @@ status: draft
 # UniVRM upstream hooks
 
 Working notes from UniVRMXT `VRMXT_vfx` Editor integration. Record what blocked
-patching the **original** imported `.vrm` prefab, what UniVRMXT does instead, and
-concrete hooks worth requesting from [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM)
-(or carrying in [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM)).
+patching the **original** imported `.vrm` prefab on stock UniVRM, what UniVRMXT does
+instead, what [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) already
+ships, and remaining hooks for [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM).
 
 Related: [univrm-vfx.md](univrm-vfx.md), UniVRMXT
 [architecture.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/architecture.md),
@@ -40,9 +40,11 @@ After import, `AssetPostprocessor.OnPostprocessAllAssets` can load the `.vrm` wi
   unless applied inside `OnImportAsset`.
 
 So UniVRMXT cannot attach `VrmxtVfxInstance` / `ParticleSystem` children onto the stock
-`.vrm` prefab from an optional consumer package alone.
+`.vrm` prefab from an optional consumer package alone (without an in-import hook).
 
-See [Current workaround](#current-workaround-univrmxt-mvp) (companion `*.vrmxt.prefab`).
+Extended-UniVRM solves this with `IVrm10ImportExtension` during `Process` (see
+[Current workaround](#current-workaround-univrmxt-mvp)). On stock UniVRM, use the companion
+`*.vrmxt.prefab` path.
 
 `Object.Instantiate` of the importer asset was tried and rejected: it broke sub-asset
 material references (null `sharedMaterials`), which then NRE’d in

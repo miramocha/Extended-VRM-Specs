@@ -77,7 +77,7 @@ Full write-up: [univrm-upstream-hooks.md](univrm-upstream-hooks.md).
 
 | Topic | Status |
 |-------|--------|
-| Editor `.vrm` ScriptedImporter integration | Workaround: companion prefab; prefer upstream import callback — see [univrm-upstream-hooks.md](univrm-upstream-hooks.md) |
+| Editor `.vrm` ScriptedImporter integration | Done in Extended-UniVRM (Project Settings/VRM10 gate); stock UniVRM still needs companion prefab or upstream adoption of hook A — [univrm-upstream-hooks.md](univrm-upstream-hooks.md) |
 | VFX-only `textures[]` import | Workaround: re-read GLB; prefer texture enumeration hook |
 | Unknown `specVersion` policy | TBD (shared with base spec) |
 | Trigger / play mode | TBD |
