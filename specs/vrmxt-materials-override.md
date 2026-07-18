@@ -200,3 +200,6 @@ Engine integration details are documented in
 - Core materials: glTF 2.0 `materials` schema
 - [UniVRM Materials Override](../implementations/univrm-materials-override.md)
 - [VRM4U Materials Override](../implementations/vrm4u-materials-override.md)
+- [VRMXT_vfx](vrmxt-vfx.md)
+- [VRMXT_springBone_override](vrmxt-spring-bone-override.md)
+- [VRMXT_lattice](vrmxt-lattice.md) (research draft)

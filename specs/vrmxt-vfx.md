@@ -47,8 +47,10 @@ VFX. Supporting consumers map the portable fields to their native particle syste
     shapes, gravity, trails, sub-emitters, and collision are out of scope for `1.0`.
 11. Particles MUST be treated as camera-facing billboards when the consumer supports
     billboards.
-12. Initial particle velocity direction MUST follow the emitter node's local +Y axis
-    after `localPosition` is applied. Magnitude is `startSpeed` in meters per second.
+12. Initial particle velocity direction MUST follow the emitter local +Y axis after
+    `localPosition` and `localRotation` are applied (see
+    [Emitter transform](#emitter-transform)). Magnitude is `startSpeed` in meters
+    per second.
 13. Consumers MUST ignore unknown properties.
 14. Files using this optional design MUST NOT list `VRMXT_vfx` in `extensionsRequired`.
 15. Engine-specific override entries are **TBD** and MUST NOT be treated as stable.
@@ -63,10 +65,40 @@ VFX. Supporting consumers map the portable fields to their native particle syste
 | `emitters[].type` | string | yes | Effect kind; v1 defines `"particle"` |
 | `emitters[].node` | integer | yes | Attach node index |
 | `emitters[].localPosition` | number[3] | no | Offset in node local space, meters; default `[0,0,0]` |
+| `emitters[].localRotation` | number[4] | no | Orientation in node local space as quaternion **xyzw**; default identity `[0,0,0,1]` |
 | `emitters[].particle` | object | yes if `type` is `"particle"` | Portable particle parameters |
 
-Emitter world transform = node world transform with `localPosition` applied in node
-local space. Local rotation is identity for `1.0`.
+### Emitter transform
+
+All vectors and quaternions below are in the same right-handed Y-up space as glTF
+node transforms.
+
+1. When `localPosition` is omitted, use `[0,0,0]`.
+2. When `localRotation` is omitted, use identity `[0,0,0,1]` (x, y, z, w).
+3. `localRotation` MUST be four finite numbers in **xyzw** order, matching glTF
+   `nodes[].rotation`.
+4. Build the emitter local matrix as translation by `localPosition` composed with
+   rotation by `localRotation`:
+
+   `emitterLocal = T(localPosition) * R(localRotation)`
+
+   Column-vector convention: apply rotation first, then translation, in node local
+   space.
+5. Emitter world matrix:
+
+   `emitterWorld = nodeWorld * emitterLocal`
+
+   where `nodeWorld` is the evaluated world matrix of `nodes[node]`.
+6. Emission origin is the translation of `emitterWorld`.
+7. Initial velocity direction is the unit +Y axis of the emitter local frame,
+   transformed by `emitterWorld` (equivalently: the world-space direction of
+   `emitterLocal`'s +Y axis under `nodeWorld`). Magnitude is `startSpeed`.
+8. When both locals are defaults, emission origin equals the node origin and
+   velocity follows the node local +Y axis.
+
+Invalid `localPosition` or `localRotation` (wrong length, non-finite components, or
+a zero-length quaternion) MUST cause the consumer to skip that emitter.
+Normalization of near-unit quaternions is **TBD**.
 
 ## Particle properties
 
@@ -77,7 +109,7 @@ local space. Local rotation is identity for `1.0`.
 | `maxParticles` | integer | no | `64` | Active particle cap |
 | `lifetime` | number | no | `1` | Particle lifetime in seconds |
 | `startSize` | number | no | `0.05` | Billboard size in meters |
-| `startSpeed` | number | no | `0.1` | Initial speed along local +Y, m/s |
+| `startSpeed` | number | no | `0.1` | Initial speed along emitter local +Y, m/s |
 | `startColor` | number[4] | no | `[1,1,1,1]` | Linear RGBA |
 
 When `texture` is omitted or unresolved, the consumer MAY use a solid quad tinted by
@@ -106,6 +138,7 @@ Non-normative.
           "type": "particle",
           "node": 42,
           "localPosition": [0.0, 0.05, 0.0],
+          "localRotation": [0.0, 0.0, 0.0, 1.0],
           "particle": {
             "texture": 3,
             "emissionRate": 20.0,
@@ -137,12 +170,21 @@ Exact visual parity across engines is not required. Field meaning and units are.
 Later drafts MAY:
 
 - Add emitter `type` values other than `"particle"`.
-- Add optional particle fields with defaults (shapes, gravity, local rotation).
+- Add optional particle fields with defaults (shapes, gravity).
 - Add per-emitter engine `overrides[]` in the same style as
-  [[VRMXT_materials_override]] and [[VRMXT_springBone_override]].
+  [VRMXT_materials_override](vrmxt-materials-override.md) and
+  [VRMXT_springBone_override](vrmxt-spring-bone-override.md).
 
 Adding optional fields with defaults does not by itself require a `specVersion` bump.
 Removing or redefining an existing field does.
+
+## Related
+
+- [VRMXT_materials_override](vrmxt-materials-override.md)
+- [VRMXT_springBone_override](vrmxt-spring-bone-override.md)
+- [VRMXT_lattice](vrmxt-lattice.md) (research draft)
+- [Blender VFX](../implementations/blender-vfx.md)
+- [UniVRM VFX](../implementations/univrm-vfx.md)
 
 ## Open questions
 
@@ -153,3 +195,4 @@ Removing or redefining an existing field does.
 | Blend mode / render queue | TBD |
 | Engine override profile schema | TBD |
 | Whether `name` must be unique | TBD |
+| Near-unit quaternion normalization | TBD |
