@@ -90,8 +90,10 @@ Extended-UniVRM ships `IVrm10ImportExtension` / `Vrm10ImportExtensionRegistry` a
 handlers from `VrmScriptedImporterImpl.Process` while `AssetImportContext` is live.
 
 Invocation is gated by **Project Settings → VRM10 → Enable VRM Import Extensions**
-(`Vrm10ProjectEditorSettings.enableImportExtensions`, default on). When that setting is off,
-`InvokeAll` is a no-op and UniVRMXT treats hooks as unavailable (companion prefab path).
+(`Vrm10ProjectEditorSettings.EnableImportExtensions`, default on; stored inverted as
+`disableImportExtensions` so older ProjectSettings assets missing the field stay enabled).
+When that setting is off, `InvokeAll` is a no-op and UniVRMXT treats hooks as unavailable
+(companion prefab path).
 
 UniVRMXT soft-detects the registry type (`VRM10.Editor`) and `IsEnabled`, then registers a
 handler that runs `TryAttachFromGlb` on the **original** `.vrm` root (node list from
