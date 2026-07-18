@@ -15,16 +15,16 @@ status: draft
 
 # Warudo VRMXT
 
-Host integration for [VRMXT](../specs/vrmxt-vfx.md) extensions on [Warudo](https://warudo.app/)
-Characters. Implementation lives in the **VRMXT Plugin for Warudo** Unity project
-(`Assets/Vrmxt/`), exported as a plugin mod to `StreamingAssets/Plugins`.
+Host integration for [VRMXT_vfx](../specs/vrmxt-vfx.md) on [Warudo](https://warudo.app/)
+Characters. Implementation: [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo)
+(`Assets/Vrmxt/`), exported as a UMod plugin to `StreamingAssets/Plugins`.
 
 Related: [Warudo Materials Override](warudo-materials-override.md) (planned on the same
 host path), [UniVRM VFX](univrm-vfx.md), [UniVRM upstream hooks](univrm-upstream-hooks.md).
 
 ## Goal
 
-After Character **Source** loads a VRM 1.0 `.vrm`, apply VRMXT extensions onto that
+After Character **Source** loads a VRM 1.0 `.vrm`, apply `VRMXT_vfx` onto that
 Character’s GameObject. No extra scene Asset. No authoring from Warudo in v1.
 
 | Item | Value |
@@ -33,6 +33,7 @@ Character’s GameObject. No extra scene Asset. No authoring from Warudo in v1.
 | Mod folder | `Assets/Vrmxt` |
 | Export | `Warudo_Data/StreamingAssets/Plugins` |
 | v1 extension | `VRMXT_vfx` |
+| Plugin version (shipped) | `0.0.4` (see `VrmxtPlugin`) |
 
 ## Package split
 
@@ -40,29 +41,45 @@ Character’s GameObject. No extra scene Asset. No authoring from Warudo in v1.
 |-------|-------|
 | Extension JSON | `.vrm` glTF |
 | Parse + ParticleSystem map | Vendored UniVRMXT Format/Vfx `.cs` under the mod (no UPM/DLL/`.asmdef`) |
-| Character watch + byte re-read | `VrmxtPlugin` |
+| Packaged particle shader / mat | `Assets/Vrmxt/Shaders/VrmxtParticlesUnlit.shader` (`VRMXT/Particles Unlit`), `Resources/UniVRMXT/ParticlesUnlit.mat` |
+| Character watch + byte re-read | `VrmxtPlugin` / `VrmxtCharacterApply` |
+| Emit-axis correction | `VrmxtWarudoBoneAxisCorrection` (VRM 1.0 **ReverseX**; Warudo humanoid normalize zeros bone local rotations) |
 | Stock VRM load | Warudo Character asset |
 
 ## Flow (v1)
 
-**Status: TBD** — Warudo plugin path is not functional yet. Diagram and resolve
-notes below are target intent; do not treat as shipped behavior until the plugin
-lands and this section is updated.
+**Status: shipped** on plugin `main` (plugin version `0.0.4`). Warudo owns stock VRM
+load; the plugin attaches after the Character is active.
 
 ```
 Character Source load (Warudo + UniVRM)
-        → Character Active = true
-VrmxtPlugin watches Source / Active
+        → Character becomes active (plugin polls; does not use OnActiveStateChange)
+VrmxtPlugin
         → PersistentDataManager.ReadFileBytesAsync (character://data/… → relative path)
 VrmxtCharacterApply
-        → resolve Character root (TBD: not CharacterAsset.GameObject under UMod)
-        → VrmxtVfxRuntime.TryAttachFromGlb(root, bytes, nodes)
+        → resolve Character root via name / hierarchy walk (not CharacterAsset.GameObject)
+        → VrmxtVfxRuntime.TryAttachFromGlb(root, bytes, …)
+        → VrmxtWarudoBoneAxisCorrection on emitter parents
 ParticleSystem children under emitter nodes
 ```
 
-Node resolve strategy **TBD**. Current draft plugin uses GLB `nodes[].name` lookup
-(`VrmxtVfxNodeResolver`). Preferring `RuntimeGltfInstance.Nodes` may return when
-UniGLTF is available to the mod; not required for v1.
+### UMod compile constraints (non-normative)
+
+UMod cannot see CoreModule-typed Warudo API surfaces the same way as Editor play mode:
+
+- Do **not** read `CharacterAsset.GameObject` or `OnActiveStateChange` / `UnityEvent`
+  (CS0012 under UMod).
+- Do **not** use `System.Reflection` (UMod code security).
+- `referencePaths` is for other **mods**, not UnityEngine DLLs.
+- Load shaders/materials with **`ModHost.Assets.Load`**, not `Resources.Load` (Unity
+  Resources cannot see uMod assets). `VrmxtPlugin` binds the packaged particle mat and
+  sets UniVRMXT `PreferPackagedParticleMaterial` / `PackagedMaterialProvider`.
+
+### Node resolve
+
+v1 resolves `emitters[].node` by GLB `nodes[].name` lookup (`VrmxtVfxNodeResolver`)
+against the Character hierarchy. Preferring `RuntimeGltfInstance.Nodes` is optional
+when UniGLTF types are available to the mod; not required for v1.
 
 VFX-only textures are decoded on the second GLB read (`VrmxtVfxGlbTextures`). The plugin
 owns those textures until the Character reloads or is unbound.
@@ -88,6 +105,13 @@ Same watch + byte re-read. Extend `VrmxtCharacterApply` to honor
 
 ## Build
 
-1. Unity 2021.3 + Warudo Mod Tool; Api Compatibility Level **.NET Framework**.
-2. **Warudo → Build Mod** with ExportSettings profile `Vrmxt`.
-3. Enable plugin in Warudo; load a Character whose `.vrm` contains `VRMXT_vfx`.
+1. Unity `2021.3.45f2` + Warudo Mod Tool; Api Compatibility Level **.NET Framework**;
+   Assembly Version Validation **off**.
+2. Local Mod Settings: copy `umod/ExportSettings.example.asset` →
+   `Assets/ExportSettings.asset` (gitignored; machine paths). Optional backup:
+   `umod/export-settings.ps1 -Backup` / `-Restore` (`.old` twin UMod does not wipe).
+3. **Warudo → Build Mod** with profile **VRMXT** (mod folder `Assets/Vrmxt`).
+4. Enable plugin in Warudo; load a Character whose `.vrm` contains `VRMXT_vfx`.
+5. Rebuild after pulling shader/Resources under `Assets/Vrmxt/`.
+
+Repo README: https://github.com/miramocha/VRMXT-Plugin-for-Warudo

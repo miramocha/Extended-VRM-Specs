@@ -249,6 +249,7 @@ Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
 | Extension schemas | [specs/](specs/) |
 | Blender hook API | [implementations/blender-extension-hooks.md](implementations/blender-extension-hooks.md) |
 | Unity VFX profile | [implementations/univrm-vfx.md](implementations/univrm-vfx.md) |
+| Warudo VRMXT host | [implementations/warudo-vrmxt.md](implementations/warudo-vrmxt.md) |
 | Godot VFX profile | [implementations/godot-vfx.md](implementations/godot-vfx.md) |
 | three-vrm VFX profile | [implementations/three-vrm-vfx.md](implementations/three-vrm-vfx.md) |
 | Repo index | [README.md](README.md) |

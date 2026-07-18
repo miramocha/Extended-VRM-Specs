@@ -78,7 +78,7 @@ the hierarchy).
 
 - **Extended-UniVRM:** import hooks (Project Settings/VRM10 enable) → VFX on original `.vrm`
 - **Stock UniVRM / hooks disabled:** sibling companion prefab `*.vrmxt.prefab`
-- Runtime / Warudo: stock load, then `TryAttachFromGlb`
+- Runtime / Warudo: stock load, then `TryAttachFromGlb` — [Warudo VRMXT](warudo-vrmxt.md)
 - VFX-only textures: second GLB image decode (texture enum hook still open)
 
 Full write-up: [univrm-upstream-hooks.md](univrm-upstream-hooks.md).
@@ -98,3 +98,4 @@ Full write-up: [univrm-upstream-hooks.md](univrm-upstream-hooks.md).
 - Upstream hooks / AssetDatabase workaround: [univrm-upstream-hooks.md](univrm-upstream-hooks.md)
 - UniVRMXT: https://github.com/miramocha/UniVRMXT
 - [Blender VFX](blender-vfx.md)
+- [Warudo VRMXT](warudo-vrmxt.md)
