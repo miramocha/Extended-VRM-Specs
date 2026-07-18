@@ -171,6 +171,12 @@ spec. The optional plugin must read those values from raw JSON when it supports 
 - Provider resolution may use `IPluginManager` and soft object paths.
 - Runtime material loading needs validation for each packaged platform and VRM4U build.
 
+The VRM file stores soft object paths under `material.variants`; it does not embed Unreal
+material assets. A supporting consumer MUST cook or otherwise include any parent
+materials it intends to honor. Resolve the selected path at load time; on miss, leave
+the stock VRM4U material (see Fallback). Remote download of material source is out of
+scope for this profile.
+
 ## Fallback
 
 Package absence requires no action: VRM4U ignores the unknown extension. With the package

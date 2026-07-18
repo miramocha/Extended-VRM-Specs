@@ -109,13 +109,24 @@ its built-in MToon, unlit, and PBR selection.
 
 ## Package and shader resolution
 
-The handler package is already installed when its code runs. `provider` helps it reject
-entries intended for another package or warn about version drift.
+The VRM file names a Unity shader (`material.name`); it does not contain shader source.
+UniVRMXT and the host app MUST include any shaders they intend to honor, and MUST keep
+those shaders in player builds (referenced materials, shader variant collections,
+Resources, or Always Included Shaders). `provider` is an advisory package hint only.
 
-`Shader.Find` returns `null` when the shader is absent or stripped from a player build.
-The provider package must retain required shaders through referenced materials, shader
-variant collections, Resources, or project build settings. Resolution failure invokes
-stock import.
+Runtime resolve order for a supporting consumer:
+
+1. Read the `unity` override and `material.name`.
+2. Resolve the shader (typically `Shader.Find`).
+3. If the shader is present and the `variant` matches the active pipeline, build the
+   override material and apply `bindings`.
+4. If the shader is missing, stripped, or incompatible, use stock VRM 1.0 import for
+   that material.
+
+A drag-and-drop or other runtime VRM viewer therefore loads every valid VRM with stock
+materials by default. Overrides appear only for shaders the app (or an optional shader
+pack it depends on) already ships. Remote git fetch and runtime shader compilation are
+out of scope for this profile.
 
 ## Bindings
 

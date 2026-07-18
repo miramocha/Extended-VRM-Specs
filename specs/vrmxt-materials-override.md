@@ -192,6 +192,14 @@ Supporting tools MAY read the matching engine entry, resolve `material`, apply
 `bindings`, and create a local material instance. Missing providers, unresolved assets,
 unsupported kinds, or unknown engines leave stock VRM 1.0 import intact.
 
+The VRM / glTF file does not embed engine shader or material programs. A supporting
+consumer that wants overrides at runtime or in the editor MUST supply the referenced
+shaders or parent materials in its own project, package, or cooked content (rules 18–21).
+Resolution is local to that consumer: look up the profile identifier, apply the override
+when the asset is present, otherwise use stock import for that material (rules 11–12).
+This specification does not require remote download or runtime compilation of shader
+source from the file or from a registry.
+
 Engine integration details are documented in
 [UniVRM Materials Override](../implementations/univrm-materials-override.md) and
 [VRM4U Materials Override](../implementations/vrm4u-materials-override.md).
