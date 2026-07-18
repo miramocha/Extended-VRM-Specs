@@ -1,12 +1,13 @@
 ---
-description: Obsidian-compatible Markdown properties, tags, links, and structure
+description: Obsidian YAML properties with GitHub-compatible Markdown bodies
 globs: "**/*.md"
 alwaysApply: false
 ---
 
-# Obsidian Markdown
+# Obsidian properties and GitHub Markdown
 
-New documentation must work as an Obsidian vault note and remain readable on GitHub.
+New documentation must work as an Obsidian vault and render correctly on GitHub.
+Obsidian-specific syntax is limited to YAML properties at the top of the file.
 
 ## Required properties
 
@@ -31,20 +32,21 @@ status: draft
 - `status`: `draft`, `proposed`, `accepted`, `deprecated`, or `superseded`.
 - README and generated files may omit properties when metadata would add no value.
 
-## Tags and links
+## Tags
 
 - Tags use lowercase kebab-case. Prefer stable namespaces such as `spec/*`, `format/*`,
   `compatibility/*`, `implementation/*`, and `decision/*`. Do not invent near-duplicates.
-- Put classification tags in properties; avoid decorative inline `#tags`.
-- Use `[[Note Name]]` or `[[Note Name#Section|label]]` for vault-internal concepts.
-- Use standard Markdown links for external URLs and when repository-relative portability
-  matters. Never leave unresolved links in accepted specs.
+- Put all classification tags in YAML properties. Do not use inline `#tags`.
 
-## Note structure
+## GitHub-compatible body
 
 - Use one H1 matching `title`, then ordered H2/H3 sections; do not skip heading levels.
 - Use kebab-case filenames. Keep stable filenames and aliases after publication.
-- Use Obsidian callouts sparingly: `> [!NOTE]`, `> [!WARNING]`, `> [!EXAMPLE]`.
+- Use standard relative Markdown links for repository pages:
+  `[Material spec](../specs/vrmxt-materials-override.md)`.
+- Use standard Markdown links for external URLs and `#heading-anchors` for sections.
+- Do not use Obsidian wikilinks (`[[Page]]`), embeds (`![[Asset]]`), block references,
+  Dataview queries, or other plugin-only body syntax.
 - Use fenced code blocks with language identifiers and Markdown tables with header rows.
-- Do not add empty metadata, decorative emoji headings, Dataview queries, or plugin-only
-  syntax unless the repository explicitly adopts that plugin.
+- Do not add empty metadata or decorative emoji headings.
+- Never leave unresolved internal links in accepted specs.
