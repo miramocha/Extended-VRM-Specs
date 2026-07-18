@@ -29,7 +29,7 @@ Optional `VRMXT_*` consumers:
 |------|------|
 | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Blender authoring / I/O via VRM1 hooks |
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity UPM package on [UniVRM](https://github.com/vrm-c/UniVRM) |
-| [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo host plugin (vendored UniVRMXT VFX; UMod) |
+| [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo host plugin (vendored UniVRMXT VFX; UMod). Install: [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) |
 | Godot VRMXT addon (planned) | Optional Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm) |
 | three-vrmxt (planned) | Optional npm package beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) |
 

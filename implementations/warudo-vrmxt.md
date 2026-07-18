@@ -34,6 +34,7 @@ Character’s GameObject. No extra scene Asset. No authoring from Warudo in v1.
 | Export | `Warudo_Data/StreamingAssets/Plugins` |
 | v1 extension | `VRMXT_vfx` |
 | Plugin version (shipped) | `0.0.4` (see `VrmxtPlugin`) |
+| Steam Workshop | [VRMXT](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) |
 
 ## Package split
 
@@ -114,4 +115,5 @@ Same watch + byte re-read. Extend `VrmxtCharacterApply` to honor
 4. Enable plugin in Warudo; load a Character whose `.vrm` contains `VRMXT_vfx`.
 5. Rebuild after pulling shader/Resources under `Assets/Vrmxt/`.
 
-Repo README: https://github.com/miramocha/VRMXT-Plugin-for-Warudo
+Repo: https://github.com/miramocha/VRMXT-Plugin-for-Warudo  
+Steam Workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210
