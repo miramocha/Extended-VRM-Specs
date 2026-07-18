@@ -188,12 +188,13 @@ Rules:
 - Property groups remain the export source of truth. Do not read GeoNodes state
   back into emitters.
 - Each helper is an **Empty** named `VRMXT_vfx_{name}`, parented to the attachment
-  bone or object, tagged `vrmxt_vfx_preview=1`, with `localPosition` /
+  bone or object, tagged `vrmxt_vfx_preview=1` (VRMXT lifecycle) and
+  `vrm_exclude_from_export=1` (host export filter), with `localPosition` /
   `localRotation` on the Empty (spec-space, no bone-axis remap). Empties cannot
   host Geometry Nodes, so a child mesh `VRMXT_vfx_{name}_geo` (also tagged,
   `hide_select`) carries the `VRMXT_Particle` modifier.
 - Helpers use `hide_render=True`. Extended VRM `export_objects` skips any object
-  with `vrmxt_vfx_preview` so they do not become avatar meshes in the GLB.
+  with `vrm_exclude_from_export` so they do not become avatar meshes in the GLB.
 - Simulation Nodes require Blender 4.2+ (already the VRMXT add-on window).
 
 ### Legacy particle systems
@@ -218,7 +219,7 @@ Minimum coverage (mirror existing importer/exporter and spring-bone editor tests
 | Empty `emitters` | Valid file; no required extension entry |
 | UI operators | Add / remove / reorder update the collection; preview rebuilds |
 | Preview clear | Tagged helpers removed; property groups unchanged |
-| Preview export isolation | Objects with `vrmxt_vfx_preview` omitted from host `export_objects` |
+| Preview export isolation | Objects with `vrm_exclude_from_export` omitted from host `export_objects` |
 
 Exact test module paths: `tests/test_format_vfx.py`, `tests/test_vfx_property_adapters.py`,
 `tests/test_vfx_geonodes_preview.py`, and hook tests in the VRMXT repo.
@@ -234,7 +235,9 @@ Non-normative; [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-
   `tests/test_vfx_geonodes_preview.py`, `tests/test_hooks_registration.py`
 
 Host hooks remain in Extended-VRM-Addon-for-Blender (`extension_hooks.py`).
-Host export skips `vrmxt_vfx_preview` objects in `editor/search.py` `export_objects`.
+Host `export_objects` skips objects tagged `vrm_exclude_from_export`
+(`EXCLUDE_FROM_EXPORT_CUSTOM_PROP` in `extension_hooks.py`). VRMXT sets that
+prop on preview helpers alongside its own `vrmxt_vfx_preview` lifecycle tag.
 
 ## Open questions
 
