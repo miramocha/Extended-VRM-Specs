@@ -65,6 +65,15 @@ material definition and MAY bind MToon shade values to its parameters.
     `VRMC_materials_mtoon` extension or does not recognize the binding's source semantic.
 17. Override properties other than `engine`, `material`, and `bindings` are **TBD** and
     MUST NOT be treated as stable until this specification marks them accepted.
+18. Validity of a file that uses this extension MUST NOT depend on membership of any
+    `material` identifier in a closed registry or allowlist.
+19. A supporting implementation MUST NOT fail import of a VRM solely because a material
+    identifier is absent from a catalog. Unresolved materials MUST follow rules 11 and 12.
+20. Optional public catalogs are non-normative indexes or samples. Consumers MAY consult
+    them for discovery. Catalog absence MUST NOT be treated as a hard error.
+21. When an engine profile defines `provider`, that field is advisory. A consumer MAY warn
+    on package or plugin mismatch; it MUST NOT treat a missing or mismatched `provider` as
+    grounds to reject the file.
 
 ## Extension properties
 
@@ -80,7 +89,9 @@ material definition and MAY bind MToon shade values to its parameters.
 | `bindings[].targetType` | string | yes | `scalar`, `vector`, `texture`, or `staticSwitch` |
 
 Engine profiles define the contents of `material`, provider identifiers, supported
-`targetType` operations, and engine-specific fallback constraints.
+`targetType` operations, and engine-specific fallback constraints. Material identifiers
+in those profiles are open engine-specific strings (or profile-defined objects). Rules
+18–21 apply to every profile.
 
 ## Engine profiles
 

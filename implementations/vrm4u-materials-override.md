@@ -36,8 +36,10 @@ The consumer selects `overrides[]` where `engine` equals `unreal`.
 | `variants.translucent` | string | no | Blend, one-sided parent |
 | `variants.translucentTwoSided` | string | no | Blend, two-sided parent |
 
-At least one variant MUST be present. `provider` is advisory. A consumer MAY compare its
-fields with the installed `.uplugin`, but asset resolution determines support.
+At least one variant MUST be present. `provider` is advisory per base-spec rules 18–21.
+This profile MUST NOT require a closed material registry. A consumer MAY compare
+`provider` with the installed `.uplugin`; asset resolution determines support. Catalog
+absence MUST NOT reject the file.
 
 ### Example
 

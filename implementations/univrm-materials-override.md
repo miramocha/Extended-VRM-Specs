@@ -16,7 +16,8 @@ status: draft
 Unity implementation profile for
 [VRMXT_materials_override](../specs/vrmxt-materials-override.md). Support belongs in
 [UniVRMXT](https://github.com/miramocha/UniVRMXT) (`com.miramocha.univrmxt`), an optional
-UPM package that depends on UniVRM. UniVRM source changes are not required.
+UPM package that depends on stock [UniVRM](https://github.com/vrm-c/UniVRM). UniVRM
+source changes are not required.
 
 ## Supported entry
 
@@ -33,8 +34,9 @@ The consumer selects `overrides[]` where `engine` equals `unity`.
 | `material.provider.id` | string | yes if `provider` present | Unity package name |
 | `material.provider.version` | string | no | Exporter-observed package version |
 
-`provider` is advisory. A consumer MAY warn about package/version mismatch. It MUST use
-stock import when the shader or requested pipeline variant cannot be resolved.
+`provider` is advisory per base-spec rules 18–21. This profile MUST NOT require a closed
+shader registry. A consumer MAY warn about package/version mismatch. It MUST use stock
+import when the shader or requested pipeline variant cannot be resolved.
 
 ### Example
 
