@@ -33,20 +33,24 @@ Layering of Extended VRM (`VRMXT_*` glTF extensions) for **authoring** and
 
 ## Layers
 
-```text
-┌─────────────────────────────────────────────────────────┐
-│  Authoring                                              │
-│  Blender VRM add-on (stock VRM 1.0 I/O)                 │
-│       └─ optional VRM1 extension hooks                  │
-│            └─ VRMXT Blender extension (VRMXT_* write)   │
-├─────────────────────────────────────────────────────────┤
-│  File                                                   │
-│  .vrm / .glb  =  glTF 2.0 + VRMC_*  (+ optional VRMXT_*)│
-├─────────────────────────────────────────────────────────┤
-│  Consumers                                              │
-│  Stock UniVRM / VRM4U / other VRM1 loaders              │
-│       └─ optional Extended package (parse + attach)     │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+  subgraph authoring [Authoring]
+    blenderStock[Blender VRM add-on<br/>stock VRM 1.0 I/O]
+    hooks[optional VRM1 extension hooks]
+    vrmxtBlender[VRMXT Blender extension<br/>VRMXT_* write]
+    blenderStock --> hooks --> vrmxtBlender
+  end
+
+  file["File: .vrm / .glb<br/>glTF 2.0 + VRMC_* (+ optional VRMXT_*)"]
+
+  subgraph consumers [Consumers]
+    stockLoaders[Stock UniVRM / VRM4U / other VRM1 loaders]
+    extPkg[optional Extended package<br/>parse + attach]
+    stockLoaders --> extPkg
+  end
+
+  authoring --> file --> consumers
 ```
 
 | Layer | Owns | Does not own |
