@@ -55,8 +55,18 @@ See UniVRMXT [vfx-particle-mapping.md](https://github.com/miramocha/UniVRMXT/blo
 
 ## Export
 
-Export of authored VFX from Unity is **TBD**. Prefer Blender
-([Blender VFX](blender-vfx.md)) as the authoring path until a Unity exporter lands.
+Unity → VRM re-export of portable emitters requires Extended-UniVRM export hooks
+(`Vrm10ExportExtensionRegistry`), Project Settings → VRM10 → **Enable VRM Export
+Extensions** (default on), and UniVRMXT (`VrmxtVfxExportHookBootstrap`).
+
+Source of truth is `VrmxtVfxInstance.Emitters`, with live preview `ParticleSystem`
+values (color, rate, size, etc.) folded back at export time. Preview systems are
+cleared on a throwaway export copy so they do not become glTF nodes or materials.
+Particle albedo is re-registered into `textures[]` when
+`VrmxtVfxParticleData.Texture` or the live material is available. UniGLTF rebuilds
+`extensionsUsed` from written extensions (includes `VRMXT_vfx`).
+
+Stock UniVRM without the Extended export registry does not write `VRMXT_vfx`.
 
 ## AssetDatabase limits (UniVRMXT findings)
 

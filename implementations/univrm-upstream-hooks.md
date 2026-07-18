@@ -156,6 +156,7 @@ VrmxtVfxRuntime.TryAttachFromGlb(
 | `VrmxtVfxParticleSystemMapper` | Field map, billboard, BIRP/URP unlit material |
 | `VrmxtVfxGlbTextures` | Second-read decode of extension-only textures |
 | `VrmxtVfxImportHookBootstrap` | Soft-register import handler when Extended-UniVRM hooks exist |
+| `VrmxtVfxExportHookBootstrap` | Soft-register export handler; writes `VRMXT_vfx` from `VrmxtVfxInstance` |
 | `VrmxtVfxAssetPostprocessor` | Companion prefab fallback for stock UniVRM |
 
 ## What we want from upstream UniVRM (vrm-c)
@@ -172,6 +173,27 @@ Hook **A** is implemented in **Extended-UniVRM**. Remaining asks for stock
 destroy, only when the project setting is on.
 
 Upstream vrm-c adoption would let stock UniVRM hosts use the same path without the fork.
+
+### A2. Export extension callback — done in Extended-UniVRM
+
+`IVrm10ExportExtension`, `Vrm10ExportExtensionContext`, `Vrm10ExportExtensionRegistry`
+in **Runtime** (`Packages/VRM10/Runtime/IO/Export/Vrm10ExportExtension.cs`):
+
+| Phase | When | Typical use |
+|-------|------|-------------|
+| `PreHierarchy` | Before `ModelExporter` | Strip ephemeral preview objects |
+| `PrepareTextures` | Before texture flush | `RegisterSRgbTexture` for extension-only images |
+| `WriteExtensions` | After VRMC root serialize | `AddRootExtension(name, utf8Json)` |
+
+Gated by Project Settings → VRM10 → **Enable VRM Export Extensions** (Editor bridge sets
+`IsEnabledProvider`). Export dialog / `Vrm10Exporter.Export` work on a throwaway hierarchy
+copy when handlers are registered so scene objects are not stripped.
+
+UniVRMXT soft-detects the Runtime registry type
+(`UniVRM10.Vrm10ExportExtensionRegistry, VRM10`) and writes `VRMXT_vfx` from
+`VrmxtVfxInstance`.
+
+Upstream vrm-c adoption would unlock Unity→VRM VFX round-trip without the fork.
 
 ### B. Preserve or expose import-time node index map
 
@@ -206,7 +228,8 @@ Lower priority for AssetDatabase prefab editing; high value for runtime hosts.
 
 ## Non-goals / out of scope for upstream asks
 
-- Full Unity VFX authoring/export UI (Blender remains preferred authoring).
+- Full Unity VFX authoring UI (Blender remains preferred authoring; Unity re-export of
+  imported / attached `VrmxtVfxInstance` data is supported via export hooks).
 - Forcing `VRMXT_vfx` into `extensionsRequired` (must stay optional).
 - Changing stock load success when UniVRMXT is absent.
 
@@ -218,6 +241,7 @@ Lower priority for AssetDatabase prefab editing; high value for runtime hosts.
 | 2026-07 | Prefer upstream **A + C**; implement **A** in Extended-UniVRM first. |
 | 2026-07 | Extended-UniVRM ships import extension registry; UniVRMXT soft-detects and dual-paths. |
 | 2026-07 | Project Settings/VRM10 gate for import extensions; off → companion prefab. |
+| 2026-07 | Extended-UniVRM ships export extension registry (PreHierarchy / PrepareTextures / WriteExtensions); UniVRMXT writes `VRMXT_vfx` on VRM export. |
 
 ## Links into UniVRM source (0.131.x / Extended-UniVRM)
 
@@ -226,6 +250,7 @@ Lower priority for AssetDatabase prefab editing; high value for runtime hosts.
 | ScriptedImporter entry | `Packages/VRM10/Editor/ScriptedImporter/VrmScriptedImporter.cs` |
 | Import implementation | `Packages/VRM10/Editor/ScriptedImporter/VrmScriptedImporterImpl.cs` |
 | Import extension API | `Packages/VRM10/Editor/ScriptedImporter/Vrm10ImportExtension.cs` |
+| Export extension API | `Packages/VRM10/Runtime/IO/Export/Vrm10ExportExtension.cs` |
 | Import extension project setting | `Packages/VRM10/Editor/Settings/Vrm10ProjectEditorSettings.cs` |
 | Texture enumeration | `Packages/VRM10/Runtime/IO/Texture/Vrm10TextureDescriptorGenerator.cs` |
 | Runtime node list | `Packages/UniGLTF/Runtime/UniGLTF/RuntimeGltfInstance.cs` |
