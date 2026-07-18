@@ -11,7 +11,7 @@ status: draft
 # Extended VRM Specs
 
 Specifications and design notes for Extended VRM. Implementations target UniVRM,
-VRM4U, Godot (godot-vrm), and the
+VRM4U, Godot (godot-vrm), Three.js (three-vrm), and the
 [Blender add-on](https://github.com/miramocha/Extended-VRM-Addon-for-Blender);
 this repository defines portable file behavior.
 
@@ -22,12 +22,13 @@ Optional `VRMXT_*` consumers:
 | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Blender authoring / I/O via VRM1 hooks |
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity UPM package on UniVRM |
 | Godot VRMXT addon (planned) | Optional Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm) |
+| three-vrmxt (planned) | Optional npm package beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) |
 
 ## Architecture
 
 | Note | Topic | Status |
 |------|-------|--------|
-| [Extended VRM Architecture](architecture.md) | Authoring + consumers; stock VRM stays as-is; Extended is optional on UniVRM / Godot / Blender | draft |
+| [Extended VRM Architecture](architecture.md) | Authoring + consumers; stock VRM stays as-is; Extended is optional per engine | draft |
 
 ## Drafts
 
@@ -45,6 +46,7 @@ Optional `VRMXT_*` consumers:
 | [UniVRM Materials Override](implementations/univrm-materials-override.md) | Unity / UniVRMXT | draft |
 | [UniVRM VFX](implementations/univrm-vfx.md) | Unity / UniVRMXT / `VRMXT_vfx` | draft |
 | [Godot VFX](implementations/godot-vfx.md) | Godot / godot-vrm / `VRMXT_vfx` | draft |
+| [three-vrm VFX](implementations/three-vrm-vfx.md) | Three.js / three-vrm / `VRMXT_vfx` | draft |
 | [VRM4U Materials Override](implementations/vrm4u-materials-override.md) | Unreal / VRM4U | draft |
 | [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender add-on third-party VRM1 hooks | draft |
 | [Blender VFX](implementations/blender-vfx.md) | Blender VRMXT extension / `VRMXT_vfx` | draft |

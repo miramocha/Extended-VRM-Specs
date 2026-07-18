@@ -161,6 +161,7 @@ Minimum coverage (mirror UniVRMXT / Blender VFX intent):
 - [VRMXT_vfx](../specs/vrmxt-vfx.md)
 - [Extended VRM Architecture](../architecture.md)
 - [UniVRM VFX](univrm-vfx.md)
+- [three-vrm VFX](three-vrm-vfx.md)
 - [Blender VFX](blender-vfx.md)
 - [godot-vrm](https://github.com/V-Sekai/godot-vrm)
 

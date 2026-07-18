@@ -27,8 +27,9 @@ Layering of Extended VRM (`VRMXT_*` glTF extensions) for **authoring** and
 3. Extended behavior is optional. Consumers MAY ignore every `VRMXT_*` extension
    and still treat the file as ordinary VRM 1.0.
 4. Extended support ships as an optional add-on package on each engine (for
-   example [UniVRMXT](https://github.com/miramocha/UniVRMXT) on Unity, or a
-   separate Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm)).
+   example [UniVRMXT](https://github.com/miramocha/UniVRMXT) on Unity, a
+   separate Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm),
+   or an npm package beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)).
    Baseline avatar import keeps the stock VRM loader; replacing or forking that
    loader is not required.
 
@@ -111,6 +112,7 @@ fields onto engine types.
 |----------|------|-------------------|
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity + UniVRM | Optional UPM package. Parse extension JSON; attach after `Vrm10` load. Runtime does not replace UniVRM. |
 | Godot VRMXT addon (planned) | Godot + [godot-vrm](https://github.com/V-Sekai/godot-vrm) | Optional addon. Register `GLTFDocumentExtension` beside stock VRM plugins; runtime attach when `EditorPlugin` is absent. Does not replace godot-vrm. |
+| three-vrmxt (planned) | Three.js + [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | Optional npm package. Peer `GLTFLoaderPlugin` beside `VRMLoaderPlugin`; optional explicit `tryAttach`. Does not replace three-vrm. |
 | VRM4U path | Unreal + VRM4U | Optional profile docs under `implementations/`; stock VRM4U load remains baseline. |
 | Other engines | Any VRM 1.0 loader | Implement the specs; ignore unknown `VRMXT_*` if unsupported. |
 
@@ -152,6 +154,24 @@ Do not nest the VRMXT addon under `addons/vrm` or replace `import_vrm.gd`.
 
 Implementation notes: [Godot VFX](implementations/godot-vfx.md).
 
+### three-vrm / Three.js
+
+[@pixiv/three-vrm](https://github.com/pixiv/three-vrm) remains the VRM 1.0 loader for
+Three.js (WebGLRenderer by default; WebGPURenderer supported in v3+). Extended
+support is a separate npm package:
+
+1. App keeps `@pixiv/three-vrm` and registers `VRMLoaderPlugin` on `GLTFLoader`.
+2. App MAY also register a VRMXT `GLTFLoaderPlugin` (or call an explicit attach
+   helper after load).
+3. The VRMXT plugin reads root `extensions.VRMXT_*` in `afterRoot`, resolves nodes
+   via `parser.getDependencies('node')`, and attaches engine objects under those
+   nodes.
+4. Missing extension or missing package → no Extended objects; avatar still valid.
+
+Do not fork pixiv/three-vrm or patch `VRMLoaderPlugin` as the only path.
+
+Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
+
 ### Compatibility matrix
 
 | Scenario | Stock VRM load | Extended features |
@@ -165,7 +185,7 @@ Implementation notes: [Godot VFX](implementations/godot-vfx.md).
 
 | Approach | Why rejected |
 |----------|--------------|
-| Fork UniVRM or godot-vrm as the only way to get Extended features | Breaks drop-in use; forces replace of a maintained upstream |
+| Fork UniVRM, godot-vrm, or three-vrm as the only way to get Extended features | Breaks drop-in use; forces replace of a maintained upstream |
 | Put `VRMXT_*` in `extensionsRequired` for optional extras | Stock loaders would refuse the file |
 | Separate binary format instead of glTF extensions | Splits the ecosystem; breaks “one avatar file” |
 | Require Blender VRMXT extension for all VRM export | Stock authoring must stay available |
@@ -178,6 +198,7 @@ Implementation notes: [Godot VFX](implementations/godot-vfx.md).
 | Blender hook API | [implementations/blender-extension-hooks.md](implementations/blender-extension-hooks.md) |
 | Unity VFX profile | [implementations/univrm-vfx.md](implementations/univrm-vfx.md) |
 | Godot VFX profile | [implementations/godot-vfx.md](implementations/godot-vfx.md) |
+| three-vrm VFX profile | [implementations/three-vrm-vfx.md](implementations/three-vrm-vfx.md) |
 | Repo index | [README.md](README.md) |
 
 ## Open questions
