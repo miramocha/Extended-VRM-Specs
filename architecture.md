@@ -122,7 +122,7 @@ parallel Extended-only format.
 | Piece | Repo | Role |
 |-------|------|------|
 | Stock Blender VRM add-on | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) (fork of [saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender); generic hooks to propose upstream) | Import/export `VRMC_*`, build node/bone maps |
-| VRM1 extension hooks | Same add-on: `io_scene_vrm.extension_hooks` | After stock maps exist, call registered third-party callbacks |
+| VRM1 extension hooks | Same add-on: `io_scene_vrm.extension_hooks` | After stock maps exist, call registered third-party callbacks when Addon Preferences enable import/export hooks (default off) |
 | VRMXT Blender extension | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Registers hooks; authors and serializes `VRMXT_*` |
 
 Hooks exist because glTF2 user extensions run too early to receive final VRM bone
@@ -134,8 +134,8 @@ Blender flow (non-normative):
 1. User builds a VRM 1.0 avatar with the stock VRM add-on.
 2. Optional: enable the VRMXT Blender extension and author Extended data (emitters,
    overrides, …).
-3. Export writes stock `VRMC_*` first, then hook callbacks append `VRMXT_*` and
-   `extensionsUsed` entries.
+3. Export writes stock `VRMC_*` first. When export extension hooks are enabled in
+   Addon Preferences, hook callbacks append `VRMXT_*` and `extensionsUsed` entries.
 4. Result is one `.vrm` / `.glb`. No second file format.
 
 Without the VRMXT Blender extension, export stays stock VRM. Hooks stay idle.
