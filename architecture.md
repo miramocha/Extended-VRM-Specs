@@ -121,7 +121,7 @@ parallel Extended-only format.
 
 | Piece | Repo | Role |
 |-------|------|------|
-| Stock Blender VRM add-on | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) (fork/lineage of VRM Add-on for Blender) | Import/export `VRMC_*`, build node/bone maps |
+| Stock Blender VRM add-on | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) (fork of [saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender); generic hooks to propose upstream) | Import/export `VRMC_*`, build node/bone maps |
 | VRM1 extension hooks | Same add-on: `io_scene_vrm.extension_hooks` | After stock maps exist, call registered third-party callbacks |
 | VRMXT Blender extension | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Registers hooks; authors and serializes `VRMXT_*` |
 
@@ -165,10 +165,13 @@ export, see [Authoring](#authoring).
 ### Unity / UniVRM
 
 [UniVRM](https://github.com/vrm-c/UniVRM) remains the stock VRM 1.0 importer. UniVRMXT
-is additive:
+is additive. For Editor import onto the original `.vrm`,
+[Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) is a fork that ships
+**generic** ScriptedImporter hooks (to propose upstream to vrm-c); see
+[UniVRM upstream hooks](implementations/univrm-upstream-hooks.md).
 
 1. Project keeps UniVRM (`com.vrmc.gltf`, `com.vrmc.vrm`) from
-   [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM).
+   [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) (or Extended-UniVRM when using import hooks).
 2. Project MAY add UniVRMXT (`com.miramocha.univrmxt`).
 3. After stock load (`Vrm10.LoadGltfDataAsync` or equivalent), the app calls UniVRMXT
    helpers (for example `VrmxtVfxRuntime.TryAttach`) with glTF JSON and node

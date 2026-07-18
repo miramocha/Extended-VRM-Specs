@@ -20,6 +20,20 @@ patching the **original** imported `.vrm` prefab on stock UniVRM, what UniVRMXT 
 instead, what [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) already
 ships, and remaining hooks for [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM).
 
+## Fork and upstream intent
+
+[Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) is a fork of
+[vrm-c/UniVRM](https://github.com/vrm-c/UniVRM). It adds a **generic** `.vrm`
+ScriptedImporter extension API (`IVrm10ImportExtension` /
+`Vrm10ImportExtensionRegistry`) — not UniVRMXT-specific. The plan is to propose that
+hook surface upstream so stock UniVRM hosts can load optional packages without this fork.
+
+Same pattern on Blender:
+[Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender)
+ships generic VRM1 hooks to propose to
+[saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender)
+— see [blender-extension-hooks.md](blender-extension-hooks.md).
+
 Related: [univrm-vfx.md](univrm-vfx.md), UniVRMXT
 [architecture.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/architecture.md),
 [vfx-particle-mapping.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/vfx-particle-mapping.md).

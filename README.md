@@ -16,6 +16,13 @@ Specifications and design notes for Extended VRM. Implementations target
 [Blender add-on](https://github.com/miramocha/Extended-VRM-Addon-for-Blender);
 this repository defines portable file behavior.
 
+Host forks that carry **generic** extension hooks (to propose upstream; not VRMXT-specific):
+
+| Fork | Upstream | Hooks doc |
+|------|----------|-----------|
+| [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender) | [Blender Extension Hooks](implementations/blender-extension-hooks.md) |
+| [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) |
+
 Optional `VRMXT_*` consumers:
 
 | Repo | Role |
@@ -50,5 +57,6 @@ Optional `VRMXT_*` consumers:
 | [Godot VFX](implementations/godot-vfx.md) | Godot / godot-vrm / `VRMXT_vfx` | draft |
 | [three-vrm VFX](implementations/three-vrm-vfx.md) | Three.js / three-vrm / `VRMXT_vfx` | draft |
 | [VRM4U Materials Override](implementations/vrm4u-materials-override.md) | Unreal / VRM4U | draft |
-| [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender add-on third-party VRM1 hooks | draft |
+| [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) | UniVRM / Extended-UniVRM ScriptedImporter hooks (upstream propose) | draft |
+| [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hooks (upstream propose) | draft |
 | [Blender VFX](implementations/blender-vfx.md) | Blender VRMXT extension / `VRMXT_vfx` | draft |

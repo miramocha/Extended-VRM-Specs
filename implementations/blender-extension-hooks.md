@@ -20,7 +20,21 @@ They let a separate Blender add-on handle `VRMXT_*` (and similar) root extension
 after stock VRM maps exist. Examples: [VRMXT_vfx](../specs/vrmxt-vfx.md),
 [VRMXT_lattice](../specs/vrmxt-lattice.md).
 
-Primary consumer:
+## Fork and upstream intent
+
+[Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender)
+is a fork of [saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender).
+It adds a **generic** VRM1 extension hook API (`io_scene_vrm.extension_hooks`) — not
+VRMXT-specific. The plan is to propose that hook surface upstream so stock Blender VRM
+hosts can load optional packages (e.g.
+[VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender))
+without requiring this fork.
+
+Same pattern on Unity: [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM)
+ships generic import hooks to propose to [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM)
+— see [univrm-upstream-hooks.md](univrm-upstream-hooks.md).
+
+Primary consumer today:
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender)
 (`io_scene_vrmxt`).
 
