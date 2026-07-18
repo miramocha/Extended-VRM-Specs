@@ -12,7 +12,7 @@ status: draft
 
 Specifications and design notes for Extended VRM. Implementations target UniVRM,
 VRM4U, and the [Blender add-on](https://github.com/miramocha/Extended-VRM-Addon-for-Blender);
-this vault defines portable file behavior.
+this repository defines portable file behavior.
 
 Optional `VRMXT_*` consumers:
 
@@ -20,6 +20,12 @@ Optional `VRMXT_*` consumers:
 |------|------|
 | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Blender authoring / I/O via VRM1 hooks |
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity UPM package on UniVRM |
+
+## Architecture
+
+| Note | Topic | Status |
+|------|-------|--------|
+| [Extended VRM Architecture](architecture.md) | Authoring + consumers; stock VRM stays as-is; Extended is optional on UniVRM / Blender | draft |
 
 ## Drafts
 
