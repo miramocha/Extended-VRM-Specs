@@ -45,6 +45,7 @@ Optional `VRMXT_*` consumers:
 | Note | Target | Status |
 |------|--------|--------|
 | [UniVRM Materials Override](implementations/univrm-materials-override.md) | Unity / UniVRMXT | draft |
+| [Warudo Materials Override](implementations/warudo-materials-override.md) | Warudo plugin / VTubing host | draft |
 | [UniVRM VFX](implementations/univrm-vfx.md) | Unity / UniVRMXT / `VRMXT_vfx` | draft |
 | [Godot VFX](implementations/godot-vfx.md) | Godot / godot-vrm / `VRMXT_vfx` | draft |
 | [three-vrm VFX](implementations/three-vrm-vfx.md) | Three.js / three-vrm / `VRMXT_vfx` | draft |

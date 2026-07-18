@@ -159,6 +159,12 @@ VRM 1.0 assets when the optional package is missing, disabled, or incomplete.
 - Editor support requires one-time project settings configuration.
 - Shader property type validation and texture transforms remain implementation work.
 
+## Host note: Warudo
+
+Warudo does not expose `materialGenerator` on Character Source load. A workable plugin
+path is post-load re-read of the `.vrm` plus material swap. See
+[Warudo Materials Override](warudo-materials-override.md).
+
 ## Source references
 
 - `Packages/UniGLTF/Runtime/UniGLTF/IO/MaterialIO/Import/IMaterialDescriptorGenerator.cs`
