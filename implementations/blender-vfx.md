@@ -161,27 +161,47 @@ Follow existing editor patterns (`editor/spring_bone1` panels, lists, operators)
 - UIList of emitters with add / remove / reorder
 - Per-emitter fields: name, attachment, local position, local rotation, texture,
   particle scalars and color
-- No simulation controls in MVP
+- Rebuild / Clear VFX Preview operators (GeoNodes helpers; see Preview policy)
+- No simulation authoring controls beyond portable particle fields
 
 ## Preview policy
 
-MVP deliberately has **no** viewport particle preview and does **not** create Blender
-particle systems from VFX data.
+After VRM 1 import (and via **Rebuild VFX Preview**), VRMXT spawns Geometry Nodes
+helpers so portable particle emitters can be checked in the viewport. The shared
+node group is ``VRMXT_Particle`` (Simulation Zone emit, local **+Y** velocity,
+lifetime cull, max-particle cap, fixed **XZ** quads in emitter local space).
 
-### Future optional legacy particle preview (risks)
+| Spec / Unity field | GeoNodes / helper |
+|--------------------|-------------------|
+| `emissionRate` | Modifier **Emission Rate** (particles/sec) |
+| `maxParticles` | Modifier **Max Particles** |
+| `lifetime` | Modifier **Lifetime** |
+| `startSize` | Modifier **Start Size** (instance scale) |
+| `startSpeed` | Modifier **Start Speed** along emitter local **+Y** |
+| `startColor` | Preview material emission tint |
+| `texture` | Preview material image (tint-only when missing) |
+| `localPosition` / `localRotation` | Empty helper local transform (spec-space, no bone-axis remap) |
+| Quad orientation | Fixed Mesh Grid rotated to **XZ** (normal +Y); no camera/viewport billboarding |
 
-A later adapter MAY spawn legacy Blender particles for authoring feedback. Known
-risks:
+Rules:
 
-| Risk | Detail |
-|------|--------|
-| Owner object | Pose bones and empties cannot own a particle system; needs a hidden helper mesh |
-| Export exclusion | Helper must stay out of GLB output (same class of problem as internal link objects) |
-| Rate model | Blender particle count / frame timing does not match `emissionRate` particles/second exactly |
-| Billboard / texture | Camera-facing textured quads differ by render engine (EEVEE / Cycles) |
-| Version window | Legacy particles exist in the supported 4.2–&lt;5.3 range but remain a long-term risk if Blender removes or replaces them |
+- Property groups remain the export source of truth. Do not read GeoNodes state
+  back into emitters.
+- Each helper is an **Empty** named `VRMXT_vfx_{name}`, parented to the attachment
+  bone or object, tagged `vrmxt_vfx_preview=1`, with `localPosition` /
+  `localRotation` on the Empty (spec-space, no bone-axis remap). Empties cannot
+  host Geometry Nodes, so a child mesh `VRMXT_vfx_{name}_geo` (also tagged,
+  `hide_select`) carries the `VRMXT_Particle` modifier.
+- Helpers use `hide_render=True`. Extended VRM `export_objects` skips any object
+  with `vrmxt_vfx_preview` so they do not become avatar meshes in the GLB.
+- Simulation Nodes require Blender 4.2+ (already the VRMXT add-on window).
 
-Do not infer export data from any preview particle system if preview is added later.
+### Legacy particle systems
+
+Do not use Blender legacy particle systems for VRMXT preview. Risks that motivated
+GeoNodes instead: pose bones cannot own particle systems (Empty + child mesh
+required for the same reason), rate/frame timing mismatch, and long-term
+deprecation risk inside the 4.2–&lt;5.3 window.
 
 ## Tests
 
@@ -189,28 +209,32 @@ Minimum coverage (mirror existing importer/exporter and spring-bone editor tests
 
 | Case | Expectation |
 |------|-------------|
-| Import valid emitter on bone node | Property group filled; bone attachment set |
-| Import emitter on object node | Object attachment set |
+| Import valid emitter on bone node | Property group filled; bone attachment set; GeoNodes helper spawned |
+| Import emitter on object node | Object attachment set; helper parented to object |
 | Import bad `node` / invalid scalars | Emitter skipped; VRM otherwise loads |
 | Import texture index | Image pointer set via `textures` → `source` → `_images` |
 | Export round-trip | Same portable fields and node attachment after re-import |
 | Export with texture | `textures[]` / `images[]` present; `extensionsUsed` contains `VRMXT_vfx` |
 | Empty `emitters` | Valid file; no required extension entry |
-| UI operators | Add / remove / reorder update the collection |
+| UI operators | Add / remove / reorder update the collection; preview rebuilds |
+| Preview clear | Tagged helpers removed; property groups unchanged |
+| Preview export isolation | Objects with `vrmxt_vfx_preview` omitted from host `export_objects` |
 
-Exact test module paths: `tests/test_format_vfx.py` and hook tests in the VRMXT repo.
-UI operator coverage is **TBD** until panels land.
+Exact test module paths: `tests/test_format_vfx.py`, `tests/test_vfx_property_adapters.py`,
+`tests/test_vfx_geonodes_preview.py`, and hook tests in the VRMXT repo.
 
 ## Likely code touch points
 
 Non-normative; [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender):
 
-- `src/io_scene_vrmxt/vfx/` (property groups, import/export hooks)
+- `src/io_scene_vrmxt/vfx/` (property groups, import/export hooks, GeoNodes preview)
 - `src/io_scene_vrmxt/hooks/vrm1_hooks.py`
 - `src/io_scene_vrmxt/format/vfx.py`
-- Tests: `tests/test_format_vfx.py`, `tests/test_hooks_registration.py`
+- Tests: `tests/test_format_vfx.py`, `tests/test_vfx_property_adapters.py`,
+  `tests/test_vfx_geonodes_preview.py`, `tests/test_hooks_registration.py`
 
 Host hooks remain in Extended-VRM-Addon-for-Blender (`extension_hooks.py`).
+Host export skips `vrmxt_vfx_preview` objects in `editor/search.py` `export_objects`.
 
 ## Open questions
 
@@ -220,5 +244,5 @@ Host hooks remain in Extended-VRM-Addon-for-Blender (`extension_hooks.py`).
 | Omit vs write default `localPosition` / `localRotation` | TBD |
 | Warn on skipped export emitters | TBD |
 | VFX texture sampler defaults | TBD |
-| Axis conversion if preview gizmos are added | TBD |
+| Axis conversion if preview gizmos are added | Open; MVP stores/spec-space local transforms without bone-axis remap |
 | UniVRM / Godot / three-vrm / VRM4U consumer packages | See [UniVRM VFX](univrm-vfx.md), [Godot VFX](godot-vfx.md), [three-vrm VFX](three-vrm-vfx.md); VRM4U TBD |
