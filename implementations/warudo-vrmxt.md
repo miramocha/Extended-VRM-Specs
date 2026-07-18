@@ -45,18 +45,24 @@ Character’s GameObject. No extra scene Asset. No authoring from Warudo in v1.
 
 ## Flow (v1)
 
+**Status: TBD** — Warudo plugin path is not functional yet. Diagram and resolve
+notes below are target intent; do not treat as shipped behavior until the plugin
+lands and this section is updated.
+
 ```
 Character Source load (Warudo + UniVRM)
         → Character Active = true
 VrmxtPlugin watches Source / Active
         → PersistentDataManager.ReadFileBytesAsync (character://data/… → relative path)
 VrmxtCharacterApply
-        → VrmxtVfxRuntime.TryAttachFromGlb(Character.GameObject, bytes, nodes)
+        → resolve Character root (TBD: not CharacterAsset.GameObject under UMod)
+        → VrmxtVfxRuntime.TryAttachFromGlb(root, bytes, nodes)
 ParticleSystem children under emitter nodes
 ```
 
-Node resolve prefers `RuntimeGltfInstance.Nodes`. Fallback: `VrmxtVfxNodeResolver` by
-`nodes[].name`.
+Node resolve strategy **TBD**. Current draft plugin uses GLB `nodes[].name` lookup
+(`VrmxtVfxNodeResolver`). Preferring `RuntimeGltfInstance.Nodes` may return when
+UniGLTF is available to the mod; not required for v1.
 
 VFX-only textures are decoded on the second GLB read (`VrmxtVfxGlbTextures`). The plugin
 owns those textures until the Character reloads or is unbound.
