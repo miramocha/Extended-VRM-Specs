@@ -250,8 +250,9 @@ This specification does not require remote download or runtime compilation of sh
 source from the file or from a registry.
 
 Engine integration details are documented in
-[UniVRM Materials Override](../implementations/univrm-materials-override.md) and
-[VRM4U Materials Override](../implementations/vrm4u-materials-override.md).
+[UniVRM Materials Override](../implementations/univrm-materials-override.md),
+[VRM4U Materials Override](../implementations/vrm4u-materials-override.md), and
+[Blender Materials Override](../implementations/blender-materials-override.md).
 
 ## Open questions
 
@@ -259,7 +260,11 @@ Engine integration details are documented in
 - [ ] Shader-feature rebuild behavior
 - [ ] Precedence vs `VRMC_materials_mtoon` and `KHR_materials_unlit`
 - [ ] Whether `extensionsRequired` is ever appropriate
-- [ ] Export rules for Blender / other authoring tools
+- [ ] Export rules for Blender / other authoring tools — VRMXT-Extension-for-Blender
+      still parses `kind` / `name`; UniVRMXT emits `idType` / `id`, so
+      Unity→Blender→Unity drops the extension until the Blender format layer switches
+      (no dual-read; nothing in production uses the old names — see
+      [Blender Materials Override](../implementations/blender-materials-override.md))
 - [ ] Stable `specVersion` policy after first accepted property set
 
 ## Related
@@ -268,6 +273,7 @@ Engine integration details are documented in
 - Core materials: glTF 2.0 `materials` schema
 - [UniVRM Materials Override](../implementations/univrm-materials-override.md)
 - [VRM4U Materials Override](../implementations/vrm4u-materials-override.md)
+- [Blender Materials Override](../implementations/blender-materials-override.md)
 - [VRMXT_vfx](vrmxt-vfx.md)
 - [VRMXT_springBone_override](vrmxt-spring-bone-override.md)
 - [VRMXT_lattice](vrmxt-lattice.md) (research draft)
