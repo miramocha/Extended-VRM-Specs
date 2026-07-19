@@ -62,4 +62,4 @@ Optional `VRMXT_*` consumers:
 | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) | UniVRM / Extended-UniVRM ScriptedImporter hooks (upstream propose) | draft |
 | [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hook API (prefs, exclude prop, upstream propose) | draft |
 | [Blender VFX](implementations/blender-vfx.md) | Blender VRMXT extension / `VRMXT_vfx` | draft |
-| [Blender Materials Override](implementations/blender-materials-override.md) | Blender VRMXT extension / `VRMXT_materials_override` (switch to `idType`/`id` after UniVRMXT merge) | draft |
+| [Blender Materials Override](implementations/blender-materials-override.md) | Blender VRMXT extension / `VRMXT_materials_override` (verbatim JSON; Unreal `resourcePath` + multi-variant format/UI pending) | draft |

@@ -43,9 +43,13 @@ material definition and MAY bind MToon shade values to its parameters.
 3. The extension object MUST contain `specVersion` with value `"1.0"` for this draft.
 4. The extension object MUST contain a non-empty `overrides` array.
 5. Each `overrides` entry MUST contain an `engine` string identifying its target engine.
-6. A material MUST NOT contain more than one override for the same `engine`.
-7. A supporting implementation MUST select only the entry matching its engine. It MUST
-   ignore entries for other or unknown engines.
+6. A material MUST NOT contain more than one override with the same **selection key**.
+   The default selection key is `engine` alone. An engine profile MAY refine the key
+   (Unity and Unreal both use `engine` plus `material.variant`). When a profile defines
+   a refined key, that key MUST be unique among entries for that engine.
+7. A supporting implementation MUST select at most one override for its engine according
+   to that engine profile's selection rules. It MUST ignore entries for other or unknown
+   engines.
 8. Implementations that do not support the extension MUST ignore it and import the
    material using remaining glTF and VRM 1.0 material rules
    (`VRMC_materials_mtoon`, `KHR_materials_unlit`, core PBR, in that existing precedence).
@@ -98,7 +102,7 @@ material definition and MAY bind MToon shade values to its parameters.
 | Property | Type | Required | Meaning |
 |----------|------|----------|---------|
 | `specVersion` | string | yes | Version of this extension; currently `"1.0"` |
-| `overrides` | object[] | yes | Non-empty list of engine-specific overrides |
+| `overrides` | object[] | yes | Non-empty list of engine-specific overrides (selection key per rules 6–7) |
 | `overrides[].engine` | string | yes | Case-sensitive engine identifier |
 | `overrides[].material` | object | yes | Definition specified by the engine profile |
 | `overrides[].bindings` | object[] | no | MToon semantic-to-target bindings |
@@ -236,10 +240,10 @@ Non-normative. The placeholder engine and material identity are not registered p
 
 ## Optional consumer interpretation
 
-Supporting tools MAY read the matching engine entry, resolve `material`, apply
-`properties` and then `bindings`, and create a local material instance. Missing
-providers, unresolved assets, unsupported identities, or unknown engines leave stock
-VRM 1.0 import intact.
+Supporting tools MAY select an override for their engine (rule 7), resolve `material`,
+apply `properties` and then `bindings`, and create a local material instance. Missing
+providers, unresolved assets, unsupported identities, unknown engines, or no matching
+variant leave stock VRM 1.0 import intact.
 
 The VRM / glTF file does not embed engine shader or material programs. A supporting
 consumer that wants overrides at runtime or in the editor MUST supply the referenced
@@ -263,6 +267,7 @@ Engine integration details are documented in
 - [ ] Export rules for Blender / other authoring tools (Blender format layer now uses
       `idType` / `id` and verbatim JSON store/write; authoring UI still open — see
       [Blender Materials Override](../implementations/blender-materials-override.md))
+- [ ] Authoring UX when a material stores multiple `unity` or `unreal` variant slots
 - [ ] Stable `specVersion` policy after first accepted property set
 
 ## Related

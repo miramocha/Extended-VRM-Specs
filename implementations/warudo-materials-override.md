@@ -120,13 +120,15 @@ covers every provider.
 
 Post-load apply (approximate):
 
-1. Select `engine: "unity"` (and matching `variant` for Built-in vs URP / Warudo Pro).
+1. Select `engine: "unity"` for the active pipeline (`material.variant`: Built-in vs
+   URP / Warudo Pro). Multiple `unity` siblings MAY exist; apply only the matching slot.
 2. Resolve `material.id` via `Shader.Find` (shader must be in the plugin mod / player).
 3. Map glTF material index → Unity materials on the Character (`CharacterAsset.Materials`,
    renderers, or `Vrm10Instance` / `RuntimeGltfInstance` when present).
 4. Apply `properties`, then `bindings` (`scalar` / `vector` / `texture` /
    `shaderFeature`). Reuse textures already imported on the avatar where possible.
-5. On missing shader or failed resolve, leave Warudo’s stock material for that index.
+5. On missing shader, variant mismatch, or failed resolve, leave Warudo’s stock material
+   for that index.
 
 This is weaker than load-time `MaterialDescriptor` generation: first frames may show
 stock MToon/PBR, then swap. Document that flash or hide the character until apply
@@ -174,7 +176,7 @@ a Character load-time generator hook.
 |------|-------|
 | VRM version | VRM 1.0 `.vrm` with `VRMXT_materials_override` |
 | `.warudo` character mods | Prefab pipeline; extension JSON not present unless separately authored |
-| Warudo Pro URP | Match override `variant` to active pipeline; ship URP-compatible shaders in the plugin |
+| Warudo Pro URP | Select the `unity` slot whose `variant` matches the active pipeline; sibling Built-in slots stay in the file unused. Ship URP-compatible shaders in the plugin. |
 | UniVRMXT UPM | Cannot drop as DLL/asmdef into a plugin mod; copy needed Format `.cs` or reimplement |
 
 ## Open questions
