@@ -143,14 +143,6 @@ otherwise the consumer falls back to the stock material.
 
 `provider.id` is an Unreal plugin name.
 
-### Migration from `materialSet`
-
-Older drafts used `idType: "materialSet"` with a nested `material.variants` map of soft
-object paths. Supporting readers SHOULD expand each present map key into a sibling
-`unreal` entry with `idType: "resourcePath"`, `id` set to that path, and `variant` set
-to the map key. New writers MUST emit `resourcePath` + `variant` only and MUST NOT emit
-`materialSet` / `variants` maps.
-
 ## Variant survival
 
 - Re-export and authoring MUST update only the `unreal` slot for the blend/cull state

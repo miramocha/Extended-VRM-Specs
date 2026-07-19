@@ -307,8 +307,8 @@ Engine integration details are documented in
 - [ ] Shader-feature rebuild behavior
 - [ ] Precedence vs `VRMC_materials_mtoon` and `KHR_materials_unlit`
 - [ ] Whether `extensionsRequired` is ever appropriate
-- [ ] Export rules for Blender / other authoring tools (Blender format layer now uses
-      `idType` / `id` and verbatim JSON store/write; authoring UI still open — see
+- [ ] Export rules for Blender / other authoring tools (format uses `idType` / `id`;
+      authoring UI still open — see
       [Blender Materials Override](../implementations/blender-materials-override.md))
 - [ ] Authoring UX when a material stores multiple `unity` or `unreal` variant slots
 - [ ] Stable `specVersion` policy after first accepted property set
