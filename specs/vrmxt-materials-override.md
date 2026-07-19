@@ -63,8 +63,8 @@ material definition and MAY bind MToon shade values to its parameters.
     default defined by the supported `VRMC_materials_mtoon` version.
 16. A supporting implementation MUST ignore a binding when the material has no
     `VRMC_materials_mtoon` extension or does not recognize the binding's source semantic.
-17. Override properties other than `engine`, `material`, and `bindings` are **TBD** and
-    MUST NOT be treated as stable until this specification marks them accepted.
+17. Override properties other than `engine`, `material`, `bindings`, and `properties` are
+    **TBD** and MUST NOT be treated as stable until this specification marks them accepted.
 18. Validity of a file that uses this extension MUST NOT depend on membership of any
     `material` identifier in a closed registry or allowlist.
 19. A supporting implementation MUST NOT fail import of a VRM solely because a material
@@ -74,6 +74,24 @@ material definition and MAY bind MToon shade values to its parameters.
 21. When an engine profile defines `provider`, that field is advisory. A consumer MAY warn
     on package or plugin mismatch; it MUST NOT treat a missing or mismatched `provider` as
     grounds to reject the file.
+22. An override MAY contain a `properties` array. Each entry sets a literal value on one
+    engine-specific material parameter, independent of `VRMC_materials_mtoon`. `properties`
+    MAY be omitted or empty.
+23. `properties[].name` MUST NOT equal any `bindings[].target` value within the same
+    override. Exporters MUST omit a `properties` entry for a target already covered by a
+    `bindings` entry. A supporting implementation MUST still apply `properties` before
+    `bindings` and let `bindings` win on conflict, so behavior stays defined for
+    non-conforming files.
+24. A supporting implementation MUST ignore a `properties` entry with an unrecognized
+    `type` or a value it cannot resolve, including an out-of-range `texture` index. It
+    MUST NOT fail import of the material for that reason; rules 11 and 12 continue to
+    apply.
+25. `properties[].value` MUST be literal data stored directly in the file. `properties`
+    MUST NOT reference, duplicate, or replace `VRMC_materials_mtoon` fields; use `bindings`
+    to transfer MToon-sourced values instead.
+26. An exporter that emits a `properties[].texture` reference MUST register the referenced
+    image through its normal glTF texture export path so the index resolves in the output
+    file. An index that does not resolve is unresolvable under rule 24.
 
 ## Extension properties
 
@@ -86,12 +104,24 @@ material definition and MAY bind MToon shade values to its parameters.
 | `overrides[].bindings` | object[] | no | MToon semantic-to-target bindings |
 | `bindings[].source` | string | yes | MToon source semantic listed below |
 | `bindings[].target` | string | yes | Engine-specific material parameter identifier |
-| `bindings[].targetType` | string | yes | `scalar`, `vector`, `texture`, or `staticSwitch` |
+| `bindings[].targetType` | string | yes | `scalar`, `vector`, `texture`, or `shaderFeature` |
+| `overrides[].properties` | object[] | no | Literal parameter values applied directly, independent of `VRMC_materials_mtoon` |
+| `properties[].name` | string | yes | Engine-specific material parameter identifier |
+| `properties[].type` | string | yes | `scalar`, `vector`, `texture`, or `shaderFeature` |
+| `properties[].value` | number, number[], or boolean | required unless `type` is `texture` | Literal value matching `type` |
+| `properties[].texture` | integer | required when `type` is `texture` | Index into glTF `textures[]` |
+
+`scalar` and `vector` carry numeric data directly. `texture` carries an index into the
+file's glTF `textures[]`. `shaderFeature` is a boolean toggle for a discrete shader
+capability rather than an assigned value: a Unity shader keyword driven by
+`#pragma shader_feature`, an Unreal Material **Static Switch** parameter, or a ShaderLab
+`[Toggle]`-backed keyword.
 
 Engine profiles define the contents of `material`, provider identifiers, supported
-`targetType` operations, and engine-specific fallback constraints. Material identifiers
-in those profiles are open engine-specific strings (or profile-defined objects). Rules
-18–21 apply to every profile.
+`targetType` and `properties[].type` operations, and engine-specific fallback constraints.
+Material identifiers in those profiles are open engine-specific strings (or
+profile-defined objects). Rules 18–21 apply to every profile; rules 22–26 govern
+`properties`.
 
 ## Engine profiles
 
@@ -122,11 +152,20 @@ The following `source` identifiers refer to resolved values from
 
 Bindings transfer the resolved source value to `target` using `targetType`. Consumers
 MUST ignore incompatible source/target combinations. Color-vector conversion,
-texture-coordinate handling, and static-switch rebuild behavior are **TBD**.
+texture-coordinate handling, and shader-feature rebuild behavior are **TBD**.
+
+## Literal material properties
+
+`overrides[].properties` sets literal values on engine material parameters straight from
+the file, with no dependency on `VRMC_materials_mtoon`. Use `properties` for authored
+constants; use `bindings` for values that should track sibling MToon data.
+
+Rules 22–26 govern omission, conflicts with `bindings`, unresolvable entries, and texture
+registration. A material MAY use `bindings`, `properties`, both, or neither.
 
 ## Attachment example
 
-Non-normative. The placeholder engine and material kind are not registered profiles.
+Non-normative. The placeholder engine and material identity are not registered profiles.
 
 ```json
 {
@@ -151,7 +190,8 @@ Non-normative. The placeholder engine and material kind are not registered profi
             {
               "engine": "example-engine",
               "material": {
-                "kind": "example-material"
+                "idType": "example-idType",
+                "id": "example-material"
               },
               "bindings": [
                 {
@@ -163,6 +203,13 @@ Non-normative. The placeholder engine and material kind are not registered profi
                   "source": "shadingToonyFactor",
                   "target": "exampleShadingToony",
                   "targetType": "scalar"
+                }
+              ],
+              "properties": [
+                {
+                  "name": "exampleUseRimLight",
+                  "type": "shaderFeature",
+                  "value": true
                 }
               ]
             }
@@ -183,14 +230,16 @@ Non-normative. The placeholder engine and material kind are not registered profi
   replace MToon JSON.
 - `bindings` transfer existing MToon shade values to target material parameters. They do
   not redefine MToon values.
-- Precedence when a supporting consumer is present: **TBD** (override vs MToon vs
-  coexistence).
+- `properties` set literal values with no MToon dependency. Rule 23 fixes precedence
+  between `properties` and `bindings` on the same target; override-vs-MToon precedence at
+  the whole-material level is otherwise **TBD** (override vs MToon vs coexistence).
 
 ## Optional consumer interpretation
 
 Supporting tools MAY read the matching engine entry, resolve `material`, apply
-`bindings`, and create a local material instance. Missing providers, unresolved assets,
-unsupported kinds, or unknown engines leave stock VRM 1.0 import intact.
+`properties` and then `bindings`, and create a local material instance. Missing
+providers, unresolved assets, unsupported identities, or unknown engines leave stock
+VRM 1.0 import intact.
 
 The VRM / glTF file does not embed engine shader or material programs. A supporting
 consumer that wants overrides at runtime or in the editor MUST supply the referenced
@@ -207,7 +256,7 @@ Engine integration details are documented in
 ## Open questions
 
 - [ ] Binding color conversions and texture transforms
-- [ ] Static-switch rebuild behavior
+- [ ] Shader-feature rebuild behavior
 - [ ] Precedence vs `VRMC_materials_mtoon` and `KHR_materials_unlit`
 - [ ] Whether `extensionsRequired` is ever appropriate
 - [ ] Export rules for Blender / other authoring tools
