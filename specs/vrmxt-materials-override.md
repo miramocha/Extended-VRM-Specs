@@ -139,6 +139,35 @@ This draft defines two case-sensitive engine identifiers:
 New engines require a separate profile. Adding a profile does not change this base
 extension version unless it changes common fields or behavior.
 
+### Selection overview
+
+Non-normative. Sibling `overrides[]` entries can share an `engine` when the profile
+refines the selection key with `material.variant` (rules 6–7). Each consumer picks at
+most one slot for its engine:
+
+```mermaid
+flowchart LR
+  file["overrides array"]
+  file --> unityBuiltin["unity + builtin"]
+  file --> unityUrp["unity + urp"]
+  file --> unrealOpaque["unreal + opaque"]
+  file --> unrealTrans["unreal + translucent"]
+  activeRP["Unity active RP"] --> unitySel["pick unity slot"]
+  gltfState["glTF alphaMode + doubleSided"] --> unrealSel["pick unreal slot"]
+  unityBuiltin --> unitySel
+  unityUrp --> unitySel
+  unrealOpaque --> unrealSel
+  unrealTrans --> unrealSel
+```
+
+| Profile | How the consumer picks the slot |
+|---------|----------------------------------|
+| Unity | Active host render pipeline (`builtin` / `urp` / `hdrp`) |
+| Unreal | This glTF material’s `alphaMode` + `doubleSided` |
+
+Full selection and survival rules: [UniVRM Materials Override](../implementations/univrm-materials-override.md),
+[VRM4U Materials Override](../implementations/vrm4u-materials-override.md).
+
 ## MToon shading source semantics
 
 The following `source` identifiers refer to resolved values from
