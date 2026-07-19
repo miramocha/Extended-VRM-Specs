@@ -15,184 +15,98 @@ status: draft
 
 # Warudo Materials Override
 
-Host integration notes for applying
-[VRMXT_materials_override](../specs/vrmxt-materials-override.md) when a VRM 1.0 avatar
-loads in [Warudo](https://warudo.app/) (VTubing). Normative override fields stay in the
-base spec and the [UniVRM Materials Override](univrm-materials-override.md) profile.
-This note records what Warudo’s public docs and Mod SDK expose today, and a workable
-plugin path.
+How [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo)
+applies [VRMXT_materials_override](../specs/vrmxt-materials-override.md) on Characters.
+Normative fields stay in the base spec and
+[UniVRM Materials Override](univrm-materials-override.md).
 
-Sources reviewed (2026-07):
+Warudo is a **consumer only**. Overrides are authored elsewhere (e.g. Blender / UniVRMXT
+Editor) and applied after Character load. No Warudo authoring UI.
 
-- [Warudo Handbook](https://docs.warudo.app/) / [HakuyaLabs/warudo-docs](https://github.com/HakuyaLabs/warudo-docs)
-- [HakuyaLabs/Warudo-Mod-Tool](https://github.com/HakuyaLabs/Warudo-Mod-Tool) (`app.warudo.modtool` 0.14.5)
-- UniVRM `GltfData` / `Vrm10.LoadGltfDataAsync` lifetime (JSON on parse object only)
+Host overview: [Warudo VRMXT](warudo-vrmxt.md).
 
 ## Goal
 
-After the user selects a `.vrm` as Character **Source**, honor
-`materials[i].extensions.VRMXT_materials_override` entries with `engine: "unity"`,
-using shaders and materials shipped in a **Warudo plugin mod** (not the base Warudo
-player build).
+After Character **Source** loads a VRM 1.0 `.vrm`, apply `engine: "unity"` override
+slots whose `material.variant` matches the active pipeline (Built-in vs URP / Warudo
+Pro). Shaders and sample materials ship in the plugin mod.
+
+**Status: shipped** with plugin `0.1.1` (same mod as VFX).
 
 ## Package split
 
-| Piece | Where it lives |
-|-------|----------------|
-| Override JSON in the avatar | `.vrm` glTF (`VRMXT_materials_override`) |
-| Unity shaders / material assets | Warudo **plugin mod** (`ModHost` load) |
-| Parse + apply logic | Plugin C# (loose `.cs`; Format layer from [UniVRMXT](https://github.com/miramocha/UniVRMXT) or equivalent) |
-| Stock VRM load | Warudo Character asset (UniVRM inside the app) |
+| Piece | Where |
+|-------|-------|
+| Override JSON | `.vrm` glTF |
+| Parse + Applier + Instance | Vendored UniVRMXT MaterialsOverride under `Assets/Vrmxt/` |
+| Sample shaders / mats | `VRMXT/Samples/TestOverrideBuiltin`, `VRMXT/Samples/TestOverrideURP` |
+| Watch + GLB re-read + apply | `VrmxtPlugin` / `VrmxtCharacterApply` |
+| Stock VRM load | Warudo Character asset |
 
-Warudo plugin mods MAY include Unity assets (prefabs, materials, shaders). They MUST
-NOT rely on third-party DLLs or `.asmdef` packages. Ship parse helpers as source under
-the mod folder. See Warudo [Plugin Mod](https://docs.warudo.app/docs/scripting/plugin-mod)
-limitations.
+## Why post-load re-read
 
-## Ideal UniVRM path (not available in Warudo today)
-
-The UniVRM profile wraps `IMaterialDescriptorGenerator` and passes it into
-`Vrm10.LoadPathAsync` / `LoadBytesAsync` / `LoadGltfDataAsync` so materials are built
-correctly on first import. Warudo owns Character Source loading. Public docs and Mod
-Tool API stubs do **not** expose:
-
-- A `materialGenerator` inject point on Character load
-- A retained `GltfData` or glTF JSON string on the loaded character
-- A documented `OnVRMLoaded` / post-parse extension callback
-
-## UniVRM JSON lifetime
-
-UniVRM exposes JSON on **`GltfData.Json`** while the parse object is alive. Typical
-callers dispose `GltfData` when the `using` ends after `LoadGltfDataAsync`. Loaded
-components (`Vrm10Instance`, `RuntimeGltfInstance`) keep nodes, materials, textures,
-and meshes. They do **not** keep the glTF JSON string.
-
-So: once Warudo’s Character is active in the scene, the parse-time JSON is gone unless
-the host kept `GltfData` (undocumented; Mod Tool `CharacterAsset` stubs show no such
-field).
-
-## Practical Warudo path: post-load re-read
-
-Re-open the same `.vrm` after Character becomes active, parse override JSON, then swap
-or rebuild materials on the live avatar.
+Warudo owns Character Source loading. Mod Tool stubs do not expose
+`IMaterialDescriptorGenerator`, retained `GltfData`, or a post-parse extension callback.
+UniVRM’s `GltfData.Json` is gone after the host dispose. The plugin re-reads Character
+bytes via `PersistentDataManager`, parses JSON, then applies onto live materials.
 
 ```
-Character Source load (Warudo + UniVRM, stock materials)
-        → WatchAsset / active = true
-Plugin resolves Source → file bytes
-        → parse GLB JSON chunk
-materials[i].extensions.VRMXT_materials_override
-        → Shader.Find / materials from plugin mod
-apply to Character renderers / Materials map
+Character Source load (stock materials)
+        → Character active
+Plugin reads bytes → glTF JSON
+TryAttachFromGltfJson → RememberTexturesFromPairs(resolver, json)
+        → ReleaseOwnership
+Apply(root, store, json, pipeline, resolveTexture)
 ```
 
-### Load hook
+Apply order relative to VFX: VFX first (while GLB texture ownership is live), then
+materials Remember + Release + Apply.
 
-Use [Data Input Watchers](https://docs.warudo.app/docs/scripting/api/watchers)
-`WatchAsset` on a `CharacterAsset` reference. When `Source` changes, Warudo sets active
-`false`, then `true` after a successful load. Guard with `IsNonNullAndActive()` before
-touching the GameObject.
+## Pipeline and shaders
 
-`OnSceneLoaded` on a `Plugin` runs after deserialize. Prefer `WatchAsset` for avatar
-reload within a scene.
+| Concern | Behavior |
+|---------|----------|
+| Active RP | `DetectActivePipelineForWarudo`: `currentRenderPipeline == null` → Builtin, else Urp |
+| Slot select | UniVRMXT `UnityOverrideSelector` (`variant` match among `unity` siblings) |
+| Shader resolve | ModHost-warmed name→Shader map → `ShaderResolveProvider` (`Shader.Find` is null for mod shaders) |
+| Sample URP shader | CG + `SRPDefaultUnlit`; no URP package includes (Mod Tool must ship a drawable pass without `PackageRequirements`) |
 
-### Reading bytes
+## Material name match
 
-Plugin mods cannot use `System.IO`. Use
-[PersistentDataManager](https://docs.warudo.app/docs/scripting/api/io)
-(`ReadFileBytesAsync`) against paths under Warudo’s data folder.
+Store keys keep glTF `materials[].name` (including a trailing ` (Instance)` when present).
+Live `sharedMaterials` names are matched after stripping ` (Instance)` on both sides so
+clone-export keys hit Warudo’s live names. Duplicate names use `Name#N` keys;
+`GltfMaterialIndex` on pairs drives sibling MToon / binding texture resolve.
 
-`CharacterAsset` inherits `FromSourceGameObjectAsset.Source` (resource URI such as
-`character://data/Characters/MyModel.vrm`). Resolve URI → sandbox-relative path before
-read. Workshop or non-file URIs need explicit handling; TBD if PersistentDataManager
-covers every provider.
+## Textures
 
-### Parsing
+`RememberTexturesFromPairs` collects indices from override `properties[]` and from MToon
+`bindings` that target textures (needs glTF JSON before GLB release). Apply resolves
+textures from `ImportedTextures` after ownership release.
 
-- Prefer Newtonsoft.Json (available in Warudo scripting / Mod Tool deps).
-- UniVRMXT Format `VrmxtMaterialsOverride` can parse per-material extension objects;
-  walk `materials[]` from the full glTF JSON.
-- Optional: if the plugin can call UniGLTF types already loaded in Warudo, parse with
-  `GlbLowLevelParser` / `GltfData.Json` on a **new** parse of the re-read bytes, then
-  dispose. Do not expect Warudo’s first-load `GltfData` to still exist.
+## Missing shader / variant
 
-### Applying overrides
+Unresolved shader or non-matching variant: leave stock material for that entry (JSON
+may still sit on the Instance).
 
-Post-load apply (approximate):
+## First-frame flash
 
-1. Select `engine: "unity"` for the active pipeline (`material.variant`: Built-in vs
-   URP / Warudo Pro). Multiple `unity` siblings MAY exist; apply only the matching slot.
-2. Resolve `material.id` via `Shader.Find` (shader must be in the plugin mod / player).
-3. Map glTF material index → Unity materials on the Character (`CharacterAsset.Materials`,
-   renderers, or `Vrm10Instance` / `RuntimeGltfInstance` when present).
-4. Apply `properties`, then `bindings` (`scalar` / `vector` / `texture` /
-   `shaderFeature`). Reuse textures already imported on the avatar where possible.
-5. On missing shader, variant mismatch, or failed resolve, leave Warudo’s stock material
-   for that index.
+Stock MToon/PBR may show briefly before apply. No hide-until-ready in current plugin.
 
-This is weaker than load-time `MaterialDescriptor` generation: first frames may show
-stock MToon/PBR, then swap. Document that flash or hide the character until apply
-finishes if needed.
+## Enable toggle
 
-### What CharacterAsset keeps (Mod Tool stubs)
+Plugin `Enable VRMXT` gates bind/apply. Disable clears VFX immediately. Material
+overrides stay on mutated host mats until the **scene is reloaded**.
 
-Public surface useful after load (implementations are stubs in Mod Tool; runtime is in
-the Warudo app):
+## Out of scope
 
-| Member | Role |
-|--------|------|
-| `Source` | Resource URI for the avatar file |
-| `Vrm10Instance` | VRM 1.0 instance when used |
-| `VRMBlendShapeProxy` | VRM 0.x blend shapes |
-| `Animator`, `MainTransform` | Hierarchy access |
-| `Materials`, `SkinnedMeshRenderers` | Material / mesh maps for swap |
-
-No `GltfData` / `Json` on that surface.
-
-## Alternate paths
-
-| Path | Fit |
-|------|-----|
-| Character expression **Target Material Properties** | Property tweaks only; not full shader override |
-| Character **`.warudo` mod** with baked materials | Offline bake; no runtime `VRMXT_materials_override` parse unless you also store JSON |
-| Custom Character `IResourceUriResolver` | Would replace Character load; high risk vs expressions / mocap |
-| NiloToon Character Controller (Pro) | Precedent for a material controller asset; NiloToon-specific |
-
-## Mod Tool notes
-
-[Warudo-Mod-Tool](https://github.com/HakuyaLabs/Warudo-Mod-Tool) ships:
-
-- `Warudo.Core` / `Warudo.Plugins.Core` API stubs for compiling plugins
-- UniVRM **0.129.1** (`com.vrmc.gltf`, `com.vrmc.univrm`, `com.vrmc.vrm`) for editor
-  character-mod authoring
-- UMod export (`Warudo → Build Mod`), Setup Character window
-
-Use it to build the plugin mod that carries shaders and apply scripts. It does not add
-a Character load-time generator hook.
-
-## Compatibility
-
-| Item | Notes |
-|------|-------|
-| VRM version | VRM 1.0 `.vrm` with `VRMXT_materials_override` |
-| `.warudo` character mods | Prefab pipeline; extension JSON not present unless separately authored |
-| Warudo Pro URP | Select the `unity` slot whose `variant` matches the active pipeline; sibling Built-in slots stay in the file unused. Ship URP-compatible shaders in the plugin. |
-| UniVRMXT UPM | Cannot drop as DLL/asmdef into a plugin mod; copy needed Format `.cs` or reimplement |
-
-## Open questions
-
-- Exact mapping from `character://` URI to `PersistentDataManager` path for local and
-  Workshop Characters.
-- Whether Warudo ever retains `GltfData` or raw JSON (none on Mod Tool stubs).
-- Stable material-index ↔ renderer slot mapping after Warudo’s own material setup.
-- Upstream feature request: expose post-load glTF JSON and/or `materialGenerator` on
-  Character Source load.
+- Authoring or export of overrides from Warudo
+- Load-time `IMaterialDescriptorGenerator` inject
+- Workshop Character byte access (local `character://` / `Characters/…` only)
 
 ## Related
 
 - Spec: [VRMXT_materials_override](../specs/vrmxt-materials-override.md)
+- Host: [Warudo VRMXT](warudo-vrmxt.md)
 - Unity profile: [UniVRM Materials Override](univrm-materials-override.md)
-- Warudo scripting: [Watchers](https://docs.warudo.app/docs/scripting/api/watchers),
-  [IO](https://docs.warudo.app/docs/scripting/api/io),
-  [Plugin Mod](https://docs.warudo.app/docs/scripting/plugin-mod)
-- Mod SDK: [Warudo-Mod-Tool](https://github.com/HakuyaLabs/Warudo-Mod-Tool)
+- UniVRMXT samples: Test Materials for Overrides (`TestOverrideBuiltin` / `TestOverrideURP`)

@@ -29,7 +29,7 @@ Optional `VRMXT_*` consumers:
 |------|------|
 | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Blender authoring / I/O via VRM1 hooks |
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity UPM package on [UniVRM](https://github.com/vrm-c/UniVRM) |
-| [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo host plugin (vendored UniVRMXT VFX; UMod). Install: [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) |
+| [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo consumer plugin (vendored UniVRMXT VFX + materials override; UMod). Install: [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) |
 | Godot VRMXT addon (planned) | Optional Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm) |
 | three-vrmxt (planned) | Optional npm package beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) |
 
@@ -53,8 +53,8 @@ Optional `VRMXT_*` consumers:
 | Note | Target | Status |
 |------|--------|--------|
 | [UniVRM Materials Override](implementations/univrm-materials-override.md) | Unity / UniVRMXT | draft |
-| [Warudo VRMXT](implementations/warudo-vrmxt.md) | Warudo plugin / `VRMXT_vfx` host | draft |
-| [Warudo Materials Override](implementations/warudo-materials-override.md) | Warudo plugin / VTubing host | draft |
+| [Warudo VRMXT](implementations/warudo-vrmxt.md) | Warudo plugin / `VRMXT_vfx` + materials override consumer | draft |
+| [Warudo Materials Override](implementations/warudo-materials-override.md) | Warudo plugin / post-load materials apply (shipped) | draft |
 | [UniVRM VFX](implementations/univrm-vfx.md) | Unity / UniVRMXT / `VRMXT_vfx` | draft |
 | [Godot VFX](implementations/godot-vfx.md) | Godot / godot-vrm / `VRMXT_vfx` | draft |
 | [three-vrm VFX](implementations/three-vrm-vfx.md) | Three.js / three-vrm / `VRMXT_vfx` | draft |
