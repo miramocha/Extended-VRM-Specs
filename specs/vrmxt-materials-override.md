@@ -198,7 +198,9 @@ registration. A material MAY use `bindings`, `properties`, both, or neither.
 
 ## Attachment example
 
-Non-normative. The placeholder engine and material identity are not registered profiles.
+Non-normative. One material with Unity Built-in + URP slots and Unreal opaque +
+translucent slots (see Selection overview). Profile-specific bindings and properties are
+omitted here; see the Unity and Unreal profile notes for fuller single-slot examples.
 
 ```json
 {
@@ -221,30 +223,42 @@ Non-normative. The placeholder engine and material identity are not registered p
           "specVersion": "1.0",
           "overrides": [
             {
-              "engine": "example-engine",
+              "engine": "unity",
               "material": {
-                "idType": "example-idType",
-                "id": "example-material"
+                "idType": "shaderName",
+                "id": "VRMXT/Samples/TestOverrideBuiltin",
+                "variant": "builtin"
               },
-              "bindings": [
-                {
-                  "source": "shadeColorFactor",
-                  "target": "exampleShadeColor",
-                  "targetType": "vector"
-                },
-                {
-                  "source": "shadingToonyFactor",
-                  "target": "exampleShadingToony",
-                  "targetType": "scalar"
-                }
-              ],
               "properties": [
-                {
-                  "name": "exampleUseRimLight",
-                  "type": "shaderFeature",
-                  "value": true
-                }
+                { "name": "_Color", "type": "vector", "value": [0, 1, 0, 1] }
               ]
+            },
+            {
+              "engine": "unity",
+              "material": {
+                "idType": "shaderName",
+                "id": "VRMXT/Samples/TestOverrideURP",
+                "variant": "urp"
+              },
+              "properties": [
+                { "name": "_Color", "type": "vector", "value": [1, 1, 0, 1] }
+              ]
+            },
+            {
+              "engine": "unreal",
+              "material": {
+                "idType": "resourcePath",
+                "id": "/Game/Example/M_Skin_Opaque",
+                "variant": "opaque"
+              }
+            },
+            {
+              "engine": "unreal",
+              "material": {
+                "idType": "resourcePath",
+                "id": "/Game/Example/M_Skin_Translucent",
+                "variant": "translucent"
+              }
             }
           ]
         }
