@@ -37,8 +37,8 @@ only.
    loader is not required.
 5. Authoring is multi-engine. Any host with stock VRM 1.0 import/export MAY add an
    optional Extended package that reads and writes `VRMXT_*` on the same `.vrm` /
-   `.glb`. Blender is the first shipping authoring path; Unity, Three.js, Unreal,
-   Godot, and others are in scope for the same file contract.
+   `.glb`. Blender and Unity (UniVRMXT + Extended-UniVRM) ship authoring paths today;
+   Three.js, Unreal, Godot, and others stay in scope for the same file contract.
 
 ## Layers
 
@@ -110,14 +110,14 @@ parallel Extended-only format.
 
 | Host | Stock VRM I/O | Extended authoring package | Import `VRMXT_*` | Export `VRMXT_*` |
 |------|---------------|----------------------------|------------------|------------------|
-| Blender | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Profile: [Blender VFX](implementations/blender-vfx.md) (and other Blender profiles) | Same |
-| Unity | [UniVRM](https://github.com/vrm-c/UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Runtime/editor import in progress per profile | **TBD** |
+| Blender | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | [Blender VFX](implementations/blender-vfx.md), [Blender Materials Override](implementations/blender-materials-override.md) | Same (Addon Preferences enable hooks) |
+| Unity | [UniVRM](https://github.com/vrm-c/UniVRM) / [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | [UniVRM VFX](implementations/univrm-vfx.md), [UniVRM Materials Override](implementations/univrm-materials-override.md) | Same via Extended-UniVRM export hooks (Project Settings gate) |
 | Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | three-vrmxt (planned) | Planned: [three-vrm VFX](implementations/three-vrm-vfx.md) | **TBD** |
 | Unreal | VRM4U | Extended package **TBD** | **TBD** | **TBD** |
 | Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VFX](implementations/godot-vfx.md) | **TBD** |
 | Other | Any VRM 1.0 tool | Optional Extended package | Implement specs | Implement specs |
 
-### Blender (first shipping authoring path)
+### Blender (shipping)
 
 | Piece | Repo | Role |
 |-------|------|------|
@@ -140,13 +140,29 @@ Blender flow (non-normative):
 
 Without the VRMXT Blender extension, export stays stock VRM. Hooks stay idle.
 
+### Unity (shipping with Extended-UniVRM)
+
+| Piece | Repo | Role |
+|-------|------|------|
+| Stock / fork UniVRM | [UniVRM](https://github.com/vrm-c/UniVRM) or [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | Stock `VRMC_*` I/O; Extended fork adds generic import/export extension registries |
+| UniVRMXT | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Soft-detects those registries; authors and serializes `VRMXT_vfx` and `VRMXT_materials_override` |
+
+Unity flow (non-normative):
+
+1. Project uses Extended-UniVRM (or stock UniVRM for consume-only paths).
+2. Project adds UniVRMXT. Enable Project Settings → VRM10 import/export extension gates when using hooks.
+3. Import: hooks attach VFX / materials override onto the original `.vrm` when enabled; stock UniVRM (or hooks off) can still consume via companion / post-load attach.
+4. Author: edit `VrmxtVfxInstance` / ParticleSystems, or assign Override Materials on `VrmxtMaterialsOverrideInstance`.
+5. Export: with export hooks enabled, UniVRMXT writes `VRMXT_*` after stock `VRMC_*`. One `.vrm` / `.glb`.
+
+Stock UniVRM without the Extended export registry does not write `VRMXT_*`. Full from-scratch VFX emitter UI still prefers Blender; Unity covers re-export and materials override authoring. Details: [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md), [UniVRM VFX](implementations/univrm-vfx.md), [UniVRM Materials Override](implementations/univrm-materials-override.md).
+
 ### Other engines (authoring direction)
 
-Unity, Three.js, Unreal, Godot, and similar hosts follow the same file contract.
+Three.js, Unreal, Godot, and similar hosts follow the same file contract.
 Implementation profiles under `implementations/` state whether export is shipped or
-**TBD**. Until an engine’s Extended export lands, Blender remains the recommended
-authoring path for writing `VRMXT_*`; that engine’s package still MAY import and
-run the data.
+**TBD**. Until an engine’s Extended export lands, use Blender or Unity to write
+`VRMXT_*`; that engine’s package still MAY import and run the data.
 
 ## Consumers (runtime)
 
@@ -165,17 +181,19 @@ export, see [Authoring](#authoring).
 ### Unity / UniVRM
 
 [UniVRM](https://github.com/vrm-c/UniVRM) remains the stock VRM 1.0 importer. UniVRMXT
-is additive. For Editor import onto the original `.vrm`,
-[Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) is a fork that ships
-**generic** ScriptedImporter hooks (to propose upstream to vrm-c); see
-[UniVRM upstream hooks](implementations/univrm-upstream-hooks.md).
+is additive. Editor import onto the original `.vrm` and `VRMXT_*` export use
+[Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) generic
+ScriptedImporter / export registries (to propose upstream to vrm-c); see
+[UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) and
+[Authoring → Unity](#unity-shipping-with-extended-univrm).
 
 1. Project keeps UniVRM (`com.vrmc.gltf`, `com.vrmc.vrm`) from
-   [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) (or Extended-UniVRM when using import hooks).
+   [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) (or Extended-UniVRM when using hooks).
 2. Project MAY add UniVRMXT (`com.miramocha.univrmxt`).
 3. After stock load (`Vrm10.LoadGltfDataAsync` or equivalent), the app calls UniVRMXT
-   helpers (for example `VrmxtVfxRuntime.TryAttach`) with glTF JSON and node
-   transforms.
+   helpers (for example `VrmxtVfxRuntime.TryAttach`,
+   `VrmxtMaterialsOverrideRuntime.TryAttachFromGltfJson`) with glTF JSON and node
+   transforms — or relies on Editor import hooks when Extended-UniVRM gates are on.
 4. Missing extension or missing package → no Extended runtime objects; avatar still
    valid.
 
@@ -249,6 +267,8 @@ Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
 | Extension schemas | [specs/](specs/) |
 | Blender hook API | [implementations/blender-extension-hooks.md](implementations/blender-extension-hooks.md) |
 | Unity VFX profile | [implementations/univrm-vfx.md](implementations/univrm-vfx.md) |
+| Unity materials override | [implementations/univrm-materials-override.md](implementations/univrm-materials-override.md) |
+| UniVRM upstream hooks | [implementations/univrm-upstream-hooks.md](implementations/univrm-upstream-hooks.md) |
 | Warudo VRMXT host | [implementations/warudo-vrmxt.md](implementations/warudo-vrmxt.md) |
 | Godot VFX profile | [implementations/godot-vfx.md](implementations/godot-vfx.md) |
 | three-vrm VFX profile | [implementations/three-vrm-vfx.md](implementations/three-vrm-vfx.md) |
@@ -258,7 +278,7 @@ Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
 
 | Topic | Status |
 |-------|--------|
-| Shared post-load registry inside upstream UniVRM | TBD (UniVRMXT uses explicit attach today) |
-| Editor `.vrm` import callback for UniVRM `VrmScriptedImporter` | Tracked in UniVRMXT (issue #4) |
-| Unity / Three.js / Unreal / Godot Extended **export** timelines | TBD per engine profile |
+| Shared post-load registry inside upstream UniVRM | TBD (Extended-UniVRM registries + UniVRMXT soft-detect; propose upstream) |
+| Full Unity from-scratch VFX authoring UI (vs Blender + Unity re-export) | Open; re-export and materials override authoring already ship |
+| Three.js / Unreal / Godot Extended **export** timelines | TBD per engine profile |
 | Cross-engine authoring round-trip conformance tests for each `VRMXT_*` | TBD |
