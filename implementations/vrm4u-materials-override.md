@@ -26,7 +26,7 @@ The consumer selects `overrides[]` where `engine` equals `unreal`.
 
 | Property | Type | Required | Meaning |
 |----------|------|----------|---------|
-| `material.kind` | string | yes | `"materialSet"` |
+| `material.idType` | string | yes | `"materialSet"` |
 | `material.provider` | object | no | Unreal plugin hint |
 | `material.provider.id` | string | yes if `provider` present | Unreal plugin name |
 | `material.provider.version` | string | no | Exporter-observed plugin version |
@@ -36,10 +36,13 @@ The consumer selects `overrides[]` where `engine` equals `unreal`.
 | `variants.translucent` | string | no | Blend, one-sided parent |
 | `variants.translucentTwoSided` | string | no | Blend, two-sided parent |
 
-At least one variant MUST be present. `provider` is advisory per base-spec rules 18–21.
-This profile MUST NOT require a closed material registry. A consumer MAY compare
-`provider` with the installed `.uplugin`; asset resolution determines support. Catalog
-absence MUST NOT reject the file.
+This profile has no single `id`: `idType: "materialSet"` identifies the whole
+`variants` object as the material identity, since Unreal needs a distinct parent per
+blend/culling combination rather than one shader string. At least one variant MUST be
+present. `provider` is advisory per base-spec rules 18–21. This profile MUST NOT require
+a closed material registry. A consumer MAY compare `provider` with the installed
+`.uplugin`; asset resolution determines support. Catalog absence MUST NOT reject the
+file.
 
 ### Example
 
@@ -47,7 +50,7 @@ absence MUST NOT reject the file.
 {
   "engine": "unreal",
   "material": {
-    "kind": "materialSet",
+    "idType": "materialSet",
     "provider": {
       "id": "ExampleMaterials",
       "version": "1.0.0"
@@ -79,6 +82,13 @@ absence MUST NOT reject the file.
       "source": "shadingToonyFactor",
       "target": "mtoon_ShadeToony",
       "targetType": "scalar"
+    }
+  ],
+  "properties": [
+    {
+      "name": "mtoon_UseRimLight",
+      "type": "shaderFeature",
+      "value": true
     }
   ]
 }
@@ -129,7 +139,8 @@ A separate plugin can support the extension when it owns the VRM loading entry p
 1. Parse the GLB JSON and retain each material's `unreal` override.
 2. Run the normal VRM4U load.
 3. Resolve the selected parent asset for each source material.
-4. Create a material instance from that parent, then apply `bindings`.
+4. Create a material instance from that parent, then apply `properties`, then
+   `bindings`.
 5. Replace generated material references in `UVrmAssetListObject::Materials` and the
    skeletal mesh material slots.
 6. Leave the original VRM4U material untouched when any step fails.
@@ -157,11 +168,25 @@ VRM4U parent materials conventionally expose `mtoon_*` and `gltf_*` parameters.
 | `shadingToonyFactor` | `mtoon_ShadeToony` | `scalar` |
 
 `scalar`, `vector`, and `texture` use material-instance parameter setters. A
-`staticSwitch` may require a material-instance-constant permutation rebuild and is not
-equivalent to a runtime scalar parameter.
+`shaderFeature` (an Unreal Material **Static Switch** parameter) may require a
+material-instance-constant permutation rebuild and is not equivalent to a runtime
+scalar parameter.
 
 Current VRM4U conversion does not populate every MToon 1.0 field listed by the base
 spec. The optional plugin must read those values from raw JSON when it supports them.
+
+## Properties
+
+`overrides[].properties` sets literal values on the resolved parent material instance
+with no `VRMC_materials_mtoon` dependency (base-spec rules 22–26). `properties[].name`
+is a parent material parameter name (conventionally `mtoon_*` or `gltf_*`, matching the
+bindings table above); `type` selects the matching instance-parameter setter, reading
+`value` (or `texture`) directly instead of a resolved MToon source.
+
+The plugin applies `properties` before `bindings` per rule 23, so a `bindings` entry
+wins if an authoring error targets the same parameter name. `shaderFeature` properties
+carry the same `UMaterialInstanceConstant` permutation-rebuild caveat as `shaderFeature`
+bindings.
 
 ## Packaging
 
@@ -187,7 +212,8 @@ leave the stock generated material and mesh slot in place.
 
 - [ ] Outline parent override and parameter inheritance
 - [ ] Masked-parent support beyond VRM4U's current material-set API
-- [ ] Static-switch behavior for editor constants and runtime dynamic instances
+- [ ] Shader-feature (Static Switch) behavior for editor constants and runtime dynamic
+      instances
 - [ ] Stable mapping between source material indices and post-import mesh slots
 
 ## Source references

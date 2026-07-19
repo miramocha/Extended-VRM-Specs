@@ -121,11 +121,11 @@ covers every provider.
 Post-load apply (approximate):
 
 1. Select `engine: "unity"` (and matching `variant` for Built-in vs URP / Warudo Pro).
-2. Resolve `material.name` via `Shader.Find` (shader must be in the plugin mod / player).
+2. Resolve `material.id` via `Shader.Find` (shader must be in the plugin mod / player).
 3. Map glTF material index → Unity materials on the Character (`CharacterAsset.Materials`,
    renderers, or `Vrm10Instance` / `RuntimeGltfInstance` when present).
-4. Apply `bindings` (`scalar` / `vector` / `texture` / `staticSwitch`). Reuse textures
-   already imported on the avatar where possible.
+4. Apply `properties`, then `bindings` (`scalar` / `vector` / `texture` /
+   `shaderFeature`). Reuse textures already imported on the avatar where possible.
 5. On missing shader or failed resolve, leave Warudo’s stock material for that index.
 
 This is weaker than load-time `MaterialDescriptor` generation: first frames may show

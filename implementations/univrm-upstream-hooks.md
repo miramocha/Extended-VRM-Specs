@@ -242,6 +242,7 @@ Lower priority for AssetDatabase prefab editing; high value for runtime hosts.
 | 2026-07 | Extended-UniVRM ships import extension registry; UniVRMXT soft-detects and dual-paths. |
 | 2026-07 | Project Settings/VRM10 gate for import extensions; off → companion prefab. |
 | 2026-07 | Extended-UniVRM ships export extension registry (PreHierarchy / PrepareTextures / WriteExtensions); UniVRMXT writes `VRMXT_vfx` on VRM export. |
+| 2026-07 | `Vrm10ExportExtensionContext` gains `AddMaterialExtension` + `TryGetMaterialIndex` so `WriteExtensions` handlers can write per-material glTF extensions (e.g. `VRMXT_materials_override`), not just root extensions. |
 
 ## Links into UniVRM source (0.131.x / Extended-UniVRM)
 

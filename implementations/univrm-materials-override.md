@@ -27,8 +27,8 @@ The consumer selects `overrides[]` where `engine` equals `unity`.
 
 | Property | Type | Required | Meaning |
 |----------|------|----------|---------|
-| `material.kind` | string | yes | `"shader"` |
-| `material.name` | string | yes | Exact Unity shader name |
+| `material.idType` | string | yes | `"shaderName"` |
+| `material.id` | string | yes | Exact Unity shader name |
 | `material.variant` | string | no | `builtin`, `urp`, or `hdrp` |
 | `material.provider` | object | no | Unity package hint |
 | `material.provider.id` | string | yes if `provider` present | Unity package name |
@@ -44,12 +44,12 @@ import when the shader or requested pipeline variant cannot be resolved.
 {
   "engine": "unity",
   "material": {
-    "kind": "shader",
-    "name": "Example/SkinToon",
+    "idType": "shaderName",
+    "id": "Example/SkinToon",
     "variant": "urp",
     "provider": {
       "id": "com.example.vrmxt-materials",
-      "version": "1.0.0"
+      "version": "1.2.0"
     }
   },
   "bindings": [
@@ -73,12 +73,21 @@ import when the shader or requested pipeline variant cannot be resolved.
       "target": "_ShadingToonyFactor",
       "targetType": "scalar"
     }
+  ],
+  "properties": [
+    {
+      "name": "_UseRimLight",
+      "type": "shaderFeature",
+      "value": true
+    }
   ]
 }
 ```
 
-`material.name` is the exact string passed to `Shader.Find`. `provider.id` is a Unity
-package name. `variant` identifies the intended render pipeline:
+`material.idType` names the identity scheme; `"shaderName"` is the only value this
+profile defines today. `material.id` is the exact string passed to `Shader.Find` — no
+GUID. `provider.id` is a Unity package name. `variant` identifies the intended render
+pipeline:
 
 | Value | Unity pipeline |
 |-------|----------------|
@@ -96,8 +105,9 @@ VRM 1.0 generator:
 
 1. Read `materials[i].extensions.VRMXT_materials_override`.
 2. Select the `unity` entry.
-3. Resolve `material.name`.
-4. Return a `MaterialDescriptor` using the resolved shader and declared bindings.
+3. Resolve `material.id` via `Shader.Find` (per `material.idType: "shaderName"`).
+4. Return a `MaterialDescriptor` using the resolved shader, declared `properties`, and
+   declared `bindings`.
 5. Delegate to the stock generator when any step fails.
 
 Runtime callers pass the wrapper through the `materialGenerator` argument on
@@ -109,17 +119,17 @@ its built-in MToon, unlit, and PBR selection.
 
 ## Package and shader resolution
 
-The VRM file names a Unity shader (`material.name`); it does not contain shader source.
+The VRM file names a Unity shader (`material.id`); it does not contain shader source.
 UniVRMXT and the host app MUST include any shaders they intend to honor, and MUST keep
 those shaders in player builds (referenced materials, shader variant collections,
 Resources, or Always Included Shaders). `provider` is an advisory package hint only.
 
 Runtime resolve order for a supporting consumer:
 
-1. Read the `unity` override and `material.name`.
+1. Read the `unity` override and `material.id`.
 2. Resolve the shader (typically `Shader.Find`).
 3. If the shader is present and the `variant` matches the active pipeline, build the
-   override material and apply `bindings`.
+   override material and apply `properties`, then `bindings`.
 4. If the shader is missing, stripped, or incompatible, use stock VRM 1.0 import for
    that material.
 
@@ -138,11 +148,37 @@ The generator reads resolved values from `VRMC_materials_mtoon` and writes them 
 | `scalar` | `Material.SetFloat` |
 | `vector` | `Material.SetVector` or `SetColor`, according to the target shader |
 | `texture` | Imported glTF texture assigned with `Material.SetTexture` |
-| `staticSwitch` | Shader keyword enable/disable |
+| `shaderFeature` | `Material.EnableKeyword` / `DisableKeyword` for a `#pragma shader_feature` or ShaderLab `[Toggle]` keyword |
 
 The example Unity targets in the base spec follow UniVRM MToon10 naming where applicable:
 `_ShadeTex`, `_ShadingShiftFactor`, `_ShadingToonyFactor`, and
 `_GiEqualizationFactor`. Custom shaders may use different targets.
+
+## Properties
+
+`overrides[].properties` sets literal values on the resolved shader with no
+`VRMC_materials_mtoon` dependency (base-spec rules 22–26). `properties[].name` is a Unity
+material property name (for example `_UseRimLight`); `type` selects the same Unity
+operation as the matching row in the bindings table above, reading `value` (or
+`texture`) directly instead of a resolved MToon source.
+
+A wrapper applies `properties` before `bindings` per rule 23, so a `bindings` entry wins
+if an authoring error targets the same parameter name.
+
+Exporters that emit a `properties[].texture` reference MUST register the source image
+during the `Vrm10ExportExtensionPhase.PrepareTextures` phase (see
+`IVrm10ExportExtension` / `Vrm10ExportExtensionContext.RegisterSRgbTexture` and
+equivalents) so the texture lands in the file's `textures[]` before export finishes, per
+base-spec rule 26.
+
+## Variant survival
+
+`material.variant` records shader authoring intent, not the active Unity render
+pipeline. A supporting exporter MUST NOT overwrite an existing `variant` value with the
+active editor render pipeline on re-export: an entry authored `hdrp` stays `hdrp` even
+when re-exported from a URP project, or when the file is re-imported and re-exported
+elsewhere. An exporter MAY fill `variant` from the active render pipeline only when it
+creates a brand-new `unity` entry that has no `variant` yet.
 
 ## Fallback
 
@@ -170,5 +206,7 @@ path is post-load re-read of the `.vrm` plus material swap. See
 - `Packages/UniGLTF/Runtime/UniGLTF/IO/MaterialIO/Import/IMaterialDescriptorGenerator.cs`
 - `Packages/UniGLTF/Runtime/UniGLTF/IO/MaterialIO/Import/MaterialDescriptor.cs`
 - `Packages/VRM10/Runtime/IO/Vrm10.cs`
+- `Packages/VRM10/Runtime/IO/Vrm10Exporter.cs`
+- `Packages/VRM10/Runtime/IO/Export/Vrm10ExportExtension.cs`
 - `Packages/VRM10/Editor/Settings/MaterialDescriptorGeneratorFactory.cs`
 - `Packages/VRM10/Editor/ScriptedImporter/VrmScriptedImporterImpl.cs`
