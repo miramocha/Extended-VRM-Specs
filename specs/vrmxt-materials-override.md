@@ -260,10 +260,8 @@ Engine integration details are documented in
 - [ ] Shader-feature rebuild behavior
 - [ ] Precedence vs `VRMC_materials_mtoon` and `KHR_materials_unlit`
 - [ ] Whether `extensionsRequired` is ever appropriate
-- [ ] Export rules for Blender / other authoring tools — VRMXT-Extension-for-Blender
-      still parses `kind` / `name`; UniVRMXT emits `idType` / `id`, so
-      Unity→Blender→Unity drops the extension until the Blender format layer switches
-      (no dual-read; nothing in production uses the old names — see
+- [ ] Export rules for Blender / other authoring tools (Blender format layer now uses
+      `idType` / `id` and verbatim JSON store/write; authoring UI still open — see
       [Blender Materials Override](../implementations/blender-materials-override.md))
 - [ ] Stable `specVersion` policy after first accepted property set
 
