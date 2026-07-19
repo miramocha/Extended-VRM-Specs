@@ -21,7 +21,9 @@ source changes are not required.
 
 ## Supported entry
 
-The consumer selects `overrides[]` where `engine` equals `unity`.
+The consumer considers all `overrides[]` where `engine` equals `unity`. Selection uses
+`material.variant` as this profile's refinement of the base-spec selection key
+(rules 6–7).
 
 ### Profile properties
 
@@ -29,7 +31,7 @@ The consumer selects `overrides[]` where `engine` equals `unity`.
 |----------|------|----------|---------|
 | `material.idType` | string | yes | `"shaderName"` |
 | `material.id` | string | yes | Exact Unity shader name |
-| `material.variant` | string | no | `builtin`, `urp`, or `hdrp` |
+| `material.variant` | string | no (see Selection) | `builtin`, `urp`, or `hdrp` |
 | `material.provider` | object | no | Unity package hint |
 | `material.provider.id` | string | yes if `provider` present | Unity package name |
 | `material.provider.version` | string | no | Exporter-observed package version |
@@ -38,7 +40,22 @@ The consumer selects `overrides[]` where `engine` equals `unity`.
 shader registry. A consumer MAY warn about package/version mismatch. It MUST use stock
 import when the shader or requested pipeline variant cannot be resolved.
 
-### Example
+### Selection
+
+- **One `unity` entry:** `material.variant` MAY be omitted or empty. That entry matches
+  any active pipeline.
+- **Two or more `unity` entries:** each MUST have a non-empty `material.variant` of
+  `builtin`, `urp`, or `hdrp`. Duplicate `(unity, variant)` pairs are invalid under
+  base-spec rule 6.
+- Selection order:
+  1. Prefer the entry whose `variant` equals the active pipeline.
+  2. Else, if exactly one `unity` entry has omitted or empty `variant`, use that.
+  3. Else use stock import for that material (do not apply a mismatched pipeline entry).
+
+Authors MAY store several pipeline slots (for example `builtin` and `urp`) on one
+material. Only the slot selected above is applied.
+
+### Example (single pipeline)
 
 ```json
 {
@@ -84,6 +101,38 @@ import when the shader or requested pipeline variant cannot be resolved.
 }
 ```
 
+### Example (builtin and urp siblings)
+
+```json
+{
+  "specVersion": "1.0",
+  "overrides": [
+    {
+      "engine": "unity",
+      "material": {
+        "idType": "shaderName",
+        "id": "VRMXT/Samples/TestOverrideBuiltin",
+        "variant": "builtin"
+      },
+      "properties": [
+        { "name": "_Color", "type": "vector", "value": [0, 1, 0, 1] }
+      ]
+    },
+    {
+      "engine": "unity",
+      "material": {
+        "idType": "shaderName",
+        "id": "VRMXT/Samples/TestOverrideURP",
+        "variant": "urp"
+      },
+      "properties": [
+        { "name": "_Color", "type": "vector", "value": [1, 1, 0, 1] }
+      ]
+    }
+  ]
+}
+```
+
 `material.idType` names the identity scheme; `"shaderName"` is the only value this
 profile defines today. `material.id` is the exact string passed to `Shader.Find` — no
 GUID. `provider.id` is a Unity package name. `variant` identifies the intended render
@@ -104,7 +153,7 @@ UniVRM exposes `IMaterialDescriptorGenerator`. A supporting package wraps the st
 VRM 1.0 generator:
 
 1. Read `materials[i].extensions.VRMXT_materials_override`.
-2. Select the `unity` entry.
+2. Select the `unity` entry for the active pipeline per Selection.
 3. Resolve `material.id` via `Shader.Find` (per `material.idType: "shaderName"`).
 4. Return a `MaterialDescriptor` using the resolved shader, declared `properties`, and
    declared `bindings`.
@@ -126,10 +175,10 @@ Resources, or Always Included Shaders). `provider` is an advisory package hint o
 
 Runtime resolve order for a supporting consumer:
 
-1. Read the `unity` override and `material.id`.
+1. Select the `unity` override for the active pipeline (Selection) and read `material.id`.
 2. Resolve the shader (typically `Shader.Find`).
-3. If the shader is present and the `variant` matches the active pipeline, build the
-   override material and apply `properties`, then `bindings`.
+3. If the shader is present and the selected entry is compatible, build the override
+   material and apply `properties`, then `bindings`.
 4. If the shader is missing, stripped, or incompatible, use stock VRM 1.0 import for
    that material.
 
@@ -173,12 +222,16 @@ base-spec rule 26.
 
 ## Variant survival
 
-`material.variant` records shader authoring intent, not the active Unity render
-pipeline. A supporting exporter MUST NOT overwrite an existing `variant` value with the
-active editor render pipeline on re-export: an entry authored `hdrp` stays `hdrp` even
-when re-exported from a URP project, or when the file is re-imported and re-exported
-elsewhere. An exporter MAY fill `variant` from the active render pipeline only when it
-creates a brand-new `unity` entry that has no `variant` yet.
+`material.variant` names the render-pipeline slot for that entry. Re-export and
+authoring treat it as stored intent for that slot.
+
+- Re-export MUST NOT delete or rewrite sibling `unity` entries for other variants.
+- Authoring or sync for the active pipeline MUST update only the matching
+  `(unity, variant)` slot, creating that slot when missing.
+- An exporter MAY set `variant` from the active render pipeline only when creating a
+  new slot that has no `variant` yet.
+- Existing non-empty `variant` values MUST NOT be overwritten with the active pipeline
+  (an entry authored `hdrp` stays `hdrp` when re-exported from URP).
 
 ## Fallback
 

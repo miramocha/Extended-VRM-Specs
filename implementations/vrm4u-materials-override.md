@@ -20,46 +20,67 @@ custom material extensions during its normal conversion flow.
 
 ## Supported entry
 
-The consumer selects `overrides[]` where `engine` equals `unreal`.
+The consumer considers all `overrides[]` where `engine` equals `unreal`. Selection uses
+`material.variant` as this profile's refinement of the base-spec selection key
+(rules 6–7). Sibling `unreal` entries can each name one blend/cull parent; a loader MAY
+fold those siblings into a `UVrmImportMaterialSet` when talking to VRM4U's material-set
+API.
 
 ### Profile properties
 
 | Property | Type | Required | Meaning |
 |----------|------|----------|---------|
-| `material.idType` | string | yes | `"materialSet"` |
+| `material.idType` | string | yes | `"resourcePath"` |
+| `material.id` | string | yes | Resource path string for a parent material |
+| `material.variant` | string | no (see Selection) | `opaque`, `opaqueTwoSided`, `translucent`, or `translucentTwoSided` |
 | `material.provider` | object | no | Unreal plugin hint |
 | `material.provider.id` | string | yes if `provider` present | Unreal plugin name |
 | `material.provider.version` | string | no | Exporter-observed plugin version |
-| `material.variants` | object | yes | Parent material soft object paths |
-| `variants.opaque` | string | no | Opaque, one-sided parent |
-| `variants.opaqueTwoSided` | string | no | Opaque, two-sided parent |
-| `variants.translucent` | string | no | Blend, one-sided parent |
-| `variants.translucentTwoSided` | string | no | Blend, two-sided parent |
 
-This profile has no single `id`: `idType: "materialSet"` identifies the whole
-`variants` object as the material identity, since Unreal needs a distinct parent per
-blend/culling combination rather than one shader string. At least one variant MUST be
-present. `provider` is advisory per base-spec rules 18–21. This profile MUST NOT require
-a closed material registry. A consumer MAY compare `provider` with the installed
-`.uplugin`; asset resolution determines support. Catalog absence MUST NOT reject the
-file.
+`material.id` is an engine resource path. In Unreal today that string is a soft object
+path resolving to a `UMaterialInterface` parent. `provider` is advisory per base-spec
+rules 18–21. This profile MUST NOT require a closed material registry. A consumer MAY
+compare `provider` with the installed `.uplugin`; asset resolution determines support.
+Catalog absence MUST NOT reject the file.
 
-### Example
+Authors need only the slots they care about (opaque-only is valid). Missing selected
+slot or unresolved `id` → stock import for that material.
+
+### Selection
+
+- **One `unreal` entry:** `material.variant` MAY be omitted or empty. That entry matches
+  any blend/cull combination derived from the glTF material.
+- **Two or more `unreal` entries:** each MUST have a non-empty `material.variant` from
+  the table below. Duplicate `(unreal, variant)` pairs are invalid under base-spec
+  rule 6.
+- Otherwise pick the entry whose `variant` matches core glTF material state:
+
+| `alphaMode` | `doubleSided` | Select `variant` |
+|-------------|---------------|------------------|
+| `OPAQUE` | `false` | `opaque` |
+| `OPAQUE` | `true` | `opaqueTwoSided` |
+| `MASK` | `false` | `opaque` |
+| `MASK` | `true` | `opaqueTwoSided` |
+| `BLEND` | `false` | `translucent` |
+| `BLEND` | `true` | `translucentTwoSided` |
+
+If no entry matches, use stock VRM4U material behavior. The parent determines Unreal
+blend and culling. VRM4U's current material-set API has no separate masked parent. A
+parent used for `MASK` must preserve alpha cutoff through its own parameter contract;
+otherwise the consumer falls back to the stock material.
+
+### Example (single slot)
 
 ```json
 {
   "engine": "unreal",
   "material": {
-    "idType": "materialSet",
+    "idType": "resourcePath",
+    "id": "/ExampleMaterials/Materials/M_Skin_Opaque.M_Skin_Opaque",
+    "variant": "opaque",
     "provider": {
       "id": "ExampleMaterials",
       "version": "1.0.0"
-    },
-    "variants": {
-      "opaque": "/ExampleMaterials/Materials/M_Skin_Opaque.M_Skin_Opaque",
-      "opaqueTwoSided": "/ExampleMaterials/Materials/M_Skin_OpaqueTwoSided.M_Skin_OpaqueTwoSided",
-      "translucent": "/ExampleMaterials/Materials/M_Skin_Translucent.M_Skin_Translucent",
-      "translucentTwoSided": "/ExampleMaterials/Materials/M_Skin_TranslucentTwoSided.M_Skin_TranslucentTwoSided"
     }
   },
   "bindings": [
@@ -94,27 +115,50 @@ file.
 }
 ```
 
-`provider.id` is an Unreal plugin name. Variant values are Unreal asset soft object
-paths resolving to `UMaterialInterface` parents.
+### Example (opaque and translucent siblings)
 
-## Parent selection
+```json
+{
+  "specVersion": "1.0",
+  "overrides": [
+    {
+      "engine": "unreal",
+      "material": {
+        "idType": "resourcePath",
+        "id": "/Game/Example/M_Skin_Opaque",
+        "variant": "opaque"
+      }
+    },
+    {
+      "engine": "unreal",
+      "material": {
+        "idType": "resourcePath",
+        "id": "/Game/Example/M_Skin_Translucent",
+        "variant": "translucent"
+      }
+    }
+  ]
+}
+```
 
-The consumer chooses one variant from core glTF material state:
+`provider.id` is an Unreal plugin name.
 
-| `alphaMode` | `doubleSided` | Variant |
-|-------------|---------------|---------|
-| `OPAQUE` | `false` | `opaque` |
-| `OPAQUE` | `true` | `opaqueTwoSided` |
-| `MASK` | `false` | `opaque` |
-| `MASK` | `true` | `opaqueTwoSided` |
-| `BLEND` | `false` | `translucent` |
-| `BLEND` | `true` | `translucentTwoSided` |
+### Migration from `materialSet`
 
-The parent determines Unreal blend and culling behavior. Missing selected variants,
-unloaded assets, and incompatible parent types invoke stock VRM4U material behavior.
-VRM4U's current material-set API has no separate masked parent. A parent used for `MASK`
-must preserve alpha cutoff through its own parameter contract; otherwise the consumer
-falls back to the stock material.
+Older drafts used `idType: "materialSet"` with a nested `material.variants` map of soft
+object paths. Supporting readers SHOULD expand each present map key into a sibling
+`unreal` entry with `idType: "resourcePath"`, `id` set to that path, and `variant` set
+to the map key. New writers MUST emit `resourcePath` + `variant` only and MUST NOT emit
+`materialSet` / `variants` maps.
+
+## Variant survival
+
+- Re-export and authoring MUST update only the `unreal` slot for the blend/cull state
+  being authored (create the slot when missing).
+- Sibling `unreal` entries for other variants MUST NOT be deleted or rewritten as a
+  side effect.
+- An exporter MAY set `variant` from glTF `alphaMode` / `doubleSided` only when creating
+  a new slot that has no `variant` yet.
 
 ## Current VRM4U integration surface
 
@@ -136,9 +180,11 @@ plugin using the stock loader must parse the GLB JSON independently.
 
 A separate plugin can support the extension when it owns the VRM loading entry point:
 
-1. Parse the GLB JSON and retain each material's `unreal` override.
+1. Parse the GLB JSON and retain each material's `unreal` override entries.
 2. Run the normal VRM4U load.
-3. Resolve the selected parent asset for each source material.
+3. For each source material, select the matching sibling entry (Selection) and resolve
+   `material.id`. A loader MAY also assemble sibling paths into a
+   `UVrmImportMaterialSet` when that API is useful.
 4. Create a material instance from that parent, then apply `properties`, then
    `bindings`.
 5. Replace generated material references in `UVrmAssetListObject::Materials` and the
@@ -196,17 +242,17 @@ bindings.
 - Provider resolution may use `IPluginManager` and soft object paths.
 - Runtime material loading needs validation for each packaged platform and VRM4U build.
 
-The VRM file stores soft object paths under `material.variants`; it does not embed Unreal
-material assets. A supporting consumer MUST cook or otherwise include any parent
-materials it intends to honor. Resolve the selected path at load time; on miss, leave
-the stock VRM4U material (see Fallback). Remote download of material source is out of
-scope for this profile.
+The VRM file stores resource paths in `material.id` (`idType: "resourcePath"`); it does
+not embed Unreal material assets. A supporting consumer MUST cook or otherwise include
+any parent materials it intends to honor. Resolve the selected path at load time; on
+miss, leave the stock VRM4U material (see Fallback). Remote download of material source
+is out of scope for this profile.
 
 ## Fallback
 
 Package absence requires no action: VRM4U ignores the unknown extension. With the package
-installed, unknown providers, unresolved assets, missing variants, and invalid bindings
-leave the stock generated material and mesh slot in place.
+installed, unknown providers, unresolved assets, missing selected variants, and invalid
+bindings leave the stock generated material and mesh slot in place.
 
 ## Open questions
 
