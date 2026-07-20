@@ -63,3 +63,11 @@ Optional `VRMXT_*` consumers:
 | [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hook API (prefs, exclude prop, upstream propose) | draft |
 | [Blender VFX](implementations/blender-vfx.md) | Blender VRMXT extension / `VRMXT_vfx` | draft |
 | [Blender Materials Override](implementations/blender-materials-override.md) | Blender VRMXT extension / `VRMXT_materials_override` (Unreal `resourcePath` + multi-variant format/UI pending) | draft |
+
+## References
+
+| Note | Topic | Status |
+|------|-------|--------|
+| [Materials Override Catalogs](references/materials-override-catalogs.md) | Non-normative shader catalogs (schema, distribution, index); JSON under `references/catalogs/data/` | draft |
+| [Unity lilToon Catalog](references/catalogs/unity-liltoon.md) | lilToon `shaderName` / type map / curated subset stub | draft |
+| [Unity Poiyomi Catalog](references/catalogs/unity-poiyomi.md) | Poiyomi Toon catalog stub (`.poiyomi/Poiyomi Toon`) | draft |

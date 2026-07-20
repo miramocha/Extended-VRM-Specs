@@ -12,6 +12,7 @@ Agent guidance for Extended-VRM-Specs: specification prose, ADRs, and schema doc
 | `rules/deslop-markdown.mdc` | Run deslop on authored `.md` prose before handoff |
 | `rules/handoff-and-git.mdc` | Diff/handoff/git safety |
 | `skills/deslop/` | De-slop skill + tell catalog + register guide |
+| `skills/unity-shader-catalog/` | ShaderLab extract + materials-override catalog JSON scaffold |
 
 ## Deliberately not included
 
@@ -23,3 +24,5 @@ Agent guidance for Extended-VRM-Specs: specification prose, ADRs, and schema doc
 
 - User says **deslop**, **de-slop**, `/deslop`, **remove AI tells**, or **humanize**
 - Agent drafts or materially edits markdown prose before handoff
+- User asks to extract Unity ShaderLab props, scaffold / refresh materials-override
+  catalog JSON, or pin lilToon / Poiyomi shader revisions → `skills/unity-shader-catalog/`
