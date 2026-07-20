@@ -240,6 +240,13 @@ stock `BuiltInVrm10MaterialDescriptorGenerator` or
 `UrpVrm10MaterialDescriptorGenerator`. Unsupported files therefore load as normal
 VRM 1.0 assets when the optional package is missing, disabled, or incomplete.
 
+## Authoring catalogs
+
+Shared shader catalog JSON (lilToon, Poiyomi, …) is owned by Specs and vendored into
+consumers. UniVRMXT MAY load the same files for Editor authoring later. See
+[Materials Override Catalogs](../references/materials-override-catalogs.md) (Ownership /
+Distribution). Runtime apply does not require catalogs.
+
 ## Known constraints
 
 - Built-in UniVRM generator selection covers Built-in RP and URP. HDRP support requires

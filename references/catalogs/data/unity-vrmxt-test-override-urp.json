@@ -1,0 +1,104 @@
+{
+  "catalogVersion": "1.0",
+  "engine": "unity",
+  "displayName": "VRMXT Test Override (URP)",
+  "shaderName": "VRMXT/Samples/TestOverrideURP",
+  "idType": "shaderName",
+  "defaultVariant": "urp",
+  "supportedVariants": [
+    "urp"
+  ],
+  "provider": {
+    "id": "com.miramocha.univrmxt",
+    "version": "0.1.0"
+  },
+  "properties": [
+    {
+      "name": "_MainTex",
+      "type": "texture",
+      "displayName": "Main Texture",
+      "common": true
+    },
+    {
+      "name": "_Color",
+      "type": "vector",
+      "displayName": "Main Color",
+      "common": true,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "_ShadeColor",
+      "type": "vector",
+      "displayName": "Shade Color",
+      "common": true,
+      "vectorSize": 4,
+      "default": [
+        0.8,
+        0.8,
+        0.8,
+        1
+      ]
+    },
+    {
+      "name": "_ShadeTex",
+      "type": "texture",
+      "displayName": "Shade Multiply",
+      "common": true
+    },
+    {
+      "name": "_ShadingShiftFactor",
+      "type": "scalar",
+      "displayName": "Shading Shift",
+      "common": true,
+      "default": 0
+    },
+    {
+      "name": "_ShadingShiftTex",
+      "type": "texture",
+      "displayName": "Shading Shift Map",
+      "common": true
+    },
+    {
+      "name": "_ShadingShiftTexScale",
+      "type": "scalar",
+      "displayName": "Shading Shift Map Scale",
+      "common": true,
+      "default": 1
+    },
+    {
+      "name": "_ShadingToonyFactor",
+      "type": "scalar",
+      "displayName": "Shading Toony",
+      "common": true,
+      "default": 0.9
+    },
+    {
+      "name": "_GiEqualizationFactor",
+      "type": "scalar",
+      "displayName": "GI Equalization",
+      "common": true,
+      "default": 0.9
+    },
+    {
+      "name": "_OutlineWidth",
+      "type": "scalar",
+      "displayName": "Outline Width",
+      "common": true,
+      "default": 0.02
+    },
+    {
+      "name": "_USE_RIM_LIGHT",
+      "type": "shaderFeature",
+      "displayName": "Use Rim Light",
+      "common": true,
+      "keyword": "_USE_RIM_LIGHT",
+      "default": false
+    }
+  ]
+}

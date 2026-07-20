@@ -1,0 +1,2805 @@
+{
+  "catalogVersion": "1.0",
+  "engine": "unity",
+  "displayName": "lilToon Cutout",
+  "shaderName": "Hidden/lilToonCutout",
+  "idType": "shaderName",
+  "defaultVariant": "builtin",
+  "supportedVariants": [
+    "builtin",
+    "urp"
+  ],
+  "properties": [
+    {
+      "name": "_Invisible",
+      "type": "scalar",
+      "displayName": "Invisible",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AsUnlit",
+      "type": "scalar",
+      "displayName": "As Unlit",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Cutoff",
+      "type": "scalar",
+      "displayName": "Cutoff",
+      "common": true,
+      "default": 0.5
+    },
+    {
+      "name": "_SubpassCutoff",
+      "type": "scalar",
+      "displayName": "Subpass Cutoff",
+      "common": false,
+      "default": 0.5
+    },
+    {
+      "name": "_FlipNormal",
+      "type": "scalar",
+      "displayName": "Flip Normal",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ShiftBackfaceUV",
+      "type": "scalar",
+      "displayName": "Shift Backface UV",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_BackfaceForceShadow",
+      "type": "scalar",
+      "displayName": "Backface Force Shadow",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_BackfaceColor",
+      "type": "vector",
+      "displayName": "Backface Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_VertexLightStrength",
+      "type": "scalar",
+      "displayName": "Vertex Light Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_LightMinLimit",
+      "type": "scalar",
+      "displayName": "Light Min Limit",
+      "common": false,
+      "default": 0.05
+    },
+    {
+      "name": "_LightMaxLimit",
+      "type": "scalar",
+      "displayName": "Light Max Limit",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_BeforeExposureLimit",
+      "type": "scalar",
+      "displayName": "Before Exposure Limit",
+      "common": false,
+      "default": 10000
+    },
+    {
+      "name": "_MonochromeLighting",
+      "type": "scalar",
+      "displayName": "Monochrome Lighting",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AlphaBoostFA",
+      "type": "scalar",
+      "displayName": "Alpha Boost FA",
+      "common": false,
+      "default": 10
+    },
+    {
+      "name": "_lilDirectionalLightStrength",
+      "type": "scalar",
+      "displayName": "lil Directional Light Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_LightDirectionOverride",
+      "type": "vector",
+      "displayName": "Light Direction Override",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0.001,
+        0.002,
+        0.001,
+        0
+      ]
+    },
+    {
+      "name": "_AAStrength",
+      "type": "scalar",
+      "displayName": "AAStrength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_UseDither",
+      "type": "scalar",
+      "displayName": "Use Dither",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_DitherTex",
+      "type": "texture",
+      "displayName": "Dither",
+      "common": false
+    },
+    {
+      "name": "_DitherMaxValue",
+      "type": "scalar",
+      "displayName": "Max Value",
+      "common": false,
+      "default": 255
+    },
+    {
+      "name": "_EnvRimBorder",
+      "type": "scalar",
+      "displayName": "[VRCLV] Rim Border",
+      "common": false,
+      "default": 3
+    },
+    {
+      "name": "_EnvRimBlur",
+      "type": "scalar",
+      "displayName": "[VRCLV] Rim Blur",
+      "common": false,
+      "default": 0.35
+    },
+    {
+      "name": "_Color",
+      "type": "vector",
+      "displayName": "Color",
+      "common": true,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_MainTex",
+      "type": "texture",
+      "displayName": "Main Texture",
+      "common": true
+    },
+    {
+      "name": "_MainTexHSVG",
+      "type": "vector",
+      "displayName": "Main Tex HSVG",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_MainGradationStrength",
+      "type": "scalar",
+      "displayName": "Gradation Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MainGradationTex",
+      "type": "texture",
+      "displayName": "Gradation Map",
+      "common": false
+    },
+    {
+      "name": "_MainColorAdjustMask",
+      "type": "texture",
+      "displayName": "Adjust Mask",
+      "common": false
+    },
+    {
+      "name": "_UseMain2ndTex",
+      "type": "scalar",
+      "displayName": "Use Main 2nd Texture",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Color2nd",
+      "type": "vector",
+      "displayName": "Color 2nd",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_Main2ndTex",
+      "type": "texture",
+      "displayName": "Main 2nd Texture",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexAngle",
+      "type": "scalar",
+      "displayName": "Main 2nd Tex Angle",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main2ndTexDecalAnimation",
+      "type": "vector",
+      "displayName": "Main 2nd Tex Decal Animation",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        30
+      ]
+    },
+    {
+      "name": "_Main2ndTexDecalSubParam",
+      "type": "vector",
+      "displayName": "Main 2nd Tex Decal Sub Param",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "_Main2ndTexIsDecal",
+      "type": "scalar",
+      "displayName": "Main 2nd Tex Is Decal",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main2ndTexIsLeftOnly",
+      "type": "scalar",
+      "displayName": "Left Only",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main2ndTexIsRightOnly",
+      "type": "scalar",
+      "displayName": "Right Only",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main2ndTexShouldCopy",
+      "type": "scalar",
+      "displayName": "Copy",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main2ndTexShouldFlipMirror",
+      "type": "scalar",
+      "displayName": "Flip Mirror",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main2ndTexShouldFlipCopy",
+      "type": "scalar",
+      "displayName": "Flip Copy",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main2ndTexIsMSDF",
+      "type": "scalar",
+      "displayName": "Main 2nd Tex Is MSDF",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main2ndBlendMask",
+      "type": "texture",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexBlendMode",
+      "type": "scalar",
+      "displayName": "Main 2nd Tex Blend Mode",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main2ndTexAlphaMode",
+      "type": "scalar",
+      "displayName": "Main 2nd Tex Alpha Mode",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main2ndEnableLighting",
+      "type": "scalar",
+      "displayName": "Main 2nd Enable Lighting",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Main2ndDissolveMask",
+      "type": "texture",
+      "displayName": "Dissolve Mask",
+      "common": false
+    },
+    {
+      "name": "_Main2ndDissolveNoiseMask",
+      "type": "texture",
+      "displayName": "Dissolve Noise Mask",
+      "common": false
+    },
+    {
+      "name": "_Main2ndDissolveNoiseStrength",
+      "type": "scalar",
+      "displayName": "Dissolve Noise Strength",
+      "common": false,
+      "default": 0.1
+    },
+    {
+      "name": "_Main2ndDissolveColor",
+      "type": "vector",
+      "displayName": "Main 2nd Dissolve Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_Main2ndDissolveParams",
+      "type": "vector",
+      "displayName": "Main 2nd Dissolve Params",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0.5,
+        0.1
+      ]
+    },
+    {
+      "name": "_Main2ndDissolvePos",
+      "type": "vector",
+      "displayName": "Dissolve Position",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_Main2ndDistanceFade",
+      "type": "vector",
+      "displayName": "Main 2nd Distance Fade",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0.1,
+        0.01,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_UseMain3rdTex",
+      "type": "scalar",
+      "displayName": "Use Main 3rd Texture",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Color3rd",
+      "type": "vector",
+      "displayName": "Color 3rd",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_Main3rdTex",
+      "type": "texture",
+      "displayName": "Main 3rd Texture",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexAngle",
+      "type": "scalar",
+      "displayName": "Main 3rd Tex Angle",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main3rdTexDecalAnimation",
+      "type": "vector",
+      "displayName": "Main 3rd Tex Decal Animation",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        30
+      ]
+    },
+    {
+      "name": "_Main3rdTexDecalSubParam",
+      "type": "vector",
+      "displayName": "Main 3rd Tex Decal Sub Param",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "_Main3rdTexIsDecal",
+      "type": "scalar",
+      "displayName": "Main 3rd Tex Is Decal",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main3rdTexIsLeftOnly",
+      "type": "scalar",
+      "displayName": "Left Only",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main3rdTexIsRightOnly",
+      "type": "scalar",
+      "displayName": "Right Only",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main3rdTexShouldCopy",
+      "type": "scalar",
+      "displayName": "Copy",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main3rdTexShouldFlipMirror",
+      "type": "scalar",
+      "displayName": "Flip Mirror",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main3rdTexShouldFlipCopy",
+      "type": "scalar",
+      "displayName": "Flip Copy",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main3rdTexIsMSDF",
+      "type": "scalar",
+      "displayName": "Main 3rd Tex Is MSDF",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main3rdBlendMask",
+      "type": "texture",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexBlendMode",
+      "type": "scalar",
+      "displayName": "Main 3rd Tex Blend Mode",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main3rdTexAlphaMode",
+      "type": "scalar",
+      "displayName": "Main 3rd Tex Alpha Mode",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Main3rdEnableLighting",
+      "type": "scalar",
+      "displayName": "Main 3rd Enable Lighting",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Main3rdDissolveMask",
+      "type": "texture",
+      "displayName": "Dissolve Mask",
+      "common": false
+    },
+    {
+      "name": "_Main3rdDissolveNoiseMask",
+      "type": "texture",
+      "displayName": "Dissolve Noise Mask",
+      "common": false
+    },
+    {
+      "name": "_Main3rdDissolveNoiseStrength",
+      "type": "scalar",
+      "displayName": "Dissolve Noise Strength",
+      "common": false,
+      "default": 0.1
+    },
+    {
+      "name": "_Main3rdDissolveColor",
+      "type": "vector",
+      "displayName": "Main 3rd Dissolve Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_Main3rdDissolveParams",
+      "type": "vector",
+      "displayName": "Main 3rd Dissolve Params",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0.5,
+        0.1
+      ]
+    },
+    {
+      "name": "_Main3rdDissolvePos",
+      "type": "vector",
+      "displayName": "Dissolve Position",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_Main3rdDistanceFade",
+      "type": "vector",
+      "displayName": "Main 3rd Distance Fade",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0.1,
+        0.01,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_AlphaMaskMode",
+      "type": "scalar",
+      "displayName": "Alpha Mask Mode",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AlphaMask",
+      "type": "texture",
+      "displayName": "AlphaMask",
+      "common": false
+    },
+    {
+      "name": "_AlphaMaskScale",
+      "type": "scalar",
+      "displayName": "Scale",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_AlphaMaskValue",
+      "type": "scalar",
+      "displayName": "Offset",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_UseBumpMap",
+      "type": "scalar",
+      "displayName": "Use Normal Map",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_BumpMap",
+      "type": "texture",
+      "displayName": "Normal Map",
+      "common": false
+    },
+    {
+      "name": "_BumpScale",
+      "type": "scalar",
+      "displayName": "Normal Scale",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_UseBump2ndMap",
+      "type": "scalar",
+      "displayName": "Use Normal Map 2nd",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Bump2ndMap",
+      "type": "texture",
+      "displayName": "Normal Map 2nd",
+      "common": false
+    },
+    {
+      "name": "_Bump2ndScale",
+      "type": "scalar",
+      "displayName": "Normal Map 2nd Scale",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Bump2ndScaleMask",
+      "type": "texture",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_UseAnisotropy",
+      "type": "scalar",
+      "displayName": "Use Anisotropy",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_AnisotropyTangentMap",
+      "type": "texture",
+      "displayName": "Tangent Map",
+      "common": false
+    },
+    {
+      "name": "_AnisotropyScale",
+      "type": "scalar",
+      "displayName": "Scale",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_AnisotropyScaleMask",
+      "type": "texture",
+      "displayName": "Scale Mask",
+      "common": false
+    },
+    {
+      "name": "_AnisotropyTangentWidth",
+      "type": "scalar",
+      "displayName": "Anisotropy Tangent Width",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_AnisotropyBitangentWidth",
+      "type": "scalar",
+      "displayName": "Anisotropy Bitangent Width",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_AnisotropyShift",
+      "type": "scalar",
+      "displayName": "Anisotropy Shift",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AnisotropyShiftNoiseScale",
+      "type": "scalar",
+      "displayName": "Anisotropy Shift Noise Scale",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AnisotropySpecularStrength",
+      "type": "scalar",
+      "displayName": "Anisotropy Specular Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Anisotropy2ndTangentWidth",
+      "type": "scalar",
+      "displayName": "Anisotropy 2nd Tangent Width",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Anisotropy2ndBitangentWidth",
+      "type": "scalar",
+      "displayName": "Anisotropy 2nd Bitangent Width",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Anisotropy2ndShift",
+      "type": "scalar",
+      "displayName": "Anisotropy 2nd Shift",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Anisotropy2ndShiftNoiseScale",
+      "type": "scalar",
+      "displayName": "Anisotropy 2nd Shift Noise Scale",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Anisotropy2ndSpecularStrength",
+      "type": "scalar",
+      "displayName": "Anisotropy 2nd Specular Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AnisotropyShiftNoiseMask",
+      "type": "texture",
+      "displayName": "Anisotropy Shift Noise Mask",
+      "common": false
+    },
+    {
+      "name": "_Anisotropy2Reflection",
+      "type": "scalar",
+      "displayName": "Anisotropy 2Reflection",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Anisotropy2MatCap",
+      "type": "scalar",
+      "displayName": "Anisotropy 2Mat Cap",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Anisotropy2MatCap2nd",
+      "type": "scalar",
+      "displayName": "Anisotropy 2Mat Cap 2nd",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_UseBacklight",
+      "type": "scalar",
+      "displayName": "Use Backlight",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_BacklightColor",
+      "type": "vector",
+      "displayName": "Backlight Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0.85,
+        0.8,
+        0.7,
+        1
+      ]
+    },
+    {
+      "name": "_BacklightColorTex",
+      "type": "texture",
+      "displayName": "Texture",
+      "common": false
+    },
+    {
+      "name": "_BacklightMainStrength",
+      "type": "scalar",
+      "displayName": "Backlight Main Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_BacklightNormalStrength",
+      "type": "scalar",
+      "displayName": "Backlight Normal Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_BacklightBorder",
+      "type": "scalar",
+      "displayName": "Border",
+      "common": false,
+      "default": 0.35
+    },
+    {
+      "name": "_BacklightBlur",
+      "type": "scalar",
+      "displayName": "Backlight Blur",
+      "common": false,
+      "default": 0.05
+    },
+    {
+      "name": "_BacklightDirectivity",
+      "type": "scalar",
+      "displayName": "Backlight Directivity",
+      "common": false,
+      "default": 5
+    },
+    {
+      "name": "_BacklightViewStrength",
+      "type": "scalar",
+      "displayName": "Backlight View Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_BacklightReceiveShadow",
+      "type": "scalar",
+      "displayName": "Backlight Receive Shadow",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_BacklightBackfaceMask",
+      "type": "scalar",
+      "displayName": "Backlight Backface Mask",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_UseShadow",
+      "type": "scalar",
+      "displayName": "Use Shadow",
+      "common": true,
+      "default": 1
+    },
+    {
+      "name": "_ShadowStrength",
+      "type": "scalar",
+      "displayName": "Shadow Strength",
+      "common": true,
+      "default": 1
+    },
+    {
+      "name": "_ShadowStrengthMask",
+      "type": "texture",
+      "displayName": "Shadow Strength Mask",
+      "common": false
+    },
+    {
+      "name": "_ShadowStrengthMaskLOD",
+      "type": "scalar",
+      "displayName": "LOD",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ShadowBorderMask",
+      "type": "texture",
+      "displayName": "Shadow Border Mask",
+      "common": false
+    },
+    {
+      "name": "_ShadowBorderMaskLOD",
+      "type": "scalar",
+      "displayName": "LOD",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ShadowBlurMask",
+      "type": "texture",
+      "displayName": "Shadow Blur Mask",
+      "common": false
+    },
+    {
+      "name": "_ShadowBlurMaskLOD",
+      "type": "scalar",
+      "displayName": "LOD",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ShadowAOShift",
+      "type": "vector",
+      "displayName": "1st Scale|1st Offset|2nd Scale|2nd Offset",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "name": "_ShadowAOShift2",
+      "type": "vector",
+      "displayName": "3rd Scale|3rd Offset",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "name": "_ShadowPostAO",
+      "type": "scalar",
+      "displayName": "Shadow Post AO",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ShadowColorType",
+      "type": "scalar",
+      "displayName": "Shadow Color Type",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ShadowColor",
+      "type": "vector",
+      "displayName": "Shadow Color",
+      "common": true,
+      "vectorSize": 4,
+      "default": [
+        0.82,
+        0.76,
+        0.85,
+        1
+      ]
+    },
+    {
+      "name": "_ShadowColorTex",
+      "type": "texture",
+      "displayName": "Shadow Color Texture",
+      "common": true
+    },
+    {
+      "name": "_ShadowNormalStrength",
+      "type": "scalar",
+      "displayName": "Shadow Normal Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_ShadowBorder",
+      "type": "scalar",
+      "displayName": "Shadow Border",
+      "common": true,
+      "default": 0.5
+    },
+    {
+      "name": "_ShadowBlur",
+      "type": "scalar",
+      "displayName": "Shadow Blur",
+      "common": true,
+      "default": 0.1
+    },
+    {
+      "name": "_ShadowReceive",
+      "type": "scalar",
+      "displayName": "Shadow Receive",
+      "common": true,
+      "default": 0
+    },
+    {
+      "name": "_Shadow2ndColor",
+      "type": "vector",
+      "displayName": "Shadow 2nd Color",
+      "common": true,
+      "vectorSize": 4,
+      "default": [
+        0.68,
+        0.66,
+        0.79,
+        1
+      ]
+    },
+    {
+      "name": "_Shadow2ndColorTex",
+      "type": "texture",
+      "displayName": "2nd Color",
+      "common": false
+    },
+    {
+      "name": "_Shadow2ndNormalStrength",
+      "type": "scalar",
+      "displayName": "Shadow 2nd Normal Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Shadow2ndBorder",
+      "type": "scalar",
+      "displayName": "Shadow 2nd Border",
+      "common": false,
+      "default": 0.15
+    },
+    {
+      "name": "_Shadow2ndBlur",
+      "type": "scalar",
+      "displayName": "Shadow 2nd Blur",
+      "common": false,
+      "default": 0.1
+    },
+    {
+      "name": "_Shadow2ndReceive",
+      "type": "scalar",
+      "displayName": "Shadow 2nd Receive",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Shadow3rdColor",
+      "type": "vector",
+      "displayName": "3rd Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_Shadow3rdColorTex",
+      "type": "texture",
+      "displayName": "3rd Color",
+      "common": false
+    },
+    {
+      "name": "_Shadow3rdNormalStrength",
+      "type": "scalar",
+      "displayName": "Shadow 3rd Normal Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Shadow3rdBorder",
+      "type": "scalar",
+      "displayName": "Shadow 3rd Border",
+      "common": false,
+      "default": 0.25
+    },
+    {
+      "name": "_Shadow3rdBlur",
+      "type": "scalar",
+      "displayName": "Shadow 3rd Blur",
+      "common": false,
+      "default": 0.1
+    },
+    {
+      "name": "_Shadow3rdReceive",
+      "type": "scalar",
+      "displayName": "Shadow 3rd Receive",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ShadowBorderColor",
+      "type": "vector",
+      "displayName": "Shadow Border Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        0.1,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "_ShadowBorderRange",
+      "type": "scalar",
+      "displayName": "Shadow Border Range",
+      "common": false,
+      "default": 0.08
+    },
+    {
+      "name": "_ShadowMainStrength",
+      "type": "scalar",
+      "displayName": "Shadow Main Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ShadowEnvStrength",
+      "type": "scalar",
+      "displayName": "Shadow Env Strength",
+      "common": true,
+      "default": 0
+    },
+    {
+      "name": "_ShadowMaskType",
+      "type": "scalar",
+      "displayName": "Shadow Mask Type",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ShadowFlatBorder",
+      "type": "scalar",
+      "displayName": "Shadow Flat Border",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_ShadowFlatBlur",
+      "type": "scalar",
+      "displayName": "Shadow Flat Blur",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_UseRimShade",
+      "type": "scalar",
+      "displayName": "Use Rim Shade",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_RimShadeColor",
+      "type": "vector",
+      "displayName": "Rim Shade Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0.5,
+        0.5,
+        0.5,
+        1
+      ]
+    },
+    {
+      "name": "_RimShadeMask",
+      "type": "texture",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_RimShadeNormalStrength",
+      "type": "scalar",
+      "displayName": "Rim Shade Normal Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_RimShadeBorder",
+      "type": "scalar",
+      "displayName": "Rim Shade Border",
+      "common": false,
+      "default": 0.5
+    },
+    {
+      "name": "_RimShadeBlur",
+      "type": "scalar",
+      "displayName": "Rim Shade Blur",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_RimShadeFresnelPower",
+      "type": "scalar",
+      "displayName": "Rim Shade Fresnel Power",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_UseReflection",
+      "type": "scalar",
+      "displayName": "Use Reflection",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Smoothness",
+      "type": "scalar",
+      "displayName": "Smoothness",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_SmoothnessTex",
+      "type": "texture",
+      "displayName": "Smoothness",
+      "common": false
+    },
+    {
+      "name": "_Metallic",
+      "type": "scalar",
+      "displayName": "Metallic",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MetallicGlossMap",
+      "type": "texture",
+      "displayName": "Metallic",
+      "common": false
+    },
+    {
+      "name": "_Reflectance",
+      "type": "scalar",
+      "displayName": "Reflectance",
+      "common": false,
+      "default": 0.04
+    },
+    {
+      "name": "_GSAAStrength",
+      "type": "scalar",
+      "displayName": "GSAA",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ApplySpecular",
+      "type": "scalar",
+      "displayName": "Apply Specular",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_ApplySpecularFA",
+      "type": "scalar",
+      "displayName": "Apply Specular FA",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_SpecularToon",
+      "type": "scalar",
+      "displayName": "Specular Toon",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_SpecularNormalStrength",
+      "type": "scalar",
+      "displayName": "Specular Normal Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_SpecularBorder",
+      "type": "scalar",
+      "displayName": "Specular Border",
+      "common": false,
+      "default": 0.5
+    },
+    {
+      "name": "_SpecularBlur",
+      "type": "scalar",
+      "displayName": "Specular Blur",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ApplyReflection",
+      "type": "scalar",
+      "displayName": "Apply Reflection",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ReflectionNormalStrength",
+      "type": "scalar",
+      "displayName": "Reflection Normal Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_ReflectionColor",
+      "type": "vector",
+      "displayName": "Reflection Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_ReflectionColorTex",
+      "type": "texture",
+      "displayName": "Reflection Color Tex",
+      "common": false
+    },
+    {
+      "name": "_ReflectionApplyTransparency",
+      "type": "scalar",
+      "displayName": "Reflection Apply Transparency",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_ReflectionCubeTex",
+      "type": "texture",
+      "displayName": "Cubemap Fallback",
+      "common": false
+    },
+    {
+      "name": "_ReflectionCubeColor",
+      "type": "vector",
+      "displayName": "Reflection Cube Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "_ReflectionCubeOverride",
+      "type": "scalar",
+      "displayName": "Override",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ReflectionCubeEnableLighting",
+      "type": "scalar",
+      "displayName": "Reflection Cube Enable Lighting",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_ReflectionBlendMode",
+      "type": "scalar",
+      "displayName": "Reflection Blend Mode",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_UseMatCap",
+      "type": "scalar",
+      "displayName": "Use MatCap",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCapColor",
+      "type": "vector",
+      "displayName": "MatCap Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_MatCapTex",
+      "type": "texture",
+      "displayName": "MatCap Texture",
+      "common": false
+    },
+    {
+      "name": "_MatCapMainStrength",
+      "type": "scalar",
+      "displayName": "Mat Cap Main Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MatCapBlendUV1",
+      "type": "vector",
+      "displayName": "Mat Cap Blend UV1",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_MatCapZRotCancel",
+      "type": "scalar",
+      "displayName": "Mat Cap ZRot Cancel",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCapPerspective",
+      "type": "scalar",
+      "displayName": "Mat Cap Perspective",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCapVRParallaxStrength",
+      "type": "scalar",
+      "displayName": "Mat Cap VRParallax Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCapBlend",
+      "type": "scalar",
+      "displayName": "Blend",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCapBlendMask",
+      "type": "texture",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_MatCapEnableLighting",
+      "type": "scalar",
+      "displayName": "Mat Cap Enable Lighting",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCapShadowMask",
+      "type": "scalar",
+      "displayName": "Mat Cap Shadow Mask",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MatCapBackfaceMask",
+      "type": "scalar",
+      "displayName": "Mat Cap Backface Mask",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MatCapLod",
+      "type": "scalar",
+      "displayName": "Mat Cap Lod",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MatCapBlendMode",
+      "type": "scalar",
+      "displayName": "Mat Cap Blend Mode",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCapApplyTransparency",
+      "type": "scalar",
+      "displayName": "Mat Cap Apply Transparency",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCapNormalStrength",
+      "type": "scalar",
+      "displayName": "Mat Cap Normal Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCapCustomNormal",
+      "type": "scalar",
+      "displayName": "Mat Cap Custom Normal",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MatCapBumpMap",
+      "type": "texture",
+      "displayName": "Normal Map",
+      "common": false
+    },
+    {
+      "name": "_MatCapBumpScale",
+      "type": "scalar",
+      "displayName": "Scale",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_UseMatCap2nd",
+      "type": "scalar",
+      "displayName": "Use MatCap 2nd",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCap2ndColor",
+      "type": "vector",
+      "displayName": "MatCap 2nd Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_MatCap2ndTex",
+      "type": "texture",
+      "displayName": "MatCap 2nd Texture",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndMainStrength",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd Main Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MatCap2ndBlendUV1",
+      "type": "vector",
+      "displayName": "Mat Cap 2nd Blend UV1",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_MatCap2ndZRotCancel",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd ZRot Cancel",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCap2ndPerspective",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd Perspective",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCap2ndVRParallaxStrength",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd VRParallax Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCap2ndBlend",
+      "type": "scalar",
+      "displayName": "Blend",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCap2ndBlendMask",
+      "type": "texture",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndEnableLighting",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd Enable Lighting",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCap2ndShadowMask",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd Shadow Mask",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MatCap2ndBackfaceMask",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd Backface Mask",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MatCap2ndLod",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd Lod",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MatCap2ndBlendMode",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd Blend Mode",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCap2ndApplyTransparency",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd Apply Transparency",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCap2ndNormalStrength",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd Normal Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_MatCap2ndCustomNormal",
+      "type": "scalar",
+      "displayName": "Mat Cap 2nd Custom Normal",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_MatCap2ndBumpMap",
+      "type": "texture",
+      "displayName": "Normal Map",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndBumpScale",
+      "type": "scalar",
+      "displayName": "Scale",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_UseRim",
+      "type": "scalar",
+      "displayName": "Use Rim",
+      "common": true,
+      "default": 1
+    },
+    {
+      "name": "_RimColor",
+      "type": "vector",
+      "displayName": "Rim Color",
+      "common": true,
+      "vectorSize": 4,
+      "default": [
+        0.66,
+        0.5,
+        0.48,
+        1
+      ]
+    },
+    {
+      "name": "_RimColorTex",
+      "type": "texture",
+      "displayName": "Rim Texture",
+      "common": true
+    },
+    {
+      "name": "_RimMainStrength",
+      "type": "scalar",
+      "displayName": "Rim Main Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_RimNormalStrength",
+      "type": "scalar",
+      "displayName": "Rim Normal Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_RimBorder",
+      "type": "scalar",
+      "displayName": "Rim Border",
+      "common": true,
+      "default": 0.5
+    },
+    {
+      "name": "_RimBlur",
+      "type": "scalar",
+      "displayName": "Rim Blur",
+      "common": true,
+      "default": 0.65
+    },
+    {
+      "name": "_RimFresnelPower",
+      "type": "scalar",
+      "displayName": "Rim Fresnel Power",
+      "common": true,
+      "default": 3.5
+    },
+    {
+      "name": "_RimEnableLighting",
+      "type": "scalar",
+      "displayName": "Rim Enable Lighting",
+      "common": true,
+      "default": 1
+    },
+    {
+      "name": "_RimShadowMask",
+      "type": "scalar",
+      "displayName": "Rim Shadow Mask",
+      "common": false,
+      "default": 0.5
+    },
+    {
+      "name": "_RimBackfaceMask",
+      "type": "scalar",
+      "displayName": "Rim Backface Mask",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_RimVRParallaxStrength",
+      "type": "scalar",
+      "displayName": "Rim VRParallax Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_RimApplyTransparency",
+      "type": "scalar",
+      "displayName": "Rim Apply Transparency",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_RimDirStrength",
+      "type": "scalar",
+      "displayName": "Rim Dir Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_RimDirRange",
+      "type": "scalar",
+      "displayName": "Rim Dir Range",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_RimIndirRange",
+      "type": "scalar",
+      "displayName": "Rim Indir Range",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_RimIndirColor",
+      "type": "vector",
+      "displayName": "Rim Indir Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_RimIndirBorder",
+      "type": "scalar",
+      "displayName": "Rim Indir Border",
+      "common": false,
+      "default": 0.5
+    },
+    {
+      "name": "_RimIndirBlur",
+      "type": "scalar",
+      "displayName": "Rim Indir Blur",
+      "common": false,
+      "default": 0.1
+    },
+    {
+      "name": "_RimBlendMode",
+      "type": "scalar",
+      "displayName": "Rim Blend Mode",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_UseGlitter",
+      "type": "scalar",
+      "displayName": "Use Glitter",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_GlitterUVMode",
+      "type": "scalar",
+      "displayName": "UV Mode|UV0|UV1",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_GlitterColor",
+      "type": "vector",
+      "displayName": "Glitter Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_GlitterColorTex",
+      "type": "texture",
+      "displayName": "Glitter Texture",
+      "common": false
+    },
+    {
+      "name": "_GlitterMainStrength",
+      "type": "scalar",
+      "displayName": "Glitter Main Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_GlitterNormalStrength",
+      "type": "scalar",
+      "displayName": "Glitter Normal Strength",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_GlitterScaleRandomize",
+      "type": "scalar",
+      "displayName": "Glitter Scale Randomize",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_GlitterApplyShape",
+      "type": "scalar",
+      "displayName": "Shape",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_GlitterShapeTex",
+      "type": "texture",
+      "displayName": "Texture",
+      "common": false
+    },
+    {
+      "name": "_GlitterAtras",
+      "type": "vector",
+      "displayName": "Atras",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_GlitterAngleRandomize",
+      "type": "scalar",
+      "displayName": "Glitter Angle Randomize",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_GlitterParams1",
+      "type": "vector",
+      "displayName": "Tiling|Particle Size|Contrast",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        256,
+        256,
+        0.16,
+        50
+      ]
+    },
+    {
+      "name": "_GlitterParams2",
+      "type": "vector",
+      "displayName": "Glitter Params 2",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0.25,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_GlitterPostContrast",
+      "type": "scalar",
+      "displayName": "Glitter Post Contrast",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_GlitterSensitivity",
+      "type": "scalar",
+      "displayName": "Sensitivity",
+      "common": false,
+      "default": 0.25
+    },
+    {
+      "name": "_GlitterEnableLighting",
+      "type": "scalar",
+      "displayName": "Glitter Enable Lighting",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_GlitterShadowMask",
+      "type": "scalar",
+      "displayName": "Glitter Shadow Mask",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_GlitterBackfaceMask",
+      "type": "scalar",
+      "displayName": "Glitter Backface Mask",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_GlitterApplyTransparency",
+      "type": "scalar",
+      "displayName": "Glitter Apply Transparency",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_GlitterVRParallaxStrength",
+      "type": "scalar",
+      "displayName": "Glitter VRParallax Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_UseEmission",
+      "type": "scalar",
+      "displayName": "Use Emission",
+      "common": true,
+      "default": 1
+    },
+    {
+      "name": "_EmissionColor",
+      "type": "vector",
+      "displayName": "Emission Color",
+      "common": true,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_EmissionMap",
+      "type": "texture",
+      "displayName": "Emission Map",
+      "common": true
+    },
+    {
+      "name": "_EmissionMainStrength",
+      "type": "scalar",
+      "displayName": "Emission Main Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_EmissionBlend",
+      "type": "scalar",
+      "displayName": "Blend",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_EmissionBlendMask",
+      "type": "texture",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_EmissionBlendMode",
+      "type": "scalar",
+      "displayName": "Emission Blend Mode",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_EmissionBlink",
+      "type": "vector",
+      "displayName": "Emission Blink",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        3.141593,
+        0
+      ]
+    },
+    {
+      "name": "_EmissionUseGrad",
+      "type": "scalar",
+      "displayName": "Emission Use Grad",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_EmissionGradTex",
+      "type": "texture",
+      "displayName": "Gradation Texture",
+      "common": false
+    },
+    {
+      "name": "_EmissionGradSpeed",
+      "type": "scalar",
+      "displayName": "Gradation Speed",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_EmissionParallaxDepth",
+      "type": "scalar",
+      "displayName": "Emission Parallax Depth",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_EmissionFluorescence",
+      "type": "scalar",
+      "displayName": "Emission Fluorescence",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_UseEmission2nd",
+      "type": "scalar",
+      "displayName": "Use Emission 2nd",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Emission2ndColor",
+      "type": "vector",
+      "displayName": "Emission 2nd Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_Emission2ndMap",
+      "type": "texture",
+      "displayName": "Emission 2nd Map",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndMainStrength",
+      "type": "scalar",
+      "displayName": "Emission 2nd Main Strength",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Emission2ndBlend",
+      "type": "scalar",
+      "displayName": "Blend",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Emission2ndBlendMask",
+      "type": "texture",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndBlendMode",
+      "type": "scalar",
+      "displayName": "Emission 2nd Blend Mode",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Emission2ndBlink",
+      "type": "vector",
+      "displayName": "Emission 2nd Blink",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        3.141593,
+        0
+      ]
+    },
+    {
+      "name": "_Emission2ndUseGrad",
+      "type": "scalar",
+      "displayName": "Emission 2nd Use Grad",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Emission2ndGradTex",
+      "type": "texture",
+      "displayName": "Gradation Texture",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndGradSpeed",
+      "type": "scalar",
+      "displayName": "Gradation Speed",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_Emission2ndParallaxDepth",
+      "type": "scalar",
+      "displayName": "Emission 2nd Parallax Depth",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Emission2ndFluorescence",
+      "type": "scalar",
+      "displayName": "Emission 2nd Fluorescence",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_UseParallax",
+      "type": "scalar",
+      "displayName": "Use Parallax",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_UsePOM",
+      "type": "scalar",
+      "displayName": "Use POM",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_ParallaxMap",
+      "type": "texture",
+      "displayName": "Parallax Map",
+      "common": false
+    },
+    {
+      "name": "_Parallax",
+      "type": "scalar",
+      "displayName": "Parallax Scale",
+      "common": false,
+      "default": 0.02
+    },
+    {
+      "name": "_ParallaxOffset",
+      "type": "scalar",
+      "displayName": "Parallax Offset",
+      "common": false,
+      "default": 0.5
+    },
+    {
+      "name": "_DistanceFadeColor",
+      "type": "vector",
+      "displayName": "Distance Fade Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "_DistanceFade",
+      "type": "vector",
+      "displayName": "Distance Fade",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0.1,
+        0.01,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_DistanceFadeMode",
+      "type": "scalar",
+      "displayName": "Distance Fade Mode",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_DistanceFadeRimColor",
+      "type": "vector",
+      "displayName": "Distance Fade Rim Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_DistanceFadeRimFresnelPower",
+      "type": "scalar",
+      "displayName": "Distance Fade Rim Fresnel Power",
+      "common": false,
+      "default": 5
+    },
+    {
+      "name": "_UseAudioLink",
+      "type": "scalar",
+      "displayName": "Use AudioLink",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_AudioLinkDefaultValue",
+      "type": "vector",
+      "displayName": "Strength|Blink Strength|Blink Speed|Blink Threshold",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        2,
+        0.75
+      ]
+    },
+    {
+      "name": "_AudioLinkUVMode",
+      "type": "scalar",
+      "displayName": "Audio Link UVMode",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_AudioLinkUVParams",
+      "type": "vector",
+      "displayName": "Scale|Offset|sAngle|Band|Bass|Low Mid|High Mid|Treble",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0.25,
+        0,
+        0,
+        0.125
+      ]
+    },
+    {
+      "name": "_AudioLinkStart",
+      "type": "vector",
+      "displayName": "Audio Link Start",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_AudioLinkMask",
+      "type": "texture",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_AudioLink2Main2nd",
+      "type": "scalar",
+      "displayName": "Audio Link 2Main 2nd",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AudioLink2Main3rd",
+      "type": "scalar",
+      "displayName": "Audio Link 2Main 3rd",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AudioLink2Emission",
+      "type": "scalar",
+      "displayName": "Audio Link 2Emission",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AudioLink2EmissionGrad",
+      "type": "scalar",
+      "displayName": "Audio Link 2Emission Grad",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AudioLink2Emission2nd",
+      "type": "scalar",
+      "displayName": "Audio Link 2Emission 2nd",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AudioLink2Emission2ndGrad",
+      "type": "scalar",
+      "displayName": "Audio Link 2Emission 2nd Grad",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AudioLink2Vertex",
+      "type": "scalar",
+      "displayName": "Audio Link 2Vertex",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AudioLinkVertexUVMode",
+      "type": "scalar",
+      "displayName": "Audio Link Vertex UVMode",
+      "common": false,
+      "default": 1
+    },
+    {
+      "name": "_AudioLinkVertexUVParams",
+      "type": "vector",
+      "displayName": "Scale|Offset|sAngle|Band|Bass|Low Mid|High Mid|Treble",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0.25,
+        0,
+        0,
+        0.125
+      ]
+    },
+    {
+      "name": "_AudioLinkVertexStart",
+      "type": "vector",
+      "displayName": "Audio Link Vertex Start",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_AudioLinkVertexStrength",
+      "type": "vector",
+      "displayName": "Audio Link Vertex Strength",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "_AudioLinkAsLocal",
+      "type": "scalar",
+      "displayName": "Audio Link As Local",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AudioLinkLocalMap",
+      "type": "texture",
+      "displayName": "Local Map",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkLocalMapParams",
+      "type": "vector",
+      "displayName": "Audio Link Local Map Params",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        120,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_DissolveMask",
+      "type": "texture",
+      "displayName": "Dissolve Mask",
+      "common": false
+    },
+    {
+      "name": "_DissolveNoiseMask",
+      "type": "texture",
+      "displayName": "Dissolve Noise Mask",
+      "common": false
+    },
+    {
+      "name": "_DissolveNoiseStrength",
+      "type": "scalar",
+      "displayName": "Dissolve Noise Strength",
+      "common": false,
+      "default": 0.1
+    },
+    {
+      "name": "_DissolveColor",
+      "type": "vector",
+      "displayName": "Dissolve Color",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "_DissolveParams",
+      "type": "vector",
+      "displayName": "Dissolve Params",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0.5,
+        0.1
+      ]
+    },
+    {
+      "name": "_DissolvePos",
+      "type": "vector",
+      "displayName": "Dissolve Position",
+      "common": false,
+      "vectorSize": 4,
+      "default": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "_IDMaskCompile",
+      "type": "scalar",
+      "displayName": "_IDMaskCompile",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskFrom",
+      "type": "scalar",
+      "displayName": "_IDMaskFrom|0: UV0|1: UV1|2: UV2|3: UV3|4: UV4|5: UV5|6: UV6|7: UV7|8: VertexID",
+      "common": false,
+      "default": 8
+    },
+    {
+      "name": "_IDMask1",
+      "type": "scalar",
+      "displayName": "_IDMask1",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMask2",
+      "type": "scalar",
+      "displayName": "_IDMask2",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMask3",
+      "type": "scalar",
+      "displayName": "_IDMask3",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMask4",
+      "type": "scalar",
+      "displayName": "_IDMask4",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMask5",
+      "type": "scalar",
+      "displayName": "_IDMask5",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMask6",
+      "type": "scalar",
+      "displayName": "_IDMask6",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMask7",
+      "type": "scalar",
+      "displayName": "_IDMask7",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMask8",
+      "type": "scalar",
+      "displayName": "_IDMask8",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskIsBitmap",
+      "type": "scalar",
+      "displayName": "_IDMaskIsBitmap",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskIndex1",
+      "type": "scalar",
+      "displayName": "_IDMaskIndex1",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskIndex2",
+      "type": "scalar",
+      "displayName": "_IDMaskIndex2",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskIndex3",
+      "type": "scalar",
+      "displayName": "_IDMaskIndex3",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskIndex4",
+      "type": "scalar",
+      "displayName": "_IDMaskIndex4",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskIndex5",
+      "type": "scalar",
+      "displayName": "_IDMaskIndex5",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskIndex6",
+      "type": "scalar",
+      "displayName": "_IDMaskIndex6",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskIndex7",
+      "type": "scalar",
+      "displayName": "_IDMaskIndex7",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskIndex8",
+      "type": "scalar",
+      "displayName": "_IDMaskIndex8",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskControlsDissolve",
+      "type": "scalar",
+      "displayName": "_IDMaskControlsDissolve",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskPrior1",
+      "type": "scalar",
+      "displayName": "_IDMaskPrior1",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskPrior2",
+      "type": "scalar",
+      "displayName": "_IDMaskPrior2",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskPrior3",
+      "type": "scalar",
+      "displayName": "_IDMaskPrior3",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskPrior4",
+      "type": "scalar",
+      "displayName": "_IDMaskPrior4",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskPrior5",
+      "type": "scalar",
+      "displayName": "_IDMaskPrior5",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskPrior6",
+      "type": "scalar",
+      "displayName": "_IDMaskPrior6",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskPrior7",
+      "type": "scalar",
+      "displayName": "_IDMaskPrior7",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_IDMaskPrior8",
+      "type": "scalar",
+      "displayName": "_IDMaskPrior8",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_UDIMDiscardCompile",
+      "type": "scalar",
+      "displayName": "UDIMDiscard Compile",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_UDIMDiscardUV",
+      "type": "scalar",
+      "displayName": "UDIMDiscard UV",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_UDIMDiscardMode",
+      "type": "scalar",
+      "displayName": "UDIMDiscard Mode",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_UseClippingCanceller",
+      "type": "scalar",
+      "displayName": "Use Clipping Canceller",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_AsOverlay",
+      "type": "scalar",
+      "displayName": "As Overlay",
+      "common": false,
+      "default": 0
+    },
+    {
+      "name": "_Ramp",
+      "type": "texture",
+      "displayName": "Shadow Ramp",
+      "common": false
+    }
+  ]
+}

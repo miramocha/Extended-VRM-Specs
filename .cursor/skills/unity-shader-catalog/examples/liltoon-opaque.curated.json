@@ -1,0 +1,1826 @@
+{
+  "displayName": "lilToon",
+  "shaderName": "lilToon",
+  "defaultVariant": "builtin",
+  "supportedVariants": [
+    "builtin",
+    "urp"
+  ],
+  "enableToggles": [
+    "_UseAnisotropy",
+    "_UseAudioLink",
+    "_UseBacklight",
+    "_UseBump2ndMap",
+    "_UseBumpMap",
+    "_UseEmission",
+    "_UseEmission2nd",
+    "_UseGlitter",
+    "_UseMain2ndTex",
+    "_UseMain3rdTex",
+    "_UseMatCap",
+    "_UseMatCap2nd",
+    "_UseParallax",
+    "_UseReflection",
+    "_UseRim",
+    "_UseRimShade",
+    "_UseShadow"
+  ],
+  "omitTextureDefaults": true,
+  "properties": [
+    {
+      "name": "_Invisible",
+      "displayName": "Invisible",
+      "common": false
+    },
+    {
+      "name": "_AsUnlit",
+      "displayName": "As Unlit",
+      "common": false
+    },
+    {
+      "name": "_Cutoff",
+      "displayName": "Cutoff",
+      "common": true
+    },
+    {
+      "name": "_SubpassCutoff",
+      "displayName": "Subpass Cutoff",
+      "common": false
+    },
+    {
+      "name": "_FlipNormal",
+      "displayName": "Flip Normal",
+      "common": false
+    },
+    {
+      "name": "_ShiftBackfaceUV",
+      "displayName": "Shift Backface UV",
+      "common": false
+    },
+    {
+      "name": "_BackfaceForceShadow",
+      "displayName": "Backface Force Shadow",
+      "common": false
+    },
+    {
+      "name": "_BackfaceColor",
+      "displayName": "Backface Color",
+      "common": false
+    },
+    {
+      "name": "_VertexLightStrength",
+      "displayName": "Vertex Light Strength",
+      "common": false
+    },
+    {
+      "name": "_LightMinLimit",
+      "displayName": "Light Min Limit",
+      "common": false
+    },
+    {
+      "name": "_LightMaxLimit",
+      "displayName": "Light Max Limit",
+      "common": false
+    },
+    {
+      "name": "_BeforeExposureLimit",
+      "displayName": "Before Exposure Limit",
+      "common": false
+    },
+    {
+      "name": "_MonochromeLighting",
+      "displayName": "Monochrome Lighting",
+      "common": false
+    },
+    {
+      "name": "_AlphaBoostFA",
+      "displayName": "Alpha Boost FA",
+      "common": false
+    },
+    {
+      "name": "_lilDirectionalLightStrength",
+      "displayName": "lil Directional Light Strength",
+      "common": false
+    },
+    {
+      "name": "_LightDirectionOverride",
+      "displayName": "Light Direction Override",
+      "common": false
+    },
+    {
+      "name": "_AAStrength",
+      "displayName": "AAStrength",
+      "common": false
+    },
+    {
+      "name": "_UseDither",
+      "displayName": "Use Dither",
+      "common": false
+    },
+    {
+      "name": "_DitherTex",
+      "displayName": "Dither",
+      "common": false
+    },
+    {
+      "name": "_DitherMaxValue",
+      "displayName": "Max Value",
+      "common": false
+    },
+    {
+      "name": "_EnvRimBorder",
+      "displayName": "[VRCLV] Rim Border",
+      "common": false
+    },
+    {
+      "name": "_EnvRimBlur",
+      "displayName": "[VRCLV] Rim Blur",
+      "common": false
+    },
+    {
+      "name": "_Color",
+      "displayName": "Color",
+      "common": true
+    },
+    {
+      "name": "_MainTex",
+      "displayName": "Main Texture",
+      "common": true
+    },
+    {
+      "name": "_MainTexHSVG",
+      "displayName": "Main Tex HSVG",
+      "common": false
+    },
+    {
+      "name": "_MainGradationStrength",
+      "displayName": "Gradation Strength",
+      "common": false
+    },
+    {
+      "name": "_MainGradationTex",
+      "displayName": "Gradation Map",
+      "common": false
+    },
+    {
+      "name": "_MainColorAdjustMask",
+      "displayName": "Adjust Mask",
+      "common": false
+    },
+    {
+      "name": "_UseMain2ndTex",
+      "displayName": "Use Main 2nd Texture",
+      "common": false
+    },
+    {
+      "name": "_Color2nd",
+      "displayName": "Color 2nd",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTex",
+      "displayName": "Main 2nd Texture",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexAngle",
+      "displayName": "Main 2nd Tex Angle",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexDecalAnimation",
+      "displayName": "Main 2nd Tex Decal Animation",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexDecalSubParam",
+      "displayName": "Main 2nd Tex Decal Sub Param",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexIsDecal",
+      "displayName": "Main 2nd Tex Is Decal",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexIsLeftOnly",
+      "displayName": "Left Only",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexIsRightOnly",
+      "displayName": "Right Only",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexShouldCopy",
+      "displayName": "Copy",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexShouldFlipMirror",
+      "displayName": "Flip Mirror",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexShouldFlipCopy",
+      "displayName": "Flip Copy",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexIsMSDF",
+      "displayName": "Main 2nd Tex Is MSDF",
+      "common": false
+    },
+    {
+      "name": "_Main2ndBlendMask",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexBlendMode",
+      "displayName": "Main 2nd Tex Blend Mode",
+      "common": false
+    },
+    {
+      "name": "_Main2ndTexAlphaMode",
+      "displayName": "Main 2nd Tex Alpha Mode",
+      "common": false
+    },
+    {
+      "name": "_Main2ndEnableLighting",
+      "displayName": "Main 2nd Enable Lighting",
+      "common": false
+    },
+    {
+      "name": "_Main2ndDissolveMask",
+      "displayName": "Dissolve Mask",
+      "common": false
+    },
+    {
+      "name": "_Main2ndDissolveNoiseMask",
+      "displayName": "Dissolve Noise Mask",
+      "common": false
+    },
+    {
+      "name": "_Main2ndDissolveNoiseStrength",
+      "displayName": "Dissolve Noise Strength",
+      "common": false
+    },
+    {
+      "name": "_Main2ndDissolveColor",
+      "displayName": "Main 2nd Dissolve Color",
+      "common": false
+    },
+    {
+      "name": "_Main2ndDissolveParams",
+      "displayName": "Main 2nd Dissolve Params",
+      "common": false
+    },
+    {
+      "name": "_Main2ndDissolvePos",
+      "displayName": "Dissolve Position",
+      "common": false
+    },
+    {
+      "name": "_Main2ndDistanceFade",
+      "displayName": "Main 2nd Distance Fade",
+      "common": false
+    },
+    {
+      "name": "_UseMain3rdTex",
+      "displayName": "Use Main 3rd Texture",
+      "common": false
+    },
+    {
+      "name": "_Color3rd",
+      "displayName": "Color 3rd",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTex",
+      "displayName": "Main 3rd Texture",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexAngle",
+      "displayName": "Main 3rd Tex Angle",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexDecalAnimation",
+      "displayName": "Main 3rd Tex Decal Animation",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexDecalSubParam",
+      "displayName": "Main 3rd Tex Decal Sub Param",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexIsDecal",
+      "displayName": "Main 3rd Tex Is Decal",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexIsLeftOnly",
+      "displayName": "Left Only",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexIsRightOnly",
+      "displayName": "Right Only",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexShouldCopy",
+      "displayName": "Copy",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexShouldFlipMirror",
+      "displayName": "Flip Mirror",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexShouldFlipCopy",
+      "displayName": "Flip Copy",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexIsMSDF",
+      "displayName": "Main 3rd Tex Is MSDF",
+      "common": false
+    },
+    {
+      "name": "_Main3rdBlendMask",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexBlendMode",
+      "displayName": "Main 3rd Tex Blend Mode",
+      "common": false
+    },
+    {
+      "name": "_Main3rdTexAlphaMode",
+      "displayName": "Main 3rd Tex Alpha Mode",
+      "common": false
+    },
+    {
+      "name": "_Main3rdEnableLighting",
+      "displayName": "Main 3rd Enable Lighting",
+      "common": false
+    },
+    {
+      "name": "_Main3rdDissolveMask",
+      "displayName": "Dissolve Mask",
+      "common": false
+    },
+    {
+      "name": "_Main3rdDissolveNoiseMask",
+      "displayName": "Dissolve Noise Mask",
+      "common": false
+    },
+    {
+      "name": "_Main3rdDissolveNoiseStrength",
+      "displayName": "Dissolve Noise Strength",
+      "common": false
+    },
+    {
+      "name": "_Main3rdDissolveColor",
+      "displayName": "Main 3rd Dissolve Color",
+      "common": false
+    },
+    {
+      "name": "_Main3rdDissolveParams",
+      "displayName": "Main 3rd Dissolve Params",
+      "common": false
+    },
+    {
+      "name": "_Main3rdDissolvePos",
+      "displayName": "Dissolve Position",
+      "common": false
+    },
+    {
+      "name": "_Main3rdDistanceFade",
+      "displayName": "Main 3rd Distance Fade",
+      "common": false
+    },
+    {
+      "name": "_AlphaMaskMode",
+      "displayName": "Alpha Mask Mode",
+      "common": false
+    },
+    {
+      "name": "_AlphaMask",
+      "displayName": "AlphaMask",
+      "common": false
+    },
+    {
+      "name": "_AlphaMaskScale",
+      "displayName": "Scale",
+      "common": false
+    },
+    {
+      "name": "_AlphaMaskValue",
+      "displayName": "Offset",
+      "common": false
+    },
+    {
+      "name": "_UseBumpMap",
+      "displayName": "Use Normal Map",
+      "common": false
+    },
+    {
+      "name": "_BumpMap",
+      "displayName": "Normal Map",
+      "common": false
+    },
+    {
+      "name": "_BumpScale",
+      "displayName": "Normal Scale",
+      "common": false
+    },
+    {
+      "name": "_UseBump2ndMap",
+      "displayName": "Use Normal Map 2nd",
+      "common": false
+    },
+    {
+      "name": "_Bump2ndMap",
+      "displayName": "Normal Map 2nd",
+      "common": false
+    },
+    {
+      "name": "_Bump2ndScale",
+      "displayName": "Normal Map 2nd Scale",
+      "common": false
+    },
+    {
+      "name": "_Bump2ndScaleMask",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_UseAnisotropy",
+      "displayName": "Use Anisotropy",
+      "common": false
+    },
+    {
+      "name": "_AnisotropyTangentMap",
+      "displayName": "Tangent Map",
+      "common": false
+    },
+    {
+      "name": "_AnisotropyScale",
+      "displayName": "Scale",
+      "common": false
+    },
+    {
+      "name": "_AnisotropyScaleMask",
+      "displayName": "Scale Mask",
+      "common": false
+    },
+    {
+      "name": "_AnisotropyTangentWidth",
+      "displayName": "Anisotropy Tangent Width",
+      "common": false
+    },
+    {
+      "name": "_AnisotropyBitangentWidth",
+      "displayName": "Anisotropy Bitangent Width",
+      "common": false
+    },
+    {
+      "name": "_AnisotropyShift",
+      "displayName": "Anisotropy Shift",
+      "common": false
+    },
+    {
+      "name": "_AnisotropyShiftNoiseScale",
+      "displayName": "Anisotropy Shift Noise Scale",
+      "common": false
+    },
+    {
+      "name": "_AnisotropySpecularStrength",
+      "displayName": "Anisotropy Specular Strength",
+      "common": false
+    },
+    {
+      "name": "_Anisotropy2ndTangentWidth",
+      "displayName": "Anisotropy 2nd Tangent Width",
+      "common": false
+    },
+    {
+      "name": "_Anisotropy2ndBitangentWidth",
+      "displayName": "Anisotropy 2nd Bitangent Width",
+      "common": false
+    },
+    {
+      "name": "_Anisotropy2ndShift",
+      "displayName": "Anisotropy 2nd Shift",
+      "common": false
+    },
+    {
+      "name": "_Anisotropy2ndShiftNoiseScale",
+      "displayName": "Anisotropy 2nd Shift Noise Scale",
+      "common": false
+    },
+    {
+      "name": "_Anisotropy2ndSpecularStrength",
+      "displayName": "Anisotropy 2nd Specular Strength",
+      "common": false
+    },
+    {
+      "name": "_AnisotropyShiftNoiseMask",
+      "displayName": "Anisotropy Shift Noise Mask",
+      "common": false
+    },
+    {
+      "name": "_Anisotropy2Reflection",
+      "displayName": "Anisotropy 2Reflection",
+      "common": false
+    },
+    {
+      "name": "_Anisotropy2MatCap",
+      "displayName": "Anisotropy 2Mat Cap",
+      "common": false
+    },
+    {
+      "name": "_Anisotropy2MatCap2nd",
+      "displayName": "Anisotropy 2Mat Cap 2nd",
+      "common": false
+    },
+    {
+      "name": "_UseBacklight",
+      "displayName": "Use Backlight",
+      "common": false
+    },
+    {
+      "name": "_BacklightColor",
+      "displayName": "Backlight Color",
+      "common": false
+    },
+    {
+      "name": "_BacklightColorTex",
+      "displayName": "Texture",
+      "common": false
+    },
+    {
+      "name": "_BacklightMainStrength",
+      "displayName": "Backlight Main Strength",
+      "common": false
+    },
+    {
+      "name": "_BacklightNormalStrength",
+      "displayName": "Backlight Normal Strength",
+      "common": false
+    },
+    {
+      "name": "_BacklightBorder",
+      "displayName": "Border",
+      "common": false
+    },
+    {
+      "name": "_BacklightBlur",
+      "displayName": "Backlight Blur",
+      "common": false
+    },
+    {
+      "name": "_BacklightDirectivity",
+      "displayName": "Backlight Directivity",
+      "common": false
+    },
+    {
+      "name": "_BacklightViewStrength",
+      "displayName": "Backlight View Strength",
+      "common": false
+    },
+    {
+      "name": "_BacklightReceiveShadow",
+      "displayName": "Backlight Receive Shadow",
+      "common": false
+    },
+    {
+      "name": "_BacklightBackfaceMask",
+      "displayName": "Backlight Backface Mask",
+      "common": false
+    },
+    {
+      "name": "_UseShadow",
+      "displayName": "Use Shadow",
+      "common": true
+    },
+    {
+      "name": "_ShadowStrength",
+      "displayName": "Shadow Strength",
+      "common": true
+    },
+    {
+      "name": "_ShadowStrengthMask",
+      "displayName": "Shadow Strength Mask",
+      "common": false
+    },
+    {
+      "name": "_ShadowStrengthMaskLOD",
+      "displayName": "LOD",
+      "common": false
+    },
+    {
+      "name": "_ShadowBorderMask",
+      "displayName": "Shadow Border Mask",
+      "common": false
+    },
+    {
+      "name": "_ShadowBorderMaskLOD",
+      "displayName": "LOD",
+      "common": false
+    },
+    {
+      "name": "_ShadowBlurMask",
+      "displayName": "Shadow Blur Mask",
+      "common": false
+    },
+    {
+      "name": "_ShadowBlurMaskLOD",
+      "displayName": "LOD",
+      "common": false
+    },
+    {
+      "name": "_ShadowAOShift",
+      "displayName": "1st Scale|1st Offset|2nd Scale|2nd Offset",
+      "common": false
+    },
+    {
+      "name": "_ShadowAOShift2",
+      "displayName": "3rd Scale|3rd Offset",
+      "common": false
+    },
+    {
+      "name": "_ShadowPostAO",
+      "displayName": "Shadow Post AO",
+      "common": false
+    },
+    {
+      "name": "_ShadowColorType",
+      "displayName": "Shadow Color Type",
+      "common": false
+    },
+    {
+      "name": "_ShadowColor",
+      "displayName": "Shadow Color",
+      "common": true
+    },
+    {
+      "name": "_ShadowColorTex",
+      "displayName": "Shadow Color Texture",
+      "common": true
+    },
+    {
+      "name": "_ShadowNormalStrength",
+      "displayName": "Shadow Normal Strength",
+      "common": false
+    },
+    {
+      "name": "_ShadowBorder",
+      "displayName": "Shadow Border",
+      "common": true
+    },
+    {
+      "name": "_ShadowBlur",
+      "displayName": "Shadow Blur",
+      "common": true
+    },
+    {
+      "name": "_ShadowReceive",
+      "displayName": "Shadow Receive",
+      "common": true
+    },
+    {
+      "name": "_Shadow2ndColor",
+      "displayName": "Shadow 2nd Color",
+      "common": true
+    },
+    {
+      "name": "_Shadow2ndColorTex",
+      "displayName": "2nd Color",
+      "common": false
+    },
+    {
+      "name": "_Shadow2ndNormalStrength",
+      "displayName": "Shadow 2nd Normal Strength",
+      "common": false
+    },
+    {
+      "name": "_Shadow2ndBorder",
+      "displayName": "Shadow 2nd Border",
+      "common": false
+    },
+    {
+      "name": "_Shadow2ndBlur",
+      "displayName": "Shadow 2nd Blur",
+      "common": false
+    },
+    {
+      "name": "_Shadow2ndReceive",
+      "displayName": "Shadow 2nd Receive",
+      "common": false
+    },
+    {
+      "name": "_Shadow3rdColor",
+      "displayName": "3rd Color",
+      "common": false
+    },
+    {
+      "name": "_Shadow3rdColorTex",
+      "displayName": "3rd Color",
+      "common": false
+    },
+    {
+      "name": "_Shadow3rdNormalStrength",
+      "displayName": "Shadow 3rd Normal Strength",
+      "common": false
+    },
+    {
+      "name": "_Shadow3rdBorder",
+      "displayName": "Shadow 3rd Border",
+      "common": false
+    },
+    {
+      "name": "_Shadow3rdBlur",
+      "displayName": "Shadow 3rd Blur",
+      "common": false
+    },
+    {
+      "name": "_Shadow3rdReceive",
+      "displayName": "Shadow 3rd Receive",
+      "common": false
+    },
+    {
+      "name": "_ShadowBorderColor",
+      "displayName": "Shadow Border Color",
+      "common": false
+    },
+    {
+      "name": "_ShadowBorderRange",
+      "displayName": "Shadow Border Range",
+      "common": false
+    },
+    {
+      "name": "_ShadowMainStrength",
+      "displayName": "Shadow Main Strength",
+      "common": false
+    },
+    {
+      "name": "_ShadowEnvStrength",
+      "displayName": "Shadow Env Strength",
+      "common": true
+    },
+    {
+      "name": "_ShadowMaskType",
+      "displayName": "Shadow Mask Type",
+      "common": false
+    },
+    {
+      "name": "_ShadowFlatBorder",
+      "displayName": "Shadow Flat Border",
+      "common": false
+    },
+    {
+      "name": "_ShadowFlatBlur",
+      "displayName": "Shadow Flat Blur",
+      "common": false
+    },
+    {
+      "name": "_UseRimShade",
+      "displayName": "Use Rim Shade",
+      "common": false
+    },
+    {
+      "name": "_RimShadeColor",
+      "displayName": "Rim Shade Color",
+      "common": false
+    },
+    {
+      "name": "_RimShadeMask",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_RimShadeNormalStrength",
+      "displayName": "Rim Shade Normal Strength",
+      "common": false
+    },
+    {
+      "name": "_RimShadeBorder",
+      "displayName": "Rim Shade Border",
+      "common": false
+    },
+    {
+      "name": "_RimShadeBlur",
+      "displayName": "Rim Shade Blur",
+      "common": false
+    },
+    {
+      "name": "_RimShadeFresnelPower",
+      "displayName": "Rim Shade Fresnel Power",
+      "common": false
+    },
+    {
+      "name": "_UseReflection",
+      "displayName": "Use Reflection",
+      "common": false
+    },
+    {
+      "name": "_Smoothness",
+      "displayName": "Smoothness",
+      "common": false
+    },
+    {
+      "name": "_SmoothnessTex",
+      "displayName": "Smoothness",
+      "common": false
+    },
+    {
+      "name": "_Metallic",
+      "displayName": "Metallic",
+      "common": false
+    },
+    {
+      "name": "_MetallicGlossMap",
+      "displayName": "Metallic",
+      "common": false
+    },
+    {
+      "name": "_Reflectance",
+      "displayName": "Reflectance",
+      "common": false
+    },
+    {
+      "name": "_GSAAStrength",
+      "displayName": "GSAA",
+      "common": false
+    },
+    {
+      "name": "_ApplySpecular",
+      "displayName": "Apply Specular",
+      "common": false
+    },
+    {
+      "name": "_ApplySpecularFA",
+      "displayName": "Apply Specular FA",
+      "common": false
+    },
+    {
+      "name": "_SpecularToon",
+      "displayName": "Specular Toon",
+      "common": false
+    },
+    {
+      "name": "_SpecularNormalStrength",
+      "displayName": "Specular Normal Strength",
+      "common": false
+    },
+    {
+      "name": "_SpecularBorder",
+      "displayName": "Specular Border",
+      "common": false
+    },
+    {
+      "name": "_SpecularBlur",
+      "displayName": "Specular Blur",
+      "common": false
+    },
+    {
+      "name": "_ApplyReflection",
+      "displayName": "Apply Reflection",
+      "common": false
+    },
+    {
+      "name": "_ReflectionNormalStrength",
+      "displayName": "Reflection Normal Strength",
+      "common": false
+    },
+    {
+      "name": "_ReflectionColor",
+      "displayName": "Reflection Color",
+      "common": false
+    },
+    {
+      "name": "_ReflectionColorTex",
+      "displayName": "Reflection Color Tex",
+      "common": false
+    },
+    {
+      "name": "_ReflectionApplyTransparency",
+      "displayName": "Reflection Apply Transparency",
+      "common": false
+    },
+    {
+      "name": "_ReflectionCubeTex",
+      "displayName": "Cubemap Fallback",
+      "common": false
+    },
+    {
+      "name": "_ReflectionCubeColor",
+      "displayName": "Reflection Cube Color",
+      "common": false
+    },
+    {
+      "name": "_ReflectionCubeOverride",
+      "displayName": "Override",
+      "common": false
+    },
+    {
+      "name": "_ReflectionCubeEnableLighting",
+      "displayName": "Reflection Cube Enable Lighting",
+      "common": false
+    },
+    {
+      "name": "_ReflectionBlendMode",
+      "displayName": "Reflection Blend Mode",
+      "common": false
+    },
+    {
+      "name": "_UseMatCap",
+      "displayName": "Use MatCap",
+      "common": false
+    },
+    {
+      "name": "_MatCapColor",
+      "displayName": "MatCap Color",
+      "common": false
+    },
+    {
+      "name": "_MatCapTex",
+      "displayName": "MatCap Texture",
+      "common": false
+    },
+    {
+      "name": "_MatCapMainStrength",
+      "displayName": "Mat Cap Main Strength",
+      "common": false
+    },
+    {
+      "name": "_MatCapBlendUV1",
+      "displayName": "Mat Cap Blend UV1",
+      "common": false
+    },
+    {
+      "name": "_MatCapZRotCancel",
+      "displayName": "Mat Cap ZRot Cancel",
+      "common": false
+    },
+    {
+      "name": "_MatCapPerspective",
+      "displayName": "Mat Cap Perspective",
+      "common": false
+    },
+    {
+      "name": "_MatCapVRParallaxStrength",
+      "displayName": "Mat Cap VRParallax Strength",
+      "common": false
+    },
+    {
+      "name": "_MatCapBlend",
+      "displayName": "Blend",
+      "common": false
+    },
+    {
+      "name": "_MatCapBlendMask",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_MatCapEnableLighting",
+      "displayName": "Mat Cap Enable Lighting",
+      "common": false
+    },
+    {
+      "name": "_MatCapShadowMask",
+      "displayName": "Mat Cap Shadow Mask",
+      "common": false
+    },
+    {
+      "name": "_MatCapBackfaceMask",
+      "displayName": "Mat Cap Backface Mask",
+      "common": false
+    },
+    {
+      "name": "_MatCapLod",
+      "displayName": "Mat Cap Lod",
+      "common": false
+    },
+    {
+      "name": "_MatCapBlendMode",
+      "displayName": "Mat Cap Blend Mode",
+      "common": false
+    },
+    {
+      "name": "_MatCapApplyTransparency",
+      "displayName": "Mat Cap Apply Transparency",
+      "common": false
+    },
+    {
+      "name": "_MatCapNormalStrength",
+      "displayName": "Mat Cap Normal Strength",
+      "common": false
+    },
+    {
+      "name": "_MatCapCustomNormal",
+      "displayName": "Mat Cap Custom Normal",
+      "common": false
+    },
+    {
+      "name": "_MatCapBumpMap",
+      "displayName": "Normal Map",
+      "common": false
+    },
+    {
+      "name": "_MatCapBumpScale",
+      "displayName": "Scale",
+      "common": false
+    },
+    {
+      "name": "_UseMatCap2nd",
+      "displayName": "Use MatCap 2nd",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndColor",
+      "displayName": "MatCap 2nd Color",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndTex",
+      "displayName": "MatCap 2nd Texture",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndMainStrength",
+      "displayName": "Mat Cap 2nd Main Strength",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndBlendUV1",
+      "displayName": "Mat Cap 2nd Blend UV1",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndZRotCancel",
+      "displayName": "Mat Cap 2nd ZRot Cancel",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndPerspective",
+      "displayName": "Mat Cap 2nd Perspective",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndVRParallaxStrength",
+      "displayName": "Mat Cap 2nd VRParallax Strength",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndBlend",
+      "displayName": "Blend",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndBlendMask",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndEnableLighting",
+      "displayName": "Mat Cap 2nd Enable Lighting",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndShadowMask",
+      "displayName": "Mat Cap 2nd Shadow Mask",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndBackfaceMask",
+      "displayName": "Mat Cap 2nd Backface Mask",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndLod",
+      "displayName": "Mat Cap 2nd Lod",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndBlendMode",
+      "displayName": "Mat Cap 2nd Blend Mode",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndApplyTransparency",
+      "displayName": "Mat Cap 2nd Apply Transparency",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndNormalStrength",
+      "displayName": "Mat Cap 2nd Normal Strength",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndCustomNormal",
+      "displayName": "Mat Cap 2nd Custom Normal",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndBumpMap",
+      "displayName": "Normal Map",
+      "common": false
+    },
+    {
+      "name": "_MatCap2ndBumpScale",
+      "displayName": "Scale",
+      "common": false
+    },
+    {
+      "name": "_UseRim",
+      "displayName": "Use Rim",
+      "common": true
+    },
+    {
+      "name": "_RimColor",
+      "displayName": "Rim Color",
+      "common": true
+    },
+    {
+      "name": "_RimColorTex",
+      "displayName": "Rim Texture",
+      "common": true
+    },
+    {
+      "name": "_RimMainStrength",
+      "displayName": "Rim Main Strength",
+      "common": false
+    },
+    {
+      "name": "_RimNormalStrength",
+      "displayName": "Rim Normal Strength",
+      "common": false
+    },
+    {
+      "name": "_RimBorder",
+      "displayName": "Rim Border",
+      "common": true
+    },
+    {
+      "name": "_RimBlur",
+      "displayName": "Rim Blur",
+      "common": true
+    },
+    {
+      "name": "_RimFresnelPower",
+      "displayName": "Rim Fresnel Power",
+      "common": true
+    },
+    {
+      "name": "_RimEnableLighting",
+      "displayName": "Rim Enable Lighting",
+      "common": true
+    },
+    {
+      "name": "_RimShadowMask",
+      "displayName": "Rim Shadow Mask",
+      "common": false
+    },
+    {
+      "name": "_RimBackfaceMask",
+      "displayName": "Rim Backface Mask",
+      "common": false
+    },
+    {
+      "name": "_RimVRParallaxStrength",
+      "displayName": "Rim VRParallax Strength",
+      "common": false
+    },
+    {
+      "name": "_RimApplyTransparency",
+      "displayName": "Rim Apply Transparency",
+      "common": false
+    },
+    {
+      "name": "_RimDirStrength",
+      "displayName": "Rim Dir Strength",
+      "common": false
+    },
+    {
+      "name": "_RimDirRange",
+      "displayName": "Rim Dir Range",
+      "common": false
+    },
+    {
+      "name": "_RimIndirRange",
+      "displayName": "Rim Indir Range",
+      "common": false
+    },
+    {
+      "name": "_RimIndirColor",
+      "displayName": "Rim Indir Color",
+      "common": false
+    },
+    {
+      "name": "_RimIndirBorder",
+      "displayName": "Rim Indir Border",
+      "common": false
+    },
+    {
+      "name": "_RimIndirBlur",
+      "displayName": "Rim Indir Blur",
+      "common": false
+    },
+    {
+      "name": "_RimBlendMode",
+      "displayName": "Rim Blend Mode",
+      "common": false
+    },
+    {
+      "name": "_UseGlitter",
+      "displayName": "Use Glitter",
+      "common": false
+    },
+    {
+      "name": "_GlitterUVMode",
+      "displayName": "UV Mode|UV0|UV1",
+      "common": false
+    },
+    {
+      "name": "_GlitterColor",
+      "displayName": "Glitter Color",
+      "common": false
+    },
+    {
+      "name": "_GlitterColorTex",
+      "displayName": "Glitter Texture",
+      "common": false
+    },
+    {
+      "name": "_GlitterMainStrength",
+      "displayName": "Glitter Main Strength",
+      "common": false
+    },
+    {
+      "name": "_GlitterNormalStrength",
+      "displayName": "Glitter Normal Strength",
+      "common": false
+    },
+    {
+      "name": "_GlitterScaleRandomize",
+      "displayName": "Glitter Scale Randomize",
+      "common": false
+    },
+    {
+      "name": "_GlitterApplyShape",
+      "displayName": "Shape",
+      "common": false
+    },
+    {
+      "name": "_GlitterShapeTex",
+      "displayName": "Texture",
+      "common": false
+    },
+    {
+      "name": "_GlitterAtras",
+      "displayName": "Atras",
+      "common": false
+    },
+    {
+      "name": "_GlitterAngleRandomize",
+      "displayName": "Glitter Angle Randomize",
+      "common": false
+    },
+    {
+      "name": "_GlitterParams1",
+      "displayName": "Tiling|Particle Size|Contrast",
+      "common": false
+    },
+    {
+      "name": "_GlitterParams2",
+      "displayName": "Glitter Params 2",
+      "common": false
+    },
+    {
+      "name": "_GlitterPostContrast",
+      "displayName": "Glitter Post Contrast",
+      "common": false
+    },
+    {
+      "name": "_GlitterSensitivity",
+      "displayName": "Sensitivity",
+      "common": false
+    },
+    {
+      "name": "_GlitterEnableLighting",
+      "displayName": "Glitter Enable Lighting",
+      "common": false
+    },
+    {
+      "name": "_GlitterShadowMask",
+      "displayName": "Glitter Shadow Mask",
+      "common": false
+    },
+    {
+      "name": "_GlitterBackfaceMask",
+      "displayName": "Glitter Backface Mask",
+      "common": false
+    },
+    {
+      "name": "_GlitterApplyTransparency",
+      "displayName": "Glitter Apply Transparency",
+      "common": false
+    },
+    {
+      "name": "_GlitterVRParallaxStrength",
+      "displayName": "Glitter VRParallax Strength",
+      "common": false
+    },
+    {
+      "name": "_UseEmission",
+      "displayName": "Use Emission",
+      "common": true
+    },
+    {
+      "name": "_EmissionColor",
+      "displayName": "Emission Color",
+      "common": true
+    },
+    {
+      "name": "_EmissionMap",
+      "displayName": "Emission Map",
+      "common": true
+    },
+    {
+      "name": "_EmissionMainStrength",
+      "displayName": "Emission Main Strength",
+      "common": false
+    },
+    {
+      "name": "_EmissionBlend",
+      "displayName": "Blend",
+      "common": false
+    },
+    {
+      "name": "_EmissionBlendMask",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_EmissionBlendMode",
+      "displayName": "Emission Blend Mode",
+      "common": false
+    },
+    {
+      "name": "_EmissionBlink",
+      "displayName": "Emission Blink",
+      "common": false
+    },
+    {
+      "name": "_EmissionUseGrad",
+      "displayName": "Emission Use Grad",
+      "common": false
+    },
+    {
+      "name": "_EmissionGradTex",
+      "displayName": "Gradation Texture",
+      "common": false
+    },
+    {
+      "name": "_EmissionGradSpeed",
+      "displayName": "Gradation Speed",
+      "common": false
+    },
+    {
+      "name": "_EmissionParallaxDepth",
+      "displayName": "Emission Parallax Depth",
+      "common": false
+    },
+    {
+      "name": "_EmissionFluorescence",
+      "displayName": "Emission Fluorescence",
+      "common": false
+    },
+    {
+      "name": "_UseEmission2nd",
+      "displayName": "Use Emission 2nd",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndColor",
+      "displayName": "Emission 2nd Color",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndMap",
+      "displayName": "Emission 2nd Map",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndMainStrength",
+      "displayName": "Emission 2nd Main Strength",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndBlend",
+      "displayName": "Blend",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndBlendMask",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndBlendMode",
+      "displayName": "Emission 2nd Blend Mode",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndBlink",
+      "displayName": "Emission 2nd Blink",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndUseGrad",
+      "displayName": "Emission 2nd Use Grad",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndGradTex",
+      "displayName": "Gradation Texture",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndGradSpeed",
+      "displayName": "Gradation Speed",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndParallaxDepth",
+      "displayName": "Emission 2nd Parallax Depth",
+      "common": false
+    },
+    {
+      "name": "_Emission2ndFluorescence",
+      "displayName": "Emission 2nd Fluorescence",
+      "common": false
+    },
+    {
+      "name": "_UseParallax",
+      "displayName": "Use Parallax",
+      "common": false
+    },
+    {
+      "name": "_UsePOM",
+      "displayName": "Use POM",
+      "common": false
+    },
+    {
+      "name": "_ParallaxMap",
+      "displayName": "Parallax Map",
+      "common": false
+    },
+    {
+      "name": "_Parallax",
+      "displayName": "Parallax Scale",
+      "common": false
+    },
+    {
+      "name": "_ParallaxOffset",
+      "displayName": "Parallax Offset",
+      "common": false
+    },
+    {
+      "name": "_DistanceFadeColor",
+      "displayName": "Distance Fade Color",
+      "common": false
+    },
+    {
+      "name": "_DistanceFade",
+      "displayName": "Distance Fade",
+      "common": false
+    },
+    {
+      "name": "_DistanceFadeMode",
+      "displayName": "Distance Fade Mode",
+      "common": false
+    },
+    {
+      "name": "_DistanceFadeRimColor",
+      "displayName": "Distance Fade Rim Color",
+      "common": false
+    },
+    {
+      "name": "_DistanceFadeRimFresnelPower",
+      "displayName": "Distance Fade Rim Fresnel Power",
+      "common": false
+    },
+    {
+      "name": "_UseAudioLink",
+      "displayName": "Use AudioLink",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkDefaultValue",
+      "displayName": "Strength|Blink Strength|Blink Speed|Blink Threshold",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkUVMode",
+      "displayName": "Audio Link UVMode",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkUVParams",
+      "displayName": "Scale|Offset|sAngle|Band|Bass|Low Mid|High Mid|Treble",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkStart",
+      "displayName": "Audio Link Start",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkMask",
+      "displayName": "Mask",
+      "common": false
+    },
+    {
+      "name": "_AudioLink2Main2nd",
+      "displayName": "Audio Link 2Main 2nd",
+      "common": false
+    },
+    {
+      "name": "_AudioLink2Main3rd",
+      "displayName": "Audio Link 2Main 3rd",
+      "common": false
+    },
+    {
+      "name": "_AudioLink2Emission",
+      "displayName": "Audio Link 2Emission",
+      "common": false
+    },
+    {
+      "name": "_AudioLink2EmissionGrad",
+      "displayName": "Audio Link 2Emission Grad",
+      "common": false
+    },
+    {
+      "name": "_AudioLink2Emission2nd",
+      "displayName": "Audio Link 2Emission 2nd",
+      "common": false
+    },
+    {
+      "name": "_AudioLink2Emission2ndGrad",
+      "displayName": "Audio Link 2Emission 2nd Grad",
+      "common": false
+    },
+    {
+      "name": "_AudioLink2Vertex",
+      "displayName": "Audio Link 2Vertex",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkVertexUVMode",
+      "displayName": "Audio Link Vertex UVMode",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkVertexUVParams",
+      "displayName": "Scale|Offset|sAngle|Band|Bass|Low Mid|High Mid|Treble",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkVertexStart",
+      "displayName": "Audio Link Vertex Start",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkVertexStrength",
+      "displayName": "Audio Link Vertex Strength",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkAsLocal",
+      "displayName": "Audio Link As Local",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkLocalMap",
+      "displayName": "Local Map",
+      "common": false
+    },
+    {
+      "name": "_AudioLinkLocalMapParams",
+      "displayName": "Audio Link Local Map Params",
+      "common": false
+    },
+    {
+      "name": "_DissolveMask",
+      "displayName": "Dissolve Mask",
+      "common": false
+    },
+    {
+      "name": "_DissolveNoiseMask",
+      "displayName": "Dissolve Noise Mask",
+      "common": false
+    },
+    {
+      "name": "_DissolveNoiseStrength",
+      "displayName": "Dissolve Noise Strength",
+      "common": false
+    },
+    {
+      "name": "_DissolveColor",
+      "displayName": "Dissolve Color",
+      "common": false
+    },
+    {
+      "name": "_DissolveParams",
+      "displayName": "Dissolve Params",
+      "common": false
+    },
+    {
+      "name": "_DissolvePos",
+      "displayName": "Dissolve Position",
+      "common": false
+    },
+    {
+      "name": "_IDMaskCompile",
+      "displayName": "_IDMaskCompile",
+      "common": false
+    },
+    {
+      "name": "_IDMaskFrom",
+      "displayName": "_IDMaskFrom|0: UV0|1: UV1|2: UV2|3: UV3|4: UV4|5: UV5|6: UV6|7: UV7|8: VertexID",
+      "common": false
+    },
+    {
+      "name": "_IDMask1",
+      "displayName": "_IDMask1",
+      "common": false
+    },
+    {
+      "name": "_IDMask2",
+      "displayName": "_IDMask2",
+      "common": false
+    },
+    {
+      "name": "_IDMask3",
+      "displayName": "_IDMask3",
+      "common": false
+    },
+    {
+      "name": "_IDMask4",
+      "displayName": "_IDMask4",
+      "common": false
+    },
+    {
+      "name": "_IDMask5",
+      "displayName": "_IDMask5",
+      "common": false
+    },
+    {
+      "name": "_IDMask6",
+      "displayName": "_IDMask6",
+      "common": false
+    },
+    {
+      "name": "_IDMask7",
+      "displayName": "_IDMask7",
+      "common": false
+    },
+    {
+      "name": "_IDMask8",
+      "displayName": "_IDMask8",
+      "common": false
+    },
+    {
+      "name": "_IDMaskIsBitmap",
+      "displayName": "_IDMaskIsBitmap",
+      "common": false
+    },
+    {
+      "name": "_IDMaskIndex1",
+      "displayName": "_IDMaskIndex1",
+      "common": false
+    },
+    {
+      "name": "_IDMaskIndex2",
+      "displayName": "_IDMaskIndex2",
+      "common": false
+    },
+    {
+      "name": "_IDMaskIndex3",
+      "displayName": "_IDMaskIndex3",
+      "common": false
+    },
+    {
+      "name": "_IDMaskIndex4",
+      "displayName": "_IDMaskIndex4",
+      "common": false
+    },
+    {
+      "name": "_IDMaskIndex5",
+      "displayName": "_IDMaskIndex5",
+      "common": false
+    },
+    {
+      "name": "_IDMaskIndex6",
+      "displayName": "_IDMaskIndex6",
+      "common": false
+    },
+    {
+      "name": "_IDMaskIndex7",
+      "displayName": "_IDMaskIndex7",
+      "common": false
+    },
+    {
+      "name": "_IDMaskIndex8",
+      "displayName": "_IDMaskIndex8",
+      "common": false
+    },
+    {
+      "name": "_IDMaskControlsDissolve",
+      "displayName": "_IDMaskControlsDissolve",
+      "common": false
+    },
+    {
+      "name": "_IDMaskPrior1",
+      "displayName": "_IDMaskPrior1",
+      "common": false
+    },
+    {
+      "name": "_IDMaskPrior2",
+      "displayName": "_IDMaskPrior2",
+      "common": false
+    },
+    {
+      "name": "_IDMaskPrior3",
+      "displayName": "_IDMaskPrior3",
+      "common": false
+    },
+    {
+      "name": "_IDMaskPrior4",
+      "displayName": "_IDMaskPrior4",
+      "common": false
+    },
+    {
+      "name": "_IDMaskPrior5",
+      "displayName": "_IDMaskPrior5",
+      "common": false
+    },
+    {
+      "name": "_IDMaskPrior6",
+      "displayName": "_IDMaskPrior6",
+      "common": false
+    },
+    {
+      "name": "_IDMaskPrior7",
+      "displayName": "_IDMaskPrior7",
+      "common": false
+    },
+    {
+      "name": "_IDMaskPrior8",
+      "displayName": "_IDMaskPrior8",
+      "common": false
+    },
+    {
+      "name": "_UDIMDiscardCompile",
+      "displayName": "UDIMDiscard Compile",
+      "common": false
+    },
+    {
+      "name": "_UDIMDiscardUV",
+      "displayName": "UDIMDiscard UV",
+      "common": false
+    },
+    {
+      "name": "_UDIMDiscardMode",
+      "displayName": "UDIMDiscard Mode",
+      "common": false
+    },
+    {
+      "name": "_UseClippingCanceller",
+      "displayName": "Use Clipping Canceller",
+      "common": false
+    },
+    {
+      "name": "_AsOverlay",
+      "displayName": "As Overlay",
+      "common": false
+    },
+    {
+      "name": "_Ramp",
+      "displayName": "Shadow Ramp",
+      "common": false
+    }
+  ]
+}

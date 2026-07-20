@@ -308,9 +308,10 @@ Engine integration details are documented in
 - [ ] Precedence vs `VRMC_materials_mtoon` and `KHR_materials_unlit`
 - [ ] Whether `extensionsRequired` is ever appropriate
 - [ ] Export rules for Blender / other authoring tools (format uses `idType` / `id`;
-      authoring UI still open — see
-      [Blender Materials Override](../implementations/blender-materials-override.md))
+      authoring plan in
+      [Blender Materials Override](../implementations/blender-materials-override.md#authoring-ui-plan))
 - [ ] Authoring UX when a material stores multiple `unity` or `unreal` variant slots
+      (Unity multi-variant rules sketched in the Blender authoring plan; Unreal still open)
 - [ ] Stable `specVersion` policy after first accepted property set
 
 ## Related
