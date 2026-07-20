@@ -1,7 +1,7 @@
 {
   "catalogVersion": "1.0",
   "engine": "unity",
-  "displayName": "lilToon Transparent",
+  "displayName": "lilToon Transparent 2.3.4",
   "shaderName": "Hidden/lilToonTransparent",
   "idType": "shaderName",
   "defaultVariant": "builtin",
