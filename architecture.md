@@ -16,9 +16,9 @@ status: draft
 # Extended VRM Architecture
 
 Layering of Extended VRM (`VRMXT_*` glTF extensions) for **multi-engine authoring**
-(import/export) and **runtime consumers** relative to stock VRM 1.0. Normative field
-rules live in [specs/](specs/); this note covers compatibility and integration seams
-only.
+(import/export), **runtime consumers**, and **converters** relative to stock VRM 1.0.
+Normative field rules live in [specs/](specs/); this note covers compatibility and
+integration seams only.
 
 ## Claims
 
@@ -164,11 +164,12 @@ Implementation profiles under `implementations/` state whether export is shipped
 **TBD**. Until an engine’s Extended export lands, use Blender or Unity to write
 `VRMXT_*`; that engine’s package still MAY import and run the data.
 
-## Consumers (runtime)
+## Consumers
 
 A **runtime consumer** reads `VRMXT_*` after (or beside) a stock VRM load and maps
-portable fields onto engine types. When the same package also supports editor
-export, see [Authoring](#authoring).
+portable fields onto engine types. A **converter** reads the same extensions and emits
+a host-native avatar package. When the same package also supports editor export, see
+[Authoring](#authoring).
 
 | Consumer | Host | Integration style |
 |----------|------|-------------------|
@@ -176,6 +177,7 @@ export, see [Authoring](#authoring).
 | Godot VRMXT addon (planned) | Godot + [godot-vrm](https://github.com/V-Sekai/godot-vrm) | Optional addon. Register `GLTFDocumentExtension` beside stock VRM plugins; runtime attach when `EditorPlugin` is absent. Does not replace godot-vrm. |
 | three-vrmxt (planned) | Three.js + [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | Optional npm package. Peer `GLTFLoaderPlugin` beside `VRMLoaderPlugin`; optional explicit `tryAttach`. Does not replace three-vrm. |
 | VRM4U path | Unreal + VRM4U | Optional profile docs under `implementations/`; stock VRM4U load remains baseline. |
+| VRMXT → VRChat converter (planned) | Unity + VRChat Avatar SDK | Separate product. Offline conversion: read `.vrm`, emit VRChat-ready prefab / Animator setup. Consumes `VRMXT_*` (+ stock VRM); schema does not embed VRChat SDK types. See [animation controller standardization](decisions/animation-controller-standardization.md). |
 | Other engines | Any VRM 1.0 loader | Implement the specs; ignore unknown `VRMXT_*` if unsupported. |
 
 ### Unity / UniVRM
@@ -283,4 +285,4 @@ Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
 | Full Unity from-scratch VFX authoring UI (vs Blender + Unity re-export) | Open; re-export and materials override authoring already ship |
 | Three.js / Unreal / Godot Extended **export** timelines | TBD per engine profile |
 | Cross-engine authoring round-trip conformance tests for each `VRMXT_*` | TBD |
-| Portable Animator-like controller (`VRMXT_*`) | Decision: [conditional / narrow](decisions/animation-controller-standardization.md); no extension draft until flip conditions met |
+| Portable Animator-like controller (`VRMXT_AnimationController` + `VRMXT_AnimationClip`) | Decision: [conditional / narrow](decisions/animation-controller-standardization.md); drafts: [controller](specs/vrmxt-animation-controller.md), [clip](specs/vrmxt-animation-clip.md); crossfade / emote-end TBD |

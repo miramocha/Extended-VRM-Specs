@@ -165,6 +165,10 @@ Non-normative.
 
 Exact visual parity across engines is not required. Field meaning and units are.
 
+The glTF Extension Registry has no particle-emitter `KHR_` / `EXT_` extension.
+`EXT_mesh_gpu_instancing` covers static instance batches, not live emitters. Research:
+[KHR / glTF overlap](../references/khr-gltf-overlap.md).
+
 ## Extensibility
 
 Later drafts MAY:
@@ -183,6 +187,7 @@ Removing or redefining an existing field does.
 - [VRMXT_materials_override](vrmxt-materials-override.md)
 - [VRMXT_springBone_override](vrmxt-spring-bone-override.md)
 - [VRMXT_lattice](vrmxt-lattice.md) (research draft)
+- [KHR / glTF overlap](../references/khr-gltf-overlap.md) (non-normative)
 - [Blender VFX](../implementations/blender-vfx.md)
 - [UniVRM VFX](../implementations/univrm-vfx.md)
 - [Godot VFX](../implementations/godot-vfx.md)

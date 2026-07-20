@@ -32,6 +32,7 @@ Optional `VRMXT_*` consumers:
 | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo consumer plugin (vendored UniVRMXT VFX + materials override; UMod). Install: [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) |
 | Godot VRMXT addon (planned) | Optional Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm) |
 | three-vrmxt (planned) | Optional npm package beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) |
+| VRMXT → VRChat converter (planned) | Separate product. Offline Unity conversion of `.vrm` (`VRMC_*` + `VRMXT_*`) into a VRChat-ready avatar. Consumes the portable contract; does not put VRChat SDK types in the file schema. See [Animation controller standardization](decisions/animation-controller-standardization.md) |
 
 ## Architecture
 
@@ -43,7 +44,7 @@ Optional `VRMXT_*` consumers:
 
 | Note | Topic | Status |
 |------|-------|--------|
-| [Animation controller standardization](decisions/animation-controller-standardization.md) | Go/no-go on portable Animator-like graphs across engines; conditional narrow profile | draft |
+| [Animation controller standardization](decisions/animation-controller-standardization.md) | Durable final scope: `VRMXT_AnimationController` + `VRMXT_AnimationClip`; bridge one-shots; packaging A | draft |
 
 ## Drafts
 
@@ -53,6 +54,8 @@ Optional `VRMXT_*` consumers:
 | [VRMXT_springBone_override](specs/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
 | [VRMXT_vfx](specs/vrmxt-vfx.md) | `VRMXT_vfx` (particles) | draft |
 | [VRMXT_lattice](specs/vrmxt-lattice.md) | `VRMXT_lattice` (FFD / cage) | draft |
+| [VRMXT_AnimationController](specs/vrmxt-animation-controller.md) | Root flat FSM; bridge one-shots; packaging A | draft |
+| [VRMXT_AnimationClip](specs/vrmxt-animation-clip.md) | Per-`animations[i]` metadata; required on controller-bound clips | draft |
 
 ## Implementation profiles
 
@@ -74,6 +77,7 @@ Optional `VRMXT_*` consumers:
 
 | Note | Topic | Status |
 |------|-------|--------|
+| [KHR / glTF overlap](references/khr-gltf-overlap.md) | Non-normative: Khronos/EXT registry vs materials, VFX, and animation (`VRMXT_AnimationController` / `VRMXT_AnimationClip`) | draft |
 | [Materials Override Catalogs](references/materials-override-catalogs.md) | Non-normative shader catalogs (schema, distribution, index); JSON under `references/catalogs/data/` | draft |
 | [Unity lilToon Catalog](references/catalogs/unity-liltoon.md) | lilToon opaque/cutout/transparent JSON @ pin `2.3.4` (359 props) | draft |
 | [Unity VRMXT Test Override Catalog](references/catalogs/unity-vrmxt-test-override.md) | UniVRMXT TestOverrideBuiltin / TestOverrideURP (11 props) | draft |

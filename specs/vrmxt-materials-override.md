@@ -280,6 +280,9 @@ omitted here; see the Unity and Unreal profile notes for fuller single-slot exam
 - `properties` set literal values with no MToon dependency. Rule 23 fixes precedence
   between `properties` and `bindings` on the same target; override-vs-MToon precedence at
   the whole-material level is otherwise **TBD** (override vs MToon vs coexistence).
+- `KHR_materials_variants` is a different mechanism (primitive → portable `materials[]`
+  swap for named skins). It does not carry engine material identities or MToon bindings.
+  Research: [KHR / glTF overlap](../references/khr-gltf-overlap.md).
 
 ## Optional consumer interpretation
 
@@ -318,6 +321,7 @@ Engine integration details are documented in
 
 - Upstream MToon: `VRMC_materials_mtoon` in the VRM 1.0 specification
 - Core materials: glTF 2.0 `materials` schema
+- [KHR / glTF overlap](../references/khr-gltf-overlap.md) (non-normative)
 - [UniVRM Materials Override](../implementations/univrm-materials-override.md)
 - [VRM4U Materials Override](../implementations/vrm4u-materials-override.md)
 - [Blender Materials Override](../implementations/blender-materials-override.md)
