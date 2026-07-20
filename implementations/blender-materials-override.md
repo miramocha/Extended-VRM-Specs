@@ -37,9 +37,9 @@ optional `properties[]`; Unreal `resourcePath` still open). Panel:
 ## Authoring UI plan
 
 Goal: let authors create and edit `VRMXT_materials_override` on a Blender material
-without hand-editing JSON. Catalog JSON drives known shaders (ship Liltoon and
-Poiyomi first). Catalogs are authoring aids only. Base-spec rules 18–21 still apply
-(open identifiers; unresolved materials fall back on import).
+without hand-editing JSON. Catalog JSON drives known shaders (lilToon JSON shipped in
+Specs; Poiyomi next). Catalogs are authoring aids only. Base-spec rules 18–21 still
+apply (open identifiers; unresolved materials fall back on import).
 
 ### Target authoring flow
 
@@ -51,9 +51,12 @@ Non-normative. Unity Built-in + Liltoon example:
 4. Set **Variant** → e.g. `Built-In` (`material.variant: "builtin"`).
 5. Set **Material / Shader** from the catalog dropdown **filtered by that variant**
    (see [Materials Override Catalogs](../references/materials-override-catalogs.md)
-   Material/Shader dropdown filter). Built-In → lilToon and Poiyomi; URP → lilToon;
-   HDRP → no catalog entries yet (**Custom…** only). Writes `material.idType:
-   "shaderName"` and `material.id` to the chosen catalog’s Unity shader name.
+   Material/Shader dropdown filter). Built-In → lilToon family + Poiyomi (when
+   shipped); URP → lilToon family; HDRP → no catalog entries yet (**Custom…** only).
+   lilToon ships as **three** catalog rows (opaque `lilToon`, cutout
+   `Hidden/lilToonCutout`, transparent `Hidden/lilToonTransparent`). Writes
+   `material.idType: "shaderName"` and `material.id` to the chosen catalog’s Unity
+   shader name.
 6. Under **Properties**:
    - **Add Common Props** — one click appends the catalog's common subset (names not
      already on this slot), with catalog defaults.
@@ -94,7 +97,9 @@ parent (`VRM_PT_vrm_material_property`).
 **Add** behavior:
 
 - Enum = all catalog `properties[]` for this shader minus names already on the slot
-  (common and non-common alike).
+  (common and non-common alike). lilToon @ pin `2.3.4` has ~337 extended rows
+  (glitter, parallax, … as literal `properties[]`, not MToon `bindings`); UI MAY
+  add search or section grouping later if the flat enum is hard to use.
 - Always include **Custom…** → free-text `name` + manual `type`.
 - Reject `properties[].name` that equals any `bindings[].target` on the same slot
   (base-spec rule 23); warn in UI.
@@ -143,7 +148,7 @@ Writes `material.idType` + `material.id`. Options depend on Engine + Variant.
 
 | UI entry | Stored value | Source |
 |----------|--------------|--------|
-| Catalog row (e.g. lilToon, Poiyomi) | `idType: "shaderName"`, `id` = catalog `shaderName` | Catalog JSON entries whose `supportedVariants` contains the selected Variant |
+| Catalog row (e.g. lilToon / Cutout / Transparent, Poiyomi) | `idType: "shaderName"`, `id` = catalog `shaderName` | One JSON file per `shaderName`; show entries whose `supportedVariants` contains the selected Variant |
 | Custom… | `idType: "shaderName"`, `id` = free-text | Author (always listed) |
 
 When the filtered catalog list is empty (e.g. **HDRP**), this control still offers
@@ -229,7 +234,7 @@ Add-property operators:
 
 | Phase | Deliverable |
 |-------|-------------|
-| 0 | Catalog schema + Liltoon + Poiyomi JSON stubs (names/types only; fill real shader strings later) |
+| 0 | Catalog schema + lilToon JSON (opaque / cutout / transparent @ pin `2.3.4`) — **done in Specs**; Poiyomi JSON still TBD |
 | 1 | PropertyGroups for overrides + properties; import fills groups; export serializes groups |
 | 2 | Panel rewrite: Add/Remove slot; Engine / Variant / Shader enums; Custom shader |
 | 3 | Add/edit/remove properties with type-driven value widgets + texture pointers |
@@ -237,7 +242,8 @@ Add-property operators:
 | 5 | Bindings authoring (MToon source → target); multi-variant UX polish |
 | 6 | Unreal `resourcePath` + variant authoring |
 
-First ship target = phases 0–4. Readonly panel remains until phase 2 replaces it.
+First ship target = phases 0–4 (Specs phase 0 content for lilToon is available to vendor).
+Readonly panel remains until phase 2 replaces it.
 
 ### Tests
 
@@ -254,13 +260,18 @@ First ship target = phases 0–4. Readonly panel remains until phase 2 replaces 
 
 ### Open questions (authoring)
 
-- [ ] One catalog file per shader vs bundled multi-shader catalogs (see catalog index)
+- [x] One catalog file per shader vs bundled — **one JSON file per `shaderName`**
+      (catalog index)
 - [ ] Whether changing Material/Shader clears existing `properties[]` or remaps by name
 - [ ] Whether `provider` is editable in the first ship set or catalog-only
-- [ ] Bindings UI timing relative to properties authoring
-- [ ] HDRP catalog entries in first ship set, or Built-in + URP only
+- [ ] Bindings UI timing relative to properties authoring (properties first; bindings
+      phase 5)
+- [x] HDRP in first ship — **no**; catalog `supportedVariants` = `builtin` + `urp`;
+      HDRP = **Custom…** only until smoke-tested
 - [ ] String-typed literal properties (needs base-spec change if required)
-- [ ] Curated lilToon / Poiyomi property lists (tracked on catalog family pages)
+- [x] lilToon curated property list — **shipped** (359 props @ `2.3.4`; common +
+      extended including glitter/parallax as `properties[]`)
+- [ ] Poiyomi curated property list (family page still stub)
 
 ## Checklist
 
@@ -271,8 +282,10 @@ First ship target = phases 0–4. Readonly panel remains until phase 2 replaces 
 - [x] Readonly Material PROPERTIES panel for display
 - [ ] Document export rules once behavior matches the base spec open question
 - [ ] Authoring UI (edit / create overrides in Blender; multi-variant slots)
-- [ ] Shader catalogs (Liltoon, Poiyomi) + catalog loader — docs:
+- [x] Specs catalogs (lilToon opaque/cutout/transparent JSON + index) — docs:
       [Materials Override Catalogs](../references/materials-override-catalogs.md)
+- [ ] Vendor catalog JSON into `io_scene_vrmxt/materials_override/catalogs/` + catalog
+      loader (Poiyomi still TBD on Specs side)
 - [ ] PropertyGroups as source of truth; sync/export from groups
 - [ ] Type-driven property value widgets + texture export registration
 
