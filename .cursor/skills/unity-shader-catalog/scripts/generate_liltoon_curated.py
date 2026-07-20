@@ -233,7 +233,7 @@ def build_curated(source: str) -> dict:
         for r in rows
     ]
     return {
-        "displayName": "lilToon",
+        "displayName": "lilToon 2.3.4",
         "shaderName": "lilToon",
         "defaultVariant": "builtin",
         "supportedVariants": ["builtin", "urp"],

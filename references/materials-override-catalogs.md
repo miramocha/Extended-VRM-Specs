@@ -43,6 +43,9 @@ JSON paths:
 - `references/catalogs/data/unity-liltoon.json`
 - `references/catalogs/data/unity-liltoon-cutout.json`
 - `references/catalogs/data/unity-liltoon-transparent.json`
+- `references/catalogs/data/unity-liltoon-warudo.json`
+- `references/catalogs/data/unity-liltoon-warudo-cutout.json`
+- `references/catalogs/data/unity-liltoon-warudo-transparent.json`
 - `references/catalogs/data/unity-vrmxt-test-override-builtin.json`
 - `references/catalogs/data/unity-vrmxt-test-override-urp.json`
 - `references/catalogs/data/unity-poiyomi.json` (planned)
@@ -91,6 +94,7 @@ same `catalogVersion` are fine; consumers SHOULD tolerate unknown fields.
 | Note | Engine | Data JSON | `supportedVariants` | Status |
 |------|--------|-----------|---------------------|--------|
 | [Unity lilToon](catalogs/unity-liltoon.md) | `unity` | `unity-liltoon.json`, `unity-liltoon-cutout.json`, `unity-liltoon-transparent.json` | `builtin`, `urp` (not `hdrp` yet) | shipped (pin lilToon `2.3.4`, 359 props each) |
+| [Unity lilToon Warudo](catalogs/unity-liltoon-warudo.md) | `unity` | `unity-liltoon-warudo.json`, `unity-liltoon-warudo-cutout.json`, `unity-liltoon-warudo-transparent.json` | `builtin` only | shipped (pin lilToon `1.10.3` Warudo, 356 props each) |
 | [Unity VRMXT Test Override](catalogs/unity-vrmxt-test-override.md) | `unity` | `unity-vrmxt-test-override-builtin.json`, `unity-vrmxt-test-override-urp.json` | `builtin` / `urp` (one each) | shipped (UniVRMXT sample, 11 props each) |
 | [Unity Poiyomi](catalogs/unity-poiyomi.md) | `unity` | `catalogs/data/unity-poiyomi.json` (planned) | `builtin` only | stub |
 
@@ -116,7 +120,7 @@ Proposed shape for tool-side JSON (field names MAY change; keep semantics):
 |-------|------|----------|---------|
 | `catalogVersion` | string | yes | Catalog file format version (start `"1.0"`) |
 | `engine` | string | yes | `"unity"` for Unity families |
-| `displayName` | string | yes | Dropdown label (e.g. `"lilToon"`) |
+| `displayName` | string | yes | Dropdown label (e.g. `"lilToon 2.3.4"`) |
 | `shaderName` | string | yes | Exact Unity shader name → `material.id` |
 | `idType` | string | yes | `"shaderName"` for Unity |
 | `defaultVariant` | string | no | Suggested variant when creating a slot; MUST be in `supportedVariants` when that field is set |

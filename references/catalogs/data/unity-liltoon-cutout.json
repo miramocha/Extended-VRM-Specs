@@ -1,7 +1,7 @@
 {
   "catalogVersion": "1.0",
   "engine": "unity",
-  "displayName": "lilToon Cutout",
+  "displayName": "lilToon Cutout 2.3.4",
   "shaderName": "Hidden/lilToonCutout",
   "idType": "shaderName",
   "defaultVariant": "builtin",

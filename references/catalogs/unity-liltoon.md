@@ -37,11 +37,11 @@ Non-normative. Not a closed allowlist. Property names from opaque
 
 ### Related shader names (family)
 
-| Mode (informal) | `shaderName` | Catalog JSON |
-|-----------------|--------------|--------------|
-| Opaque | `lilToon` | [`unity-liltoon.json`](data/unity-liltoon.json) |
-| Cutout | `Hidden/lilToonCutout` | [`unity-liltoon-cutout.json`](data/unity-liltoon-cutout.json) |
-| Transparent | `Hidden/lilToonTransparent` | [`unity-liltoon-transparent.json`](data/unity-liltoon-transparent.json) |
+| Mode (informal) | `shaderName` | `displayName` | Catalog JSON |
+|-----------------|--------------|---------------|--------------|
+| Opaque | `lilToon` | lilToon 2.3.4 | [`unity-liltoon.json`](data/unity-liltoon.json) |
+| Cutout | `Hidden/lilToonCutout` | lilToon Cutout 2.3.4 | [`unity-liltoon-cutout.json`](data/unity-liltoon-cutout.json) |
+| Transparent | `Hidden/lilToonTransparent` | lilToon Transparent 2.3.4 | [`unity-liltoon-transparent.json`](data/unity-liltoon-transparent.json) |
 
 One JSON file per `shaderName`. Cutout source:
 [`lts_cutout.shader`](https://github.com/lilxyzw/lilToon/blob/2.3.4/Assets/lilToon/Shader/lts_cutout.shader).
@@ -66,8 +66,8 @@ URP, and HDRP (pipeline detection / templates). The opaque `shaderName` remains
 
 | Pipeline | Support (upstream) | Catalog `supportedVariants` | Dropdown when that variant selected |
 |----------|--------------------|-----------------------------|--------------------------------------|
-| Built-in (`builtin`) | yes | yes | Shows lilToon |
-| URP (`urp`) | yes | yes | Shows lilToon |
+| Built-in (`builtin`) | yes | yes | Shows lilToon 2.3.4 |
+| URP (`urp`) | yes | yes | Shows lilToon 2.3.4 |
 | HDRP (`hdrp`) | yes (upstream) | **no** (not shipped yet) | lilToon **not** listed; Custom only |
 
 Catalog JSON SHOULD set `"supportedVariants": ["builtin", "urp"]` and
@@ -282,6 +282,7 @@ Release: https://github.com/lilxyzw/lilToon/releases/tag/2.3.4
 ## Related
 
 - Index: [Materials Override Catalogs](../materials-override-catalogs.md)
+- Sibling (Warudo pin 1.10.3): [Unity lilToon Warudo Catalog](unity-liltoon-warudo.md)
 - Sibling: [Unity Poiyomi Catalog](unity-poiyomi.md)
 - Blender authoring: [Blender Materials Override](../../implementations/blender-materials-override.md)
 - Unity apply: [UniVRM Materials Override](../../implementations/univrm-materials-override.md)

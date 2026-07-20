@@ -1,13 +1,12 @@
 {
   "catalogVersion": "1.0",
   "engine": "unity",
-  "displayName": "lilToon 2.3.4",
-  "shaderName": "lilToon",
+  "displayName": "lilToon Cutout Warudo 1.10.3",
+  "shaderName": "Hidden/lilToonCutout",
   "idType": "shaderName",
   "defaultVariant": "builtin",
   "supportedVariants": [
-    "builtin",
-    "urp"
+    "builtin"
   ],
   "properties": [
     {
@@ -160,20 +159,6 @@
       "displayName": "Max Value",
       "common": false,
       "default": 255
-    },
-    {
-      "name": "_EnvRimBorder",
-      "type": "scalar",
-      "displayName": "[VRCLV] Rim Border",
-      "common": false,
-      "default": 3
-    },
-    {
-      "name": "_EnvRimBlur",
-      "type": "scalar",
-      "displayName": "[VRCLV] Rim Blur",
-      "common": false,
-      "default": 0.35
     },
     {
       "name": "_Color",
@@ -2794,12 +2779,6 @@
       "displayName": "As Overlay",
       "common": false,
       "default": 0
-    },
-    {
-      "name": "_Ramp",
-      "type": "texture",
-      "displayName": "Shadow Ramp",
-      "common": false
     }
   ]
 }
