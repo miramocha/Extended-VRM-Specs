@@ -43,6 +43,8 @@ JSON paths:
 - `references/catalogs/data/unity-liltoon.json`
 - `references/catalogs/data/unity-liltoon-cutout.json`
 - `references/catalogs/data/unity-liltoon-transparent.json`
+- `references/catalogs/data/unity-vrmxt-test-override-builtin.json`
+- `references/catalogs/data/unity-vrmxt-test-override-urp.json`
 - `references/catalogs/data/unity-poiyomi.json` (planned)
 
 One file per `shaderName` (or per family entry). Do not invent a second parallel schema
@@ -89,6 +91,7 @@ same `catalogVersion` are fine; consumers SHOULD tolerate unknown fields.
 | Note | Engine | Data JSON | `supportedVariants` | Status |
 |------|--------|-----------|---------------------|--------|
 | [Unity lilToon](catalogs/unity-liltoon.md) | `unity` | `unity-liltoon.json`, `unity-liltoon-cutout.json`, `unity-liltoon-transparent.json` | `builtin`, `urp` (not `hdrp` yet) | shipped (pin lilToon `2.3.4`, 359 props each) |
+| [Unity VRMXT Test Override](catalogs/unity-vrmxt-test-override.md) | `unity` | `unity-vrmxt-test-override-builtin.json`, `unity-vrmxt-test-override-urp.json` | `builtin` / `urp` (one each) | shipped (UniVRMXT sample, 11 props each) |
 | [Unity Poiyomi](catalogs/unity-poiyomi.md) | `unity` | `catalogs/data/unity-poiyomi.json` (planned) | `builtin` only | stub |
 
 ### Material/Shader dropdown filter
@@ -97,8 +100,8 @@ UI filters catalog entries by the slot’s selected **Variant** (`material.varia
 
 | Selected variant | Catalog entries shown |
 |------------------|------------------------|
-| Built-In (`builtin`) | lilToon, Poiyomi |
-| URP (`urp`) | lilToon |
+| Built-In (`builtin`) | lilToon, VRMXT Test Override (Built-in), Poiyomi |
+| URP (`urp`) | lilToon, VRMXT Test Override (URP) |
 | HDRP (`hdrp`) | *(none)* — **Custom…** only until a catalog lists `hdrp` |
 
 **Custom…** always remains available for any variant. Empty catalog list for HDRP is

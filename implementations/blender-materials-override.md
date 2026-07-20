@@ -24,15 +24,15 @@ see [Blender Extension Hooks](blender-extension-hooks.md)).
 
 | Stage | Behavior |
 |-------|----------|
-| Import | Read `materials[i].extensions.VRMXT_materials_override`; store extension JSON on the Blender material (`vrmxt_materials_override_settings.raw_json` + custom prop). |
-| Export | Write stored JSON back onto the material extension + `extensionsUsed`. |
-| UI | Readonly Material PROPERTIES panel. Shows parsed engine / identity / bindings / properties. Multiple `unity` or `unreal` variant slots MAY appear as separate rows. No authoring. |
+| Import | Read extension JSON; store on material; populate authored PropertyGroups when Unity parse succeeds. |
+| Export | Serialize authored groups (preferred) or stored raw JSON; remap texture Images into `textures[]` when export context provides buffer helpers. |
+| UI | Editable Material PROPERTIES panel: Add/Remove override slots, Engine / Variant / Material-Shader (catalog + Custom), Add Common Props / Add / Remove properties. Bindings still deferred. Unreal / unparsed payloads stay readonly via raw JSON. |
 
 Hooks: `materials_override/import_hook.py`, `materials_override/export_hook.py`,
 registered from `hooks/vrm1_hooks.py`. Format module:
-`format/materials_override.py` (`idType` / `id` / `variant`; Unity `shaderName`;
-optional `properties[]`; Unreal `resourcePath` still open). Panel:
-`materials_override/panel.py`.
+`format/materials_override.py` (Unity multi-slot selection key = `engine` + `variant`).
+Catalogs: `materials_override/catalogs/*.json` + `catalog.py`. Panel / ops:
+`materials_override/panel.py`, `materials_override/ops.py`, `sync.py`.
 
 ## Authoring UI plan
 
@@ -281,13 +281,13 @@ Readonly panel remains until phase 2 replaces it.
 - [x] Tests/fixtures under `tests/resources/gltf/` use `idType` / `id`
 - [x] Readonly Material PROPERTIES panel for display
 - [ ] Document export rules once behavior matches the base spec open question
-- [ ] Authoring UI (edit / create overrides in Blender; multi-variant slots)
+- [x] Authoring UI (edit / create overrides in Blender; multi-variant slots) — first ship in VRMXT-Extension-for-Blender
 - [x] Specs catalogs (lilToon opaque/cutout/transparent JSON + index) — docs:
       [Materials Override Catalogs](../references/materials-override-catalogs.md)
-- [ ] Vendor catalog JSON into `io_scene_vrmxt/materials_override/catalogs/` + catalog
+- [x] Vendor catalog JSON into `io_scene_vrmxt/materials_override/catalogs/` + catalog
       loader (Poiyomi still TBD on Specs side)
-- [ ] PropertyGroups as source of truth; sync/export from groups
-- [ ] Type-driven property value widgets + texture export registration
+- [x] PropertyGroups as source of truth; sync/export from groups
+- [x] Type-driven property value widgets + texture export registration (Image remap on export when helpers available)
 
 ## Related
 

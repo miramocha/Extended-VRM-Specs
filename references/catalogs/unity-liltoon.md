@@ -177,8 +177,7 @@ not covered by **Add Common Props**. Grouped by upstream inspector section:
 
 **Excluded** from these three catalog files (use **Custom…** or a future outline shader
 row): Outline + Outline Advanced, Tessellation, Advanced render state (`_Cull`,
-`_SrcBlend`, stencil, …), `_TransparentMode`, `_UseOutline`, HideInInspector save
-chrome.
+`_SrcBlend`, stencil, …), `_TransparentMode`, `_UseOutline`.
 
 Catalog JSON defaults follow ShaderLab where useful. **Add Common Props** still only
 batch-adds `common: true` rows. Feature toggles in `enableToggles` (shadow, rim,
