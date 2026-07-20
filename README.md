@@ -39,6 +39,12 @@ Optional `VRMXT_*` consumers:
 |------|-------|--------|
 | [Extended VRM Architecture](architecture.md) | Multi-engine authoring + runtime consumers; stock VRM stays as-is; Extended optional per engine | draft |
 
+## Decisions
+
+| Note | Topic | Status |
+|------|-------|--------|
+| [Animation controller standardization](decisions/animation-controller-standardization.md) | Go/no-go on portable Animator-like graphs across engines; conditional narrow profile | draft |
+
 ## Drafts
 
 | Note | Extension / topic | Status |

@@ -265,6 +265,7 @@ Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
 | Need | Doc |
 |------|-----|
 | Extension schemas | [specs/](specs/) |
+| Design decisions | [decisions/](decisions/) (e.g. [animation controller standardization](decisions/animation-controller-standardization.md)) |
 | Blender hook API | [implementations/blender-extension-hooks.md](implementations/blender-extension-hooks.md) |
 | Unity VFX profile | [implementations/univrm-vfx.md](implementations/univrm-vfx.md) |
 | Unity materials override | [implementations/univrm-materials-override.md](implementations/univrm-materials-override.md) |
@@ -282,3 +283,4 @@ Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
 | Full Unity from-scratch VFX authoring UI (vs Blender + Unity re-export) | Open; re-export and materials override authoring already ship |
 | Three.js / Unreal / Godot Extended **export** timelines | TBD per engine profile |
 | Cross-engine authoring round-trip conformance tests for each `VRMXT_*` | TBD |
+| Portable Animator-like controller (`VRMXT_*`) | Decision: [conditional / narrow](decisions/animation-controller-standardization.md); no extension draft until flip conditions met |
