@@ -211,9 +211,9 @@ to `IMaterialDescriptorGenerator`.
 
 ## Related
 
-- [VRMXT_materials_override](vrmxt-materials-override.md)
-- [VRMXT_vfx](vrmxt-vfx.md)
-- [VRMXT_lattice](vrmxt-lattice.md) (research draft; may reuse override-engine pattern)
+- [VRMXT_materials_override](../materials/vrmxt-materials-override.md)
+- [VRMXT_sprite_particle](../vfx/vrmxt-sprite-particle.md)
+- [VRMXT_lattice](../deformation/vrmxt-lattice.md) (research draft; may reuse override-engine pattern)
 
 ## Open questions
 

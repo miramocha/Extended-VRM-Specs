@@ -45,32 +45,36 @@ Optional `VRMXT_*` consumers:
 | Note | Topic | Status |
 |------|-------|--------|
 | [Animation controller standardization](decisions/animation-controller-standardization.md) | Durable final scope: `VRMXT_AnimationController` + `VRMXT_AnimationClip`; bridge one-shots; packaging A | draft |
+| [VFX capability boundaries](decisions/vfx-capability-boundaries.md) | One extension per capability; node-based particle attachment; lattice stays separate | accepted |
+| [Billboard sprite ownership](decisions/billboard-sprite-ownership.md) | Flatten particle appearance; no Billboard Sprite fragment; runtime geometry is consumer-owned | accepted |
+| [VFX capability naming](decisions/vfx-capability-naming.md) | `VRMXT_sprite_particle` and candidate VFX family names | accepted |
 
 ## Drafts
 
 | Note | Extension / topic | Status |
 |------|-------------------|--------|
-| [VRMXT_materials_override](specs/vrmxt-materials-override.md) | `VRMXT_materials_override` | draft |
-| [VRMXT_springBone_override](specs/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
-| [VRMXT_vfx](specs/vrmxt-vfx.md) | `VRMXT_vfx` (particles) | draft |
-| [VRMXT_lattice](specs/vrmxt-lattice.md) | `VRMXT_lattice` (FFD / cage) | draft |
-| [VRMXT_AnimationController](specs/vrmxt-animation-controller.md) | Root flat FSM; bridge one-shots; packaging A | draft |
-| [VRMXT_AnimationClip](specs/vrmxt-animation-clip.md) | Per-`animations[i]` metadata; required on controller-bound clips | draft |
+| [VRMXT Conformance](specs/core/vrmxt-conformance.md) | Shared `VRMXT_*` family requirements | draft |
+| [VRMXT_materials_override](specs/extensions/materials/vrmxt-materials-override.md) | `VRMXT_materials_override` | draft |
+| [VRMXT_springBone_override](specs/extensions/physics/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
+| [VRMXT_sprite_particle](specs/extensions/vfx/vrmxt-sprite-particle.md) | Portable sprite particle emitters | draft |
+| [VRMXT_lattice](specs/extensions/deformation/vrmxt-lattice.md) | `VRMXT_lattice` (FFD / cage) | draft |
+| [VRMXT_AnimationController](specs/extensions/animation/vrmxt-animation-controller.md) | Root flat FSM; bridge one-shots; packaging A | draft |
+| [VRMXT_AnimationClip](specs/extensions/animation/vrmxt-animation-clip.md) | Per-`animations[i]` metadata; required on controller-bound clips | draft |
 
 ## Implementation profiles
 
 | Note | Target | Status |
 |------|--------|--------|
 | [UniVRM Materials Override](implementations/univrm-materials-override.md) | Unity / UniVRMXT | draft |
-| [Warudo VRMXT](implementations/warudo-vrmxt.md) | Warudo plugin / `VRMXT_vfx` + materials override consumer | draft |
+| [Warudo VRMXT](implementations/warudo-vrmxt.md) | Warudo plugin / particle + materials override consumer | draft |
 | [Warudo Materials Override](implementations/warudo-materials-override.md) | Warudo plugin / post-load materials apply (shipped) | draft |
-| [UniVRM VFX](implementations/univrm-vfx.md) | Unity / UniVRMXT / `VRMXT_vfx` | draft |
-| [Godot VFX](implementations/godot-vfx.md) | Godot / godot-vrm / `VRMXT_vfx` | draft |
-| [three-vrm VFX](implementations/three-vrm-vfx.md) | Three.js / three-vrm / `VRMXT_vfx` | draft |
+| [UniVRM VFX](implementations/univrm-vfx.md) | Unity / UniVRMXT / `VRMXT_sprite_particle` | draft |
+| [Godot VFX](implementations/godot-vfx.md) | Godot / godot-vrm / `VRMXT_sprite_particle` | draft |
+| [three-vrm VFX](implementations/three-vrm-vfx.md) | Three.js / three-vrm / `VRMXT_sprite_particle` | draft |
 | [VRM4U Materials Override](implementations/vrm4u-materials-override.md) | Unreal / VRM4U | draft |
 | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) | UniVRM / Extended-UniVRM ScriptedImporter hooks (upstream propose) | draft |
 | [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hook API (prefs, exclude prop, upstream propose) | draft |
-| [Blender VFX](implementations/blender-vfx.md) | Blender VRMXT extension / `VRMXT_vfx` | draft |
+| [Blender VFX](implementations/blender-vfx.md) | Blender VRMXT extension / `VRMXT_sprite_particle` | draft |
 | [Blender Materials Override](implementations/blender-materials-override.md) | Blender VRMXT extension / `VRMXT_materials_override` (Unreal `resourcePath` + multi-variant format/UI pending) | draft |
 
 ## References
@@ -78,7 +82,15 @@ Optional `VRMXT_*` consumers:
 | Note | Topic | Status |
 |------|-------|--------|
 | [KHR / glTF overlap](references/khr-gltf-overlap.md) | Non-normative: Khronos/EXT registry vs materials, VFX, and animation (`VRMXT_AnimationController` / `VRMXT_AnimationClip`) | draft |
+| [Engine particle capability](references/engine-particle-capability.md) | Non-normative: Unity Particle System vs VFX Graph / BIRP; Niagara vs Cascade; VRM4U attach constraints (2026-07-21) | draft |
+| [VRoid Hub VRMXT round-trip](references/vroid-hub-vrmxt-roundtrip.md) | Non-normative: `VRMXT_materials_override` survives Hub upload → original download (2026-07-21) | draft |
 | [Materials Override Catalogs](references/materials-override-catalogs.md) | Non-normative shader catalogs (schema, distribution, index); JSON under `references/catalogs/data/` | draft |
 | [Unity lilToon Catalog](references/catalogs/unity-liltoon.md) | lilToon opaque/cutout/transparent JSON @ pin `2.3.4` (359 props) | draft |
 | [Unity VRMXT Test Override Catalog](references/catalogs/unity-vrmxt-test-override.md) | UniVRMXT TestOverrideBuiltin / TestOverrideURP (11 props) | draft |
 | [Unity Poiyomi Catalog](references/catalogs/unity-poiyomi.md) | Poiyomi Toon catalog stub (`.poiyomi/Poiyomi Toon`) | draft |
+
+## Archive
+
+| Note | Superseded by |
+|------|---------------|
+| [VRMXT_vfx](archive/specs/vrmxt-vfx.md) | [VRMXT_sprite_particle](specs/extensions/vfx/vrmxt-sprite-particle.md) and [VFX capability boundaries](decisions/vfx-capability-boundaries.md) |

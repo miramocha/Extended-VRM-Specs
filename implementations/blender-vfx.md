@@ -1,7 +1,7 @@
 ---
 title: Blender VFX
 aliases:
-  - VRMXT_vfx for Blender
+  - VRMXT_sprite_particle for Blender
   - Blender particle emitters
 tags:
   - extended-vrm
@@ -14,7 +14,7 @@ status: draft
 
 # Blender VFX
 
-Blender add-on implementation profile for [VRMXT_vfx](../specs/vrmxt-vfx.md).
+Blender add-on implementation profile for [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md).
 Support belongs in
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender),
 which registers on VRM1 hooks from
@@ -48,22 +48,18 @@ Proposed layout (implementation identifiers MAY be adjusted; keep semantics):
 |------------------|------------|-------|
 | Collection of emitter items | `emitters[]` | Order preserved on export |
 | `name` | `emitters[].name` | Authoring label |
-| Attachment pointer | `emitters[].node` | Pose bone **or** object; see mapping |
-| `local_position` | `localPosition` | Spec-space meters; default `(0,0,0)` |
-| `local_rotation` | `localRotation` | Spec-space quaternion **xyzw**; default identity |
-| `texture` (`PointerProperty` to `Image`) | `particle.texture` | Resolved through glTF textures/images |
+| Attachment pointer | `emitters[].node` | Pose bone **or** Empty/object helper; see mapping |
+| `texture` (`PointerProperty` to `Image`) | `texture` | Resolved through glTF textures/images |
+| `size` | `size` | Width and height in meters |
+| `color` | `color` | Linear RGBA |
 | `emission_rate` | `emissionRate` | |
 | `max_particles` | `maxParticles` | |
 | `lifetime` | `lifetime` | |
-| `start_size` | `startSize` | |
 | `start_speed` | `startSpeed` | |
-| `start_color` | `startColor` | Linear RGBA |
 
-MVP stores `local_position` and `local_rotation` as **spec / glTF node-local** values
-so round-trip matches file bytes. Bone `axis_translation` remapping used for spring
-colliders and look-at offsets is **not** applied to these fields in MVP.
-
-Whether a later preview UI should convert values for Blender bone axes is **TBD**.
+Offsets live on the glTF / Blender node the emitter points at. Prefer an Empty (or
+other Object) parented under the bone when a non-zero local offset is needed. Do not
+store duplicate `localPosition` / `localRotation` on the emitter property group.
 
 ## VRM 1 import seam
 
@@ -75,7 +71,7 @@ and image maps.
 In-tree path: same timing, code lives beside the existing
 `extensions.VRMC_springBone` load:
 
-1. Read root `extensions.VRMXT_vfx`.
+1. Read root `extensions.VRMXT_sprite_particle`.
 2. Require `specVersion` `"1.0"` for this draft; unknown versions: **TBD** (skip or
    best-effort).
 3. Iterate `emitters[]`. Skip invalid entries per the base spec.
@@ -83,7 +79,7 @@ In-tree path: same timing, code lives beside the existing
    - Returns `PoseBone` when the node mapped to a bone (`_bone_names`).
    - Returns `Object` when the node mapped to an object (`_object_names`).
    - Returns `None` → skip emitter.
-5. Resolve `particle.texture` when present:
+5. Resolve `texture` when present:
    - Index into glTF `textures[]`.
    - Read `textures[i].source` as an image index.
    - Assign `self._images.get(source)` to the emitter image pointer.
@@ -107,13 +103,15 @@ and object index maps exist:
    - Pose bone → `bone_name_to_index_dict`.
    - Object → `object_name_to_index_dict`.
    - Unmapped attachment → skip that emitter (or omit export; **TBD** whether to warn).
-3. Write `localPosition` / `localRotation` from property groups. Whether to omit
-   identity/zero defaults or write them explicitly is **TBD**; either is valid.
-4. Ensure particle images exist in the glTF using existing exporter helpers
+3. Ensure particle images exist in the glTF using existing exporter helpers
    (`find_or_create_image` and texture/sampler append paths used by meta and MToon).
-5. Set `particle.texture` to the resulting `textures[]` index.
-6. Write root `extensions.VRMXT_vfx` and add `VRMXT_vfx` to `extensionsUsed`.
-7. Do **not** add `VRMXT_vfx` to `extensionsRequired`.
+4. Set `texture` to the resulting `textures[]` index.
+5. Write root `extensions.VRMXT_sprite_particle` and add `VRMXT_sprite_particle` to
+   `extensionsUsed`.
+6. Do **not** add `VRMXT_sprite_particle` to `extensionsRequired`.
+
+Offset helpers authored as Empties under bones export as ordinary glTF nodes with
+`translation` / `rotation`. The emitter `node` index points at that helper.
 
 ## Node, bone, and object mapping
 
@@ -141,17 +139,16 @@ share an existing texture entry when `source` matches.
 
 Per emitter, skip (do not fail the whole VRM load/export) when:
 
-- `type` missing or unknown
 - `node` missing, out of range, or unresolved
-- `type` is `"particle"` but `particle` is missing
-- Non-finite or negative `emissionRate` / `lifetime` / `startSize` / `startSpeed`
+- `size` present but not two finite numbers greater than `0`
+- `color` present but not four finite numbers, RGB `>= 0`, alpha in `[0,1]`
+- Non-finite or negative `emissionRate` / `lifetime` / `startSpeed`
 - `maxParticles` not an integer `>= 1`
-- `localPosition` or `localRotation` wrong length, non-finite, or zero-length quaternion
 - Attachment cleared or unmapped on export
 
 Stock VRM 1.0 load without the VFX feature: avatar imports; no emitters. Missing
 optional package behavior does not apply here (this lives inside the VRM add-on),
-but absent `VRMXT_vfx` in the file MUST leave the collection empty.
+but absent `VRMXT_sprite_particle` in the file MUST leave the collection empty.
 
 ## UI
 
@@ -159,8 +156,9 @@ Follow existing editor patterns (`editor/spring_bone1` panels, lists, operators)
 
 - Panel under the armature VRM 1 UI
 - UIList of emitters with add / remove / reorder
-- Per-emitter fields: name, attachment, local position, local rotation, texture,
-  particle scalars and color
+- Per-emitter fields: name, attach node (bone or Empty/object), sprite appearance
+  (texture, size, color), particle scalars
+- Operators to create an offset Empty under a selected bone when needed
 - Rebuild / Clear VFX Preview operators (GeoNodes helpers; see Preview policy)
 - No simulation authoring controls beyond portable particle fields
 
@@ -168,31 +166,31 @@ Follow existing editor patterns (`editor/spring_bone1` panels, lists, operators)
 
 After VRM 1 import (and via **Rebuild VFX Preview**), VRMXT spawns Geometry Nodes
 helpers so portable particle emitters can be checked in the viewport. The shared
-node group is ``VRMXT_Particle`` (Simulation Zone emit, local **+Y** velocity,
-lifetime cull, max-particle cap, fixed **XZ** quads in emitter local space).
+node group is ``VRMXT_SpriteParticle`` (Simulation Zone emit, local **+Y** velocity,
+lifetime cull, max-particle cap, fixed **XZ** quads in emitter node local space).
 
 | Spec / Unity field | GeoNodes / helper |
 |--------------------|-------------------|
 | `emissionRate` | Modifier **Emission Rate** (particles/sec) |
 | `maxParticles` | Modifier **Max Particles** |
 | `lifetime` | Modifier **Lifetime** |
-| `startSize` | Modifier **Start Size** (instance scale) |
-| `startSpeed` | Modifier **Start Speed** along emitter local **+Y** |
-| `startColor` | Preview material emission tint |
+| `size` | Modifier **Start Size** (instance width / height) |
+| `startSpeed` | Modifier **Start Speed** along emitter node local **+Y** |
+| `color` | Preview material emission tint |
 | `texture` | Preview material image (tint-only when missing) |
-| `localPosition` / `localRotation` | Empty helper local transform (spec-space, no bone-axis remap) |
+| Attach node transform | Preview parented to resolved bone / Empty |
 | Quad orientation | Fixed Mesh Grid rotated to **XZ** (normal +Y); no camera/viewport billboarding |
 
 Rules:
 
 - Property groups remain the export source of truth. Do not read GeoNodes state
   back into emitters.
-- Each helper is an **Empty** named `VRMXT_vfx_{name}`, parented to the attachment
-  bone or object, tagged `vrmxt_vfx_preview=1` (VRMXT lifecycle) and
-  `vrm_exclude_from_export=1` (host export filter), with `localPosition` /
-  `localRotation` on the Empty (spec-space, no bone-axis remap). Empties cannot
-  host Geometry Nodes, so a child mesh `VRMXT_vfx_{name}_geo` (also tagged,
-  `hide_select`) carries the `VRMXT_Particle` modifier.
+- Each preview helper is an **Empty** named `VRMXT_sprite_particle_{name}`, parented to
+  the attach node, tagged `vrmxt_vfx_preview=1` (VRMXT lifecycle) and
+  `vrm_exclude_from_export=1` (host export filter). Preview helpers are viewport-only;
+  they MUST NOT become the serialized attach node. Empties cannot host Geometry Nodes,
+  so a child mesh `VRMXT_sprite_particle_{name}_geo` (also tagged, `hide_select`) carries
+  the `VRMXT_SpriteParticle` modifier.
 - Helpers use `hide_render=True`. Extended VRM `export_objects` skips any object
   with `vrm_exclude_from_export` so they do not become avatar meshes in the GLB.
 - Simulation Nodes require Blender 4.2+ (already the VRMXT add-on window).
@@ -215,7 +213,7 @@ Minimum coverage (mirror existing importer/exporter and spring-bone editor tests
 | Import bad `node` / invalid scalars | Emitter skipped; VRM otherwise loads |
 | Import texture index | Image pointer set via `textures` → `source` → `_images` |
 | Export round-trip | Same portable fields and node attachment after re-import |
-| Export with texture | `textures[]` / `images[]` present; `extensionsUsed` contains `VRMXT_vfx` |
+| Export with texture | `textures[]` / `images[]` present; `extensionsUsed` contains `VRMXT_sprite_particle` |
 | Empty `emitters` | Valid file; no required extension entry |
 | UI operators | Add / remove / reorder update the collection; preview rebuilds |
 | Preview clear | Tagged helpers removed; property groups unchanged |
@@ -244,8 +242,8 @@ prop on preview helpers alongside its own `vrmxt_vfx_preview` lifecycle tag.
 | Topic | Status |
 |-------|--------|
 | `specVersion` other than `1.0` on import | TBD |
-| Omit vs write default `localPosition` / `localRotation` | TBD |
+| Omit vs write default `localPosition` / `localRotation` | Removed — offsets live on helper glTF nodes |
 | Warn on skipped export emitters | TBD |
 | VFX texture sampler defaults | TBD |
-| Axis conversion if preview gizmos are added | Open; MVP stores/spec-space local transforms without bone-axis remap |
-| UniVRM / Godot / three-vrm / VRM4U consumer packages | See [UniVRM VFX](univrm-vfx.md), [Godot VFX](godot-vfx.md), [three-vrm VFX](three-vrm-vfx.md); VRM4U TBD |
+| Axis conversion if preview gizmos are added | Open; attach-node transform is source of truth |
+| UniVRM / Godot / three-vrm / VRM4U consumer packages | See [UniVRM VFX](univrm-vfx.md), [Godot VFX](godot-vfx.md), [three-vrm VFX](three-vrm-vfx.md); VRM4U TBD — backend notes in [Engine particle capability](../references/engine-particle-capability.md) |

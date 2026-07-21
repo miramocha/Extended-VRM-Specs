@@ -15,7 +15,7 @@ status: draft
 # Unity Poiyomi Catalog
 
 Authoring catalog note for [Poiyomi Toon Shader](https://github.com/poiyomi/PoiyomiToonShader)
-under [VRMXT_materials_override](../../specs/vrmxt-materials-override.md). Index and shared
+under [VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md). Index and shared
 schema: [Materials Override Catalogs](../materials-override-catalogs.md).
 
 Non-normative. Not a closed allowlist.

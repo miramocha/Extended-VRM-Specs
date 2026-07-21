@@ -145,7 +145,7 @@ Without the VRMXT Blender extension, export stays stock VRM. Hooks stay idle.
 | Piece | Repo | Role |
 |-------|------|------|
 | Stock / fork UniVRM | [UniVRM](https://github.com/vrm-c/UniVRM) or [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | Stock `VRMC_*` I/O; Extended fork adds generic import/export extension registries |
-| UniVRMXT | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Soft-detects those registries; authors and serializes `VRMXT_vfx` and `VRMXT_materials_override` |
+| UniVRMXT | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Soft-detects those registries; authors and serializes `VRMXT_sprite_particle` and `VRMXT_materials_override` |
 
 Unity flow (non-normative):
 
@@ -285,4 +285,4 @@ Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
 | Full Unity from-scratch VFX authoring UI (vs Blender + Unity re-export) | Open; re-export and materials override authoring already ship |
 | Three.js / Unreal / Godot Extended **export** timelines | TBD per engine profile |
 | Cross-engine authoring round-trip conformance tests for each `VRMXT_*` | TBD |
-| Portable Animator-like controller (`VRMXT_AnimationController` + `VRMXT_AnimationClip`) | Decision: [conditional / narrow](decisions/animation-controller-standardization.md); drafts: [controller](specs/vrmxt-animation-controller.md), [clip](specs/vrmxt-animation-clip.md); crossfade / emote-end TBD |
+| Portable Animator-like controller (`VRMXT_AnimationController` + `VRMXT_AnimationClip`) | Decision: [conditional / narrow](decisions/animation-controller-standardization.md); drafts: [controller](specs/extensions/animation/vrmxt-animation-controller.md), [clip](specs/extensions/animation/vrmxt-animation-clip.md); crossfade / emote-end TBD |

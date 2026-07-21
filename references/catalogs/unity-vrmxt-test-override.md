@@ -15,7 +15,7 @@ status: draft
 # Unity VRMXT Test Override Catalog
 
 Authoring catalog for UniVRMXT **Test Materials for Overrides** under
-[VRMXT_materials_override](../../specs/vrmxt-materials-override.md). Index and shared
+[VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md). Index and shared
 schema: [Materials Override Catalogs](materials-override-catalogs.md).
 
 Non-normative. Small fixture for Blender / UniVRMXT authoring UI — not a production

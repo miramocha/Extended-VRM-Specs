@@ -29,9 +29,9 @@ referenced by a controller MAY omit the extension (preview / library packs).
 extension is not that KHR and MUST NOT require it.
 
 Decision context:
-[animation-controller-standardization](../decisions/animation-controller-standardization.md).
+[animation-controller-standardization](../../../decisions/animation-controller-standardization.md).
 Khronos overlap (non-normative):
-[KHR / glTF overlap](../references/khr-gltf-overlap.md).
+[KHR / glTF overlap](../../../references/khr-gltf-overlap.md).
 
 ## Scope
 
@@ -222,8 +222,8 @@ Removing or redefining an existing field does.
 ## Related
 
 - [VRMXT_AnimationController](vrmxt-animation-controller.md)
-- [Animation controller standardization](../decisions/animation-controller-standardization.md)
-- [KHR / glTF overlap](../references/khr-gltf-overlap.md) (non-normative)
+- [Animation controller standardization](../../../decisions/animation-controller-standardization.md)
+- [KHR / glTF overlap](../../../references/khr-gltf-overlap.md) (non-normative)
 - Closed Khronos draft: [glTF#2080](https://github.com/KhronosGroup/glTF/pull/2080)
 - Upstream [VRMC_vrm_animation](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_vrm_animation-1.0)
 

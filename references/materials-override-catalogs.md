@@ -14,7 +14,7 @@ status: draft
 # Materials Override Catalogs
 
 Non-normative authoring catalogs for
-[VRMXT_materials_override](../specs/vrmxt-materials-override.md). Tools such as
+[VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md). Tools such as
 [Blender Materials Override](../implementations/blender-materials-override.md) and later
 [UniVRM Materials Override](../implementations/univrm-materials-override.md) / UniVRMXT
 Editor use them for Material-Shader dropdowns, typed property pickers, and **Add Common
@@ -157,7 +157,7 @@ approach they use.
 
 ## Related
 
-- Spec: [VRMXT_materials_override](../specs/vrmxt-materials-override.md)
+- Spec: [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
 - Unity profile: [UniVRM Materials Override](../implementations/univrm-materials-override.md)
 - Blender authoring: [Blender Materials Override](../implementations/blender-materials-override.md)
 - Architecture: [Extended VRM Architecture](../architecture.md)

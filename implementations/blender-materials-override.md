@@ -13,7 +13,7 @@ status: draft
 
 # Blender Materials Override
 
-Blender add-on notes for [VRMXT_materials_override](../specs/vrmxt-materials-override.md).
+Blender add-on notes for [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md).
 Support belongs in
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender)
 (VRM1 hooks on
@@ -291,7 +291,7 @@ Readonly panel remains until phase 2 replaces it.
 
 ## Related
 
-- Spec: [VRMXT_materials_override](../specs/vrmxt-materials-override.md)
+- Spec: [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
 - Catalogs: [Materials Override Catalogs](../references/materials-override-catalogs.md)
 - Unity: [UniVRM Materials Override](univrm-materials-override.md)
 - Unreal: [VRM4U Materials Override](vrm4u-materials-override.md)

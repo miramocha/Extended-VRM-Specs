@@ -14,7 +14,7 @@ status: draft
 # UniVRM Materials Override
 
 Unity implementation profile for
-[VRMXT_materials_override](../specs/vrmxt-materials-override.md). Support belongs in
+[VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md). Support belongs in
 [UniVRMXT](https://github.com/miramocha/UniVRMXT) (`com.miramocha.univrmxt`), an optional
 UPM package that depends on stock [UniVRM](https://github.com/vrm-c/UniVRM). UniVRM
 source changes are not required.

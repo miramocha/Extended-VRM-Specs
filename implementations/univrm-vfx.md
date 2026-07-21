@@ -1,7 +1,7 @@
 ---
 title: UniVRM VFX
 aliases:
-  - VRMXT_vfx for UniVRM
+  - VRMXT_sprite_particle for UniVRM
   - UniVRMXT particles
 tags:
   - extended-vrm
@@ -14,12 +14,12 @@ status: draft
 
 # UniVRM VFX
 
-Unity implementation profile for [VRMXT_vfx](../specs/vrmxt-vfx.md). Support belongs in
+Unity implementation profile for [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md). Support belongs in
 [UniVRMXT](https://github.com/miramocha/UniVRMXT) (`com.miramocha.univrmxt`). Stock
 [UniVRM](https://github.com/vrm-c/UniVRM) source changes are not required.
 
 VRM 1.0 only. The extension is optional: stock UniVRM load MUST succeed when UniVRMXT
-is absent or when `VRMXT_vfx` is missing.
+is absent or when `VRMXT_sprite_particle` is missing.
 
 ## Package
 
@@ -34,7 +34,7 @@ is absent or when `VRMXT_vfx` is missing.
 
 UniVRM has no general root-extension registry. UniVRMXT foundation:
 
-1. Parse root `extensions.VRMXT_vfx` from glTF JSON (`specVersion` `"1.0"`) via
+1. Parse root `extensions.VRMXT_sprite_particle` from glTF JSON (`specVersion` `"1.0"`) via
    `VrmxtVfx.TryParse`.
 2. Skip invalid emitters per the base spec.
 3. After `Vrm10.LoadGltfDataAsync` (or equivalent), map `emitters[].node` through
@@ -48,9 +48,11 @@ UniGLTF/VRM10 asmdefs; the load caller supplies JSON and the node Transform list
 
 ## Runtime behavior (foundation)
 
-MVP stores parsed emitter data on `VrmxtVfxInstance` (node index, `Transform`, local
-TR, particle scalars, texture index). `VrmxtVfxParticleSystemMapper` maps portable
-fields onto Unity `ParticleSystem` (billboard, local +Y velocity, optional texture).
+MVP stores parsed emitter data on `VrmxtVfxInstance` (node index, `Transform`,
+particle scalars, sprite texture). `VrmxtVfxParticleSystemMapper` maps portable
+fields onto Unity `ParticleSystem` (camera-facing billboard render mode, node-local +Y
+velocity, optional texture).
+Offsets live on the resolved node (helper Empty / Transform), not on emitter fields.
 See UniVRMXT [vfx-particle-mapping.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/vfx-particle-mapping.md).
 
 ## Export
@@ -64,9 +66,9 @@ values (color, rate, size, etc.) folded back at export time. Preview systems are
 cleared on a throwaway export copy so they do not become glTF nodes or materials.
 Particle albedo is re-registered into `textures[]` when
 `VrmxtVfxParticleData.Texture` or the live material is available. UniGLTF rebuilds
-`extensionsUsed` from written extensions (includes `VRMXT_vfx`).
+`extensionsUsed` from written extensions (includes `VRMXT_sprite_particle`).
 
-Stock UniVRM without the Extended export registry does not write `VRMXT_vfx`.
+Stock UniVRM without the Extended export registry does not write `VRMXT_sprite_particle`.
 
 ## AssetDatabase limits (UniVRMXT findings)
 
@@ -94,7 +96,9 @@ Full write-up: [univrm-upstream-hooks.md](univrm-upstream-hooks.md).
 
 ## Related
 
-- Spec: [VRMXT_vfx](../specs/vrmxt-vfx.md)
+- Spec: [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
+- Backend research: [Engine particle capability](../references/engine-particle-capability.md)
+  (`ParticleSystem` required; VFX Graph optional)
 - Upstream hooks / AssetDatabase workaround: [univrm-upstream-hooks.md](univrm-upstream-hooks.md)
 - UniVRMXT: https://github.com/miramocha/UniVRMXT
 - [Blender VFX](blender-vfx.md)

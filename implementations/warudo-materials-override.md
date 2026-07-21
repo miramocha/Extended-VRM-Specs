@@ -16,7 +16,7 @@ status: draft
 # Warudo Materials Override
 
 How [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo)
-applies [VRMXT_materials_override](../specs/vrmxt-materials-override.md) on Characters.
+applies [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md) on Characters.
 Normative fields stay in the base spec and
 [UniVRM Materials Override](univrm-materials-override.md).
 
@@ -117,7 +117,8 @@ overrides stay on mutated host mats until the **scene is reloaded**.
 
 ## Related
 
-- Spec: [VRMXT_materials_override](../specs/vrmxt-materials-override.md)
+- Spec: [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
 - Host: [Warudo VRMXT](warudo-vrmxt.md)
+- Hub compatibility: [VRoid Hub VRMXT round-trip](../references/vroid-hub-vrmxt-roundtrip.md)
 - Unity profile: [UniVRM Materials Override](univrm-materials-override.md)
 - UniVRMXT samples: Test Materials for Overrides (`TestOverrideBuiltin` / `TestOverrideURP`)

@@ -14,3 +14,8 @@ alwaysApply: true
   normative.
 - When naming concepts, reuse identifiers already established in Extended-UniVRM or
   Extended-VRM-Addon-for-Blender when those exist.
+- Treat repository standards as **unreleased drafts** unless a note explicitly states
+  otherwise. Do not constrain draft design around a hypothetical v1, release phase, or
+  post-release compatibility. Do not defer needed draft design to a later release without
+  explicit direction. Existing `specVersion` values describe draft schema revisions, not
+  released standards.

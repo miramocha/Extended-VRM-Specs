@@ -19,10 +19,10 @@ status: draft
 
 Non-normative research note. Checked ratified and in-progress entries in the
 [glTF 2.0 Extension Registry](https://github.com/KhronosGroup/glTF/blob/main/extensions/README.md)
-(as of 2026-07-20) against VRMXT materials, VFX, and animation drafts.
+(as of 2026-07-20) against VRMXT materials, particle, and animation drafts.
 
 **Finding:** no Khronos (`KHR_`) or multi-vendor (`EXT_`) extension replaces
-`VRMXT_materials_override`, `VRMXT_vfx`, `VRMXT_AnimationController`, or
+`VRMXT_materials_override`, `VRMXT_sprite_particle`, `VRMXT_AnimationController`, or
 `VRMXT_AnimationClip`. Closest materials naming collision is
 `KHR_materials_variants`. No particle-emitter extension exists on the registry. No
 ratified FSM or clip-metadata catalog exists for animation.
@@ -77,10 +77,10 @@ attachment point and wrong payload (loses engine ids and MToon bindings).
 Document authors should keep the two `variant` meanings distinct when writing UI copy
 or cross-links.
 
-## `VRMXT_vfx`
+## `VRMXT_sprite_particle`
 
-VRMXT root emitters attach to glTF nodes and describe continuous point-source particles
-for mapping onto native particle systems.
+VRMXT root emitters attach to glTF nodes and describe continuous point-source sprite
+particles for mapping onto native particle systems.
 
 ### Candidates
 
@@ -146,9 +146,9 @@ clip metadata only. Skip interactivity and pointer as foundations.
 
 ## Related
 
-- [VRMXT_materials_override](../specs/vrmxt-materials-override.md)
-- [VRMXT_vfx](../specs/vrmxt-vfx.md)
-- [VRMXT_AnimationController](../specs/vrmxt-animation-controller.md)
-- [VRMXT_AnimationClip](../specs/vrmxt-animation-clip.md)
+- [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
+- [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
+- [VRMXT_AnimationController](../specs/extensions/animation/vrmxt-animation-controller.md)
+- [VRMXT_AnimationClip](../specs/extensions/animation/vrmxt-animation-clip.md)
 - [Animation controller standardization](../decisions/animation-controller-standardization.md)
 - [Materials Override Catalogs](materials-override-catalogs.md)

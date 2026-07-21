@@ -249,8 +249,8 @@ Detail: [KHR / glTF overlap](../references/khr-gltf-overlap.md).
 1. **Do not** dump `.controller` / AnimBP assets, put VRChat SDK in the schema, or adopt
    `KHR_interactivity` as the avatar animation brain.
 2. **Do** implement against the draft specs
-   ([VRMXT_AnimationController](../specs/vrmxt-animation-controller.md),
-   [VRMXT_AnimationClip](../specs/vrmxt-animation-clip.md)) under the final scope above.
+   ([VRMXT_AnimationController](../specs/extensions/animation/vrmxt-animation-controller.md),
+   [VRMXT_AnimationClip](../specs/extensions/animation/vrmxt-animation-clip.md)) under the final scope above.
    Crossfade policy and emote-end remain TBD inside those drafts until locked.
 3. Keep materials / VFX / spring / lattice work in parallel; animation authoring waits on
    flagged UniVRM clip I/O.
@@ -296,9 +296,9 @@ Any of:
 
 ## Related
 
-- [VRMXT_AnimationController](../specs/vrmxt-animation-controller.md)
-- [VRMXT_AnimationClip](../specs/vrmxt-animation-clip.md)
+- [VRMXT_AnimationController](../specs/extensions/animation/vrmxt-animation-controller.md)
+- [VRMXT_AnimationClip](../specs/extensions/animation/vrmxt-animation-clip.md)
 - [Extended VRM Architecture](../architecture.md)
 - [KHR / glTF overlap](../references/khr-gltf-overlap.md)
 - Upstream [VRMC_vrm_animation](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_vrm_animation-1.0)
-- [VRMXT_materials_override](../specs/vrmxt-materials-override.md)
+- [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)

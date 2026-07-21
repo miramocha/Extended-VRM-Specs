@@ -15,7 +15,7 @@ status: draft
 # Unity lilToon Catalog
 
 Authoring catalog note for [lilToon](https://github.com/lilxyzw/lilToon) under
-[VRMXT_materials_override](../../specs/vrmxt-materials-override.md). Index and shared
+[VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md). Index and shared
 schema: [Materials Override Catalogs](../materials-override-catalogs.md).
 
 Non-normative. Not a closed allowlist. Property names from opaque
@@ -229,7 +229,7 @@ Inverse (MToon → lil border/blur) is **TBD**; do not treat `_ShadowBorder` =
 
 ### Suggested VRMXT bindings (MToon → lilToon)
 
-[VRMXT_materials_override](../../specs/vrmxt-materials-override.md) `bindings` sources are
+[VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md) `bindings` sources are
 the shade set only. Invert the shadow rows above for defaults:
 
 | MToon `source` | lilToon `target` | `targetType` | Notes |

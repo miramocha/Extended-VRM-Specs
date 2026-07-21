@@ -16,8 +16,8 @@ status: draft
 
 # Warudo VRMXT
 
-Host integration for [VRMXT_vfx](../specs/vrmxt-vfx.md) and
-[VRMXT_materials_override](../specs/vrmxt-materials-override.md) on
+Host integration for [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md) and
+[VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md) on
 [Warudo](https://warudo.app/) Characters. Implementation:
 [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo)
 (`Assets/Vrmxt/`), exported as a UMod plugin to `StreamingAssets/Plugins`.
@@ -32,7 +32,7 @@ Related: [Warudo Materials Override](warudo-materials-override.md) (apply detail
 
 After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 
-1. `VRMXT_vfx` → ParticleSystem children
+1. `VRMXT_sprite_particle` → ParticleSystem children
 2. `VRMXT_materials_override` → unity-slot shader/properties/bindings on matching mats
 
 | Item | Value |
@@ -40,7 +40,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 | Plugin id | `mira.vrmxt` |
 | Mod folder | `Assets/Vrmxt` |
 | Export | `Warudo_Data/StreamingAssets/Plugins` |
-| Extensions | `VRMXT_vfx`, `VRMXT_materials_override` |
+| Extensions | `VRMXT_sprite_particle`, `VRMXT_materials_override` |
 | Plugin version (shipped) | `0.1.1` (see `VrmxtPlugin`) |
 | Steam Workshop | [VRMXT](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) |
 

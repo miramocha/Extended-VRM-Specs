@@ -22,8 +22,8 @@ Third-party Blender add-ons use this surface to read or write root glTF extensio
 
 Primary consumer today:
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender)
-(`io_scene_vrmxt`). Spec examples: [VRMXT_vfx](../specs/vrmxt-vfx.md),
-[VRMXT_lattice](../specs/vrmxt-lattice.md).
+(`io_scene_vrmxt`). Spec examples: [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
+[VRMXT_lattice](../specs/extensions/deformation/vrmxt-lattice.md).
 
 Module: `io_scene_vrm.extension_hooks` (source:
 `src/io_scene_vrm/extension_hooks.py`).

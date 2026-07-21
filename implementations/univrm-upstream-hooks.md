@@ -15,7 +15,7 @@ status: draft
 
 # UniVRM upstream hooks
 
-Working notes from UniVRMXT `VRMXT_vfx` Editor integration. Record what blocked
+Working notes from UniVRMXT `VRMXT_sprite_particle` Editor integration. Record what blocked
 patching the **original** imported `.vrm` prefab on stock UniVRM, what UniVRMXT does
 instead, what [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) already
 ships, and remaining hooks for [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM).
@@ -68,8 +68,8 @@ material references (null `sharedMaterials`), which then NRE’d in
 
 Runtime loads keep `RuntimeGltfInstance.Nodes` (stable glTF node index → `Transform`).
 AssetDatabase imports do **not** (UniVRM treats missing `RuntimeGltfInstance` as “prefab
-instance”). Node indices for `VRMXT_vfx` must be resolved another way (UniVRMXT uses
-`nodes[].name` matching).
+instance”). Node indices for `VRMXT_sprite_particle` must be resolved another way (UniVRMXT
+uses `nodes[].name` matching).
 
 ### 3. VFX-only `textures[]` are never imported
 
@@ -79,7 +79,7 @@ instance”). Node indices for `VRMXT_vfx` must be resolved another way (UniVRMX
 - VRM meta thumbnail
 
 It does **not** walk root extensions. A texture referenced only by
-`extensions.VRMXT_vfx.emitters[].particle.texture` never becomes a `Texture2D` sub-asset.
+`extensions.VRMXT_sprite_particle.emitters[].texture` never becomes a `Texture2D` sub-asset.
 
 Example: `vfx_smoke.vrm` has `materials: []`, one mesh with no material index, and one
 `textures[]` / `images[]` entry used solely by a particle emitter. Stock import has no
@@ -156,7 +156,7 @@ VrmxtVfxRuntime.TryAttachFromGlb(
 | `VrmxtVfxParticleSystemMapper` | Field map, billboard, BIRP/URP unlit material |
 | `VrmxtVfxGlbTextures` | Second-read decode of extension-only textures |
 | `VrmxtVfxImportHookBootstrap` | Soft-register import handler when Extended-UniVRM hooks exist |
-| `VrmxtVfxExportHookBootstrap` | Soft-register export handler; writes `VRMXT_vfx` from `VrmxtVfxInstance` |
+| `VrmxtVfxExportHookBootstrap` | Soft-register export handler; writes `VRMXT_sprite_particle` from `VrmxtVfxInstance` |
 | `VrmxtVfxAssetPostprocessor` | Companion prefab fallback for stock UniVRM |
 
 ## What we want from upstream UniVRM (vrm-c)
@@ -190,7 +190,7 @@ Gated by Project Settings → VRM10 → **Enable VRM Export Extensions** (Editor
 copy when handlers are registered so scene objects are not stripped.
 
 UniVRMXT soft-detects the Runtime registry type
-(`UniVRM10.Vrm10ExportExtensionRegistry, VRM10`) and writes `VRMXT_vfx` from
+(`UniVRM10.Vrm10ExportExtensionRegistry, VRM10`) and writes `VRMXT_sprite_particle` from
 `VrmxtVfxInstance`.
 
 Upstream vrm-c adoption would unlock Unity→VRM VFX round-trip without the fork.
@@ -230,7 +230,7 @@ Lower priority for AssetDatabase prefab editing; high value for runtime hosts.
 
 - Full Unity VFX authoring UI (Blender remains preferred authoring; Unity re-export of
   imported / attached `VrmxtVfxInstance` data is supported via export hooks).
-- Forcing `VRMXT_vfx` into `extensionsRequired` (must stay optional).
+- Forcing `VRMXT_sprite_particle` into `extensionsRequired` (must stay optional).
 - Changing stock load success when UniVRMXT is absent.
 
 ## Decision log (UniVRMXT / Extended-UniVRM)
@@ -241,7 +241,7 @@ Lower priority for AssetDatabase prefab editing; high value for runtime hosts.
 | 2026-07 | Prefer upstream **A + C**; implement **A** in Extended-UniVRM first. |
 | 2026-07 | Extended-UniVRM ships import extension registry; UniVRMXT soft-detects and dual-paths. |
 | 2026-07 | Project Settings/VRM10 gate for import extensions; off → companion prefab. |
-| 2026-07 | Extended-UniVRM ships export extension registry (PreHierarchy / PrepareTextures / WriteExtensions); UniVRMXT writes `VRMXT_vfx` on VRM export. |
+| 2026-07 | Extended-UniVRM ships export extension registry (PreHierarchy / PrepareTextures / WriteExtensions); UniVRMXT writes `VRMXT_sprite_particle` on VRM export. |
 | 2026-07 | `Vrm10ExportExtensionContext` gains `AddMaterialExtension` + `TryGetMaterialIndex` so `WriteExtensions` handlers can write per-material glTF extensions (e.g. `VRMXT_materials_override`), not just root extensions. |
 
 ## Links into UniVRM source (0.131.x / Extended-UniVRM)
