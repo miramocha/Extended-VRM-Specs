@@ -60,7 +60,16 @@ Apply(root, store, json, pipeline, resolveTexture)
 ```
 
 Apply order relative to VFX: VFX first (while GLB texture ownership is live), then
-materials Remember + Release + Apply.
+materials Remember + Release + Apply. Apply mutates live renderer materials in place.
+The host does **not** write `CharacterAsset.Materials`: UMod compile hits CS0012 when
+touching Warudo members typed with `UnityEngine.Material` (CoreModule vs mod
+`UnityEngine.dll`). After a successful apply, the host rebuilds
+`CharacterAsset.MaterialProperties` for overridden keys only: match store / live names
+with the same `(Instance)` strip as apply, enumerate each live shader locally, then write
+the resulting `List<ShaderProperty>` into the existing catalog. The host cannot call
+Warudo's `Shader.GetShaderProperties()` extension because its CoreModule `Shader`
+parameter triggers UMod CS0012. The local enumeration refreshes the Character material
+UI catalog from MToon to the live override shader (e.g. lilToon).
 
 ## Pipeline and shaders
 
@@ -103,6 +112,8 @@ overrides stay on mutated host mats until the **scene is reloaded**.
 - Authoring or export of overrides from Warudo
 - Load-time `IMaterialDescriptorGenerator` inject
 - Workshop Character byte access (local `character://` / `Characters/…` only)
+- Assigning into `CharacterAsset.Materials` (UMod CS0012 on CoreModule `Material`)
+- Rewriting expression / blend-shape `MaterialPropertyEntry` lists after apply
 
 ## Related
 
