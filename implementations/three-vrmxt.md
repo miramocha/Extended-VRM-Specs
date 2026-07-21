@@ -1,6 +1,7 @@
 ---
-title: three-vrm VFX
+title: three-vrmxt
 aliases:
+  - three-vrm VFX
   - VRMXT_sprite_particle for three-vrm
   - Three.js VRM particles
   - WebGL VRMXT_sprite_particle
@@ -13,16 +14,22 @@ type: guide
 status: draft
 ---
 
-# three-vrm VFX
+# three-vrmxt
 
-Three.js / web implementation profile for
-[VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md). Support
-belongs in a **separate** optional npm package (working name `@miramocha/three-vrmxt`),
-registered beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm). Do not fork
+Three.js / web consumer profile for Extended VRM. Support belongs in a **separate**
+optional npm package (working name `@miramocha/three-vrmxt`), registered beside
+[@pixiv/three-vrm](https://github.com/pixiv/three-vrm). Current scope covers
+[VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md). Do not fork
 or replace the stock VRM loader plugin.
 
 VRM 1.0 only. The extension is optional: stock three-vrm load MUST succeed when the
 VRMXT package is absent or when `VRMXT_sprite_particle` is missing.
+
+## Supported features
+
+| Extension | Status |
+|-----------|--------|
+| `VRMXT_sprite_particle` | Planned |
 
 Host stack is **Three.js**. Typical renderers:
 
@@ -140,7 +147,7 @@ WebGL vs WebGPU material choice is **TBD**. Prefer one MVP path (likely WebGL
 ## Export
 
 Export of authored VFX from three-vrm / Three.js editors is **TBD**. Prefer Blender
-([Blender VFX](blender-vfx.md)) as the authoring path until a web exporter lands.
+([Blender VRMXT VFX](blender-vrmxt.md#vfx)) as the authoring path until a web exporter lands.
 
 If export is added later: write root `extensions.VRMXT_sprite_particle`, add
 `VRMXT_sprite_particle` to `extensionsUsed`, and do **not** add it to
@@ -177,9 +184,9 @@ Minimum coverage:
 
 - [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
 - [Extended VRM Architecture](../architecture.md)
-- [UniVRM VFX](univrm-vfx.md)
-- [Godot VFX](godot-vfx.md)
-- [Blender VFX](blender-vfx.md)
+- [UniVRMXT VFX](univrm-vrmxt.md#vfx)
+- [Godot VRMXT](godot-vrmxt.md)
+- [Blender VRMXT VFX](blender-vrmxt.md#vfx)
 - [pixiv/three-vrm](https://github.com/pixiv/three-vrm)
 
 ## Open questions

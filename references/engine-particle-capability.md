@@ -85,7 +85,7 @@ Do not ship two required Unity backends for `VRMXT_sprite_particle`.
 
 BIRP removal forces material / shader migration toward URP; it does not force a particle
 simulation rewrite. Current UniVRM VFX profile already targets `ParticleSystem`
-([UniVRM VFX](../implementations/univrm-vfx.md)).
+([UniVRMXT VFX](../implementations/univrm-vrmxt.md#vfx)).
 
 ## Cross-engine capability (summary)
 
@@ -120,7 +120,7 @@ base spec.
 
 A VRMXT Unreal package should depend on VRM4U + VRM4ULoader + Niagara and attach after
 stock load—same optional-consumer pattern as
-[VRM4U Materials Override](../implementations/vrm4u-materials-override.md).
+[VRM4U VRMXT](../implementations/vrm4u-vrmxt.md).
 
 ### Integration surface
 
@@ -199,7 +199,7 @@ Current draft fields and backends:
    local-+Y stripping is covered. Godot: lock rate↔`amount` formula. Three.js: prefer
    instanced quads for world-meter size.
 4. Implementation profile for VRM4U VFX remains TBD
-   ([Blender VFX](../implementations/blender-vfx.md) open questions).
+   ([Blender VRMXT VFX](../implementations/blender-vrmxt.md#vfx) open questions).
 
 ## Related
 
@@ -207,8 +207,8 @@ Current draft fields and backends:
 - [VFX capability boundaries](../decisions/vfx-capability-boundaries.md)
 - [VFX capability naming](../decisions/vfx-capability-naming.md)
 - [Billboard sprite ownership](../decisions/billboard-sprite-ownership.md)
-- [UniVRM VFX](../implementations/univrm-vfx.md)
-- [Godot VFX](../implementations/godot-vfx.md)
-- [three-vrm VFX](../implementations/three-vrm-vfx.md)
-- [VRM4U Materials Override](../implementations/vrm4u-materials-override.md)
+- [UniVRMXT VFX](../implementations/univrm-vrmxt.md#vfx)
+- [Godot VRMXT](../implementations/godot-vrmxt.md)
+- [three-vrmxt](../implementations/three-vrmxt.md)
+- [VRM4U VRMXT](../implementations/vrm4u-vrmxt.md)
 - [KHR / glTF overlap](khr-gltf-overlap.md)

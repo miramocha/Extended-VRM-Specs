@@ -192,10 +192,10 @@ Removing or redefining an existing field does.
 - [VRMXT_springBone_override](../../specs/extensions/physics/vrmxt-spring-bone-override.md)
 - [VRMXT_lattice](../../specs/extensions/deformation/vrmxt-lattice.md) (research draft)
 - [KHR / glTF overlap](../../references/khr-gltf-overlap.md) (non-normative)
-- [Blender VFX](../../implementations/blender-vfx.md)
-- [UniVRM VFX](../../implementations/univrm-vfx.md)
-- [Godot VFX](../../implementations/godot-vfx.md)
-- [three-vrm VFX](../../implementations/three-vrm-vfx.md)
+- [Blender VRMXT VFX](../../implementations/blender-vrmxt.md#vfx)
+- [UniVRMXT VFX](../../implementations/univrm-vrmxt.md#vfx)
+- [Godot VRMXT](../../implementations/godot-vrmxt.md)
+- [three-vrmxt](../../implementations/three-vrmxt.md)
 
 ## Open questions
 

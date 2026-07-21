@@ -254,9 +254,9 @@ def unregister() -> None:
     unregister_vrm1_export_extension_hook(on_vrm1_export)
 ```
 
-## Relation to VFX
+## Relation to VRMXT features
 
-[Blender VFX](blender-vfx.md) is implemented by VRMXT-Extension-for-Blender through
+[Blender VRMXT](blender-vrmxt.md) implements VFX and materials override through
 these hooks. Preview helpers set `vrm_exclude_from_export` plus a VRMXT lifecycle
 tag. Property groups remain the export source of truth.
 

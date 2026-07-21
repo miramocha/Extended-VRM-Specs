@@ -110,11 +110,11 @@ parallel Extended-only format.
 
 | Host | Stock VRM I/O | Extended authoring package | Import `VRMXT_*` | Export `VRMXT_*` |
 |------|---------------|----------------------------|------------------|------------------|
-| Blender | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | [Blender VFX](implementations/blender-vfx.md), [Blender Materials Override](implementations/blender-materials-override.md) | Same (Addon Preferences enable hooks) |
-| Unity | [UniVRM](https://github.com/vrm-c/UniVRM) / [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | [UniVRM VFX](implementations/univrm-vfx.md), [UniVRM Materials Override](implementations/univrm-materials-override.md) | Same via Extended-UniVRM export hooks (Project Settings gate) |
-| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | three-vrmxt (planned) | Planned: [three-vrm VFX](implementations/three-vrm-vfx.md) | **TBD** |
-| Unreal | VRM4U | Extended package **TBD** | **TBD** | **TBD** |
-| Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VFX](implementations/godot-vfx.md) | **TBD** |
+| Blender | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | [Blender VRMXT](implementations/blender-vrmxt.md) | Same (Addon Preferences enable hooks) |
+| Unity | [UniVRM](https://github.com/vrm-c/UniVRM) / [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | [UniVRMXT](implementations/univrm-vrmxt.md) | Same via Extended-UniVRM export hooks (Project Settings gate) |
+| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | three-vrmxt (planned) | Planned: [three-vrmxt](implementations/three-vrmxt.md) | **TBD** |
+| Unreal | VRM4U | VRM4U VRMXT package (planned) | Planned: [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | **TBD** |
+| Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VRMXT](implementations/godot-vrmxt.md) | **TBD** |
 | Other | Any VRM 1.0 tool | Optional Extended package | Implement specs | Implement specs |
 
 ### Blender (shipping)
@@ -155,7 +155,7 @@ Unity flow (non-normative):
 4. Author: edit `VrmxtVfxInstance` / ParticleSystems, or assign Override Materials on `VrmxtMaterialsOverrideInstance`.
 5. Export: with export hooks enabled, UniVRMXT writes `VRMXT_*` after stock `VRMC_*`. One `.vrm` / `.glb`.
 
-Stock UniVRM without the Extended export registry does not write `VRMXT_*`. Full from-scratch VFX emitter UI still prefers Blender; Unity covers re-export and materials override authoring. Details: [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md), [UniVRM VFX](implementations/univrm-vfx.md), [UniVRM Materials Override](implementations/univrm-materials-override.md).
+Stock UniVRM without the Extended export registry does not write `VRMXT_*`. Full from-scratch VFX emitter UI still prefers Blender; Unity covers re-export and materials override authoring. Details: [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md), [UniVRMXT](implementations/univrm-vrmxt.md).
 
 ### Other engines (authoring direction)
 
@@ -178,6 +178,8 @@ a host-native avatar package. When the same package also supports editor export,
 | three-vrmxt (planned) | Three.js + [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | Optional npm package. Peer `GLTFLoaderPlugin` beside `VRMLoaderPlugin`; optional explicit `tryAttach`. Does not replace three-vrm. |
 | VRM4U path | Unreal + VRM4U | Optional profile docs under `implementations/`; stock VRM4U load remains baseline. |
 | VRMXT → VRChat converter (planned) | Unity + VRChat Avatar SDK | Separate product. Offline conversion: read `.vrm`, emit VRChat-ready prefab / Animator setup. Consumes `VRMXT_*` (+ stock VRM); schema does not embed VRChat SDK types. See [animation controller standardization](decisions/animation-controller-standardization.md). |
+| VRoid Hub browser extension + Unity WebGL viewer (planned) | Chrome/Firefox extension + Unity `2021.3.45f2` WebGL | Extension owns Hub OAuth/download; persistent extension-origin viewer hosts UniVRM + UniVRMXT. Editor pin matches Warudo. See [architecture decision](decisions/vroid-hub-browser-viewer-architecture.md), [extension profile](implementations/vroid-hub-browser-extension.md), [Unity WebGL profile](implementations/unity-webgl-vrmxt-viewer.md). |
+| VRM Posing Desktop (planned) | [VRM Posing Desktop](https://store.steampowered.com/app/1895630/VRM_Posing_Desktop/) | Post-load attach onto host UniVRM (`0.129.3` measured). See [Posing Desktop profile](implementations/vrm-posing-desktop-vrmxt.md). |
 | Other engines | Any VRM 1.0 loader | Implement the specs; ignore unknown `VRMXT_*` if unsupported. |
 
 ### Unity / UniVRM
@@ -204,8 +206,7 @@ format parsing stays testable without replacing UniVRM assemblies. Full material
 descriptor wrapping still runs inside a project that already has UniVRM.
 
 Implementation notes:
-[UniVRM VFX](implementations/univrm-vfx.md),
-[UniVRM Materials Override](implementations/univrm-materials-override.md),
+[UniVRMXT](implementations/univrm-vrmxt.md),
 package [architecture](https://github.com/miramocha/UniVRMXT/blob/main/docs/architecture.md).
 
 ### Godot / godot-vrm
@@ -223,7 +224,7 @@ godot-vrm remains the VRM 1.0 importer. Extended support is a separate addon:
 
 Do not nest the VRMXT addon under `addons/vrm` or replace `import_vrm.gd`.
 
-Implementation notes: [Godot VFX](implementations/godot-vfx.md).
+Implementation notes: [Godot VRMXT](implementations/godot-vrmxt.md).
 
 ### three-vrm / Three.js
 
@@ -241,7 +242,7 @@ support is a separate npm package:
 
 Do not fork pixiv/three-vrm or patch `VRMLoaderPlugin` as the only path.
 
-Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
+Implementation notes: [three-vrmxt](implementations/three-vrmxt.md).
 
 ### Compatibility matrix
 
@@ -269,12 +270,15 @@ Implementation notes: [three-vrm VFX](implementations/three-vrm-vfx.md).
 | Extension schemas | [specs/](specs/) |
 | Design decisions | [decisions/](decisions/) (e.g. [animation controller standardization](decisions/animation-controller-standardization.md)) |
 | Blender hook API | [implementations/blender-extension-hooks.md](implementations/blender-extension-hooks.md) |
-| Unity VFX profile | [implementations/univrm-vfx.md](implementations/univrm-vfx.md) |
-| Unity materials override | [implementations/univrm-materials-override.md](implementations/univrm-materials-override.md) |
+| UniVRMXT profile | [implementations/univrm-vrmxt.md](implementations/univrm-vrmxt.md) |
+| Blender VRMXT profile | [implementations/blender-vrmxt.md](implementations/blender-vrmxt.md) |
 | UniVRM upstream hooks | [implementations/univrm-upstream-hooks.md](implementations/univrm-upstream-hooks.md) |
 | Warudo VRMXT host | [implementations/warudo-vrmxt.md](implementations/warudo-vrmxt.md) |
-| Godot VFX profile | [implementations/godot-vfx.md](implementations/godot-vfx.md) |
-| three-vrm VFX profile | [implementations/three-vrm-vfx.md](implementations/three-vrm-vfx.md) |
+| VRM Posing Desktop consumer | [implementations/vrm-posing-desktop-vrmxt.md](implementations/vrm-posing-desktop-vrmxt.md) |
+| VRoid Hub extension viewer | [decisions/vroid-hub-browser-viewer-architecture.md](decisions/vroid-hub-browser-viewer-architecture.md), [implementations/vroid-hub-browser-extension.md](implementations/vroid-hub-browser-extension.md), [implementations/unity-webgl-vrmxt-viewer.md](implementations/unity-webgl-vrmxt-viewer.md) |
+| Godot VRMXT profile | [implementations/godot-vrmxt.md](implementations/godot-vrmxt.md) |
+| three-vrmxt profile | [implementations/three-vrmxt.md](implementations/three-vrmxt.md) |
+| VRM4U VRMXT profile | [implementations/vrm4u-vrmxt.md](implementations/vrm4u-vrmxt.md) |
 | Repo index | [README.md](README.md) |
 
 ## Open questions

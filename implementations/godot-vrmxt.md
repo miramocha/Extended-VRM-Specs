@@ -1,6 +1,7 @@
 ---
-title: Godot VFX
+title: Godot VRMXT
 aliases:
+  - Godot VFX
   - VRMXT_sprite_particle for Godot
   - godot-vrmxt particles
 tags:
@@ -12,15 +13,22 @@ type: guide
 status: draft
 ---
 
-# Godot VFX
+# Godot VRMXT
 
-Godot implementation profile for [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md).
-Support belongs in a **separate** optional addon (working name `godot-vrmxt`), registered
-beside [godot-vrm](https://github.com/V-Sekai/godot-vrm). Do not fork or replace the stock
-VRM importer.
+Godot consumer profile for Extended VRM. Support belongs in a **separate** optional
+addon (working name `godot-vrmxt`), registered beside
+[godot-vrm](https://github.com/V-Sekai/godot-vrm). Current scope covers
+[VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md). Do not fork
+or replace the stock VRM importer.
 
 VRM 1.0 only. The extension is optional: stock godot-vrm load MUST succeed when the
 VRMXT addon is absent or when `VRMXT_sprite_particle` is missing.
+
+## Supported features
+
+| Extension | Status |
+|-----------|--------|
+| `VRMXT_sprite_particle` | Planned |
 
 ## Package
 
@@ -125,7 +133,7 @@ to satisfy the base spec's camera-plane requirement.
 ## Export
 
 Export of authored VFX from Godot is **TBD**. Prefer Blender
-([Blender VFX](blender-vfx.md)) as the authoring path until a Godot exporter lands.
+([Blender VRMXT VFX](blender-vrmxt.md#vfx)) as the authoring path until a Godot exporter lands.
 
 If export is added later: write root `extensions.VRMXT_sprite_particle`, add
 `VRMXT_sprite_particle` to `extensionsUsed`, and do **not** add it to
@@ -160,9 +168,9 @@ Minimum coverage (mirror UniVRMXT / Blender VFX intent):
 
 - [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
 - [Extended VRM Architecture](../architecture.md)
-- [UniVRM VFX](univrm-vfx.md)
-- [three-vrm VFX](three-vrm-vfx.md)
-- [Blender VFX](blender-vfx.md)
+- [UniVRMXT VFX](univrm-vrmxt.md#vfx)
+- [three-vrmxt](three-vrmxt.md)
+- [Blender VRMXT VFX](blender-vrmxt.md#vfx)
 - [godot-vrm](https://github.com/V-Sekai/godot-vrm)
 
 ## Open questions

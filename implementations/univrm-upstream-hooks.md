@@ -34,7 +34,7 @@ ships generic VRM1 hooks to propose to
 [saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender)
 — see [blender-extension-hooks.md](blender-extension-hooks.md).
 
-Related: [univrm-vfx.md](univrm-vfx.md), UniVRMXT
+Related: [UniVRMXT](univrm-vrmxt.md), UniVRMXT
 [architecture.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/architecture.md),
 [vfx-particle-mapping.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/vfx-particle-mapping.md).
 

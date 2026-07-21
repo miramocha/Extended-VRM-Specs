@@ -95,5 +95,5 @@ Empty. Fill later; keep curated, not a full property mirror.
 
 - Index: [Materials Override Catalogs](../materials-override-catalogs.md)
 - Sibling: [Unity lilToon Catalog](unity-liltoon.md)
-- Blender authoring: [Blender Materials Override](../../implementations/blender-materials-override.md)
-- Unity apply: [UniVRM Materials Override](../../implementations/univrm-materials-override.md)
+- Blender authoring: [Blender VRMXT materials override](../../implementations/blender-vrmxt.md#materials-override)
+- Unity apply: [UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override)

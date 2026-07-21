@@ -67,4 +67,7 @@ byte comparison in this pass.
 ## Related
 
 - Spec: [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
-- Warudo apply: [Warudo Materials Override](../implementations/warudo-materials-override.md)
+- Warudo apply: [Warudo VRMXT materials override](../implementations/warudo-vrmxt.md#materials-override)
+- Hub extension viewer (planned): [architecture decision](../decisions/vroid-hub-browser-viewer-architecture.md),
+  [browser extension](../implementations/vroid-hub-browser-extension.md),
+  [Unity WebGL viewer](../implementations/unity-webgl-vrmxt-viewer.md)

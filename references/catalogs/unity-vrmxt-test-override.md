@@ -57,7 +57,7 @@ Property lists match. Only `shaderName`, `displayName`, `defaultVariant`,
 
 One catalog file per `shaderName`. Multi-slot: store `(unity, builtin)` and
 `(unity, urp)` siblings with the matching sample shader per
-[UniVRM Materials Override](../../implementations/univrm-materials-override.md).
+[UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override).
 
 ## Curated properties
 
@@ -94,5 +94,5 @@ Binding pairs live in authoring UI / example JSON
 
 - Index: [Materials Override Catalogs](materials-override-catalogs.md)
 - Sample README: UniVRMXT `Samples~/TestMaterialsForOverrides/README.md`
-- Blender authoring: [Blender Materials Override](../../implementations/blender-materials-override.md)
-- Unity apply: [UniVRM Materials Override](../../implementations/univrm-materials-override.md)
+- Blender authoring: [Blender VRMXT materials override](../../implementations/blender-vrmxt.md#materials-override)
+- Unity apply: [UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override)

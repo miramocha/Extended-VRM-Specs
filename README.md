@@ -30,6 +30,8 @@ Optional `VRMXT_*` consumers:
 | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Blender authoring / I/O via VRM1 hooks |
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity UPM package on [UniVRM](https://github.com/vrm-c/UniVRM) |
 | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo consumer plugin (vendored UniVRMXT VFX + materials override; UMod). Install: [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) |
+| VRM Posing Desktop consumer (planned) | Post-load VRMXT on [VRM Posing Desktop](https://store.steampowered.com/app/1895630/VRM_Posing_Desktop/); host UniVRM `0.129.3` (measured). See [profile](implementations/vrm-posing-desktop-vrmxt.md) |
+| VRoid Hub browser extension + Unity WebGL viewer (planned) | Chrome/Firefox extension; Unity `2021.3.45f2` player matches Warudo. See [architecture decision](decisions/vroid-hub-browser-viewer-architecture.md) |
 | Godot VRMXT addon (planned) | Optional Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm) |
 | three-vrmxt (planned) | Optional npm package beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) |
 | VRMXT → VRChat converter (planned) | Separate product. Offline Unity conversion of `.vrm` (`VRMC_*` + `VRMXT_*`) into a VRChat-ready avatar. Consumes the portable contract; does not put VRChat SDK types in the file schema. See [Animation controller standardization](decisions/animation-controller-standardization.md) |
@@ -48,6 +50,7 @@ Optional `VRMXT_*` consumers:
 | [VFX capability boundaries](decisions/vfx-capability-boundaries.md) | One extension per capability; node-based particle attachment; lattice stays separate | accepted |
 | [Billboard sprite ownership](decisions/billboard-sprite-ownership.md) | Flatten particle appearance; no Billboard Sprite fragment; runtime geometry is consumer-owned | accepted |
 | [VFX capability naming](decisions/vfx-capability-naming.md) | `VRMXT_sprite_particle` and candidate VFX family names | accepted |
+| [VRoid Hub browser viewer architecture](decisions/vroid-hub-browser-viewer-architecture.md) | Extension indicator + separate Unity WebGL viewer; Hub OAuth broker; Unity `2021.3.45f2` Warudo match | proposed |
 
 ## Drafts
 
@@ -65,17 +68,17 @@ Optional `VRMXT_*` consumers:
 
 | Note | Target | Status |
 |------|--------|--------|
-| [UniVRM Materials Override](implementations/univrm-materials-override.md) | Unity / UniVRMXT | draft |
+| [UniVRMXT](implementations/univrm-vrmxt.md) | Unity / UniVRMXT (`VRMXT_sprite_particle` + `VRMXT_materials_override`) | draft |
 | [Warudo VRMXT](implementations/warudo-vrmxt.md) | Warudo plugin / particle + materials override consumer | draft |
-| [Warudo Materials Override](implementations/warudo-materials-override.md) | Warudo plugin / post-load materials apply (shipped) | draft |
-| [UniVRM VFX](implementations/univrm-vfx.md) | Unity / UniVRMXT / `VRMXT_sprite_particle` | draft |
-| [Godot VFX](implementations/godot-vfx.md) | Godot / godot-vrm / `VRMXT_sprite_particle` | draft |
-| [three-vrm VFX](implementations/three-vrm-vfx.md) | Three.js / three-vrm / `VRMXT_sprite_particle` | draft |
-| [VRM4U Materials Override](implementations/vrm4u-materials-override.md) | Unreal / VRM4U | draft |
+| [VRM Posing Desktop VRMXT](implementations/vrm-posing-desktop-vrmxt.md) | Posing Desktop consumer; UniVRM `0.129.3` host pin (measured) | draft |
+| [VRoid Hub browser extension](implementations/vroid-hub-browser-extension.md) | Chrome/Firefox Hub indicator + OAuth download shell | draft |
+| [Unity WebGL VRMXT viewer](implementations/unity-webgl-vrmxt-viewer.md) | Extension-hosted Unity WebGL player (`2021.3.45f2` Warudo match) | draft |
+| [Godot VRMXT](implementations/godot-vrmxt.md) | Godot / godot-vrm consumer (`VRMXT_sprite_particle` planned) | draft |
+| [three-vrmxt](implementations/three-vrmxt.md) | Three.js / three-vrm consumer (`VRMXT_sprite_particle` planned) | draft |
+| [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | Unreal / VRM4U consumer (`VRMXT_materials_override` planned) | draft |
 | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) | UniVRM / Extended-UniVRM ScriptedImporter hooks (upstream propose) | draft |
 | [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hook API (prefs, exclude prop, upstream propose) | draft |
-| [Blender VFX](implementations/blender-vfx.md) | Blender VRMXT extension / `VRMXT_sprite_particle` | draft |
-| [Blender Materials Override](implementations/blender-materials-override.md) | Blender VRMXT extension / `VRMXT_materials_override` (Unreal `resourcePath` + multi-variant format/UI pending) | draft |
+| [Blender VRMXT](implementations/blender-vrmxt.md) | Blender VRMXT extension (`VRMXT_sprite_particle` + `VRMXT_materials_override`) | draft |
 
 ## References
 
@@ -84,6 +87,7 @@ Optional `VRMXT_*` consumers:
 | [KHR / glTF overlap](references/khr-gltf-overlap.md) | Non-normative: Khronos/EXT registry vs materials, VFX, and animation (`VRMXT_AnimationController` / `VRMXT_AnimationClip`) | draft |
 | [Engine particle capability](references/engine-particle-capability.md) | Non-normative: Unity Particle System vs VFX Graph / BIRP; Niagara vs Cascade; VRM4U attach constraints (2026-07-21) | draft |
 | [VRoid Hub VRMXT round-trip](references/vroid-hub-vrmxt-roundtrip.md) | Non-normative: `VRMXT_materials_override` survives Hub upload → original download (2026-07-21) | draft |
+| [Warudo Source-Preserving VRMXT Export](references/warudo-source-preserving-vrmxt-export.md) | Plan for rewriting VRMXT JSON into a copy of a local Warudo Character VRM | proposed |
 | [Materials Override Catalogs](references/materials-override-catalogs.md) | Non-normative shader catalogs (schema, distribution, index); JSON under `references/catalogs/data/` | draft |
 | [Unity lilToon Catalog](references/catalogs/unity-liltoon.md) | lilToon opaque/cutout/transparent JSON @ pin `2.3.4` (359 props) | draft |
 | [Unity VRMXT Test Override Catalog](references/catalogs/unity-vrmxt-test-override.md) | UniVRMXT TestOverrideBuiltin / TestOverrideURP (11 props) | draft |

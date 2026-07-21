@@ -100,4 +100,4 @@ Release: https://github.com/lilxyzw/lilToon/releases/tag/1.10.3
 - Sibling (newer pin): [Unity lilToon Catalog](unity-liltoon.md)
 - Index: [Materials Override Catalogs](../materials-override-catalogs.md)
 - Warudo plugin: [LilToonShaderPluginBirp](https://github.com/miramocha/Warudo-Shader-Plugins)
-- Blender authoring: [Blender Materials Override](../../implementations/blender-materials-override.md)
+- Blender authoring: [Blender VRMXT materials override](../../implementations/blender-vrmxt.md#materials-override)

@@ -1,6 +1,7 @@
 ---
-title: VRM4U Materials Override
+title: VRM4U VRMXT
 aliases:
+  - VRM4U Materials Override
   - VRMXT materials override for Unreal
 tags:
   - extended-vrm
@@ -11,12 +12,19 @@ type: guide
 status: draft
 ---
 
-# VRM4U Materials Override
+# VRM4U VRMXT
 
-Unreal implementation profile for
-[VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md). A separate plugin can
-support wrapped runtime loads and post-processing. VRM4U currently has no callback for
-custom material extensions during its normal conversion flow.
+Unreal consumer profile for Extended VRM through VRM4U. Current scope covers
+[VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md).
+A separate plugin can support wrapped runtime loads and post-processing. VRM4U
+currently has no callback for custom material extensions during its normal conversion
+flow.
+
+## Supported features
+
+| Extension | Status |
+|-----------|--------|
+| `VRMXT_materials_override` | Planned |
 
 ## Supported entry
 

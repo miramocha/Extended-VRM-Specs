@@ -15,10 +15,9 @@ status: draft
 
 Non-normative authoring catalogs for
 [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md). Tools such as
-[Blender Materials Override](../implementations/blender-materials-override.md) and later
-[UniVRM Materials Override](../implementations/univrm-materials-override.md) / UniVRMXT
-Editor use them for Material-Shader dropdowns, typed property pickers, and **Add Common
-Props**.
+[Blender VRMXT](../implementations/blender-vrmxt.md#materials-override) and later
+[UniVRMXT](../implementations/univrm-vrmxt.md#materials-override) Editor use them for
+Material-Shader dropdowns, typed property pickers, and **Add Common Props**.
 
 Catalogs are **not** part of the glTF extension schema. Base-spec rules 18–21 still apply:
 open material identifiers, optional catalogs for discovery, unresolved materials fall back
@@ -158,6 +157,6 @@ approach they use.
 ## Related
 
 - Spec: [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
-- Unity profile: [UniVRM Materials Override](../implementations/univrm-materials-override.md)
-- Blender authoring: [Blender Materials Override](../implementations/blender-materials-override.md)
+- Unity profile: [UniVRMXT](../implementations/univrm-vrmxt.md#materials-override)
+- Blender authoring: [Blender VRMXT](../implementations/blender-vrmxt.md#materials-override)
 - Architecture: [Extended VRM Architecture](../architecture.md)
