@@ -23,6 +23,9 @@ Authoring source is Blender Lattice + Lattice Modifier. Primary Unity consumer
 reference is [Harry Heath Lattice Modifier for Unity](https://harryheath.com/lattice)
 (Asset Store package). No field schema is frozen yet.
 
+This capability follows [VRMXT Conformance](../../core/vrmxt-conformance.md). A lattice is a
+mesh-deformation capability, not a particle or billboard effect.
+
 Stock VRM 1.0 importers that ignore the extension MUST load the model without
 runtime lattice deformation. Today, Blender VRM export typically **bakes** non-armature
 modifiers into mesh geometry; this extension would preserve lattice as runtime data
@@ -193,7 +196,7 @@ Open schema choices:
 
 | Choice | Options | Lean |
 |--------|---------|------|
-| Where lattices live | Root extension vs nodes extras | Root, like `VRMXT_vfx` |
+| Where lattices live | Root extension vs nodes extras | Root, like `VRMXT_sprite_particle` |
 | Handle storage | Absolute local positions vs rest+offset | Rest+offset matches Unity API; Blender exports deltas from Make Regular grid |
 | Interpolation enum | Blender names / Unity names / portable set | Portable set + consumer remap tables |
 | Weight mask | glTF vertex color / extras / accessor | Prefer existing mesh attribute |
@@ -245,10 +248,11 @@ Open schema choices:
 | Lattice Modifier for Unity (docs) | https://harryheath.com/lattice |
 | Blender Lattice object | https://docs.blender.org/manual/en/4.2/animation/lattice.html |
 | Blender Lattice Modifier | https://docs.blender.org/manual/en/4.2/modeling/modifiers/deform/lattice.html |
-| Related: `VRMXT_vfx` optional-extension pattern | [vrmxt-vfx.md](vrmxt-vfx.md) |
-| Related: engine override pattern | [vrmxt-spring-bone-override.md](vrmxt-spring-bone-override.md) |
-| Related: material override sibling | [vrmxt-materials-override.md](vrmxt-materials-override.md) |
-| Related: Blender VRM1 hooks | [blender-extension-hooks.md](../implementations/blender-extension-hooks.md) |
+| Related: VRMXT family requirements | [vrmxt-conformance.md](../../core/vrmxt-conformance.md) |
+| Related: `VRMXT_sprite_particle` root-extension pattern | [vrmxt-sprite-particle.md](../vfx/vrmxt-sprite-particle.md) |
+| Related: engine override pattern | [vrmxt-spring-bone-override.md](../physics/vrmxt-spring-bone-override.md) |
+| Related: material override sibling | [vrmxt-materials-override.md](../materials/vrmxt-materials-override.md) |
+| Related: Blender VRM1 hooks | [blender-extension-hooks.md](../../../implementations/blender-extension-hooks.md) |
 
 ## Related implementation notes
 

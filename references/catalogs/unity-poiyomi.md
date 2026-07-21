@@ -15,7 +15,7 @@ status: draft
 # Unity Poiyomi Catalog
 
 Authoring catalog note for [Poiyomi Toon Shader](https://github.com/poiyomi/PoiyomiToonShader)
-under [VRMXT_materials_override](../../specs/vrmxt-materials-override.md). Index and shared
+under [VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md). Index and shared
 schema: [Materials Override Catalogs](../materials-override-catalogs.md).
 
 Non-normative. Not a closed allowlist.
@@ -95,5 +95,5 @@ Empty. Fill later; keep curated, not a full property mirror.
 
 - Index: [Materials Override Catalogs](../materials-override-catalogs.md)
 - Sibling: [Unity lilToon Catalog](unity-liltoon.md)
-- Blender authoring: [Blender Materials Override](../../implementations/blender-materials-override.md)
-- Unity apply: [UniVRM Materials Override](../../implementations/univrm-materials-override.md)
+- Blender authoring: [Blender VRMXT materials override](../../implementations/blender-vrmxt.md#materials-override)
+- Unity apply: [UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override)

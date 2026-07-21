@@ -22,8 +22,8 @@ Third-party Blender add-ons use this surface to read or write root glTF extensio
 
 Primary consumer today:
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender)
-(`io_scene_vrmxt`). Spec examples: [VRMXT_vfx](../specs/vrmxt-vfx.md),
-[VRMXT_lattice](../specs/vrmxt-lattice.md).
+(`io_scene_vrmxt`). Spec examples: [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
+[VRMXT_lattice](../specs/extensions/deformation/vrmxt-lattice.md).
 
 Module: `io_scene_vrm.extension_hooks` (source:
 `src/io_scene_vrm/extension_hooks.py`).
@@ -254,9 +254,9 @@ def unregister() -> None:
     unregister_vrm1_export_extension_hook(on_vrm1_export)
 ```
 
-## Relation to VFX
+## Relation to VRMXT features
 
-[Blender VFX](blender-vfx.md) is implemented by VRMXT-Extension-for-Blender through
+[Blender VRMXT](blender-vrmxt.md) implements VFX and materials override through
 these hooks. Preview helpers set `vrm_exclude_from_export` plus a VRMXT lifecycle
 tag. Property groups remain the export source of truth.
 

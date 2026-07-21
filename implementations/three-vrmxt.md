@@ -1,9 +1,10 @@
 ---
-title: three-vrm VFX
+title: three-vrmxt
 aliases:
-  - VRMXT_vfx for three-vrm
+  - three-vrm VFX
+  - VRMXT_sprite_particle for three-vrm
   - Three.js VRM particles
-  - WebGL VRMXT_vfx
+  - WebGL VRMXT_sprite_particle
 tags:
   - extended-vrm
   - implementation/three-js
@@ -13,15 +14,22 @@ type: guide
 status: draft
 ---
 
-# three-vrm VFX
+# three-vrmxt
 
-Three.js / web implementation profile for [VRMXT_vfx](../specs/vrmxt-vfx.md). Support
-belongs in a **separate** optional npm package (working name `@miramocha/three-vrmxt`),
-registered beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm). Do not fork
+Three.js / web consumer profile for Extended VRM. Support belongs in a **separate**
+optional npm package (working name `@miramocha/three-vrmxt`), registered beside
+[@pixiv/three-vrm](https://github.com/pixiv/three-vrm). Current scope covers
+[VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md). Do not fork
 or replace the stock VRM loader plugin.
 
 VRM 1.0 only. The extension is optional: stock three-vrm load MUST succeed when the
-VRMXT package is absent or when `VRMXT_vfx` is missing.
+VRMXT package is absent or when `VRMXT_sprite_particle` is missing.
+
+## Supported features
+
+| Extension | Status |
+|-----------|--------|
+| `VRMXT_sprite_particle` | Planned |
 
 Host stack is **Three.js**. Typical renderers:
 
@@ -40,7 +48,7 @@ Host stack is **Three.js**. Typical renderers:
 | Integration API | `GLTFLoaderPlugin` via `loader.register((parser) => …)` |
 
 three-vrm already splits `VRMC_*` features into loader plugins (springBone, MToon,
-node constraint, …). `VRMXT_vfx` follows that peer-plugin pattern.
+node constraint, …). `VRMXT_sprite_particle` follows that peer-plugin pattern.
 
 ## Architecture fit
 
@@ -52,7 +60,7 @@ consumer package row:
 | Stock VRM load unchanged | Keep `@pixiv/three-vrm`; add VRMXT package separately |
 | Do not replace stock import | Own `GLTFLoaderPlugin`; do not patch `VRMLoaderPlugin` |
 | Parse + attach | `afterRoot` and/or explicit `tryAttach` helper |
-| No `extensionsRequired` | Never list `VRMXT_vfx` there |
+| No `extensionsRequired` | Never list `VRMXT_sprite_particle` there |
 | Missing package / missing ext | Avatar loads; no emitters |
 
 Rejected: shipping Extended VFX only by forking pixiv/three-vrm.
@@ -74,16 +82,16 @@ loader.register((parser) => new VRMXTVfxLoaderPlugin(parser));
 Plugin behavior (mirror `VRMSpringBoneLoaderPlugin`):
 
 1. `afterRoot(gltf)`:
-   - If `json.extensionsUsed` lacks `VRMXT_vfx`, store null / no-op and return.
-   - Read `json.extensions.VRMXT_vfx`.
+   - If `json.extensionsUsed` lacks `VRMXT_sprite_particle`, store null / no-op and return.
+   - Read `json.extensions.VRMXT_sprite_particle`.
    - Require `specVersion` `"1.0"` for this draft; other versions: **TBD**.
    - `const nodes = await gltf.parser.getDependencies('node')`.
    - Iterate `emitters[]`. Skip invalid entries per the base spec.
    - Resolve `emitters[].node` as `nodes[nodeIndex]`. Missing → skip that emitter.
-   - Resolve `particle.texture` when present via `parser.getDependency('texture', index)`
+   - Resolve `texture` when present via `parser.getDependency('texture', index)`
      (or equivalent). Unresolved → solid tint fallback.
-   - Attach particle objects under the resolved `Object3D` using `localPosition` /
-     `localRotation` (see [Emitter transform](../specs/vrmxt-vfx.md#emitter-transform)).
+   - Attach particle objects under the resolved `Object3D` (origin / orientation follow
+     that node's transform; no extension-local offset fields).
    - Store a manager / handle on `gltf.userData` (name TBD, e.g. `vrmxtVfx`).
 2. Do not fail the whole VRM load when individual emitters are skipped.
 
@@ -108,7 +116,7 @@ method in the render loop next to `vrm.update(delta)`.
 
 | Layer | Role |
 |-------|------|
-| Format | Parse / validate `VRMXT_vfx` JSON only |
+| Format | Parse / validate `VRMXT_sprite_particle` JSON only |
 | Loader plugin | `GLTFLoaderPlugin.afterRoot` |
 | Runtime attach | `tryAttach` without re-parsing the whole glTF when JSON + nodes are known |
 | Particle mapper | Map portable fields onto Three.js drawables |
@@ -123,16 +131,15 @@ Field meaning and units follow the base spec.
 
 | Spec field | Three.js target (MVP candidates) | Notes |
 |------------|----------------------------------|-------|
-| `localPosition` / `localRotation` | Child `Object3D` under resolved node | Spec / glTF node-local; xyzw quat |
+| Attach node | Parent for particle drawable | Origin and orientation from node world transform |
 | emitter drawable | `THREE.Points`, instanced quads, or small custom billboard system | **TBD** which default |
 | `emissionRate` | Spawner rate in updater | particles / second |
 | `maxParticles` | Buffer / pool size | Cap ≥ 1 |
 | `lifetime` | Per-particle life | Seconds |
-| `startSize` | Point size / quad scale | Meters |
-| `startSpeed` | Velocity along local +Y | Emitter local frame |
-| `startColor` | Vertex / material color | Linear RGBA |
+| `size` | Point size / quad scale | Width and height in meters |
+| `startSpeed` | Velocity along node local +Y | Node local frame |
+| `color` | Vertex / material color | Linear RGBA |
 | `texture` | Material map | Omitted / unresolved → solid tint |
-| billboard | Camera-facing points or quads | When the path supports it |
 
 WebGL vs WebGPU material choice is **TBD**. Prefer one MVP path (likely WebGL
 `Points` + `PointsMaterial` or textured quads) before a NodeMaterial variant.
@@ -140,25 +147,25 @@ WebGL vs WebGPU material choice is **TBD**. Prefer one MVP path (likely WebGL
 ## Export
 
 Export of authored VFX from three-vrm / Three.js editors is **TBD**. Prefer Blender
-([Blender VFX](blender-vfx.md)) as the authoring path until a web exporter lands.
+([Blender VRMXT VFX](blender-vrmxt.md#vfx)) as the authoring path until a web exporter lands.
 
-If export is added later: write root `extensions.VRMXT_vfx`, add `VRMXT_vfx` to
-`extensionsUsed`, and do **not** add it to `extensionsRequired`.
+If export is added later: write root `extensions.VRMXT_sprite_particle`, add
+`VRMXT_sprite_particle` to `extensionsUsed`, and do **not** add it to
+`extensionsRequired`.
 
 ## Validation and fallback
 
 Per emitter, skip (do not fail the whole load) when:
 
-- `type` missing or unknown
 - `node` missing, out of range, or unresolved
-- `type` is `"particle"` but `particle` is missing
-- Non-finite or negative `emissionRate` / `lifetime` / `startSize` / `startSpeed`
+- `size` present but not two finite numbers greater than `0`
+- `color` present but not four finite numbers, RGB `>= 0`, alpha in `[0,1]`
+- Non-finite or negative `emissionRate` / `lifetime` / `startSpeed`
 - `maxParticles` not an integer `>= 1`
-- Invalid `localPosition` / `localRotation` per the base spec
 
 Stock three-vrm without the VRMXT package: avatar loads; no emitters. three-vrm MAY
-still load VRM 0.0 files; `VRMXT_vfx` remains VRM 1.0-only — skip when the file is
-not VRM 1.0 / lacks the extension.
+still load VRM 0.0 files; `VRMXT_sprite_particle` remains VRM 1.0-only — skip when the
+file is not VRM 1.0 / lacks the extension.
 
 ## Tests
 
@@ -169,17 +176,17 @@ Minimum coverage:
 | Load valid emitter on bone / object node | Particle child under resolved `Object3D` |
 | Bad `node` / invalid scalars | Emitter skipped; VRM otherwise loads |
 | Texture index | Map assigned when texture resolves |
-| Missing `VRMXT_vfx` with package present | No-op |
+| Missing `VRMXT_sprite_particle` with package present | No-op |
 | Explicit `tryAttach` after stock load | Same result as plugin path |
 | Empty `emitters` | Valid file; no required extension entry |
 
 ## Related
 
-- [VRMXT_vfx](../specs/vrmxt-vfx.md)
+- [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
 - [Extended VRM Architecture](../architecture.md)
-- [UniVRM VFX](univrm-vfx.md)
-- [Godot VFX](godot-vfx.md)
-- [Blender VFX](blender-vfx.md)
+- [UniVRMXT VFX](univrm-vrmxt.md#vfx)
+- [Godot VRMXT](godot-vrmxt.md)
+- [Blender VRMXT VFX](blender-vrmxt.md#vfx)
 - [pixiv/three-vrm](https://github.com/pixiv/three-vrm)
 
 ## Open questions

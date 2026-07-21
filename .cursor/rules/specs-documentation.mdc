@@ -29,6 +29,21 @@ Prefer clarity for implementers over essay voice.
   relationships that prose would bury.
 - Preserve stable anchors and filenames once published; renames need intentional migration.
 
+## File placement
+
+- Put family-wide normative contracts that are not glTF extensions in `specs/core/`.
+- Put reusable normative schema fragments with no independent `extensionsUsed` identity
+  in `specs/fragments/`.
+- Put concrete glTF extension specs in `specs/extensions/<domain>/`. Current domains are
+  `animation`, `deformation`, `materials`, `physics`, and `vfx`.
+- Do not place a concrete extension spec directly under `specs/`.
+- Folder names are editorial taxonomy. They MUST NOT add a segment to the serialized
+  extension name: `specs/extensions/vfx/vrmxt-sprite-particle.md` defines
+  `VRMXT_sprite_particle`.
+- Add every new normative document to the registry in `README.md`.
+- Keep decisions, implementation profiles, and research in `decisions/`,
+  `implementations/`, and `references/`.
+
 ## Accuracy and provenance
 
 - Do not invent citations to VRM, glTF, UniVRM, or Blender docs. Link real sections or mark

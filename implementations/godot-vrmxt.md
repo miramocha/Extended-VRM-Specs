@@ -1,7 +1,8 @@
 ---
-title: Godot VFX
+title: Godot VRMXT
 aliases:
-  - VRMXT_vfx for Godot
+  - Godot VFX
+  - VRMXT_sprite_particle for Godot
   - godot-vrmxt particles
 tags:
   - extended-vrm
@@ -12,15 +13,22 @@ type: guide
 status: draft
 ---
 
-# Godot VFX
+# Godot VRMXT
 
-Godot implementation profile for [VRMXT_vfx](../specs/vrmxt-vfx.md). Support belongs in
-a **separate** optional addon (working name `godot-vrmxt`), registered beside
-[godot-vrm](https://github.com/V-Sekai/godot-vrm). Do not fork or replace the stock
-VRM importer.
+Godot consumer profile for Extended VRM. Support belongs in a **separate** optional
+addon (working name `godot-vrmxt`), registered beside
+[godot-vrm](https://github.com/V-Sekai/godot-vrm). Current scope covers
+[VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md). Do not fork
+or replace the stock VRM importer.
 
 VRM 1.0 only. The extension is optional: stock godot-vrm load MUST succeed when the
-VRMXT addon is absent or when `VRMXT_vfx` is missing.
+VRMXT addon is absent or when `VRMXT_sprite_particle` is missing.
+
+## Supported features
+
+| Extension | Status |
+|-----------|--------|
+| `VRMXT_sprite_particle` | Planned |
 
 ## Package
 
@@ -31,8 +39,8 @@ VRMXT addon is absent or when `VRMXT_vfx` is missing.
 | Engine | Godot 4.x matching the project's godot-vrm version window |
 | Integration API | `GLTFDocumentExtension` via `GLTFDocument.register_gltf_document_extension` |
 
-godot-vrm already registers per-`VRMC_*` document extensions the same way. `VRMXT_vfx`
-uses that registry as a peer plugin.
+godot-vrm already registers per-`VRMC_*` document extensions the same way.
+`VRMXT_sprite_particle` uses that registry as a peer plugin.
 
 ## Architecture fit
 
@@ -44,7 +52,7 @@ consumer package row:
 | Stock VRM load unchanged | Keep godot-vrm; enable VRMXT addon separately |
 | Do not replace stock import | Own `EditorPlugin`; do not replace `import_vrm.gd` |
 | Parse + attach | `_import_post` (editor) and/or explicit runtime attach helper |
-| No `extensionsRequired` | Never list `VRMXT_vfx` there |
+| No `extensionsRequired` | Never list `VRMXT_sprite_particle` there |
 | Missing package / missing ext | Avatar loads; no emitters |
 
 Rejected: shipping Extended VFX only by forking V-Sekai/godot-vrm or patching
@@ -55,19 +63,19 @@ Rejected: shipping Extended VFX only by forking V-Sekai/godot-vrm or patching
 Preferred path: an `EditorPlugin` registers a `GLTFDocumentExtension` in `_enter_tree`
 and unregisters it in `_exit_tree`, parallel to godot-vrm's `plugin.gd`.
 
-1. `_import_preflight(state, extensions)`: if `extensions` lacks `VRMXT_vfx`, return
-   `ERR_SKIP`. Otherwise return `OK`.
+1. `_import_preflight(state, extensions)`: if `extensions` lacks `VRMXT_sprite_particle`,
+   return `ERR_SKIP`. Otherwise return `OK`.
 2. `_import_post(state, root)`:
-   - Read `state.json["extensions"]["VRMXT_vfx"]`.
+   - Read `state.json["extensions"]["VRMXT_sprite_particle"]`.
    - Require `specVersion` `"1.0"` for this draft; other versions: **TBD** (skip or
      best-effort).
    - Iterate `emitters[]`. Skip invalid entries per the base spec.
    - Resolve `node` with `state.get_scene_node(node_index)`. Null / missing → skip
      that emitter.
-   - Resolve `particle.texture` when present via `state` textures/images (same
-     direction as MToon). Unresolved → leave empty; still apply other particle fields.
-   - Spawn a particle node under the resolved scene node using
-     `localPosition` / `localRotation` (see [Emitter transform](../specs/vrmxt-vfx.md#emitter-transform)).
+   - Resolve `texture` when present via `state` textures/images (same direction as
+     MToon). Unresolved → leave empty; still apply other particle fields.
+   - Spawn a particle node under the resolved scene node (origin / orientation follow
+     that node's transform; no extension-local offset fields).
 3. Do not fail the whole VRM import when individual emitters are skipped.
 
 godot-vrm's `*.vrm` `EditorSceneFormatImporter` builds a `GLTFDocument` and calls
@@ -94,7 +102,7 @@ Non-normative package layout:
 
 | Layer | Role |
 |-------|------|
-| Format | Parse / validate `VRMXT_vfx` JSON only |
+| Format | Parse / validate `VRMXT_sprite_particle` JSON only |
 | Importer | Resolve nodes and textures from `GLTFState` or caller maps |
 | Runtime attach | Store resolved emitters on the avatar root |
 | Particle mapper | Map portable fields onto `GPUParticles3D` (or `CPUParticles3D`) |
@@ -109,37 +117,37 @@ base spec. Proposed Godot targets:
 
 | Spec field | Godot target | Notes |
 |------------|--------------|-------|
-| `localPosition` / `localRotation` | Child `Node3D` under resolved node | Spec / glTF node-local; xyzw quat |
-| emitter | `GPUParticles3D` (preferred) or `CPUParticles3D` | Continuous point source |
+| Attach node | Parent for `GPUParticles3D` / `CPUParticles3D` | Origin and orientation from node world transform |
 | `emissionRate` | Derived from `amount` and `lifetime` | Godot has no exact particles/sec API; document the formula when locked |
 | `maxParticles` | `amount` | Cap ≥ 1 |
 | `lifetime` | `lifetime` | Seconds |
-| `startSize` | Process / mesh scale | Billboard size in meters |
-| `startSpeed` | Initial velocity along local +Y | `ParticleProcessMaterial.direction` / velocity |
-| `startColor` | Particle color | Linear RGBA |
+| `size` | Process / mesh scale | Sprite width and height in meters |
+| `startSpeed` | Initial velocity along node local +Y | `ParticleProcessMaterial.direction` / velocity |
+| `color` | Particle color | Linear RGBA |
 | `texture` | Albedo on particle material | Omitted / unresolved → solid tint |
-| billboard | Camera-facing draw pass | When the renderer supports it |
 
-`emissionRate` ↔ `amount` mapping is **TBD** until a conformance sample exists.
+`emissionRate` ↔ `amount` mapping is **TBD** until a conformance sample exists. Godot's
+particle draw pass is camera-facing by default; no extra facing configuration is needed
+to satisfy the base spec's camera-plane requirement.
 
 ## Export
 
 Export of authored VFX from Godot is **TBD**. Prefer Blender
-([Blender VFX](blender-vfx.md)) as the authoring path until a Godot exporter lands.
+([Blender VRMXT VFX](blender-vrmxt.md#vfx)) as the authoring path until a Godot exporter lands.
 
-If export is added later: write root `extensions.VRMXT_vfx`, add `VRMXT_vfx` to
-`extensionsUsed`, and do **not** add it to `extensionsRequired`.
+If export is added later: write root `extensions.VRMXT_sprite_particle`, add
+`VRMXT_sprite_particle` to `extensionsUsed`, and do **not** add it to
+`extensionsRequired`.
 
 ## Validation and fallback
 
 Per emitter, skip (do not fail the whole load) when:
 
-- `type` missing or unknown
 - `node` missing, out of range, or `get_scene_node` returns null
-- `type` is `"particle"` but `particle` is missing
-- Non-finite or negative `emissionRate` / `lifetime` / `startSize` / `startSpeed`
+- `size` present but not two finite numbers greater than `0`
+- `color` present but not four finite numbers, RGB `>= 0`, alpha in `[0,1]`
+- Non-finite or negative `emissionRate` / `lifetime` / `startSpeed`
 - `maxParticles` not an integer `>= 1`
-- Invalid `localPosition` / `localRotation` per the base spec
 
 Stock godot-vrm without the VRMXT addon: avatar imports; no emitters.
 
@@ -152,17 +160,17 @@ Minimum coverage (mirror UniVRMXT / Blender VFX intent):
 | Import valid emitter on bone / object node | Particle child under resolved node |
 | Import bad `node` / invalid scalars | Emitter skipped; VRM otherwise loads |
 | Import texture index | Material albedo set when texture resolves |
-| Missing `VRMXT_vfx` with addon enabled | No-op; avatar valid |
+| Missing `VRMXT_sprite_particle` with addon enabled | No-op; avatar valid |
 | Runtime load without EditorPlugin | Autoload register or explicit attach works |
 | Empty `emitters` | Valid file; no required extension entry |
 
 ## Related
 
-- [VRMXT_vfx](../specs/vrmxt-vfx.md)
+- [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
 - [Extended VRM Architecture](../architecture.md)
-- [UniVRM VFX](univrm-vfx.md)
-- [three-vrm VFX](three-vrm-vfx.md)
-- [Blender VFX](blender-vfx.md)
+- [UniVRMXT VFX](univrm-vrmxt.md#vfx)
+- [three-vrmxt](three-vrmxt.md)
+- [Blender VRMXT VFX](blender-vrmxt.md#vfx)
 - [godot-vrm](https://github.com/V-Sekai/godot-vrm)
 
 ## Open questions
@@ -172,7 +180,7 @@ Minimum coverage (mirror UniVRMXT / Blender VFX intent):
 | Final addon id / Asset Library listing | TBD |
 | `GPUParticles3D` vs `CPUParticles3D` default | TBD |
 | `emissionRate` → `amount` formula | TBD |
-| glTF node-local TR vs Godot import basis on bones | TBD (verify on sample) |
+| glTF node-local TR vs Godot import basis on bones | TBD (verify on sample; offsets via helper nodes) |
 | Unknown `specVersion` policy | TBD (shared with base spec) |
 | Trigger / play mode | TBD |
 | Godot export | TBD |

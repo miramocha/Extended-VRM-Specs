@@ -23,9 +23,9 @@ metadata on every referenced clip. Hosts drive the machine through a first-party
 bridge (`PlayOneShot`, `GoToState`, `SetFloat` / `SetBool` / `SetInt`, `SetStateClip`).
 
 Decision context:
-[animation-controller-standardization](../decisions/animation-controller-standardization.md).
+[animation-controller-standardization](../../../decisions/animation-controller-standardization.md).
 Khronos overlap (non-normative):
-[KHR / glTF overlap](../references/khr-gltf-overlap.md).
+[KHR / glTF overlap](../../../references/khr-gltf-overlap.md).
 
 ## Scope
 
@@ -240,7 +240,7 @@ Phase 1 UniVRMXT intent: author the FSM on Animator **layer index 0** with displ
 import, rebuild layer 0 named `VRMXT`. Do not write other Animator layers into the file.
 The portable schema has no layer name or `layers[]`. Non-portable Mecanim features are
 out of scope for the mapping; see
-[animation-controller-standardization](../decisions/animation-controller-standardization.md).
+[animation-controller-standardization](../../../decisions/animation-controller-standardization.md).
 
 ## Attachment example
 
@@ -380,8 +380,8 @@ extension or a major `specVersion`; they stay outside this extension's permanent
 ## Related
 
 - [VRMXT_AnimationClip](vrmxt-animation-clip.md)
-- [Animation controller standardization](../decisions/animation-controller-standardization.md)
-- [KHR / glTF overlap](../references/khr-gltf-overlap.md) (non-normative)
+- [Animation controller standardization](../../../decisions/animation-controller-standardization.md)
+- [KHR / glTF overlap](../../../references/khr-gltf-overlap.md) (non-normative)
 - Upstream [VRMC_vrm_animation](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_vrm_animation-1.0)
 
 ## Open questions

@@ -15,8 +15,8 @@ status: draft
 # Unity VRMXT Test Override Catalog
 
 Authoring catalog for UniVRMXT **Test Materials for Overrides** under
-[VRMXT_materials_override](../../specs/vrmxt-materials-override.md). Index and shared
-schema: [Materials Override Catalogs](materials-override-catalogs.md).
+[VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md). Index and shared
+schema: [Materials Override Catalogs](../materials-override-catalogs.md).
 
 Non-normative. Small fixture for Blender / UniVRMXT authoring UI — not a production
 shader family.
@@ -57,7 +57,7 @@ Property lists match. Only `shaderName`, `displayName`, `defaultVariant`,
 
 One catalog file per `shaderName`. Multi-slot: store `(unity, builtin)` and
 `(unity, urp)` siblings with the matching sample shader per
-[UniVRM Materials Override](../../implementations/univrm-materials-override.md).
+[UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override).
 
 ## Curated properties
 
@@ -92,7 +92,7 @@ Binding pairs live in authoring UI / example JSON
 
 ## Related
 
-- Index: [Materials Override Catalogs](materials-override-catalogs.md)
+- Index: [Materials Override Catalogs](../materials-override-catalogs.md)
 - Sample README: UniVRMXT `Samples~/TestMaterialsForOverrides/README.md`
-- Blender authoring: [Blender Materials Override](../../implementations/blender-materials-override.md)
-- Unity apply: [UniVRM Materials Override](../../implementations/univrm-materials-override.md)
+- Blender authoring: [Blender VRMXT materials override](../../implementations/blender-vrmxt.md#materials-override)
+- Unity apply: [UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override)

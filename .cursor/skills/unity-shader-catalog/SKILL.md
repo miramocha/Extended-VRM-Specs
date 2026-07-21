@@ -27,7 +27,7 @@ Curated property **lists** stay human (family `.md`). Scripts fill **types** and
 - Dump full `Properties` block into catalog JSON
 - Auto-mark `common: true` (read family markdown tables)
 - Add `hdrp` to `supportedVariants` without smoke test + doc update
-- Edit normative `specs/vrmxt-materials-override.md` for catalog-only work
+- Edit normative `specs/extensions/materials/vrmxt-materials-override.md` for catalog-only work
 
 ## Workflow
 

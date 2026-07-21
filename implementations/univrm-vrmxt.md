@@ -1,31 +1,118 @@
 ---
-title: UniVRM Materials Override
+title: UniVRMXT
 aliases:
+  - UniVRM VFX
+  - UniVRM Materials Override
+  - VRMXT_sprite_particle for UniVRM
   - VRMXT materials override for Unity
+  - UniVRMXT particles
 tags:
   - extended-vrm
   - implementation/unity
+  - spec/vfx
   - spec/materials
   - compatibility/vrm1
 type: guide
 status: draft
 ---
 
-# UniVRM Materials Override
+# UniVRMXT
 
 Unity implementation profile for
-[VRMXT_materials_override](../specs/vrmxt-materials-override.md). Support belongs in
-[UniVRMXT](https://github.com/miramocha/UniVRMXT) (`com.miramocha.univrmxt`), an optional
-UPM package that depends on stock [UniVRM](https://github.com/vrm-c/UniVRM). UniVRM
-source changes are not required.
+[VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md) and
+[VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md).
+Support belongs in [UniVRMXT](https://github.com/miramocha/UniVRMXT)
+(`com.miramocha.univrmxt`), an optional UPM package that depends on stock
+[UniVRM](https://github.com/vrm-c/UniVRM). UniVRM source changes are not required.
 
-## Supported entry
+VRM 1.0 only. Extensions are optional: stock UniVRM load MUST succeed when UniVRMXT
+is absent or when either extension is missing from the file.
+
+## Package
+
+| Item | Value |
+|------|-------|
+| UPM id | `com.miramocha.univrmxt` |
+| Stock VRM I/O | [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) (`0.131.1`+) |
+| Optional host fork | [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) |
+| Unity | `2022.3` |
+| Extensions | `VRMXT_sprite_particle`, `VRMXT_materials_override` |
+
+## VFX
+
+### Import seam
+
+UniVRM has no general root-extension registry. UniVRMXT foundation:
+
+1. Parse root `extensions.VRMXT_sprite_particle` from glTF JSON (`specVersion` `"1.0"`) via
+   `VrmxtVfx.TryParse`.
+2. Skip invalid emitters per the base spec.
+3. After `Vrm10.LoadGltfDataAsync` (or equivalent), map `emitters[].node` through
+   `RuntimeGltfInstance.Nodes`.
+4. Call `VrmxtVfxRuntime.TryAttach(root, gltfJson, nodes, out instance)` to store
+   resolved emitters on `VrmxtVfxInstance` (avatar root). `VrmxtVfxData` remains
+   available as a ScriptableObject mirror for asset workflows.
+
+Unresolved nodes skip that emitter only. UniVRMXT Runtime does not hard-reference
+UniGLTF/VRM10 asmdefs; the load caller supplies JSON and the node Transform list.
+
+### Runtime behavior (foundation)
+
+MVP stores parsed emitter data on `VrmxtVfxInstance` (node index, `Transform`,
+particle scalars, sprite texture). `VrmxtVfxParticleSystemMapper` maps portable
+fields onto Unity `ParticleSystem` (camera-facing billboard render mode, node-local +Y
+velocity, optional texture).
+Offsets live on the resolved node (helper Empty / Transform), not on emitter fields.
+See UniVRMXT [vfx-particle-mapping.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/vfx-particle-mapping.md).
+
+### Export
+
+Unity → VRM re-export of portable emitters requires Extended-UniVRM export hooks
+(`Vrm10ExportExtensionRegistry`), Project Settings → VRM10 → **Enable VRM Export
+Extensions** (default on), and UniVRMXT (`VrmxtVfxExportHookBootstrap`).
+
+Source of truth is `VrmxtVfxInstance.Emitters`, with live preview `ParticleSystem`
+values (color, rate, size, etc.) folded back at export time. Preview systems are
+cleared on a throwaway export copy so they do not become glTF nodes or materials.
+Particle albedo is re-registered into `textures[]` when
+`VrmxtVfxParticleData.Texture` or the live material is available. UniGLTF rebuilds
+`extensionsUsed` from written extensions (includes `VRMXT_sprite_particle`).
+
+Stock UniVRM without the Extended export registry does not write `VRMXT_sprite_particle`.
+
+### AssetDatabase limits (UniVRMXT findings)
+
+Optional consumer packages cannot patch the stock imported `.vrm` prefab after
+`VrmScriptedImporter` finishes (`AddComponent` on the main asset fails; reimport rebuilds
+the hierarchy).
+
+**Current UniVRMXT workaround** (dual path):
+
+- **Extended-UniVRM:** import hooks (Project Settings/VRM10 enable) → VFX on original `.vrm`
+- **Stock UniVRM / hooks disabled:** sibling companion prefab `*.vrmxt.prefab`
+- Runtime / Warudo: stock load, then `TryAttachFromGlb` — [Warudo VRMXT](warudo-vrmxt.md)
+- VFX-only textures: second GLB image decode (texture enum hook still open)
+
+Full write-up: [univrm-upstream-hooks.md](univrm-upstream-hooks.md).
+
+### Open questions (VFX)
+
+| Topic | Status |
+|-------|--------|
+| Editor `.vrm` ScriptedImporter integration | Done in Extended-UniVRM (Project Settings/VRM10 gate); stock UniVRM still needs companion prefab or upstream adoption of hook A — [univrm-upstream-hooks.md](univrm-upstream-hooks.md) |
+| VFX-only `textures[]` import | Workaround: re-read GLB; prefer texture enumeration hook |
+| Unknown `specVersion` policy | TBD (shared with base spec) |
+| Trigger / play mode | TBD |
+
+## Materials override
+
+### Supported entry
 
 The consumer considers all `overrides[]` where `engine` equals `unity`. Selection uses
 `material.variant` as this profile's refinement of the base-spec selection key
 (rules 6–7).
 
-### Profile properties
+#### Profile properties
 
 | Property | Type | Required | Meaning |
 |----------|------|----------|---------|
@@ -40,7 +127,7 @@ The consumer considers all `overrides[]` where `engine` equals `unity`. Selectio
 shader registry. A consumer MAY warn about package/version mismatch. It MUST use stock
 import when the shader or requested pipeline variant cannot be resolved.
 
-### Selection
+#### Selection
 
 - **One `unity` entry:** `material.variant` MAY be omitted or empty. That entry matches
   any active pipeline.
@@ -55,7 +142,7 @@ import when the shader or requested pipeline variant cannot be resolved.
 Authors MAY store several pipeline slots (for example `builtin` and `urp`) on one
 material. Only the slot selected above is applied.
 
-### Example (single pipeline)
+#### Example (single pipeline)
 
 ```json
 {
@@ -101,7 +188,7 @@ material. Only the slot selected above is applied.
 }
 ```
 
-### Example (builtin and urp siblings)
+#### Example (builtin and urp siblings)
 
 ```json
 {
@@ -147,7 +234,7 @@ pipeline:
 The optional package MUST reject a variant that does not match the active pipeline and
 use stock import for that material.
 
-## UniVRM integration
+### UniVRM integration
 
 UniVRM exposes `IMaterialDescriptorGenerator`. A supporting package wraps the stock
 VRM 1.0 generator:
@@ -166,7 +253,7 @@ Editor import uses a `MaterialDescriptorGeneratorFactory` assigned in UniVRM pro
 settings. The factory returns the same wrapper. With no factory assigned, UniVRM keeps
 its built-in MToon, unlit, and PBR selection.
 
-## Package and shader resolution
+### Package and shader resolution
 
 The VRM file names a Unity shader (`material.id`); it does not contain shader source.
 UniVRMXT and the host app MUST include any shaders they intend to honor, and MUST keep
@@ -187,7 +274,7 @@ materials by default. Overrides appear only for shaders the app (or an optional 
 pack it depends on) already ships. Remote git fetch and runtime shader compilation are
 out of scope for this profile.
 
-## Bindings
+### Bindings
 
 The generator reads resolved values from `VRMC_materials_mtoon` and writes them through
 `MaterialDescriptor` actions.
@@ -203,7 +290,7 @@ The example Unity targets in the base spec follow UniVRM MToon10 naming where ap
 `_ShadeTex`, `_ShadingShiftFactor`, `_ShadingToonyFactor`, and
 `_GiEqualizationFactor`. Custom shaders may use different targets.
 
-## Properties
+### Properties
 
 `overrides[].properties` sets literal values on the resolved shader with no
 `VRMC_materials_mtoon` dependency (base-spec rules 22–26). `properties[].name` is a Unity
@@ -220,7 +307,7 @@ during the `Vrm10ExportExtensionPhase.PrepareTextures` phase (see
 equivalents) so the texture lands in the file's `textures[]` before export finishes, per
 base-spec rule 26.
 
-## Variant survival
+### Variant survival
 
 `material.variant` names the render-pipeline slot for that entry. Re-export and
 authoring treat it as stored intent for that slot.
@@ -233,21 +320,21 @@ authoring treat it as stored intent for that slot.
 - Existing non-empty `variant` values MUST NOT be overwritten with the active pipeline
   (an entry authored `hdrp` stays `hdrp` when re-exported from URP).
 
-## Fallback
+### Fallback
 
 Failure is local to one glTF material. The wrapper delegates that material index to the
 stock `BuiltInVrm10MaterialDescriptorGenerator` or
 `UrpVrm10MaterialDescriptorGenerator`. Unsupported files therefore load as normal
 VRM 1.0 assets when the optional package is missing, disabled, or incomplete.
 
-## Authoring catalogs
+### Authoring catalogs
 
 Shared shader catalog JSON (lilToon, Poiyomi, …) is owned by Specs and vendored into
 consumers. UniVRMXT MAY load the same files for Editor authoring later. See
 [Materials Override Catalogs](../references/materials-override-catalogs.md) (Ownership /
 Distribution). Runtime apply does not require catalogs.
 
-## Known constraints
+### Known constraints
 
 - Built-in UniVRM generator selection covers Built-in RP and URP. HDRP support requires
   the optional package to provide its own stock-equivalent fallback.
@@ -255,13 +342,13 @@ Distribution). Runtime apply does not require catalogs.
 - Editor support requires one-time project settings configuration.
 - Shader property type validation and texture transforms remain implementation work.
 
-## Host note: Warudo
+### Host note: Warudo
 
 Warudo does not expose `materialGenerator` on Character Source load. A workable plugin
 path is post-load re-read of the `.vrm` plus material swap. See
-[Warudo Materials Override](warudo-materials-override.md).
+[Warudo VRMXT materials override](warudo-vrmxt.md#materials-override).
 
-## Source references
+### Source references
 
 - `Packages/UniGLTF/Runtime/UniGLTF/IO/MaterialIO/Import/IMaterialDescriptorGenerator.cs`
 - `Packages/UniGLTF/Runtime/UniGLTF/IO/MaterialIO/Import/MaterialDescriptor.cs`
@@ -270,3 +357,14 @@ path is post-load re-read of the `.vrm` plus material swap. See
 - `Packages/VRM10/Runtime/IO/Export/Vrm10ExportExtension.cs`
 - `Packages/VRM10/Editor/Settings/MaterialDescriptorGeneratorFactory.cs`
 - `Packages/VRM10/Editor/ScriptedImporter/VrmScriptedImporterImpl.cs`
+
+## Related
+
+- Specs: [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
+  [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
+- Backend research: [Engine particle capability](../references/engine-particle-capability.md)
+  (`ParticleSystem` required; VFX Graph optional)
+- Upstream hooks / AssetDatabase workaround: [univrm-upstream-hooks.md](univrm-upstream-hooks.md)
+- UniVRMXT: https://github.com/miramocha/UniVRMXT
+- [Blender VRMXT](blender-vrmxt.md)
+- [Warudo VRMXT](warudo-vrmxt.md)

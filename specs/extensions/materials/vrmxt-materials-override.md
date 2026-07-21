@@ -133,8 +133,8 @@ This draft defines two case-sensitive engine identifiers:
 
 | Engine | Profile |
 |--------|---------|
-| `unity` | [UniVRM Materials Override](../implementations/univrm-materials-override.md) |
-| `unreal` | [VRM4U Materials Override](../implementations/vrm4u-materials-override.md) |
+| `unity` | [UniVRMXT materials override](../../../implementations/univrm-vrmxt.md#materials-override) |
+| `unreal` | [VRM4U VRMXT](../../../implementations/vrm4u-vrmxt.md) |
 
 New engines require a separate profile. Adding a profile does not change this base
 extension version unless it changes common fields or behavior.
@@ -165,8 +165,8 @@ flowchart LR
 | Unity | Active host render pipeline (`builtin` / `urp` / `hdrp`) |
 | Unreal | This glTF material’s `alphaMode` + `doubleSided` |
 
-Full selection and survival rules: [UniVRM Materials Override](../implementations/univrm-materials-override.md),
-[VRM4U Materials Override](../implementations/vrm4u-materials-override.md).
+Full selection and survival rules: [UniVRMXT materials override](../../../implementations/univrm-vrmxt.md#materials-override),
+[VRM4U VRMXT](../../../implementations/vrm4u-vrmxt.md).
 
 ## MToon shading source semantics
 
@@ -282,7 +282,7 @@ omitted here; see the Unity and Unreal profile notes for fuller single-slot exam
   the whole-material level is otherwise **TBD** (override vs MToon vs coexistence).
 - `KHR_materials_variants` is a different mechanism (primitive → portable `materials[]`
   swap for named skins). It does not carry engine material identities or MToon bindings.
-  Research: [KHR / glTF overlap](../references/khr-gltf-overlap.md).
+  Research: [KHR / glTF overlap](../../../references/khr-gltf-overlap.md).
 
 ## Optional consumer interpretation
 
@@ -300,9 +300,9 @@ This specification does not require remote download or runtime compilation of sh
 source from the file or from a registry.
 
 Engine integration details are documented in
-[UniVRM Materials Override](../implementations/univrm-materials-override.md),
-[VRM4U Materials Override](../implementations/vrm4u-materials-override.md), and
-[Blender Materials Override](../implementations/blender-materials-override.md).
+[UniVRMXT materials override](../../../implementations/univrm-vrmxt.md#materials-override),
+[VRM4U VRMXT](../../../implementations/vrm4u-vrmxt.md), and
+[Blender VRMXT materials override](../../../implementations/blender-vrmxt.md#materials-override).
 
 ## Open questions
 
@@ -312,7 +312,7 @@ Engine integration details are documented in
 - [ ] Whether `extensionsRequired` is ever appropriate
 - [ ] Export rules for Blender / other authoring tools (format uses `idType` / `id`;
       authoring plan in
-      [Blender Materials Override](../implementations/blender-materials-override.md#authoring-ui-plan))
+      [Blender VRMXT authoring UI](../../../implementations/blender-vrmxt.md#authoring-ui-plan))
 - [ ] Authoring UX when a material stores multiple `unity` or `unreal` variant slots
       (Unity multi-variant rules sketched in the Blender authoring plan; Unreal still open)
 - [ ] Stable `specVersion` policy after first accepted property set
@@ -321,10 +321,11 @@ Engine integration details are documented in
 
 - Upstream MToon: `VRMC_materials_mtoon` in the VRM 1.0 specification
 - Core materials: glTF 2.0 `materials` schema
-- [KHR / glTF overlap](../references/khr-gltf-overlap.md) (non-normative)
-- [UniVRM Materials Override](../implementations/univrm-materials-override.md)
-- [VRM4U Materials Override](../implementations/vrm4u-materials-override.md)
-- [Blender Materials Override](../implementations/blender-materials-override.md)
-- [VRMXT_vfx](vrmxt-vfx.md)
-- [VRMXT_springBone_override](vrmxt-spring-bone-override.md)
-- [VRMXT_lattice](vrmxt-lattice.md) (research draft)
+- [KHR / glTF overlap](../../../references/khr-gltf-overlap.md) (non-normative)
+- [VRoid Hub VRMXT round-trip](../../../references/vroid-hub-vrmxt-roundtrip.md) (non-normative)
+- [UniVRMXT materials override](../../../implementations/univrm-vrmxt.md#materials-override)
+- [VRM4U VRMXT](../../../implementations/vrm4u-vrmxt.md)
+- [Blender VRMXT materials override](../../../implementations/blender-vrmxt.md#materials-override)
+- [VRMXT_sprite_particle](../vfx/vrmxt-sprite-particle.md)
+- [VRMXT_springBone_override](../physics/vrmxt-spring-bone-override.md)
+- [VRMXT_lattice](../deformation/vrmxt-lattice.md) (research draft)

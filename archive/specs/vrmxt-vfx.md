@@ -10,10 +10,14 @@ tags:
   - compatibility/vrm1
   - implementation/optional-consumer
 type: specification
-status: draft
+status: superseded
 ---
 
 # VRMXT_vfx
+
+> Archived experimental draft. Superseded by
+> [VRMXT_sprite_particle](../../specs/extensions/vfx/vrmxt-sprite-particle.md). See
+> [VFX capability boundaries](../../decisions/vfx-capability-boundaries.md) for the decision.
 
 Root glTF extension for portable avatar VFX. Version `1.0` defines particle
 emitters only. Each emitter attaches to one glTF node (any bone or helper).
@@ -167,7 +171,7 @@ Exact visual parity across engines is not required. Field meaning and units are.
 
 The glTF Extension Registry has no particle-emitter `KHR_` / `EXT_` extension.
 `EXT_mesh_gpu_instancing` covers static instance batches, not live emitters. Research:
-[KHR / glTF overlap](../references/khr-gltf-overlap.md).
+[KHR / glTF overlap](../../references/khr-gltf-overlap.md).
 
 ## Extensibility
 
@@ -176,22 +180,22 @@ Later drafts MAY:
 - Add emitter `type` values other than `"particle"`.
 - Add optional particle fields with defaults (shapes, gravity).
 - Add per-emitter engine `overrides[]` in the same style as
-  [VRMXT_materials_override](vrmxt-materials-override.md) and
-  [VRMXT_springBone_override](vrmxt-spring-bone-override.md).
+  [VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md) and
+  [VRMXT_springBone_override](../../specs/extensions/physics/vrmxt-spring-bone-override.md).
 
 Adding optional fields with defaults does not by itself require a `specVersion` bump.
 Removing or redefining an existing field does.
 
 ## Related
 
-- [VRMXT_materials_override](vrmxt-materials-override.md)
-- [VRMXT_springBone_override](vrmxt-spring-bone-override.md)
-- [VRMXT_lattice](vrmxt-lattice.md) (research draft)
-- [KHR / glTF overlap](../references/khr-gltf-overlap.md) (non-normative)
-- [Blender VFX](../implementations/blender-vfx.md)
-- [UniVRM VFX](../implementations/univrm-vfx.md)
-- [Godot VFX](../implementations/godot-vfx.md)
-- [three-vrm VFX](../implementations/three-vrm-vfx.md)
+- [VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md)
+- [VRMXT_springBone_override](../../specs/extensions/physics/vrmxt-spring-bone-override.md)
+- [VRMXT_lattice](../../specs/extensions/deformation/vrmxt-lattice.md) (research draft)
+- [KHR / glTF overlap](../../references/khr-gltf-overlap.md) (non-normative)
+- [Blender VRMXT VFX](../../implementations/blender-vrmxt.md#vfx)
+- [UniVRMXT VFX](../../implementations/univrm-vrmxt.md#vfx)
+- [Godot VRMXT](../../implementations/godot-vrmxt.md)
+- [three-vrmxt](../../implementations/three-vrmxt.md)
 
 ## Open questions
 

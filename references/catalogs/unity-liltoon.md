@@ -15,7 +15,7 @@ status: draft
 # Unity lilToon Catalog
 
 Authoring catalog note for [lilToon](https://github.com/lilxyzw/lilToon) under
-[VRMXT_materials_override](../../specs/vrmxt-materials-override.md). Index and shared
+[VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md). Index and shared
 schema: [Materials Override Catalogs](../materials-override-catalogs.md).
 
 Non-normative. Not a closed allowlist. Property names from opaque
@@ -76,7 +76,7 @@ or we add `hdrp` to `supportedVariants` later after a pinned revision is smoke-t
 
 Multi-slot: authors MAY store `(unity, builtin)` and `(unity, urp)` siblings with the
 same `shaderName` per
-[UniVRM Materials Override](../../implementations/univrm-materials-override.md).
+[UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override).
 
 ## Type mapping
 
@@ -90,7 +90,7 @@ same `shaderName` per
 
 ## Curated property subset
 
-Two tiers for Blender authoring ([Blender Materials Override](../../implementations/blender-materials-override.md)):
+Two tiers for Blender authoring ([Blender VRMXT materials override](../../implementations/blender-vrmxt.md#materials-override)):
 
 | Tier | Catalog flag | UI |
 |------|--------------|-----|
@@ -229,7 +229,7 @@ Inverse (MToon → lil border/blur) is **TBD**; do not treat `_ShadowBorder` =
 
 ### Suggested VRMXT bindings (MToon → lilToon)
 
-[VRMXT_materials_override](../../specs/vrmxt-materials-override.md) `bindings` sources are
+[VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md) `bindings` sources are
 the shade set only. Invert the shadow rows above for defaults:
 
 | MToon `source` | lilToon `target` | `targetType` | Notes |
@@ -284,6 +284,6 @@ Release: https://github.com/lilxyzw/lilToon/releases/tag/2.3.4
 - Index: [Materials Override Catalogs](../materials-override-catalogs.md)
 - Sibling (Warudo pin 1.10.3): [Unity lilToon Warudo Catalog](unity-liltoon-warudo.md)
 - Sibling: [Unity Poiyomi Catalog](unity-poiyomi.md)
-- Blender authoring: [Blender Materials Override](../../implementations/blender-materials-override.md)
-- Unity apply: [UniVRM Materials Override](../../implementations/univrm-materials-override.md)
+- Blender authoring: [Blender VRMXT materials override](../../implementations/blender-vrmxt.md#materials-override)
+- Unity apply: [UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override)
 - Upstream convert: [lilMaterialConvertUtility.cs](https://github.com/lilxyzw/lilToon/blob/2.3.4/Assets/lilToon/Editor/lilInspector/lilMaterialConvertUtility.cs)

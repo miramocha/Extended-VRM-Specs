@@ -11,7 +11,7 @@ status: draft
 # Materials Override Catalog Data
 
 Machine-readable catalog JSON for
-[Materials Override Catalogs](../materials-override-catalogs.md) lives in this folder.
+[Materials Override Catalogs](../../materials-override-catalogs.md) lives in this folder.
 
 | File | `shaderName` | Status |
 |------|--------------|--------|
