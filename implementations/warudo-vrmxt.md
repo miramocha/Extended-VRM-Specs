@@ -25,8 +25,8 @@ Host integration for [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprit
 (`Assets/Vrmxt/`), exported as a UMod plugin to `StreamingAssets/Plugins`.
 
 Warudo remains a runtime consumer: the plugin applies VRMXT data after Character load.
-A source-preserving export utility rewrites VRMXT materials-override JSON into a copy of
-the original local VRM. It does not export live geometry or other Warudo scene state.
+A VRMXT patch export rewrites materials-override JSON into a copy of the original local
+VRM. It does not export live geometry or other Warudo scene state.
 
 Related: [UniVRMXT](univrm-vrmxt.md).
 Planned Hub WebGL viewer uses the same Unity `2021.3.45f2` pin:
@@ -185,21 +185,21 @@ Per-asset toggles (both default on):
 No companion asset → plugin still auto-applies both features (same as both toggles on).
 Plugin **Enable VRMXT** remains the global kill-switch.
 
-## Source-preserving export
+## VRMXT patch export
 
 **Status: implemented** (see
 [VRMXT Plugin for Warudo #8](https://github.com/miramocha/VRMXT-Plugin-for-Warudo/issues/8)
-and [export plan](../references/warudo-source-preserving-vrmxt-export.md)).
+and [export plan](../references/warudo-vrmxt-patch-export.md)).
 
 On the same **VRMXT** asset (`VrmxtCharacterAsset`):
 
 - Refresh a per-material list with shader autocomplete.
 - Apply shader overrides into the runtime `VRMXT_materials_override` store and re-apply live.
-- Export writes current store JSON into a new file (default `Characters/<stem>.vrmxt.vrm`)
+- Export patches current store JSON into a new file (default `Characters/<stem>.vrmxt.vrm`)
   via `PersistentDataManager`, preserving original BIN and unrelated JSON.
 
 `GlbChunks.TryRebuild` lives in UniVRMXT (vendored into the plugin). Host injection and
-paths stay outside `Scripts/UniVRMXT/`.
+paths stay outside `Scripts/UniVRMXT/` (`VrmxtPatchExport`).
 
 ## UMod compile constraints
 
@@ -266,7 +266,7 @@ Status: planned.
 
 - General live-avatar VRM export
 - Automatic overwrite or replacement of the loaded Character source
-- New GLB image payloads in the source-preserving export (see
+- New GLB image payloads in the VRMXT patch export (see
   [Limitations](#limitations-workarounds-and-planned-authoring))
 - Blueprint nodes for materials override authoring
 - Full per-shader custom Material Editor UI in Warudo (template `.mat` flow planned)
