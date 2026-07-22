@@ -174,9 +174,10 @@ The trigger will read the original local Character VRM, replace supported VRMXT 
 in its glTF JSON, rebuild the GLB around the unchanged BIN payload, and write a separate
 file through `PersistentDataManager`.
 
-Initial support covers `VRMXT_materials_override`. Existing root `VRMXT_vfx` JSON and
-unrelated extensions pass through unchanged. The utility does not export live geometry,
-pose, spring-bone state, or other Warudo scene changes.
+Initial support covers `VRMXT_materials_override`. Existing root
+`VRMXT_sprite_particle` JSON and unrelated extensions pass through unchanged. The
+utility does not export live geometry, pose, spring-bone state, or other Warudo scene
+changes.
 
 Implementation adds one generic GLB rebuild helper to authoritative UniVRMXT
 `GlbChunks.cs`; Warudo-specific injection and file handling stay in host code.
