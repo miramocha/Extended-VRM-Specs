@@ -50,7 +50,7 @@ The flow does not need a UniVRM exporter hook or UniVRM assembly reference.
 - Parse the original GLB JSON with Newtonsoft.
 - Write current `VRMXT_materials_override` store JSON onto matched
   `materials[i].extensions` entries.
-- Preserve existing root `VRMXT_vfx` JSON.
+- Preserve existing root `VRMXT_sprite_particle` JSON.
 - Add supported extension names to `extensionsUsed` without duplicates.
 - Preserve the original BIN chunk and all unrelated JSON.
 - Rebuild a valid GLB with correct little-endian lengths and four-byte padding.

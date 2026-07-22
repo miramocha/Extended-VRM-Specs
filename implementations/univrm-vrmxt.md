@@ -61,7 +61,9 @@ UniGLTF/VRM10 asmdefs; the load caller supplies JSON and the node Transform list
 MVP stores parsed emitter data on `VrmxtVfxInstance` (node index, `Transform`,
 particle scalars, sprite texture). `VrmxtVfxParticleSystemMapper` maps portable
 fields onto Unity `ParticleSystem` (camera-facing billboard render mode, node-local +Y
-velocity, optional texture).
+velocity, optional texture). Rectangular `size` uses `startSize3D` with
+`scalingMode = Local` on an identity-scale particle child so world-meter dimensions do
+not inherit the referenced node's scale.
 Offsets live on the resolved node (helper Empty / Transform), not on emitter fields.
 See UniVRMXT [vfx-particle-mapping.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/vfx-particle-mapping.md).
 
@@ -75,8 +77,9 @@ Source of truth is `VrmxtVfxInstance.Emitters`, with live preview `ParticleSyste
 values (color, rate, size, etc.) folded back at export time. Preview systems are
 cleared on a throwaway export copy so they do not become glTF nodes or materials.
 Particle albedo is re-registered into `textures[]` when
-`VrmxtVfxParticleData.Texture` or the live material is available. UniGLTF rebuilds
-`extensionsUsed` from written extensions (includes `VRMXT_sprite_particle`).
+`VrmxtVfxParticleData.Texture` or the live material is available.
+`Vrm10ExportExtensionContext.AddRootExtension` adds `VRMXT_sprite_particle` to
+`extensionsUsed` once and never to `extensionsRequired`.
 
 Stock UniVRM without the Extended export registry does not write `VRMXT_sprite_particle`.
 

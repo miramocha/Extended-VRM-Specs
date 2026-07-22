@@ -3,7 +3,6 @@ title: VRMXT_sprite_particle
 aliases:
   - VRM particles
   - Extended VRM particle systems
-  - VRMXT_particle
 tags:
   - extended-vrm
   - spec/vfx

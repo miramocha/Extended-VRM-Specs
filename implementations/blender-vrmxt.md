@@ -183,7 +183,7 @@ lifetime cull, max-particle cap, fixed **XZ** quads in emitter node local space)
 | `emissionRate` | Modifier **Emission Rate** (particles/sec) |
 | `maxParticles` | Modifier **Max Particles** |
 | `lifetime` | Modifier **Lifetime** |
-| `size` | Modifier **Start Size** (instance width / height) |
+| `size` | Modifier **Size X** / **Size Y** (instance width / height) |
 | `startSpeed` | Modifier **Start Speed** along emitter node local **+Y** |
 | `color` | Preview material emission tint |
 | `texture` | Preview material image (tint-only when missing) |
@@ -252,7 +252,7 @@ prop on preview helpers alongside its own `vrmxt_vfx_preview` lifecycle tag.
 |-------|--------|
 | `specVersion` other than `1.0` on import | TBD |
 | Omit vs write default `localPosition` / `localRotation` | Removed — offsets live on helper glTF nodes |
-| Warn on skipped export emitters | TBD |
+| Warn on skipped export / unresolved import emitters | Done — hook logs per emitter and a summary count |
 | VFX texture sampler defaults | TBD |
 | Axis conversion if preview gizmos are added | Open; attach-node transform is source of truth |
 | UniVRM / Godot / three-vrm / VRM4U consumer packages | See [UniVRMXT VFX](univrm-vrmxt.md#vfx), [Godot VRMXT](godot-vrmxt.md), [three-vrmxt](three-vrmxt.md), and [VRM4U VRMXT](vrm4u-vrmxt.md); backend notes in [Engine particle capability](../references/engine-particle-capability.md) |
