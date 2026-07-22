@@ -160,7 +160,7 @@ Pascal form locked above unless a later family-wide casing pass.
 |------------|------|
 | Target | VRM 1.0 (`VRMC_vrm`) only; VRM 0.x unsupported |
 | Portable file | Optional `VRMXT_*` in the same glTF/VRM; no engine-private sidecar |
-| Stock VRM | Humanoid, look-at, expressions stay `VRMC_vrm` |
+| Stock VRM | Humanoid, look-at, expressions stay `VRMC_vrm` (face catalogs: [Face / expression systems](../references/face-expression-systems.md)) |
 | `extensionsRequired` | Controller and clip extensions MUST NOT be listed |
 | No third-party deps | Stock engine animation APIs and/or first-party VRMXT interpreter only |
 | Prod-safe I/O | UniVRM VRM 1.0 clip import/export MUST be opt-in flags (default off) |

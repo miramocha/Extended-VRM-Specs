@@ -84,6 +84,7 @@ Optional `VRMXT_*` consumers:
 
 | Note | Topic | Status |
 |------|-------|--------|
+| [Face / expression systems](references/face-expression-systems.md) | Non-normative: VRM presets, ARKit 52, VRC/Oculus 15 visemes + maps | draft |
 | [KHR / glTF overlap](references/khr-gltf-overlap.md) | Non-normative: Khronos/EXT registry vs materials, VFX, and animation (`VRMXT_AnimationController` / `VRMXT_AnimationClip`) | draft |
 | [Engine particle capability](references/engine-particle-capability.md) | Non-normative: Unity Particle System vs VFX Graph / BIRP; Niagara vs Cascade; VRM4U attach constraints (2026-07-21) | draft |
 | [VRoid Hub VRMXT round-trip](references/vroid-hub-vrmxt-roundtrip.md) | Non-normative: `VRMXT_materials_override` survives Hub upload → original download (2026-07-21) | draft |
