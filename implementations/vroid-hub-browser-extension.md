@@ -124,13 +124,15 @@ then treat confidential-client exchange as required.
 Use documented endpoints
 ([load character model](https://developer.vroid.com/en/api/load-character.html)):
 
-```text
-OAuth access token
-  → GET /api/character_models/{id}     (metadata; eligibility)
-  → POST /api/download_licenses        { character_model_id }
-  → GET /api/download_licenses/{licenseId}/download
-  → 302 AWS S3 presigned URL
-  → fetch → ArrayBuffer (original .vrm / GLB)
+```mermaid
+flowchart TD
+  token["OAuth access token"]
+  meta["GET /api/character_models/{id}<br/>metadata; eligibility"]
+  license["POST /api/download_licenses<br/>{ character_model_id }"]
+  download["GET /api/download_licenses/{licenseId}/download"]
+  s3["302 AWS S3 presigned URL"]
+  bytes["fetch → ArrayBuffer<br/>original .vrm / GLB"]
+  token --> meta --> license --> download --> s3 --> bytes
 ```
 
 Rules:
@@ -148,10 +150,15 @@ Rules:
 
 Preferred path:
 
-```text
-extension fetch ArrayBuffer
-  → viewer postMessage({ type: 'load-vrm', characterModelId, bytes }, [bytes])
-  → .jslib / player JS → Unity byte[] → UniVRM load → UniVRMXT attach
+```mermaid
+flowchart TD
+  fetch["extension fetch ArrayBuffer"]
+  post["viewer postMessage<br/>{ type: 'load-vrm', characterModelId, bytes }<br/>transferable [bytes]"]
+  bridge[".jslib / player JS"]
+  heap["Unity byte[]"]
+  load["UniVRM load"]
+  attach["UniVRMXT attach"]
+  fetch --> post --> bridge --> heap --> load --> attach
 ```
 
 Validate `event.origin` as the extension origin. Use transferable `ArrayBuffer` to

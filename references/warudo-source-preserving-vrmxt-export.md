@@ -9,12 +9,12 @@ tags:
   - format/glb
   - compatibility/vrm1
 type: reference
-status: proposed
+status: accepted
 ---
 
 # Warudo Source-Preserving VRMXT Export
 
-Plan for adding a plugin trigger that writes VRMXT extension state into a copy of a
+Reference for the plugin utility that writes VRMXT extension state into a copy of a
 Warudo Character's original local VRM file.
 
 Tracking:
@@ -26,6 +26,10 @@ Consumer profile: [Warudo VRMXT](../implementations/warudo-vrmxt.md).
 Reuse the source GLB geometry, buffers, images, and stock VRM extensions. The export
 changes supported VRMXT JSON objects and `extensionsUsed`, then writes a separate file
 under Warudo's data folder.
+
+Warudo UI: manually added scene asset **VRMXT** (`VrmxtCharacterAsset`) — Character
+picker (unique claim), per-feature toggles, per-material shader autocomplete, Apply,
+then Export. Editable output suffix (default `.vrmxt`).
 
 This utility rewrites source bytes. It does not export the live avatar or general Warudo
 scene state.

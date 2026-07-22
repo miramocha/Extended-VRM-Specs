@@ -27,6 +27,10 @@ Prefer clarity for implementers over essay voice.
   compatibility, open questions.
 - Prefer tables for fields, enums, and matrices. Prefer diagrams only when they clarify
   relationships that prose would bury.
+- When a diagram is needed, use a fenced **Mermaid** block (` ```mermaid `). Do not use
+  ASCII art boxes, arrows, or trees for flow, sequence, state, or relationship diagrams.
+  Keep node/edge labels short and stable; prefer `flowchart`, `sequenceDiagram`,
+  `stateDiagram-v2`, or `classDiagram` over decorative layouts.
 - Preserve stable anchors and filenames once published; renames need intentional migration.
 
 ## File placement

@@ -64,10 +64,18 @@ in design discussion:
    auth uses a registered VRoid Hub application. Code that holds `client_secret`
    lives in a backend token broker / BFF. Extension and WebGL code hold only tokens
    issued for that app.
-4. Download original model bytes with the documented API sequence: OAuth access token
-   → `POST /api/download_licenses` with `character_model_id` →
-   `GET /api/download_licenses/{id}/download` → AWS S3 presigned URL → `ArrayBuffer`.
-   Prefer original download over Hub optimized preview for VRMXT.
+4. Download original model bytes with the documented API sequence. Prefer original
+   download over Hub optimized preview for VRMXT.
+
+```mermaid
+flowchart TD
+  token["OAuth access token"]
+  license["POST /api/download_licenses<br/>{ character_model_id }"]
+  download["GET /api/download_licenses/{id}/download"]
+  s3["AWS S3 presigned URL"]
+  bytes["ArrayBuffer"]
+  token --> license --> download --> s3 --> bytes
+```
 5. Indicator semantics:
    - Public metadata MAY drive “download eligible / preview action available”
      states.

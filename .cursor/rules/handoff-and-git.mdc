@@ -11,7 +11,7 @@ alwaysApply: true
 - For new or materially restructured notes, verify Obsidian properties, controlled tags,
   heading order, and links against `obsidian-markdown.mdc`.
 - Check specs against `specs-documentation.mdc`: normative vs example, stable names,
-  real citations, no invented decisions.
+  real citations, no invented decisions, Mermaid over ASCII diagrams.
 - Prefer small, reviewable doc diffs. Avoid unrelated rewrites of published specs.
 - Report checks actually run and any verification not run.
 - Never commit unless explicitly asked. Never push unless explicitly asked.

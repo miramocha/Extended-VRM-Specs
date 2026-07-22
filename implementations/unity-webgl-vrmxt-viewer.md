@@ -73,12 +73,14 @@ from C#.
 
 ## Load seam
 
-```text
-extension ArrayBuffer (or short-lived URL)
-  → player JS / .jslib bridge
-  → Unity byte[]
-  → Vrm10 load (or project equivalent)
-  → UniVRMXT TryAttach / materials apply / VFX attach
+```mermaid
+flowchart TD
+  bytes["extension ArrayBuffer<br/>or short-lived URL"]
+  bridge["player JS / .jslib bridge"]
+  heap["Unity byte[]"]
+  load["Vrm10 load<br/>or project equivalent"]
+  attach["UniVRMXT TryAttach<br/>materials apply / VFX attach"]
+  bytes --> bridge --> heap --> load --> attach
 ```
 
 Bridge requirements:

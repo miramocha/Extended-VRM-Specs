@@ -48,5 +48,7 @@ status: draft
 - Do not use Obsidian wikilinks (`[[Page]]`), embeds (`![[Asset]]`), block references,
   Dataview queries, or other plugin-only body syntax.
 - Use fenced code blocks with language identifiers and Markdown tables with header rows.
+- Diagrams: Mermaid fenced blocks only (` ```mermaid `). No ASCII art diagrams.
+  See `specs-documentation.mdc`.
 - Do not add empty metadata or decorative emoji headings.
 - Never leave unresolved internal links in accepted specs.
