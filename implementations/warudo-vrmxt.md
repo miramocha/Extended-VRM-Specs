@@ -25,8 +25,8 @@ Host integration for [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprit
 (`Assets/Vrmxt/`), exported as a UMod plugin to `StreamingAssets/Plugins`.
 
 Warudo remains a runtime consumer: the plugin applies VRMXT data after Character load.
-A source-preserving export utility rewrites VRMXT materials-override JSON into a copy of
-the original local VRM. It does not export live geometry or other Warudo scene state.
+A VRMXT patch export rewrites materials-override JSON into a copy of the original local
+VRM. It does not export live geometry or other Warudo scene state.
 
 Related: [UniVRMXT](univrm-vrmxt.md).
 Planned Hub WebGL viewer uses the same Unity `2021.3.45f2` pin:
@@ -51,7 +51,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 | Warudo Mod Tool | `0.14.5.1` (`app.warudo.modtool` `#upm/0.14.5.1`) |
 | UniVRM (Warudo runtime) | `0.130.1` (`UniGLTF.PackageVersion` / `UniGLTFVersion` `2.66.1` in `Warudo_Data/Managed/UniGLTF.dll`) |
 | UniVRM (Mod Tool editor) | `0.129.1` (`com.vrmc.*@96a7b03851` embedded in Mod Tool `0.14.5.1`) |
-| Source-preserving export | Implemented (`VrmxtCharacterAsset` + `GlbChunks.TryRebuild`); see #8 |
+| VRMXT patch export | Implemented (`VrmxtManagerAsset` + `GlbChunks.TryRebuild`); see #8 |
 
 ## Package split
 
@@ -63,7 +63,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 | Character watch + byte re-read | `VrmxtPlugin` / `VrmxtCharacterApply` |
 | Emit-axis correction | `VrmxtWarudoBoneAxisCorrection` (VRM 1.0 **ReverseX**) |
 | Stock VRM load | Warudo Character asset |
-| Source-preserving export | Original GLB bytes + rewritten materials-override JSON; `VrmxtCharacterAsset`; sandboxed `PersistentDataManager` output |
+| VRMXT patch export | Original GLB bytes + rewritten materials-override JSON; `VrmxtManagerAsset`; sandboxed `PersistentDataManager` output |
 
 ## Flow
 
@@ -170,10 +170,10 @@ entry. Stock MToon or PBR may appear briefly before the override is applied.
 Disabling it unbinds Characters and clears VFX. Material overrides remain on mutated
 host materials until the scene reloads. Enabling it again rebinds and reapplies.
 
-## Per-character VRMXT asset
+## Per-character VRMXT Manager
 
-Manually add a scene asset **VRMXT** (`VrmxtCharacterAsset`, not singleton). Pick one
-local Character. At most one VRMXT asset may claim a given Character; a second assign
+Manually add a scene asset **VRMXT Manager** (`VrmxtManagerAsset`, not singleton). Pick one
+local Character. At most one Manager may claim a given Character; a second assign
 is rejected and soft-reconcile clears duplicates on scene bind.
 
 Per-asset toggles (both default on):
@@ -182,24 +182,24 @@ Per-asset toggles (both default on):
 - **Enable Materials Override** — apply / clear `VRMXT_materials_override` (also gates
   Apply / Clear / Export)
 
-No companion asset → plugin still auto-applies both features (same as both toggles on).
+No Manager → plugin still auto-applies both features (same as both toggles on).
 Plugin **Enable VRMXT** remains the global kill-switch.
 
-## Source-preserving export
+## VRMXT patch export
 
 **Status: implemented** (see
 [VRMXT Plugin for Warudo #8](https://github.com/miramocha/VRMXT-Plugin-for-Warudo/issues/8)
-and [export plan](../references/warudo-source-preserving-vrmxt-export.md)).
+and [export plan](../references/warudo-vrmxt-patch-export.md)).
 
-On the same **VRMXT** asset (`VrmxtCharacterAsset`):
+On the same **VRMXT Manager** (`VrmxtManagerAsset`):
 
 - Refresh a per-material list with shader autocomplete.
 - Apply shader overrides into the runtime `VRMXT_materials_override` store and re-apply live.
-- Export writes current store JSON into a new file (default `Characters/<stem>.vrmxt.vrm`)
+- Export patches current store JSON into a new file (default `Characters/<stem>.vrmxt.vrm`)
   via `PersistentDataManager`, preserving original BIN and unrelated JSON.
 
 `GlbChunks.TryRebuild` lives in UniVRMXT (vendored into the plugin). Host injection and
-paths stay outside `Scripts/UniVRMXT/`.
+paths stay outside `Scripts/UniVRMXT/` (`VrmxtPatchExport`).
 
 ## UMod compile constraints
 
@@ -223,7 +223,7 @@ Apply and export accept `character://data/Characters/….vrm` (and bare
 
 ## Limitations, workarounds, and planned authoring
 
-Source-preserving export rewrites materials-override JSON onto a copy of the original
+VRMXT patch export rewrites materials-override JSON onto a copy of the original
 local VRM and keeps the original BIN (no new image payloads). Authoring in Warudo uses
 Warudo's material property catalog, not Unity's Material Inspector or custom shader GUIs.
 
@@ -266,7 +266,7 @@ Status: planned.
 
 - General live-avatar VRM export
 - Automatic overwrite or replacement of the loaded Character source
-- New GLB image payloads in the source-preserving export (see
+- New GLB image payloads in the VRMXT patch export (see
   [Limitations](#limitations-workarounds-and-planned-authoring))
 - Blueprint nodes for materials override authoring
 - Full per-shader custom Material Editor UI in Warudo (template `.mat` flow planned)

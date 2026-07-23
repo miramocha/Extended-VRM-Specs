@@ -1,8 +1,9 @@
 ---
-title: Warudo Source-Preserving VRMXT Export
+title: Warudo VRMXT Patch Export
 aliases:
   - Warudo VRMXT export plan
   - Warudo source GLB rewrite
+  - Warudo Source-Preserving VRMXT Export
 tags:
   - extended-vrm
   - implementation/warudo
@@ -12,9 +13,9 @@ type: reference
 status: accepted
 ---
 
-# Warudo Source-Preserving VRMXT Export
+# Warudo VRMXT Patch Export
 
-Reference for the plugin utility that writes VRMXT extension state into a copy of a
+Reference for the plugin utility that patches VRMXT extension state into a copy of a
 Warudo Character's original local VRM file.
 
 Tracking:
@@ -27,11 +28,11 @@ Reuse the source GLB geometry, buffers, images, and stock VRM extensions. The ex
 changes supported VRMXT JSON objects and `extensionsUsed`, then writes a separate file
 under Warudo's data folder.
 
-Warudo UI: manually added scene asset **VRMXT** (`VrmxtCharacterAsset`) — Character
+Warudo UI: manually added scene asset **VRMXT Manager** (`VrmxtManagerAsset`) — Character
 picker (unique claim), per-feature toggles, per-material shader autocomplete, Apply,
-then Export. Editable output suffix (default `.vrmxt`).
+then Export VRMXT Patch. Editable output suffix (default `.vrmxt`).
 
-This utility rewrites source bytes. It does not export the live avatar or general Warudo
+This utility patches source bytes. It does not export the live avatar or general Warudo
 scene state.
 
 ## Feasibility
@@ -82,7 +83,7 @@ The planned vendor surface is one modified file. The copy under
 
 ### Warudo host
 
-Add a Warudo-owned export service outside `Scripts/UniVRMXT/`. It will:
+Add a Warudo-owned export service outside `Scripts/UniVRMXT/` (`VrmxtPatchExport`). It will:
 
 - resolve source and output paths;
 - read and write bytes through `PersistentDataManager`;
@@ -95,8 +96,8 @@ Material matching prefers a valid stored `GltfMaterialIndex`. If that index is a
 invalid, the service may use normalized material-name matching when the result is unique.
 Missing or ambiguous entries remain unchanged and appear in the result.
 
-`VrmxtPlugin` will add an export `[Trigger]`, output naming/configuration, an in-progress
-guard, and status reporting.
+`VrmxtManagerAsset` exposes an export `[Trigger]`, output naming/configuration, an
+in-progress guard, and status reporting.
 
 ## Data integrity rules
 
@@ -138,7 +139,7 @@ guard, and status reporting.
 
 1. Load a local VRMXT Character in Warudo.
 2. Apply or edit supported materials override state.
-3. Trigger export.
+3. Trigger Export VRMXT Patch.
 4. Confirm that the new file appears under Warudo's persistent `Characters/` data.
 5. Compare source and output GLBs. Stock JSON and BIN should differ only where this plan
    permits.
