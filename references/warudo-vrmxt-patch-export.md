@@ -28,7 +28,7 @@ Reuse the source GLB geometry, buffers, images, and stock VRM extensions. The ex
 changes supported VRMXT JSON objects and `extensionsUsed`, then writes a separate file
 under Warudo's data folder.
 
-Warudo UI: manually added scene asset **VRMXT** (`VrmxtCharacterAsset`) — Character
+Warudo UI: manually added scene asset **VRMXT Manager** (`VrmxtManagerAsset`) — Character
 picker (unique claim), per-feature toggles, per-material shader autocomplete, Apply,
 then Export VRMXT Patch. Editable output suffix (default `.vrmxt`).
 
@@ -96,7 +96,7 @@ Material matching prefers a valid stored `GltfMaterialIndex`. If that index is a
 invalid, the service may use normalized material-name matching when the result is unique.
 Missing or ambiguous entries remain unchanged and appear in the result.
 
-`VrmxtCharacterAsset` exposes an export `[Trigger]`, output naming/configuration, an
+`VrmxtManagerAsset` exposes an export `[Trigger]`, output naming/configuration, an
 in-progress guard, and status reporting.
 
 ## Data integrity rules
