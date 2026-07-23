@@ -17,7 +17,9 @@ Agent guidance for Extended-VRM-Specs: specification prose, ADRs, and schema doc
 
 ## Deliberately not included
 
-- Game/UI player-facing copy deslop rules
+- Game/UI player-facing copy deslop rules (VRMXT UI labels live in the tool repos:
+  `rules/ui-labels.mdc` under Warudo VRMXT, Warudo Shader Plugins, and
+  VRMXT-Extension-for-Blender — not deslop)
 - Unity C#, meta, asmdef, or Editor-agent workflows
 - Game backlog, story, or content naming policies
 
