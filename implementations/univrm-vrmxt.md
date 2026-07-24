@@ -279,19 +279,14 @@ out of scope for this profile.
 
 ### Apply, Materialize, and Transfer (host ops)
 
-Cross-host names:
+Cross-host rules:
 [VRMXT Editor → Materials Apply, Materialize, and Transfer](vrmxt-editor.md#materials-apply-materialize-and-transfer).
 
-| Op | UniVRMXT status | Direction |
-|----|-----------------|-----------|
-| Apply | **Done** — `VrmxtMaterialsOverrideApplier.Apply`, import hooks / generator | Override JSON → live / imported material **instances** |
-| Materialize | **Not shipped** (Planned) — create/update Unity `Material` **asset** (`.mat`) | Override JSON → project asset |
-| Transfer | **Done** — `SyncUnityOverrideFromMaterial` / `SyncFromOverrideMaterials` (source = Override Material **asset**) | Material asset → upsert active `(unity, variant)` slot |
-
-Apply and Materialize are separate. Current UniVRMXT Apply MUST NOT be described as Materialize.
-Missing shader → skip that material; stock import remains. Transfer MUST keep sibling
-pipeline slots (variant survival). Transfer MUST NOT read a runtime `(Instance)`
-material.
+| Op | UniVRMXT status | API |
+|----|-----------------|-----|
+| Apply | **Done** | `VrmxtMaterialsOverrideApplier.Apply`; import hooks / generator |
+| Materialize | **Not shipped** (Planned) | Create/update `Material` **asset** (`.mat`) from override |
+| Transfer | **Done** | `SyncUnityOverrideFromMaterial` / `SyncFromOverrideMaterials` (Override Material **asset** only) |
 
 ### Bindings
 

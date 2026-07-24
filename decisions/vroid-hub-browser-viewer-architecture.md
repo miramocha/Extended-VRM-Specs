@@ -83,13 +83,11 @@ flowchart TD
      (`extensionsUsed` / material or root `VRMXT_*` objects) after authorized download.
    - Do not treat Hub tags, titles, or description text as VRMXT proof.
 6. Ship one Unity WebGL player initially from the shared
-   [VRMXT Unity Player](../implementations/vrmxt-unity-player.md) project on Unity
-   `2021.3.45f2` (same project as the desktop drag-drop player; WebGL is a build
-   target, not a second Unity tree). That pin matches Warudo; it is not a WebGL
-   platform requirement. The player app stays **outside** the UniVRMXT UPM package.
-   Later players MAY register; swap by awaiting `unityInstance.Quit()`, removing the
-   player iframe, then loading a fresh isolated instance. Do not infer Unity editor
-   version from VRMXT metadata.
+   [VRMXT Unity Player](../implementations/vrmxt-unity-player.md) project (desktop +
+   WebGL builds; pin and repo split owned there; matches Warudo). The player app stays
+   **outside** the UniVRMXT UPM package. Later players MAY register; swap by awaiting
+   `unityInstance.Quit()`, removing the player iframe, then loading a fresh isolated
+   instance. Do not infer Unity editor version from VRMXT metadata.
 7. Unity receives model bytes (or a short-lived URL the extension already authorized)
    and loads with UniVRM + UniVRMXT. Unity does not perform VRoid OAuth or Hub API
    calls.
@@ -107,11 +105,9 @@ Official download licenses return the original upload path that preserved materi
 override in the round-trip note. Optimized preview blobs observed on Hub are opaque
 to third-party GLB parsers and are the wrong fidelity target for Warudo parity.
 
-Matching Warudo's `2021.3.45f2` keeps one reference consumer pair (Warudo plugin and
-Hub WebGL viewer) on the same editor and package baseline. UniVRMXT currently
-declares Unity `2022.3` in its package manifest; the viewer project must document and
-test a 2021.3-compatible package set. Do not downgrade the existing Extended-UniVRM
-`2022.3` authoring project in place.
+Matching Warudo's editor pin (see [VRMXT Unity Player](../implementations/vrmxt-unity-player.md))
+keeps one reference consumer pair (Warudo plugin and Hub WebGL) on the same baseline.
+Do not downgrade the existing Extended-UniVRM `2022.3` authoring project in place.
 
 ## Alternatives considered
 
@@ -142,8 +138,8 @@ test a 2021.3-compatible package set. Do not downgrade the existing Extended-Uni
   never ships `client_secret` to clients.
 - Content-script surface stays small: route detect, indicator, open/focus viewer.
 - Confirmed-VRMXT badge costs an authorized download and GLB JSON parse.
-- UniVRMXT package baseline for `2021.3.45f2` is compatibility work tracked in the
-  player / WebGL profiles.
+- UniVRMXT package baseline for the Player / WebGL pin is compatibility work tracked in
+  [VRMXT Unity Player](../implementations/vrmxt-unity-player.md).
 - Architecture index and README list the player and Hub consumer pair.
 
 ## Open questions

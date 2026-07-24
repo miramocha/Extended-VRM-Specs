@@ -40,7 +40,7 @@ official VRoid Hub API and renders it with UniVRM + UniVRMXT.
 | Auth | Extension OAuth app; separate from Hub website session |
 | Download | Documented download-license → S3 presigned URL |
 | Renderer | Unity WebGL (VRMXT Unity Player WebGL build) |
-| Unity editor pin | `2021.3.45f2` (Warudo match; see [Player](vrmxt-unity-player.md) / [WebGL](unity-webgl-vrmxt-viewer.md)) |
+| Unity editor pin | See [Player](vrmxt-unity-player.md) / [WebGL](unity-webgl-vrmxt-viewer.md) |
 
 ## Components
 

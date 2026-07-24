@@ -49,33 +49,22 @@ stock VRM when Extended packages are absent.
 Profiles: [Blender VRMXT](blender-vrmxt.md), [UniVRMXT](univrm-vrmxt.md),
 [VRMXT Unity Player](vrmxt-unity-player.md), [Warudo VRMXT](warudo-vrmxt.md). Patch
 detail: [Warudo VRMXT Patch Export](../references/warudo-vrmxt-patch-export.md).
-
-UniVRMXT is the UPM library. The Player is a separate app project (not nested in the
-package). Desktop and Hub WebGL share that one Player project; WebGL has no authoring.
+UniVRMXT = UPM library; Player = separate app (desktop + Hub WebGL) — see Player profile.
 
 ## Shared editor contract
 
-Applies to every host that claims VRMXT authoring. Aligns with
+Family I/O rules (stock baseline, export order, no optional `extensionsRequired`, skip
+invalid units, round-trip goal) live in
 [Architecture → Authoring](../architecture.md#authoring) and
-[VRMXT Conformance](../specs/core/vrmxt-conformance.md).
+[VRMXT Conformance](../specs/core/vrmxt-conformance.md). This page adds editor-only
+obligations:
 
-1. Stock VRM 1.0 import/export remains the baseline. Extended code MUST NOT replace it.
-2. Export order: stock `VRMC_*` (and related) first, then `VRMXT_*` and matching
-   `extensionsUsed` entries.
-3. Optional `VRMXT_*` names MUST NOT appear in `extensionsRequired`.
-4. Import: after stock node/bone (or equivalent) maps exist, parse `VRMXT_*` into
-   editor-owned data. Skip invalid units per each capability spec; do not fail the whole
-   avatar load.
-5. Round-trip: portable fields survive export → import on the same host. Cross-host
-   survival is a goal where both hosts implement the same capability.
-6. Editor UI and preview MAY be host-native. Portable bytes MUST match the capability
+1. Editor UI and preview MAY be host-native. Portable bytes MUST match the capability
    specs.
-7. Partial support MUST be documented (this matrix or the host profile). Do not claim
+2. Partial support MUST be documented (this matrix or the host profile). Do not claim
    full capability support when only import or only one extension ships.
-8. Materials override hosts that claim Apply / Materialize / Transfer MUST follow
+3. Materials override hosts that claim Apply / Materialize / Transfer MUST follow
    [Materials Apply, Materialize, and Transfer](#materials-apply-materialize-and-transfer).
-   Apply and Materialize are separate ops. Warudo and UniVRMXT ship Apply today; neither
-   ships Materialize yet.
 
 ### Editor operation legend
 
@@ -177,8 +166,7 @@ Transfer is the reverse of Materialize. UniVRMXT: `SyncFromOverrideMaterials` /
 
 ## Capability matrix (shipping hosts)
 
-Statuses below summarize profile checklists as of this draft. Prefer the linked profile
-when they disagree.
+Summarizes profile checklists. Prefer the linked profile when they disagree.
 
 ### `VRMXT_sprite_particle`
 
@@ -289,23 +277,18 @@ flowchart LR
 
 ## Implementer checklist (new host)
 
-Use when adding a fourth editor (Godot, three-vrmxt export, VRM4U, …).
+Use when adding another editor (Godot, three-vrmxt export, VRM4U, …).
 
-1. Pick stock VRM I/O; add optional Extended package (do not fork-replace stock).
-2. Wire import after node/bone maps exist (hook, plugin, or post-load).
-3. For each capability you ship: implement Import + Create/edit + Export per the bar
-   above; link a profile under `implementations/`.
-4. Materials override on a shader-resolving host: treat Apply, Materialize, and Transfer as
-   separate ops per [Materials Apply, Materialize, and Transfer](#materials-apply-materialize-and-transfer).
-   Do not count Apply as Materialize.
-5. Follow per-capability skip rules; never fail whole-avatar load on one bad unit.
-6. Textures referenced by VFX or materials `properties[]` / bindings: register into
-   `textures[]` / `images[]` on export when the capability requires it (materials
-   base-spec rule 26; VFX texture path in host profile).
-7. Update this matrix and [architecture.md](../architecture.md) authoring table.
-8. Prefer shared catalog JSON from Specs for materials authoring aids
-   ([catalogs](../references/materials-override-catalogs.md)); catalogs are not a
-   whitelist.
+1. Follow [Architecture → Authoring](../architecture.md#authoring) common rules.
+2. For each capability you ship: Import + Create/edit + Export per the
+   [minimum bar](#minimum-bar-can-edit-vrm-into-vrmxt); add an `implementations/` profile.
+3. Shader-resolving hosts: Apply / Materialize / Transfer per
+   [Materials Apply, Materialize, and Transfer](#materials-apply-materialize-and-transfer).
+4. Register textures on export when the capability requires it (materials base-spec
+   rule 26; VFX path in host profile).
+5. Update this matrix and the Architecture authoring host table.
+6. Catalogs are authoring aids only
+   ([catalogs](../references/materials-override-catalogs.md)).
 
 ## Open gaps
 

@@ -108,7 +108,8 @@ parallel Extended-only format.
    the whole avatar load.
 5. Round-trip goal: portable fields survive export → import on the same engine and,
    where implemented, across engines. Exact editor UI and native preview differ per
-   host.
+   host. Cross-host editor ops and capability matrix:
+   [VRMXT Editor](implementations/vrmxt-editor.md).
 
 | Host | Stock VRM I/O | Extended authoring package | Import `VRMXT_*` | Export `VRMXT_*` |
 |------|---------------|----------------------------|------------------|------------------|
@@ -160,8 +161,7 @@ Unity flow (non-normative):
 
 Stock UniVRM without the Extended export registry does not write `VRMXT_*`. Full from-scratch VFX emitter UI still prefers Blender; Unity covers re-export and materials override authoring. Details: [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md), [UniVRMXT](implementations/univrm-vrmxt.md).
 
-Planned drag-drop runtime app (desktop view/edit + Hub WebGL view/apply): one project
-outside UniVRMXT — [VRMXT Unity Player](implementations/vrmxt-unity-player.md).
+Planned drag-drop runtime app: [VRMXT Unity Player](implementations/vrmxt-unity-player.md).
 
 ### Other engines (authoring direction)
 
@@ -180,7 +180,7 @@ a host-native avatar package. When the same package also supports editor export,
 | Consumer | Host | Integration style |
 |----------|------|-------------------|
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity + [UniVRM](https://github.com/vrm-c/UniVRM) | Optional UPM package. Parse extension JSON; attach after `Vrm10` load. Runtime does not replace UniVRM. |
-| [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Unity `2021.3.45f2` app | Separate from UniVRMXT. Desktop: drag-drop view/edit/export. WebGL: Hub extension embed (view/apply). Depends on UniVRMXT. |
+| [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Unity app | Desktop view/edit/export + Hub WebGL view/apply; depends on UniVRMXT. Pin and split: Player profile. |
 | Godot VRMXT addon (planned) | Godot + [godot-vrm](https://github.com/V-Sekai/godot-vrm) | Optional addon. Register `GLTFDocumentExtension` beside stock VRM plugins; runtime attach when `EditorPlugin` is absent. Does not replace godot-vrm. |
 | three-vrmxt (planned) | Three.js + [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | Optional npm package. Peer `GLTFLoaderPlugin` beside `VRMLoaderPlugin`; optional explicit `tryAttach`. Does not replace three-vrm. |
 | VRM4U path | Unreal + VRM4U | Optional profile docs under `implementations/`; stock VRM4U load remains baseline. |

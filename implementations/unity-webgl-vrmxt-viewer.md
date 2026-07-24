@@ -34,32 +34,19 @@ the Warudo VRMXT plugin on the same editor pin.
 
 | Item | Value |
 |------|-------|
-| Unity editor | `2021.3.45f2` |
-| Pin reason | Match [Warudo VRMXT](warudo-vrmxt.md); not a WebGL platform requirement |
-| Project shape | [VRMXT Unity Player](vrmxt-unity-player.md) (new app; not UniVRMXT UPM; do not downgrade Extended-UniVRM `2022.3` in place) |
-| Stock VRM | UniVRM packages compatible with 2021.3 |
+| Project | [VRMXT Unity Player](vrmxt-unity-player.md) (WebGL build target) |
+| Unity editor | `2021.3.45f2` (Player / Warudo pin; details on Player profile) |
+| Stock VRM | UniVRM packages compatible with 2021.3 (pin at implement time) |
 | Extended | UniVRMXT post-load attach |
 | Host | Extension `viewer.html` iframe |
 | Auth / download | Extension JavaScript only |
 
 ## Package baseline
 
-| Package | Role | Notes |
-|---------|------|-------|
-| `com.vrmc.gltf` / `com.vrmc.vrm` | Stock glTF + VRM 1.0 | Prefer versions already used with Warudo / Extended-UniVRM 0.131.x line; pin at implement time |
-| `com.miramocha.univrmxt` | VRMXT parse + attach | Package.json currently declares Unity `2022.3`; 2021.3.45f2 requires a **tested** compatible package set / temporary minimum declaration |
-| Player shaders | MToon / TinyMToon + shipped override shaders | Explicit Always Included / retention list |
-
-Use the shared Player project on `2021.3.45f2`. Do not open the Extended-UniVRM
-`2022.3.62f2` serialized project as a downgrade. Do not nest the player inside the
-UniVRMXT package.
-
-Warudo alignment goals:
-
-- Same editor patch (`2021.3.45f2`)
-- Same UniVRMXT materials-override and VFX attach semantics as
-  [Warudo VRMXT](warudo-vrmxt.md)
-- Comparable shader resolve inventory for overrides the product claims to support
+Use UniVRM + UniVRMXT pins documented on
+[VRMXT Unity Player](vrmxt-unity-player.md) (2021.3 compatibility work tracked there).
+Ship Always Included / retention shaders for claimed override inventory. Warudo
+alignment = same editor pin and Apply semantics as [Warudo VRMXT](warudo-vrmxt.md).
 
 ## Architecture fit
 
@@ -205,8 +192,8 @@ built player and are not substituted by `dotnet test`.
 
 | Topic | Status |
 |-------|--------|
-| Builtin vs URP for the single shipped player | TBD |
-| Exact UniVRM / UniVRMXT version pins on 2021.3.45f2 | TBD (test matrix) |
+| Builtin vs URP for the single shipped player | TBD (also on [Player](vrmxt-unity-player.md)) |
+| UniVRM / UniVRMXT pins on 2021.3 | TBD on Player profile |
 | First shader inventory (lilToon / test overrides / …) | TBD |
 | KTX2 / Basis support on 2021.3 WebGL | TBD |
 | Memory budget for large Hub originals (~10–15 MB+) | TBD |
