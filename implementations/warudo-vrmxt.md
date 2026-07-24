@@ -29,7 +29,8 @@ A VRMXT patch export rewrites materials-override JSON into a copy of the origina
 VRM. It does not export live geometry or other Warudo scene state.
 
 Related: [UniVRMXT](univrm-vrmxt.md).
-Planned Hub WebGL viewer uses the same Unity `2021.3.45f2` pin:
+Planned Hub WebGL viewer uses the same Unity `2021.3.45f2` pin via
+[VRMXT Unity Player](vrmxt-unity-player.md):
 [Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md),
 [VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md).
 
@@ -96,9 +97,11 @@ via second GLB read (`VrmxtVfxGlbTextures`); plugin owns them until unbind/reloa
 
 ## Materials override
 
-After Character **Source** loads a VRM 1.0 `.vrm`, the plugin applies `engine: "unity"`
-override slots whose `material.variant` matches the active pipeline. Shaders and sample
-materials ship in the plugin mod.
+After Character **Source** loads a VRM 1.0 `.vrm`, the plugin **Applies**
+`engine: "unity"` override slots whose `material.variant` matches the active pipeline
+(live Character materials). That is Apply, not Materialize: no Unity `.mat` asset is created.
+See [VRMXT Editor → Apply / Materialize / Transfer](vrmxt-editor.md#materials-apply-materialize-and-transfer).
+Shaders and sample materials ship in the plugin mod.
 
 ### Why post-load re-read
 

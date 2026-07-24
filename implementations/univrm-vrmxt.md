@@ -277,6 +277,22 @@ materials by default. Overrides appear only for shaders the app (or an optional 
 pack it depends on) already ships. Remote git fetch and runtime shader compilation are
 out of scope for this profile.
 
+### Apply, Materialize, and Transfer (host ops)
+
+Cross-host names:
+[VRMXT Editor → Materials Apply, Materialize, and Transfer](vrmxt-editor.md#materials-apply-materialize-and-transfer).
+
+| Op | UniVRMXT status | Direction |
+|----|-----------------|-----------|
+| Apply | **Done** — `VrmxtMaterialsOverrideApplier.Apply`, import hooks / generator | Override JSON → live / imported material **instances** |
+| Materialize | **Not shipped** (Planned) — create/update Unity `Material` **asset** (`.mat`) | Override JSON → project asset |
+| Transfer | **Done** — `SyncUnityOverrideFromMaterial` / `SyncFromOverrideMaterials` (source = Override Material **asset**) | Material asset → upsert active `(unity, variant)` slot |
+
+Apply and Materialize are separate. Current UniVRMXT Apply MUST NOT be described as Materialize.
+Missing shader → skip that material; stock import remains. Transfer MUST keep sibling
+pipeline slots (variant survival). Transfer MUST NOT read a runtime `(Instance)`
+material.
+
 ### Bindings
 
 The generator reads resolved values from `VRMC_materials_mtoon` and writes them through
@@ -369,5 +385,6 @@ path is post-load re-read of the `.vrm` plus material swap. See
   (`ParticleSystem` required; VFX Graph optional)
 - Upstream hooks / AssetDatabase workaround: [univrm-upstream-hooks.md](univrm-upstream-hooks.md)
 - UniVRMXT: https://github.com/miramocha/UniVRMXT
+- Planned app (not this package): [VRMXT Unity Player](vrmxt-unity-player.md)
 - [Blender VRMXT](blender-vrmxt.md)
 - [Warudo VRMXT](warudo-vrmxt.md)

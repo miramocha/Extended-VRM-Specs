@@ -16,14 +16,16 @@ status: draft
 
 # Unity WebGL VRMXT viewer
 
-Unity WebGL consumer profile for the VRoid Hub extension viewer.
-Architecture:
+Unity WebGL consumer profile for the VRoid Hub extension viewer. The WebGL build is
+one target of the shared [VRMXT Unity Player](vrmxt-unity-player.md) project (same
+tree as the desktop drag-drop player). Architecture:
 [VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md).
 Browser shell / OAuth / download:
 [VRoid Hub browser extension](vroid-hub-browser-extension.md).
 
-Consumer only: load original VRM bytes and attach supported `VRMXT_*` runtime
-behavior. No authoring UI and no Hub API client inside Unity.
+Consumer only on this build: load original VRM bytes and attach supported `VRMXT_*`
+runtime behavior. No authoring UI and no Hub API client inside Unity. Desktop edit /
+export lives on the standalone build of the same project, not in WebGL.
 
 ## Goal
 
@@ -34,8 +36,8 @@ the Warudo VRMXT plugin on the same editor pin.
 |------|-------|
 | Unity editor | `2021.3.45f2` |
 | Pin reason | Match [Warudo VRMXT](warudo-vrmxt.md); not a WebGL platform requirement |
-| Project shape | New viewer project (do not downgrade Extended-UniVRM `2022.3` in place) |
-| Stock VRM | UniVRM / Extended-UniVRM packages compatible with 2021.3 |
+| Project shape | [VRMXT Unity Player](vrmxt-unity-player.md) (new app; not UniVRMXT UPM; do not downgrade Extended-UniVRM `2022.3` in place) |
+| Stock VRM | UniVRM packages compatible with 2021.3 |
 | Extended | UniVRMXT post-load attach |
 | Host | Extension `viewer.html` iframe |
 | Auth / download | Extension JavaScript only |
@@ -48,8 +50,9 @@ the Warudo VRMXT plugin on the same editor pin.
 | `com.miramocha.univrmxt` | VRMXT parse + attach | Package.json currently declares Unity `2022.3`; 2021.3.45f2 requires a **tested** compatible package set / temporary minimum declaration |
 | Player shaders | MToon / TinyMToon + shipped override shaders | Explicit Always Included / retention list |
 
-Create a clean `2021.3.45f2` project. Do not open the Extended-UniVRM `2022.3.62f2`
-serialized project as a downgrade.
+Use the shared Player project on `2021.3.45f2`. Do not open the Extended-UniVRM
+`2022.3.62f2` serialized project as a downgrade. Do not nest the player inside the
+UniVRMXT package.
 
 Warudo alignment goals:
 
@@ -180,15 +183,17 @@ built player and are not substituted by `dotnet test`.
 ## Build notes (non-normative)
 
 1. Install Unity `2021.3.45f2`.
-2. Create empty viewer project; add UniVRM + UniVRMXT pins that pass 2021.3 import.
+2. Open / create the [VRMXT Unity Player](vrmxt-unity-player.md) project; add UniVRM +
+   UniVRMXT pins that pass 2021.3 import.
 3. Configure WebGL 2, threads off, decompression fallback as required.
 4. Add Always Included shaders for claimed override inventory.
-5. Build WebGL into the extension `player/` (or equivalent) folder consumed by
-   `viewer.html`.
+5. Build the **WebGL** target into the extension `player/` (or equivalent) folder
+   consumed by `viewer.html`. Desktop is a separate Player build from the same project.
 6. Measure packaged size before proposing a second player.
 
 ## Related
 
+- [VRMXT Unity Player](vrmxt-unity-player.md)
 - [VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md)
 - [VRoid Hub browser extension](vroid-hub-browser-extension.md)
 - [Warudo VRMXT](warudo-vrmxt.md)

@@ -20,7 +20,8 @@ Cross-browser extension profile for previewing VRoid Hub models with VRMXT suppo
 Architecture decision:
 [VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md).
 Unity WebGL load and apply:
-[Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md).
+[Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md)
+(build target of [VRMXT Unity Player](vrmxt-unity-player.md)).
 
 This note is a **consumer product profile**. It does not define a glTF extension.
 Hub's stock three-vrm viewer remains unchanged.
@@ -38,8 +39,8 @@ official VRoid Hub API and renders it with UniVRM + UniVRMXT.
 | Viewer surface | Extension tab or dedicated window (extension origin) |
 | Auth | Extension OAuth app; separate from Hub website session |
 | Download | Documented download-license → S3 presigned URL |
-| Renderer | Unity WebGL player (see Unity profile) |
-| Unity editor pin | `2021.3.45f2` (Warudo match; see Unity profile) |
+| Renderer | Unity WebGL (VRMXT Unity Player WebGL build) |
+| Unity editor pin | `2021.3.45f2` (Warudo match; see [Player](vrmxt-unity-player.md) / [WebGL](unity-webgl-vrmxt-viewer.md)) |
 
 ## Components
 

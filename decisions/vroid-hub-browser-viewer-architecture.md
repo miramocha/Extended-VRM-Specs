@@ -82,8 +82,11 @@ flowchart TD
    - Confirmed VRMXT presence requires inspecting original GLB JSON
      (`extensionsUsed` / material or root `VRMXT_*` objects) after authorized download.
    - Do not treat Hub tags, titles, or description text as VRMXT proof.
-6. Ship one Unity WebGL player initially, built from a **new** project on Unity
-   `2021.3.45f2`. That pin matches Warudo; it is not a WebGL platform requirement.
+6. Ship one Unity WebGL player initially from the shared
+   [VRMXT Unity Player](../implementations/vrmxt-unity-player.md) project on Unity
+   `2021.3.45f2` (same project as the desktop drag-drop player; WebGL is a build
+   target, not a second Unity tree). That pin matches Warudo; it is not a WebGL
+   platform requirement. The player app stays **outside** the UniVRMXT UPM package.
    Later players MAY register; swap by awaiting `unityInstance.Quit()`, removing the
    player iframe, then loading a fresh isolated instance. Do not infer Unity editor
    version from VRMXT metadata.
@@ -122,20 +125,26 @@ test a 2021.3-compatible package set. Do not downgrade the existing Extended-Uni
 | Toolbar popup as viewer | Closes on blur; wastes Unity startup |
 | Infer VRMXT from title/tag heuristics alone | False positives/negatives; Hub has no VRMXT metadata field |
 | Dual 2021.3 + 2022.3 players in first ship | Size/CSP cost; no VRMXT field selects Unity version |
+| Nest player inside UniVRMXT UPM package | App ≠ library; bloats every UniVRMXT consumer |
+| Separate Unity projects for desktop vs Hub WebGL (first ship) | Duplicate load/attach/shader inventory; prefer one Player project with two builds until pin/size forces split |
 | Downgrade Extended-UniVRM 2022.3 project to 2021.3 | Project serialization and package graph are 2022-oriented |
 
 ## Consequences
 
-- Two consumer profiles:
-  [VRoid Hub browser extension](../implementations/vroid-hub-browser-extension.md) and
-  [Unity WebGL VRMXT viewer](../implementations/unity-webgl-vrmxt-viewer.md).
+- One player app profile
+  ([VRMXT Unity Player](../implementations/vrmxt-unity-player.md)) plus two consumer
+  surfaces: [VRoid Hub browser extension](../implementations/vroid-hub-browser-extension.md)
+  and [Unity WebGL VRMXT viewer](../implementations/unity-webgl-vrmxt-viewer.md)
+  (WebGL build of that app).
+- Desktop edit/export and Hub WebGL view/apply share load, attach, and shader inventory;
+  WebGL remains consumer-only.
 - Product needs a registered VRoid Hub OAuth application and a token broker that
   never ships `client_secret` to clients.
 - Content-script surface stays small: route detect, indicator, open/focus viewer.
 - Confirmed-VRMXT badge costs an authorized download and GLB JSON parse.
 - UniVRMXT package baseline for `2021.3.45f2` is compatibility work tracked in the
-  Unity viewer profile.
-- Architecture index and README list the new consumer pair.
+  player / WebGL profiles.
+- Architecture index and README list the player and Hub consumer pair.
 
 ## Open questions
 
@@ -150,6 +159,7 @@ test a 2021.3-compatible package set. Do not downgrade the existing Extended-Uni
 
 ## Related
 
+- [VRMXT Unity Player](../implementations/vrmxt-unity-player.md)
 - [VRoid Hub browser extension](../implementations/vroid-hub-browser-extension.md)
 - [Unity WebGL VRMXT viewer](../implementations/unity-webgl-vrmxt-viewer.md)
 - [Warudo VRMXT](../implementations/warudo-vrmxt.md)

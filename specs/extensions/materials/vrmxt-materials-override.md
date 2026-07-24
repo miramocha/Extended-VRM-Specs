@@ -304,6 +304,14 @@ Engine integration details are documented in
 [VRM4U VRMXT](../../../implementations/vrm4u-vrmxt.md), and
 [Blender VRMXT materials override](../../../implementations/blender-vrmxt.md#materials-override).
 
+Editor hosts that resolve the target shader treat **Apply**, **Materialize**, and **Transfer**
+as separate ops. Apply (override → live instances) MAY ship without Materialize. Materialize
+(override → durable material **asset**; Unity `.mat`) is not satisfied by Apply.
+Transfer is host **material asset** → override (Unity: from `.mat` only). UniVRMXT and
+Warudo ship Apply today; neither ships Materialize yet. Names and rules:
+[VRMXT Editor → Materials Apply, Materialize, and Transfer](../../../implementations/vrmxt-editor.md#materials-apply-materialize-and-transfer).
+These operations are host-side; they do not add fields to this extension.
+
 ## Open questions
 
 - [ ] Binding color conversions and texture transforms
@@ -323,6 +331,7 @@ Engine integration details are documented in
 - Core materials: glTF 2.0 `materials` schema
 - [KHR / glTF overlap](../../../references/khr-gltf-overlap.md) (non-normative)
 - [VRoid Hub VRMXT round-trip](../../../references/vroid-hub-vrmxt-roundtrip.md) (non-normative)
+- [VRMXT Editor](../../../implementations/vrmxt-editor.md) (materialize / transfer)
 - [UniVRMXT materials override](../../../implementations/univrm-vrmxt.md#materials-override)
 - [VRM4U VRMXT](../../../implementations/vrm4u-vrmxt.md)
 - [Blender VRMXT materials override](../../../implementations/blender-vrmxt.md#materials-override)
