@@ -158,9 +158,11 @@ Non-normative. Node `42` is a helper child of a hand bone; its glTF `translation
 
 Exact visual parity across engines is not required. Emission rate, lifetime, active cap,
 initial velocity, node transform, sprite size, texture selection, and linear color
-meaning are portable. Runtime geometry may use Unity `ParticleSystem` billboard mode,
-Niagara Sprite Renderer, Godot draw-pass `QuadMesh`, Three.js `Sprite` or instanced
-quads, or an equivalent renderer.
+meaning are portable. Blend mode, depth write, draw order, sidedness, UV layout, and
+alpha cutoff are consumer-defined for this draft; use the host particle material
+defaults. Runtime geometry may use Unity `ParticleSystem` billboard mode, Niagara
+Sprite Renderer, Godot draw-pass `QuadMesh`, Three.js `Sprite` or instanced quads, or an
+equivalent renderer.
 
 The glTF Extension Registry has no particle-emitter `KHR_` or `EXT_` extension.
 Research: [KHR / glTF overlap](../../../references/khr-gltf-overlap.md).
@@ -169,24 +171,30 @@ Native backends and Unity / VRM4U constraints:
 
 ## Extensibility
 
-Later drafts MAY add particle-specific fields such as emission shapes, gravity, or
-color and size over lifetime. A different simulation or rendering capability uses a
-separate `VRMXT_*` extension.
+Later drafts MAY add particle-specific fields such as emission shapes, gravity,
+bursts, color and size over lifetime, velocity spread, or portable simulation-space and
+render-state fields. A different simulation or rendering capability uses a separate
+`VRMXT_*` extension.
 
 Adding optional fields with defaults does not by itself require a `specVersion` bump.
 Removing or redefining an existing field does.
 
-## Open questions
+## Deferred (out of this draft)
 
-| Topic | Status |
-|-------|--------|
-| Emission burst schedules | TBD |
-| Color / size over lifetime curves | TBD |
-| Initial velocity spread | TBD |
-| Particle simulation space | TBD |
-| Whether `name` must be unique | TBD |
-| Singular / zero-scale node world transform | TBD |
-| Blend / depth / order / sidedness / UV / alpha cutoff | TBD |
+These topics stay out of the current portable schema. Continuous emission via
+`emissionRate` remains the only scheduling model. Spawn origin, initial velocity, and
+world-meter `size` follow the normative rules above; whether particles keep following
+the emitter after spawn is left to the consumer until standardized.
+
+| Topic | Notes |
+|-------|-------|
+| Emission burst schedules | Continuous point source only |
+| Color / size over lifetime curves | — |
+| Initial velocity spread | — |
+| Particle simulation space | Consumer / engine default after spawn |
+| Whether `name` must be unique | — |
+| Singular / zero-scale node world transform | — |
+| Blend / depth / order / sidedness / UV / alpha cutoff | Consumer material defaults |
 
 ## Related
 

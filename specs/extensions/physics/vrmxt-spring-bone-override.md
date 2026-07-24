@@ -35,6 +35,10 @@ BoneSpring at runtime. Unsupported consumers continue using their normal
 | UniVRM / stock importer | no required change |
 | Consumer package | optional; replaces simulation backend when supported |
 
+## Conformance
+
+This specification conforms to [VRMXT Conformance](../../core/vrmxt-conformance.md).
+
 ## Normative requirements
 
 1. Files that use this extension MUST list `VRMXT_springBone_override` in
@@ -211,6 +215,7 @@ to `IMaterialDescriptorGenerator`.
 
 ## Related
 
+- [VRMXT Conformance](../../core/vrmxt-conformance.md)
 - [VRMXT_materials_override](../materials/vrmxt-materials-override.md)
 - [VRMXT_sprite_particle](../vfx/vrmxt-sprite-particle.md)
 - [VRMXT_lattice](../deformation/vrmxt-lattice.md) (research draft; may reuse override-engine pattern)

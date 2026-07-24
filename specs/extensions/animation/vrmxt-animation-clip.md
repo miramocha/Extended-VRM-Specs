@@ -55,6 +55,10 @@ Khronos overlap (non-normative):
 | `KHR_animation_pointer` channel retargeting | Optional later; not required here |
 | `VRMC_vrm_animation` (VRMA) retarget maps | Complementary upstream; separate files |
 
+## Conformance
+
+This specification conforms to [VRMXT Conformance](../../core/vrmxt-conformance.md).
+
 ## Normative requirements
 
 1. Files that use this extension on any animation MUST list `VRMXT_AnimationClip` in
@@ -221,6 +225,7 @@ Removing or redefining an existing field does.
 
 ## Related
 
+- [VRMXT Conformance](../../core/vrmxt-conformance.md)
 - [VRMXT_AnimationController](vrmxt-animation-controller.md)
 - [Animation controller standardization](../../../decisions/animation-controller-standardization.md)
 - [KHR / glTF overlap](../../../references/khr-gltf-overlap.md) (non-normative)

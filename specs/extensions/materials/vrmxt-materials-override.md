@@ -34,6 +34,10 @@ material definition and MAY bind MToon shade values to its parameters.
 | Stock importer | no required change |
 | Consumer package | optional; interprets the extension when present |
 
+## Conformance
+
+This specification conforms to [VRMXT Conformance](../../core/vrmxt-conformance.md).
+
 ## Normative requirements
 
 1. Files that use this extension MUST list `VRMXT_materials_override` in
@@ -324,6 +328,7 @@ They do not add fields to this extension.
 
 ## Related
 
+- [VRMXT Conformance](../../core/vrmxt-conformance.md)
 - Upstream MToon: `VRMC_materials_mtoon` in the VRM 1.0 specification
 - Core materials: glTF 2.0 `materials` schema
 - [KHR / glTF overlap](../../../references/khr-gltf-overlap.md) (non-normative)

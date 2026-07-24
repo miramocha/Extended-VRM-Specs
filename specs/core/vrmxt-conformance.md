@@ -67,13 +67,18 @@ MUST NOT be presented as full support for that capability.
 
 ## Versioning
 
-While these drafts remain experimental, citations to conformance and fragments are
-unversioned. Concrete extensions still use their own serialized `specVersion`.
+While these drafts remain experimental, citations to this document and to shared
+fragments stay unversioned. Concrete extensions still use their own serialized
+`specVersion`.
 
-Pinned conformance and fragment versions, including migration rules when those texts
-diverge, are **TBD**.
+Pinned conformance or fragment versions, and migration rules when those texts diverge,
+are future work. They do not block experimental use of the family rules above.
 
 ## Related
 
+- [VRMXT_materials_override](../extensions/materials/vrmxt-materials-override.md)
+- [VRMXT_springBone_override](../extensions/physics/vrmxt-spring-bone-override.md)
 - [VRMXT_sprite_particle](../extensions/vfx/vrmxt-sprite-particle.md)
 - [VRMXT_lattice](../extensions/deformation/vrmxt-lattice.md)
+- [VRMXT_AnimationController](../extensions/animation/vrmxt-animation-controller.md)
+- [VRMXT_AnimationClip](../extensions/animation/vrmxt-animation-clip.md)

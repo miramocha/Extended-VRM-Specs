@@ -52,6 +52,10 @@ Khronos overlap (non-normative):
 | `KHR_interactivity` as the avatar brain | Peer host feature only |
 | VRM 0.x | Unsupported |
 
+## Conformance
+
+This specification conforms to [VRMXT Conformance](../../core/vrmxt-conformance.md).
+
 ## Normative requirements
 
 1. Files that use this extension MUST list `VRMXT_AnimationController` in
@@ -379,6 +383,7 @@ extension or a major `specVersion`; they stay outside this extension's permanent
 
 ## Related
 
+- [VRMXT Conformance](../../core/vrmxt-conformance.md)
 - [VRMXT_AnimationClip](vrmxt-animation-clip.md)
 - [Animation controller standardization](../../../decisions/animation-controller-standardization.md)
 - [KHR / glTF overlap](../../../references/khr-gltf-overlap.md) (non-normative)
