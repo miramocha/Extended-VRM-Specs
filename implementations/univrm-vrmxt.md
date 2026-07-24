@@ -285,7 +285,7 @@ Cross-host rules:
 | Op | UniVRMXT status | API |
 |----|-----------------|-----|
 | Apply | **Done** | `VrmxtMaterialsOverrideApplier.Apply`; import hooks / generator |
-| Materialize | **Not shipped** (Planned) | Create/update `Material` **asset** (`.mat`) from override |
+| Materialize | **Not shipped** (Planned; **Unity Editor only**) | Create/update `Material` **asset** (`.mat`) from override |
 | Transfer | **Done** | `SyncUnityOverrideFromMaterial` / `SyncFromOverrideMaterials` (Override Material **asset** only) |
 
 ### Bindings

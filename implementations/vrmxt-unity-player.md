@@ -88,14 +88,15 @@ flowchart TB
 | Load | Drag-drop or file picker → UniVRM load → UniVRMXT attach |
 | View | Orbit camera; VFX + materials override preview |
 | Apply | Planned (desktop + WebGL) |
-| Materialize | Planned (desktop `.mat` only; separate from Apply) |
+| Materialize | — (Editor-only; not in Player) |
 | Transfer | Planned (desktop; from `.mat` asset only) |
 | Edit | Host UI for supported capabilities (start: materials override; VFX as profile allows) |
 | Export | Write `VRMXT_*` into `.vrm` / `.glb` per [VRMXT Editor](vrmxt-editor.md) bar |
 | Limits | Document partial support; do not claim Blender-parity VFX authoring on day one |
 
 Editor claim status: update [VRMXT Editor](vrmxt-editor.md) matrix when Create/edit,
-Materialize, Transfer, and Export ship for each capability.
+Transfer, and Export ship for each capability. Materialize stays on Unity Editor /
+Unreal Editor hosts only.
 
 ## WebGL build
 
@@ -104,15 +105,16 @@ Normative consumer rules live in
 player’s source: WebGL Player Settings and the extension embed path are build targets
 of the same project, not a second Unity tree.
 
-WebGL MAY Apply overrides. WebGL MUST NOT ship Materialize-to-asset, Transfer, authoring, or
-re-export UI in the first product.
+WebGL MAY Apply overrides. WebGL MUST NOT ship Materialize, Transfer, authoring, or
+re-export UI in the first product. Desktop Player also MUST NOT Materialize (no
+AssetDatabase / editor asset write path).
 
 ## Capability intent
 
 | Capability | Desktop | WebGL |
 |------------|---------|-------|
 | Stock VRM 1.0 | Required | Required |
-| `VRMXT_materials_override` | View + Apply + Materialize (`.mat`) + Transfer + edit + export (planned) | Apply only (planned) |
+| `VRMXT_materials_override` | View + Apply + Transfer + edit + export (planned); **no** Materialize | Apply only (planned) |
 | `VRMXT_sprite_particle` | View + edit/export as profile allows | Attach only (planned) |
 | Other `VRMXT_*` | Ignore until claimed | Ignore |
 
@@ -156,5 +158,5 @@ assembly; keep two apps consuming that library.
 | Public GitHub repo name | TBD |
 | Builtin vs URP for shipped builds | TBD (align with WebGL profile) |
 | Exact UniVRM / UniVRMXT pins on 2021.3.45f2 | TBD |
-| First desktop edit surface (mats Materialize + Transfer ± VFX) | TBD |
+| First desktop edit surface (mats Transfer ± VFX; no Materialize) | TBD |
 | Desktop export path (full UniVRM export vs JSON patch like Warudo) | TBD |
