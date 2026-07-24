@@ -93,6 +93,7 @@ Optional `VRMXT_*` consumers:
 | [VRoid Hub VRMXT round-trip](references/vroid-hub-vrmxt-roundtrip.md) | Non-normative: `VRMXT_materials_override` survives Hub upload → original download (2026-07-21) | draft |
 | [Warudo VRMXT Patch Export](references/warudo-vrmxt-patch-export.md) | Plan for patching VRMXT JSON into a copy of a local Warudo Character VRM | accepted |
 | [Materials Override Catalogs](references/materials-override-catalogs.md) | Non-normative shader catalogs (schema, distribution, index); JSON under `references/catalogs/data/` | draft |
+| [Maintaining catalogs](references/catalogs/maintaining-catalogs.md) | Maintainer pin bump, regen scripts, vendor sync | draft |
 | [Unity lilToon Catalog](references/catalogs/unity-liltoon.md) | lilToon opaque/cutout/transparent JSON @ pin `2.3.4` (359 props) | draft |
 | [Unity VRMXT Test Override Catalog](references/catalogs/unity-vrmxt-test-override.md) | UniVRMXT TestOverrideBuiltin / TestOverrideURP (11 props) | draft |
 | [Unity Poiyomi Catalog](references/catalogs/unity-poiyomi.md) | Poiyomi Toon catalog stub (`.poiyomi/Poiyomi Toon`) | draft |

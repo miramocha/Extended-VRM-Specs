@@ -33,9 +33,10 @@ This repository is the **canonical** home for catalog content:
 | [materials-override-catalogs.md](materials-override-catalogs.md) (this page) | Schema, distribution, authoring policy |
 | [catalogs/unity-liltoon.md](catalogs/unity-liltoon.md), [catalogs/unity-poiyomi.md](catalogs/unity-poiyomi.md), … | Human notes: identity, curated lists, MToon maps, pins |
 | [catalogs/data/](catalogs/data/) | Machine JSON (source of truth for tools once files exist) |
+| [catalogs/maintaining-catalogs.md](catalogs/maintaining-catalogs.md) | Maintainer pin bump, regen, vendor sync |
 
 Markdown documents rationale and open questions. JSON under `catalogs/data/` is what
-loaders parse. Keep them aligned: change JSON and notes in the same PR when practical.
+loaders parse.
 
 JSON paths:
 
@@ -160,3 +161,4 @@ approach they use.
 - Unity profile: [UniVRMXT](../implementations/univrm-vrmxt.md#materials-override)
 - Blender authoring: [Blender VRMXT](../implementations/blender-vrmxt.md#materials-override)
 - Architecture: [Extended VRM Architecture](../architecture.md)
+- Maintainer regen: [Maintaining catalogs](catalogs/maintaining-catalogs.md)

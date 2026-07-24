@@ -12,9 +12,11 @@ description: >-
 
 Build / refresh non-normative catalog JSON for
 [Materials Override Catalogs](../../../references/materials-override-catalogs.md).
+Human index: [Maintaining catalogs](../../../references/catalogs/maintaining-catalogs.md).
 
 Curated property **lists** stay human (family `.md`). Scripts fill **types** and
-**defaults** from ShaderLab.
+**defaults** from ShaderLab. Do not put `.cursor/**` paths in family/reference notes;
+link those notes to the maintaining page instead.
 
 ## When to use
 

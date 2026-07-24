@@ -72,11 +72,10 @@ family for newer UniVRMXT / general Unity authoring.
 ## Curated property subset
 
 Common / extended tiers and `enableToggles` match the 2.3.4 note (22 common). Full
-machine list: [`unity-liltoon-warudo.json`](data/unity-liltoon-warudo.json). Regenerate
-from local Warudo-vendored `lts.shader` via
-[`generate_liltoon_curated.py`](../../.cursor/skills/unity-shader-catalog/scripts/generate_liltoon_curated.py)
-+ [`scaffold_catalog_json.py`](../../.cursor/skills/unity-shader-catalog/scripts/scaffold_catalog_json.py)
-(see skill; point `--file` at the BIRP plugin Shader folder).
+machine list: [`unity-liltoon-warudo.json`](data/unity-liltoon-warudo.json). Pin bump /
+regen from local Warudo-vendored `lts.shader`:
+[Maintaining catalogs](maintaining-catalogs.md) (point `--file` at the BIRP plugin Shader
+folder).
 
 MToon convert / suggested bindings: reuse
 [Unity lilToon Catalog — lilToon ↔ MToon](unity-liltoon.md#liltoon--mtoon-conversion-upstream).
@@ -99,5 +98,6 @@ Release: https://github.com/lilxyzw/lilToon/releases/tag/1.10.3
 
 - Sibling (newer pin): [Unity lilToon Catalog](unity-liltoon.md)
 - Index: [Materials Override Catalogs](../materials-override-catalogs.md)
+- Maintainer regen: [Maintaining catalogs](maintaining-catalogs.md)
 - Warudo plugin: [LilToonShaderPluginBirp](https://github.com/miramocha/Warudo-Shader-Plugins)
 - Blender authoring: [Blender VRMXT materials override](../../implementations/blender-vrmxt.md#materials-override)

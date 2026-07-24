@@ -31,4 +31,5 @@ Family notes: [Unity lilToon](../unity-liltoon.md),
 [Unity Poiyomi](../unity-poiyomi.md).
 
 Consumers vendor-copy these files; see **Distribution** on the catalogs index.
+Pin bump / regen: [Maintaining catalogs](../maintaining-catalogs.md).
 Do not treat this folder as a glTF schema.

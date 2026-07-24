@@ -145,9 +145,8 @@ Two tiers for Blender authoring ([Blender VRMXT materials override](../../implem
 ### Extended (catalog **Add** enum; not in **Add Common Props**)
 
 359 properties total per JSON file at pin **2.3.4** (22 common + 337 extended). Machine
-list: [`catalogs/data/unity-liltoon.json`](data/unity-liltoon.json). Regenerate from
-ShaderLab sections via
-[`generate_liltoon_curated.py`](../../.cursor/skills/unity-shader-catalog/scripts/generate_liltoon_curated.py).
+list: [`catalogs/data/unity-liltoon.json`](data/unity-liltoon.json). Pin bump / regen:
+[Maintaining catalogs](maintaining-catalogs.md).
 
 Extended rows include normal/matcap (above) plus lilToon-only and MToon-adjacent extras
 not covered by **Add Common Props**. Grouped by upstream inspector section:
@@ -282,6 +281,7 @@ Release: https://github.com/lilxyzw/lilToon/releases/tag/2.3.4
 ## Related
 
 - Index: [Materials Override Catalogs](../materials-override-catalogs.md)
+- Maintainer regen: [Maintaining catalogs](maintaining-catalogs.md)
 - Sibling (Warudo pin 1.10.3): [Unity lilToon Warudo Catalog](unity-liltoon-warudo.md)
 - Sibling: [Unity Poiyomi Catalog](unity-poiyomi.md)
 - Blender authoring: [Blender VRMXT materials override](../../implementations/blender-vrmxt.md#materials-override)

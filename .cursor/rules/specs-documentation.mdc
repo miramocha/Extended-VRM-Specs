@@ -18,6 +18,29 @@ Prefer clarity for implementers over essay voice.
 - State compatibility explicitly: which VRM/glTF versions, packages, or tools a change targets.
 - When a requirement is undecided, write `TBD` or `[ADD: …]` — do not invent a decision.
 
+## Audience
+
+Separate **implementer / product** prose from **repo maintainer / agent** process.
+
+| Audience | Belongs in | Examples |
+|----------|------------|----------|
+| Spec readers, tool authors, consumers | `specs/`, `decisions/`, `implementations/`, `references/` | Field rules, catalog schema, vendor paths, UI policy (`common: true`) |
+| Specs maintainers and Cursor agents | `.cursor/rules/`, `.cursor/skills/`, optional `references/**/maintaining-*.md` | Regen scripts, same-PR sync habits, deslop triggers, skill workflows |
+
+- Do **not** put `.cursor/**` paths in normative specs or in family/reference notes aimed at
+  implementers. Point those notes at a `maintaining-*.md` page (or the skill) instead.
+- Do **not** move product authoring policy (how tools use catalogs, morph layers, etc.) into
+  Cursor rules — tools still need that in the vault.
+- Agent-only steps that already live in a skill (e.g. `unity-shader-catalog`) stay in the
+  skill; the maintaining page is the human-facing index when one is needed.
+
+Materials-override catalog regen: [Maintaining catalogs](../../references/catalogs/maintaining-catalogs.md)
+and skill `unity-shader-catalog`.
+
+When adding or changing a shipping **editor** host: update the capability matrix in
+[VRMXT Editor](../../implementations/vrmxt-editor.md) and the Architecture authoring
+host table. Prefer the host profile for per-host detail; keep this matrix aligned.
+
 ## Structure
 
 - Format authored notes for Obsidian using `obsidian-markdown.mdc`, including YAML

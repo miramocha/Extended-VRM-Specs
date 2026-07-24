@@ -14,13 +14,11 @@ status: draft
 
 # VRMXT Editor
 
-Cross-platform guide for tools that **edit stock VRM 1.0 into VRMXT** (read / create /
-change `VRMXT_*`, then write one `.vrm` / `.glb`). Normative field schemas stay in
-[specs/](../specs/). Per-host seams stay in [implementations/](.). This note defines
-shared editor obligations and a **capability matrix** across shipping hosts.
+Cross-platform editor contract and capability matrix for tools that edit stock VRM 1.0
+into VRMXT (read / create / change `VRMXT_*`, then write one `.vrm` / `.glb`).
 
-Host I/O layering (stock VRM vs Extended packages):
-[Architecture → Authoring](../architecture.md#authoring).
+Host I/O layering: [Architecture → Authoring](../architecture.md#authoring). Normative
+field schemas: [specs/](../specs/). Per-host seams: profiles linked below.
 
 ## Goal
 
@@ -53,17 +51,14 @@ UniVRMXT = UPM library; Player = separate app (desktop + Hub WebGL) — see Play
 
 ## Shared editor contract
 
-Family I/O rules (stock baseline, export order, no optional `extensionsRequired`, skip
-invalid units, round-trip goal) live in
-[Architecture → Authoring](../architecture.md#authoring) and
-[VRMXT Conformance](../specs/core/vrmxt-conformance.md). This page adds editor-only
-obligations:
+Stock baseline, export order, no optional `extensionsRequired`, skip invalid units, and
+round-trip live in [Architecture → Authoring](../architecture.md#authoring) and
+[VRMXT Conformance](../specs/core/vrmxt-conformance.md). Editors MUST also:
 
-1. Editor UI and preview MAY be host-native. Portable bytes MUST match the capability
-   specs.
-2. Partial support MUST be documented (this matrix or the host profile). Do not claim
-   full capability support when only import or only one extension ships.
-3. Materials override hosts that claim Apply / Materialize / Transfer MUST follow
+1. UI and preview MAY be host-native. Portable bytes MUST match the capability specs.
+2. Document partial support in this matrix or the host profile. Do not claim full
+   capability support when only import or only one extension ships.
+3. Materials-override hosts that claim Apply / Materialize / Transfer MUST follow
    [Materials Apply, Materialize, and Transfer](#materials-apply-materialize-and-transfer).
 
 ### Editor operation legend
@@ -84,13 +79,11 @@ obligations:
 
 ## Materials Apply, Materialize, and Transfer
 
-Applies to `VRMXT_materials_override` on hosts that can resolve the target shader
+Host operations on `VRMXT_materials_override` when the target shader resolves
 (Unity Editor, Unity runtime / Player, Warudo, Unreal, …). Spec:
 [vrmxt-materials-override](../specs/extensions/materials/vrmxt-materials-override.md).
-
-These are **host operations**. They do not add glTF fields. Stock MToon / PBR in the
-file stay until Export writes override JSON (or a host deliberately strips extensions —
-out of scope here).
+These ops do not add glTF fields. Stock MToon / PBR stay until Export writes override
+JSON. Deliberate extension strip is out of scope here.
 
 **Apply** and **Materialize** are separate. Shipping Apply does **not** count as Materialize.
 
@@ -277,7 +270,7 @@ flowchart LR
 
 ## Implementer checklist (new host)
 
-Use when adding another editor (Godot, three-vrmxt export, VRM4U, …).
+For tool authors adding another editor (Godot, three-vrmxt export, VRM4U, …):
 
 1. Follow [Architecture → Authoring](../architecture.md#authoring) common rules.
 2. For each capability you ship: Import + Create/edit + Export per the
@@ -287,8 +280,9 @@ Use when adding another editor (Godot, three-vrmxt export, VRM4U, …).
 4. Register textures on export when the capability requires it (materials base-spec
    rule 26; VFX path in host profile).
 5. Update this matrix and the Architecture authoring host table.
-6. Catalogs are authoring aids only
-   ([catalogs](../references/materials-override-catalogs.md)).
+6. Treat catalogs as authoring aids only
+   ([catalogs](../references/materials-override-catalogs.md)). Pin / regen:
+   [Maintaining catalogs](../references/catalogs/maintaining-catalogs.md).
 
 ## Open gaps
 
@@ -314,4 +308,5 @@ Use when adding another editor (Godot, three-vrmxt export, VRM4U, …).
 - [Warudo VRMXT](warudo-vrmxt.md)
 - [Warudo VRMXT Patch Export](../references/warudo-vrmxt-patch-export.md)
 - [Materials Override Catalogs](../references/materials-override-catalogs.md)
+- [Maintaining catalogs](../references/catalogs/maintaining-catalogs.md)
 - [Animation controller standardization](../decisions/animation-controller-standardization.md)
