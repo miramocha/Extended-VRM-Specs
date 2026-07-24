@@ -45,8 +45,6 @@ records Unity deprecation status plus VRM4U / Unreal integration constraints.
 | [UNiagaraFunctionLibrary](https://dev.epicgames.com/documentation/unreal-engine/API/Plugins/Niagara/UNiagaraFunctionLibrary) | `SpawnSystemAttached` for runtime attach |
 | Local Extended-VRM4U tree (upstream [ruyo/VRM4U](https://github.com/ruyo/VRM4U); UE 5.8 notes 2026-06-22) | Loader / skeleton / JSON lifetime |
 
-Re-check Unity docs and VRM4U releases when revisiting this note.
-
 ## Unity: Particle System vs VFX Graph
 
 Shared name “Built-in” confuses two different things:

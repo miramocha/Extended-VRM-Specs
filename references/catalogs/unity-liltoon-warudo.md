@@ -73,9 +73,7 @@ family for newer UniVRMXT / general Unity authoring.
 
 Common / extended tiers and `enableToggles` match the 2.3.4 note (22 common). Full
 machine list: [`unity-liltoon-warudo.json`](data/unity-liltoon-warudo.json). Pin bump /
-regen from local Warudo-vendored `lts.shader`:
-[Maintaining catalogs](maintaining-catalogs.md) (point `--file` at the BIRP plugin Shader
-folder).
+regen: [Maintaining catalogs](maintaining-catalogs.md).
 
 MToon convert / suggested bindings: reuse
 [Unity lilToon Catalog — lilToon ↔ MToon](unity-liltoon.md#liltoon--mtoon-conversion-upstream).

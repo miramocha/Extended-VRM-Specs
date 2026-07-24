@@ -274,12 +274,14 @@ For tool authors adding another editor (Godot, three-vrmxt export, VRM4U, …):
 
 1. Follow [Architecture → Authoring](../architecture.md#authoring) common rules.
 2. For each capability you ship: Import + Create/edit + Export per the
-   [minimum bar](#minimum-bar-can-edit-vrm-into-vrmxt); add an `implementations/` profile.
+   [minimum bar](#minimum-bar-can-edit-vrm-into-vrmxt). If the host is documented in this
+   repo, add an `implementations/` profile.
 3. Shader-resolving hosts: Apply / Materialize / Transfer per
    [Materials Apply, Materialize, and Transfer](#materials-apply-materialize-and-transfer).
 4. Register textures on export when the capability requires it (materials base-spec
    rule 26; VFX path in host profile).
-5. Update this matrix and the Architecture authoring host table.
+5. If the host profile lives in this repo: update this matrix and the Architecture
+   authoring host table.
 6. Treat catalogs as authoring aids only
    ([catalogs](../references/materials-override-catalogs.md)). Pin / regen:
    [Maintaining catalogs](../references/catalogs/maintaining-catalogs.md).

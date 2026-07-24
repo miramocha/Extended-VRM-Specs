@@ -42,8 +42,6 @@ ratified FSM or clip-metadata catalog exists for animation.
 | [KHR_interactivity](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_interactivity/Specification.adoc) | Behavior graph (submitted for ratification) |
 | [VRMC_vrm_animation](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_vrm_animation-1.0) | Upstream VRMA retarget mapping |
 
-Re-check the registry when revisiting this note. In-progress rows change.
-
 ## `VRMXT_materials_override`
 
 VRMXT stores optional engine-specific material identities and parameter maps on
@@ -74,8 +72,8 @@ programs are not embedded in the file.
 Do not implement materials override by emitting `KHR_materials_variants`. Wrong
 attachment point and wrong payload (loses engine ids and MToon bindings).
 
-Document authors should keep the two `variant` meanings distinct when writing UI copy
-or cross-links.
+UI and tool authors SHOULD keep the two `variant` meanings distinct in labels and
+cross-links.
 
 ## `VRMXT_sprite_particle`
 
@@ -139,10 +137,11 @@ clip metadata only. Skip interactivity and pointer as foundations.
 
 1. Keep materials override, VFX, and the two animation extensions as vendor extensions;
    Khronos does not already own these jobs.
-2. Prefer a short cross-link to this note over inventing a KHR-variants mapping layer.
+2. Specs and profiles SHOULD link here rather than invent a KHR-variants mapping layer.
    Do not wrap `KHR_interactivity` as the avatar animation brain.
-3. Re-scan the registry if a particle, material-remapping, or animation-controller
-   proposal appears.
+
+Registry snapshot date: **2026-07-20** (see intro). In-progress Khronos rows can change
+after that date.
 
 ## Related
 
