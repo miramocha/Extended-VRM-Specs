@@ -208,10 +208,15 @@ to `IMaterialDescriptorGenerator`.
 
 ## References
 
+Non-normative research (VRM / Magica / VRC PhysBones concept map):
+[Spring bone / secondary physics systems](../../../references/spring-bone-physics-systems.md).
+
 - [VRM 1.0 Spring Bone](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_springBone-1.0)
 - [MagicaCloth2 cloth types](https://magicasoft.jp/en/mc2_magicacloth_basic/)
 - [MagicaCloth2 runtime construction](https://magicasoft.jp/en/mc2_runtime_build/)
 - [MagicaCloth2 BoneSpring guide](https://magicasoft.jp/en/mc2_bonespring_startguide/)
+- [MagicaCloth2 collision setup](https://magicasoft.jp/en/mc2_collision_setup/)
+- [VRChat PhysBones](https://creators.vrchat.com/common-components/physbones/) (`VRCPhysBone` / colliders; converter target, not file schema)
 
 ## Related
 
@@ -219,14 +224,16 @@ to `IMaterialDescriptorGenerator`.
 - [VRMXT_materials_override](../materials/vrmxt-materials-override.md)
 - [VRMXT_sprite_particle](../vfx/vrmxt-sprite-particle.md)
 - [VRMXT_lattice](../deformation/vrmxt-lattice.md) (research draft; may reuse override-engine pattern)
+- [Spring bone / secondary physics systems](../../../references/spring-bone-physics-systems.md)
 
 ## Open questions
 
 - [ ] Stable engine and backend identifier registry
 - [ ] Package discovery metadata for optional backends
-- [ ] Numeric parameter conversion formulas
+- [ ] Numeric parameter conversion formulas (VRM ↔ Magica; separate VRM ↔ PhysBones for converter)
 - [ ] Collider conversion for planes, inside colliders, and unsupported shapes
 - [ ] Preset identifier ownership and portability
 - [ ] Whether multiple VRM springs may share one MagicaCloth component
 - [ ] Export rules for Blender and other authoring tools
 - [ ] Schema for backend-specific `parameters`
+- [ ] VRMXT→VRChat converter: spring → PhysBone policy (Multi-Child, 1.0 vs 1.1, grab defaults)
