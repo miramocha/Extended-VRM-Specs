@@ -277,6 +277,10 @@ materials by default. Overrides appear only for shaders the app (or an optional 
 pack it depends on) already ships. Remote git fetch and runtime shader compilation are
 out of scope for this profile.
 
+Capabilities presented as supported MUST follow base-spec rules 27–28: no dependence on
+third-party host plugins outside that shipped set (for example AudioLink). Shader stubs
+MAY remain; catalogs and host UI MUST NOT list those as supported features.
+
 ### Apply, Materialize, and Transfer (host ops)
 
 Cross-host rules:

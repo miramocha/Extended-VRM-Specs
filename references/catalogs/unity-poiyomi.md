@@ -36,9 +36,19 @@ space before `Toon`).
 
 ### Related shader names (family)
 
-Poiyomi ships multiple shaders under `_PoiyomiShaders/Shaders/`. Sibling modes (Pro,
-early versions, outline-only, etc.) are **TBD**. First ship target: 9.3 Toon above. Confirm
-other `Shader "…"` strings against the pinned revision before adding dropdown rows.
+First ship / Warudo Poiyomi Shader VRMXT Plugin SKU ships primary Toon plus kept alts:
+Early Outline, Grab Pass, Two Pass (and Extras).
+
+**Deferred** to a separate plugin (omit from Manager shader autocomplete):
+
+| ShaderLab name |
+|----------------|
+| `.poiyomi/Poiyomi Toon + Lil Fur` |
+| `.poiyomi/Poiyomi Toon + Lil Fur Two Pass` |
+| `.poiyomi/Poiyomi Toon World` |
+
+Other siblings (Pro, etc.) remain **TBD**. Confirm `Shader "…"` strings against the pinned
+revision before adding dropdown rows.
 
 ### Provider (advisory)
 
@@ -65,6 +75,21 @@ Separate commercial / Pro URP builds are out of scope until they have a document
 `Shader.Find` name and a distinct catalog entry (with their own `supportedVariants`).
 
 URP/HDRP hosts that cannot resolve `.poiyomi/Poiyomi Toon` keep stock VRM import.
+
+### Warudo BIRP plugins (non-normative)
+
+Warudo Poiyomi Shader Plugin (same ShaderLab name `.poiyomi/Poiyomi Toon`):
+
+| Plugin id | Notes |
+|-----------|--------|
+| `mira.shaders.poiyomi.birp` | Avatar-common `multi_compile` + expanded SVC (`PoiyomiShaderPluginBirp`) |
+
+Variant / warm / cut notes: [Warudo Poiyomi BIRP Variants](../warudo-poiyomi-birp-variants.md).
+Excluded keywords / alts: [Warudo Poiyomi Exclusions](../warudo-poiyomi-exclusions.md).
+
+Supported override features for Warudo MUST NOT depend on third-party Unity packages
+or world stacks (example: **AudioLink** / `com.llealloo.audiolink`). See that note’s
+host dependency policy. Shader stubs may remain; catalogs and “supported” lists omit them.
 
 ## Type mapping
 
@@ -95,5 +120,6 @@ Empty. Fill later; keep curated, not a full property mirror.
 
 - Index: [Materials Override Catalogs](../materials-override-catalogs.md)
 - Sibling: [Unity lilToon Catalog](unity-liltoon.md)
+- Exclusions: [Warudo Poiyomi Exclusions](../warudo-poiyomi-exclusions.md)
 - Blender authoring: [Blender VRMXT materials override](../../implementations/blender-vrmxt.md#materials-override)
 - Unity apply: [UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override)

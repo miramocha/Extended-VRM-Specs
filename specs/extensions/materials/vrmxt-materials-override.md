@@ -100,6 +100,20 @@ This specification conforms to [VRMXT Conformance](../../core/vrmxt-conformance.
 26. An exporter that emits a `properties[].texture` reference MUST register the referenced
     image through its normal glTF texture export path so the index resolves in the output
     file. An index that does not resolve is unresolvable under rule 24.
+27. A supporting implementation that documents, catalogs, or otherwise presents a shader
+    or a discrete shader capability (including a `shaderFeature` / keyword) as **supported**
+    for this extension MUST ensure that capability works using only:
+    - host engine APIs available to that consumer; and
+    - shaders, materials, and packages that consumer ships, including first-party VRMXT
+      packages it distributes.
+    It MUST NOT present a capability as supported when correct runtime behavior depends on
+    an additional third-party plugin, package, world prefab, or equivalent host stack
+    outside that shipped set. Non-normative examples: AudioLink (`com.llealloo.audiolink`),
+    LTCGI, VRChat Light Volumes, Beat Saber bloomfog hooks.
+28. Files MAY still emit `properties`, `bindings`, or `shaderFeature` entries that name
+    host-dependent capabilities under rule 27. Supporting implementations MUST keep
+    following rules 11–12 and 24 (ignore unresolvable entries; stock import when required
+    assets are missing). They MUST NOT require those third-party stacks to load the file.
 
 ## Extension properties
 
@@ -116,14 +130,14 @@ This specification conforms to [VRMXT Conformance](../../core/vrmxt-conformance.
 | `overrides[].properties` | object[] | no | Literal parameter values applied directly, independent of `VRMC_materials_mtoon` |
 | `properties[].name` | string | yes | Engine-specific material parameter identifier |
 | `properties[].type` | string | yes | `scalar`, `vector`, `texture`, or `shaderFeature` |
-| `properties[].value` | number, number[], or boolean | required unless `type` is `texture` | Literal value matching `type` |
+| `properties[].value` | number, number[], or boolean | required unless `type` is `texture` | Literal value matching `type`. When `type` is `texture`, MAY be a number array `[scale.x, scale.y, offset.x, offset.y]` (Unity texture ST); omit when identity `(1,1,0,0)`. |
 | `properties[].texture` | integer | required when `type` is `texture` | Index into glTF `textures[]` |
 
 `scalar` and `vector` carry numeric data directly. `texture` carries an index into the
-file's glTF `textures[]`. `shaderFeature` is a boolean toggle for a discrete shader
-capability rather than an assigned value: a Unity shader keyword driven by
-`#pragma shader_feature`, an Unreal Material **Static Switch** parameter, or a ShaderLab
-`[Toggle]`-backed keyword.
+file's glTF `textures[]`, and MAY carry optional Unity tiling/offset in `value` as above.
+`shaderFeature` is a boolean toggle for a discrete shader capability rather than an
+assigned value: a Unity shader keyword driven by `#pragma shader_feature`, an Unreal
+Material **Static Switch** parameter, or a ShaderLab `[Toggle]`-backed keyword.
 
 Engine profiles define the contents of `material`, provider identifiers, supported
 `targetType` and `properties[].type` operations, and engine-specific fallback constraints.
@@ -303,6 +317,11 @@ when the asset is present, otherwise use stock import for that material (rules 1
 This specification does not require remote download or runtime compilation of shader
 source from the file or from a registry.
 
+Supported capabilities are those that run on that local supply plus host engine APIs
+(rules 27–28). Optional third-party audio-reactive or world stacks (for example AudioLink)
+are outside the supported set even when a vendored shader still exposes stubs or
+`shader_feature` keywords for them.
+
 Engine integration details are documented in
 [UniVRMXT materials override](../../../implementations/univrm-vrmxt.md#materials-override),
 [VRM4U VRMXT](../../../implementations/vrm4u-vrmxt.md), and
@@ -317,6 +336,7 @@ They do not add fields to this extension.
 
 - [ ] Binding color conversions and texture transforms
 - [ ] Shader-feature rebuild behavior
+- [ ] Catalog / UI labeling for host-dependent stubs (rule 27) vs truly ignored unknown props
 - [ ] Precedence vs `VRMC_materials_mtoon` and `KHR_materials_unlit`
 - [ ] Whether `extensionsRequired` is ever appropriate
 - [ ] Export rules for Blender / other authoring tools (format uses `idType` / `id`;

@@ -154,6 +154,12 @@ approach they use.
 5. A UI toggle that stores an Int is usually `scalar` 0/1, not `shaderFeature`, unless a
    real Unity keyword is documented.
 6. Do not fork schema per consumer. Blender and UniVRMXT load the same JSON shape.
+7. Do not mark properties or `shaderFeature` keywords as `common: true` (or otherwise
+   “supported”) when correct runtime behavior needs a third-party host plugin outside the
+   consumer’s shipped shaders / first-party VRMXT packages
+   ([VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
+   rules 27–28). Example: AudioLink. Stubs MAY stay in the shader; catalogs omit them
+   from supported / common lists.
 
 ## Related
 
