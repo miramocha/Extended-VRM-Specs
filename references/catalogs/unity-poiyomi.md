@@ -85,6 +85,7 @@ Warudo Poiyomi Shader Plugin (same ShaderLab name `.poiyomi/Poiyomi Toon`):
 | `mira.shaders.poiyomi.birp` | Avatar-common `multi_compile` + expanded SVC (`PoiyomiShaderPluginBirp`) |
 
 Variant / warm / cut notes: [Warudo Poiyomi BIRP Variants](../warudo-poiyomi-birp-variants.md).
+Excluded keywords / alts: [Warudo Poiyomi Exclusions](../warudo-poiyomi-exclusions.md).
 
 Supported override features for Warudo MUST NOT depend on third-party Unity packages
 or world stacks (example: **AudioLink** / `com.llealloo.audiolink`). See that note’s
@@ -119,5 +120,6 @@ Empty. Fill later; keep curated, not a full property mirror.
 
 - Index: [Materials Override Catalogs](../materials-override-catalogs.md)
 - Sibling: [Unity lilToon Catalog](unity-liltoon.md)
+- Exclusions: [Warudo Poiyomi Exclusions](../warudo-poiyomi-exclusions.md)
 - Blender authoring: [Blender VRMXT materials override](../../implementations/blender-vrmxt.md#materials-override)
 - Unity apply: [UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override)

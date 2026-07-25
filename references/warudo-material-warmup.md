@@ -23,6 +23,7 @@ Companion notes:
 
 - Host apply path: [Warudo VRMXT](../implementations/warudo-vrmxt.md)
 - Poiyomi keyword / SVC detail: [Warudo Poiyomi BIRP Variants](warudo-poiyomi-birp-variants.md)
+- Poiyomi exclusion inventory: [Warudo Poiyomi Exclusions](warudo-poiyomi-exclusions.md)
 
 Repos: [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo)
 (`Assets/Vrmxt/Scripts/VrmxtPlugin.cs`) and

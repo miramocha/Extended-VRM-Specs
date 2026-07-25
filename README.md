@@ -98,6 +98,9 @@ Optional `VRMXT_*` consumers:
 | [Unity lilToon Catalog](references/catalogs/unity-liltoon.md) | lilToon opaque/cutout/transparent JSON @ pin `2.3.4` (359 props) | draft |
 | [Unity VRMXT Test Override Catalog](references/catalogs/unity-vrmxt-test-override.md) | UniVRMXT TestOverrideBuiltin / TestOverrideURP (11 props) | draft |
 | [Unity Poiyomi Catalog](references/catalogs/unity-poiyomi.md) | Poiyomi Toon catalog stub (`.poiyomi/Poiyomi Toon`) | draft |
+| [Warudo Poiyomi BIRP Variants](references/warudo-poiyomi-birp-variants.md) | Non-normative: BIRP cook / `multi_compile` keep set / SVC warm | draft |
+| [Warudo Poiyomi Exclusions](references/warudo-poiyomi-exclusions.md) | Non-normative: excluded keywords, alts, PassTypes, vendor strips | draft |
+| [Warudo Material Warm-Up](references/warudo-material-warmup.md) | Non-normative: ModHost asset warm + Poiyomi SVC | draft |
 
 ## Archive
 

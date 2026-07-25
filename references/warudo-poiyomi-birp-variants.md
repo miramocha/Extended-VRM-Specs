@@ -359,6 +359,7 @@ or RenderDoc counts for EarlyZ / Outline / Add.
 
 ## Related
 
+- Exclusion inventory: [Warudo Poiyomi Exclusions](warudo-poiyomi-exclusions.md)
 - Catalog: [Unity Poiyomi Catalog](catalogs/unity-poiyomi.md)
 - lilToon Warudo pin: [Unity lilToon Warudo Catalog](catalogs/unity-liltoon-warudo.md)
 - Upstream: [Poiyomi](https://www.poiyomi.com/), [Alternate versions](https://www.poiyomi.com/general/alt-versions)
