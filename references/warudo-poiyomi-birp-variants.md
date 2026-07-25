@@ -2,7 +2,7 @@
 title: Warudo Poiyomi BIRP Variants
 aliases:
   - Poiyomi Warudo keyword warm
-  - Poiyomi Full multi_compile cut
+  - Poiyomi BIRP multi_compile cut
 tags:
   - extended-vrm
   - implementation/warudo
@@ -15,28 +15,29 @@ status: draft
 
 # Warudo Poiyomi BIRP Variants
 
-Reference for shader variant cost, SVC prewarm, and Full SKU `multi_compile` cuts on the
+Reference for shader variant cost, SVC prewarm, and BIRP `multi_compile` cuts on the
 Warudo Poiyomi Shader VRMXT Plugin (Built-in RP).
 
-Non-normative. Companion to [Unity Poiyomi Catalog](catalogs/unity-poiyomi.md).
+Non-normative. Companion to [Unity Poiyomi Catalog](catalogs/unity-poiyomi.md) and
+the cross-plugin warm overview [Warudo Material Warm-Up](warudo-material-warmup.md).
 Upstream pin: Poiyomi Toon **9.3.64**, ShaderLab name `.poiyomi/Poiyomi Toon`.
 
-This note covers the **Full** BIRP plugin only:
+This note covers the BIRP plugin:
 
-| SKU | Plugin id | Mod folder |
-|-----|-----------|------------|
-| Full | `mira.shaders.poiyomi.birp.full` | `Warudo Shader Plugins/Assets/PoiyomiShaderPluginBirpFull/` |
+| Plugin id | Mod folder |
+|-----------|------------|
+| `mira.shaders.poiyomi.birp` | `Warudo Shader Plugins/Assets/PoiyomiShaderPluginBirp/` |
 
 ## Scope
 
 - Record Warudo host rendering facts that bound prewarm `PassType` lists.
-- Quantify Full effect-keyword product and observed / expected Base compile size.
+- Quantify effect-keyword product and observed / expected Base compile size.
 - Compare MToon10 / lilToon / Poiyomi keyword strategies for Warudo.
-- Document the Full `multi_compile` keep set sized for lilToon-class avatar looks.
+- Document the `multi_compile` keep set sized for lilToon-class avatar looks.
 - Document vendor cuts already applied (matcaps, Lil Fur / World alts).
 - State that supported features must not require third-party host plugins (e.g. AudioLink).
-- Confirm rule 27 does not cut Full effect `multi_compile` axes (third-party tokens already `shader_feature`).
-- Apply Full lil-parity `multi_compile` cut (6 keep axes) and re-export guidance.
+- Confirm rule 27 does not cut effect `multi_compile` axes (third-party tokens already `shader_feature`).
+- Apply lil-parity `multi_compile` cut (6 keep axes) and re-export guidance.
 
 This note does not change normative materials-override schema. Pragma edits apply only
 after patching vendored `Poiyomi Toon.shader` and re-exporting the UMod.
@@ -74,7 +75,7 @@ MotionVectors passes.
 
 ## Prewarm PassTypes (applied)
 
-Full `WarmPassTypes` are limited to:
+`WarmPassTypes` are limited to:
 
 | PassType | Rationale |
 |----------|-----------|
@@ -101,32 +102,32 @@ Approximate counts on `Poiyomi Toon.shader` (feature / multi_compile pragmas):
 
 | SKU | Effect axes | Product per Base (before Unity megas) |
 |-----|-------------|----------------------------------------|
-| Full (original, pre-cut) | twelve: keep six below plus `_SUNDISK_HIGH_QUALITY`, `POI_PATHING`, `GRAIN`, `EFFECT_BUMP`, `POI_PARALLAX`, `POI_SUBSURFACESCATTERING` | \(2^{12}\) = 4096 |
-| Full (lil-parity, applied) | `_EMISSION`, `POI_EMISSION_1`, `_SUNDISK_SIMPLE`, `POI_MATCAP0`, `POI_BACKLIGHT`, `DISTORT` | \(2^{6}\) = 64 |
+| Pre-cut (historical) | twelve: keep six below plus `_SUNDISK_HIGH_QUALITY`, `POI_PATHING`, `GRAIN`, `EFFECT_BUMP`, `POI_PARALLAX`, `POI_SUBSURFACESCATTERING` | \(2^{12}\) = 4096 |
+| Current (lil-parity) | `_EMISSION`, `POI_EMISSION_1`, `_SUNDISK_SIMPLE`, `POI_MATCAP0`, `POI_BACKLIGHT`, `DISTORT` | \(2^{6}\) = 64 |
 
-Demoted from Full guaranteed set to `shader_feature` (+ SVC warm):
+Demoted from guaranteed set to `shader_feature` (+ SVC warm):
 `_SUNDISK_HIGH_QUALITY`, `POI_PATHING`, `GRAIN`, `EFFECT_BUMP`, `POI_PARALLAX`,
 `POI_SUBSURFACESCATTERING`.
 
 Unity also expands `multi_compile_fwdbase`, `fwdadd_fullshadows`, fog,
-`VERTEXLIGHT_ON`, and instancing. Pre-cut Full Base cook was **65536** fragment
+`VERTEXLIGHT_ON`, and instancing. Pre-cut Base cook was **65536** fragment
 programs (\(2^{16}\) ≈ 4096 × 16). After the lil-parity cut, expect order **~1024** fp
-with the same mega factor (64 × 16). Re-measure after Full UMod re-export.
+with the same mega factor (64 × 16). Re-measure after BIRP UMod re-export.
 
-### Guaranteed vs SVC (Full)
+### Guaranteed vs SVC
 
 | Class | Mechanism | Examples |
 |-------|-----------|----------|
 | Guaranteed | `multi_compile` / `multi_compile_local` | Six lil-parity axes above |
 | SVC extras | `shader_feature` (warm subsets) | Demoted six + `POI_MATCAP1–3`, `POI_EMISSION_2/3`, `POI_CLEARCOAT`, `MOCHIE_PBR`, `POI_ANISOTROPICS`, `PROP_DECALMASK`, `GEOM_TYPE_MESH` |
-| Out of Full v1 intent | leave as `shader_feature` or omit | AudioLink, mirror, LTCGI, video, voronoi, real post stack |
+| Out of Warudo v1 intent | leave as `shader_feature` or omit | AudioLink, mirror, LTCGI, video, voronoi, real post stack |
 
 Runtime plugin settings adjust warm lists and material keywords only. Cook size follows
-the Toon.shader pragma set; re-export the Full UMod after pragma edits.
+the Toon.shader pragma set; re-export the BIRP UMod after pragma edits.
 
 ## Axis audit vs host dependency (rule 27)
 
-**Verdict:** rule 27 does **not** remove any of the twelve historical Full effect
+**Verdict:** rule 27 does **not** remove any of the twelve historical effect
 `multi_compile` axes. Every third-party / world-stack integration below is already
 `#pragma shader_feature` / `shader_feature_local` only — stubs that do not multiply
 the Base cook product.
@@ -141,7 +142,7 @@ the Base cook product.
 | `POI_VORONOI` | `shader_feature_local` | self-contained FX; leave unsupported for Warudo catalogs | none |
 | VRC Light Volumes (`_UdonLightVolume*`) | float toggle + always-linked SH helpers when enabled | VRC Light Volumes | **not** a `multi_compile` axis |
 
-Twelve historical Full axes (pre-cut); lil-parity keep applied on Full Toon.shader:
+Twelve historical axes (pre-cut); lil-parity keep applied on Toon.shader:
 
 | Axis | Self-contained? | lil-parity cut |
 |------|-----------------|----------------|
@@ -160,7 +161,7 @@ Twelve historical Full axes (pre-cut); lil-parity keep applied on Full Toon.shad
 
 Rule 27 still does not change this list; cook reduction came from the lil-parity demote.
 
-**Warm-list cleanup (applied):** Full `RequiredWarmKeywords` and
+**Warm-list cleanup (applied):** `RequiredWarmKeywords` and
 `PoiyomiWarmGlitterEmission.mat` no longer enable `BSSBLOOMFOGTYPE_HEIGHT` (Beat Saber).
 Shader stubs remain `shader_feature_local`; SVC warm no longer keeps that variant.
 
@@ -185,14 +186,14 @@ stack at runtime for the feature to be considered supported.
 | Mirror / video / voronoi stacks as world hooks | Often yes | Treat as unsupported unless self-contained in the shader UMod alone. |
 
 ShaderLab may keep `#pragma shader_feature` stubs for these tokens so foreign mats do
-not pink-error. Catalogs, Manager autocomplete guidance, Full `multi_compile` keep
+not pink-error. Catalogs, Manager autocomplete guidance, `multi_compile` keep
 lists, and “supported” override docs MUST NOT list them as Warudo-supported features.
 Normative: [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
 rules 27–28.
 
-## Comparison: MToon10, lilToon, Poiyomi Full
+## Comparison: MToon10, lilToon, Poiyomi BIRP
 
-| | MToon10 (`VRM10/MToon10`) | lilToon 1.10.3 (Warudo BIRP) | Poiyomi Full (current) |
+| | MToon10 (`VRM10/MToon10`) | lilToon 1.10.3 (Warudo BIRP) | Poiyomi BIRP (current) |
 |--|--------------------------|------------------------------|-------------------------|
 | Role | VRM stock toon | Rich avatar toon | Rich avatar toon + FX |
 | Main sources | ~8 KB shader | ~55 KB `lts.shader` shell + hidden `ltspass_*`; ~65 files / ~3 MB | ~2.7 MB `Poiyomi Toon.shader` |
@@ -202,7 +203,7 @@ rules 27–28.
 
 lilToon and Poiyomi both expose matcap, dual emission, glitter, backlight, rim,
 reflection, and related avatar FX. lilToon does not build a \(2^{N}\) effect-keyword
-matrix; Poiyomi Full does when those FX are promoted to `multi_compile`.
+matrix; Poiyomi BIRP does when those FX are promoted to `multi_compile`.
 
 “lilToon parity” here means covering the same class of Warudo avatar looks. It does not
 require adopting lilToon’s `#define` pipeline.
@@ -231,9 +232,9 @@ require adopting lilToon’s `#define` pipeline.
 | AudioLink | — | `AUDIOLINK*` | unsupported (third-party host; see policy) |
 | Fur | — | separate fur shaders | deferred separate plugin |
 
-## Full `multi_compile` cut (lilToon parity)
+## `multi_compile` cut (lilToon parity)
 
-**Status:** Applied on Full `Poiyomi Toon.shader` (plugin **1.0.1**). Re-export Full UMod
+**Status:** Applied on BIRP `Poiyomi Toon.shader` (plugin **1.0.1**). Re-export BIRP UMod
 to pick up cook-size change.
 
 Keep as `multi_compile` / `multi_compile_local` (lil-class, hitch-sensitive):
@@ -251,7 +252,7 @@ Keep as `multi_compile` / `multi_compile_local` (lil-class, hitch-sensitive):
 |------|------------------------|----------------------------|
 | 6 | 64 | ~1024 |
 
-Demoted to `shader_feature` (SVC-warmed in Full plugin):
+Demoted to `shader_feature` (SVC-warmed in BIRP plugin):
 
 | Keyword | Notes |
 |---------|-------|
@@ -266,7 +267,7 @@ Do not promote to `multi_compile`: matcap 1–3, emission 2–3, clear coat, Moc
 anisotropy, decal mask, AudioLink (third-party host), and related `shader_feature`
 tokens.
 
-Relative to twelve-axis Full: effect product 4096 → 64 (64× before megas).
+Relative to twelve-axis historical: effect product 4096 → 64 (64× before megas).
 Observed Base ~65536 fp → order ~1024 with the same mega factor.
 
 Upstream docs grouping (emission, glitter, matcap, backlight, UV modifiers, pathing,
@@ -299,12 +300,12 @@ reporting those toggles, not Warudo camera post-processing.
 
 ### Textures
 
-Full vendored `_PoiyomiShaders/Textures/` under the Full mod folder.
+BIRP plugin vendored `_PoiyomiShaders/Textures/` under the BIRP mod folder.
 
 `_Matcap` defaults to Unity `"white"`. UniVRMXT / avatar overrides supply matcap textures
 when needed.
 
-Removed `Textures/Matcaps/` (~6.1 MB). Remaining texture images ~3.7 MB. See Full
+Removed `Textures/Matcaps/` (~6.1 MB). Remaining texture images ~3.7 MB. See BIRP
 `VENDOR.md`.
 
 ### Alternate shaders
@@ -331,11 +332,11 @@ Shader sources: ~22.7 MB → ~12.2 MB. Alternate removal does not reduce the mai
 |------|--------|
 | `WarmPassTypes` → ForwardBase / ForwardAdd / ShadowCaster | Applied |
 | Drop `BSSBLOOMFOGTYPE_HEIGHT` from warm keywords / warm `.mat` | Applied |
-| Demote Full effect `multi_compile` to lil-parity 6 axes | Applied (re-export Full UMod) |
+| Demote effect `multi_compile` to lil-parity 6 axes | Applied (re-export BIRP UMod) |
 | Trim `BuildWarmKeywordSets` from live keyword census | Open |
 | Drop Early Outline / Grab / Two Pass if unused | Open |
 | Measure and possibly drop Blit/SetPass after SVC `WarmUp` | Open |
-| Re-measure Full Base cook after lil-parity cut | Open |
+| Re-measure Base cook after lil-parity cut | Open |
 
 ## Debug tooling
 
@@ -354,11 +355,11 @@ or RenderDoc counts for EarlyZ / Outline / Add.
 
 - `ApplyUnityRenderStateFromMode`: `_Mode` → `renderQueue` / `RenderType` (Additive = 3000).
 - Vector pans: `SetVector` rather than `SetColor` for scroll direction.
-- Full: lil-parity `multi_compile` plus expanded SVC subsets.
+- BIRP: lil-parity `multi_compile` plus expanded SVC subsets.
 
 ## Related
 
 - Catalog: [Unity Poiyomi Catalog](catalogs/unity-poiyomi.md)
 - lilToon Warudo pin: [Unity lilToon Warudo Catalog](catalogs/unity-liltoon-warudo.md)
 - Upstream: [Poiyomi](https://www.poiyomi.com/), [Alternate versions](https://www.poiyomi.com/general/alt-versions)
-- Plugin tree: `Warudo Shader Plugins/Assets/PoiyomiShaderPluginBirpFull/`
+- Plugin tree: `Warudo Shader Plugins/Assets/PoiyomiShaderPluginBirp/`

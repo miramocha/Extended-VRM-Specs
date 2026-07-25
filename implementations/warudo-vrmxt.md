@@ -149,6 +149,9 @@ its CoreModule `Shader` parameter also triggers CS0012.
 | Shader resolve | ModHost-warmed name-to-Shader map → `ShaderResolveProvider` (`Shader.Find` returns null for mod shaders) |
 | Sample URP shader | CG + `SRPDefaultUnlit`; no URP package includes |
 
+Warm layers (ModHost asset load vs Poiyomi SVC / Blit): 
+[Warudo Material Warm-Up](../references/warudo-material-warmup.md).
+
 The Mod Tool must ship a drawable sample URP pass without `PackageRequirements`.
 
 ### Material matching
@@ -215,7 +218,8 @@ These constraints describe the current Warudo Mod Tool and are non-normative:
 - `referencePaths` is for other mods, not UnityEngine DLLs.
 - Load shaders and materials with `ModHost.Assets.Load`, not `Resources.Load`.
 - `Shader.Find` returns null for mod-shipped shaders. `VrmxtPlugin` warms assets into
-  `VrmxtMaterialsOverrideApplier.ShaderResolveProvider`.
+  `VrmxtMaterialsOverrideApplier.ShaderResolveProvider`. Detail:
+  [Warudo Material Warm-Up](../references/warudo-material-warmup.md).
 - Pipeline detection uses `DetectActivePipelineForWarudo`: null means Builtin; any
   active render pipeline means Urp.
 

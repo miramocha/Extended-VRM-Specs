@@ -78,12 +78,11 @@ URP/HDRP hosts that cannot resolve `.poiyomi/Poiyomi Toon` keep stock VRM import
 
 ### Warudo BIRP plugins (non-normative)
 
-Warudo Poiyomi Shader VRMXT Plugin (same ShaderLab name `.poiyomi/Poiyomi Toon` — enable one SKU):
+Warudo Poiyomi Shader Plugin (same ShaderLab name `.poiyomi/Poiyomi Toon`):
 
-| SKU | Plugin id | Notes |
-|-----|-----------|--------|
-| Lite | `mira.shaders.poiyomi.birp` | Smaller; glitter/emission warm |
-| Full | `mira.shaders.poiyomi.birp.full` | Avatar-common `multi_compile` + expanded SVC |
+| Plugin id | Notes |
+|-----------|--------|
+| `mira.shaders.poiyomi.birp` | Avatar-common `multi_compile` + expanded SVC (`PoiyomiShaderPluginBirp`) |
 
 Variant / warm / cut notes: [Warudo Poiyomi BIRP Variants](../warudo-poiyomi-birp-variants.md).
 
