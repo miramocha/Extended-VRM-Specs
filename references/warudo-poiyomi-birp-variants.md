@@ -28,13 +28,16 @@ This note covers the BIRP plugin:
 |-----------|------------|
 | `mira.shaders.poiyomi.birp` | `Warudo Shader Plugins/Assets/PoiyomiShaderPluginBirp/` |
 
+Toon plugin notes below (keyword / SVC product). Lil Fur siblings warm via
+`ModHost.Assets.Load` only (same path as Early Outline / Grab / Two Pass).
+
 ## Scope
 
 - Record Warudo host rendering facts that bound prewarm `PassType` lists.
 - Quantify effect-keyword product and observed / expected Base compile size.
 - Compare MToon10 / lilToon / Poiyomi keyword strategies for Warudo.
 - Document the `multi_compile` keep set sized for lilToon-class avatar looks.
-- Document vendor cuts already applied (matcaps, Lil Fur / World alts).
+- Document vendor cuts already applied (matcaps; World still deferred; Lil Fur kept in Toon UMod).
 - State that supported features must not require third-party host plugins (e.g. AudioLink).
 - Confirm rule 27 does not cut effect `multi_compile` axes (third-party tokens already `shader_feature`).
 - Apply lil-parity `multi_compile` cut (6 keep axes) and re-export guidance.
@@ -230,7 +233,7 @@ require adopting lilToon’s `#define` pipeline.
 | Pathing | — | — | `POI_PATHING` |
 | Depth / touch FX | — | — | `GRAIN`, `EFFECT_BUMP` |
 | AudioLink | — | `AUDIOLINK*` | unsupported (third-party host; see policy) |
-| Fur | — | separate fur shaders | deferred separate plugin |
+| Fur | — | separate fur shaders | `mira.shaders.poiyomi.birp` Lil Fur siblings |
 
 ## `multi_compile` cut (lilToon parity)
 
@@ -310,21 +313,22 @@ Removed `Textures/Matcaps/` (~6.1 MB). Remaining texture images ~3.7 MB. See BIR
 
 ### Alternate shaders
 
-Primary: `.poiyomi/Poiyomi Toon`.
+Primary (Toon UMod): `.poiyomi/Poiyomi Toon`.
 
-Still shipped: Early Outline, Grab Pass, Two Pass, Extras.
-
-Deferred to a later plugin (removed from trees and `KnownShaderFiles`; excluded from
-VRMXT Manager autocomplete in `VrmxtShaderInventory`):
+Still shipped in Toon UMod: Early Outline, Grab Pass, Two Pass, Extras, Lil Fur:
 
 | File | ShaderLab name |
 |------|----------------|
 | Lil Fur | `.poiyomi/Poiyomi Toon + Lil Fur` |
 | Lil Fur Two Pass | `.poiyomi/Poiyomi Toon + Lil Fur Two Pass` |
+
+Still deferred (removed from Toon tree; filtered in `VrmxtShaderInventory`):
+
+| File | ShaderLab name |
+|------|----------------|
 | World | `.poiyomi/Poiyomi Toon World` |
 
-Shader sources: ~22.7 MB → ~12.2 MB. Alternate removal does not reduce the main Toon
-`multi_compile` product.
+Lil Fur uses the same load-warm as other siblings (not the main-Toon SVC product).
 
 ## Remaining prewarm work
 
