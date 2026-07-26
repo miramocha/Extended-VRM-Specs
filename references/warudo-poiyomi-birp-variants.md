@@ -28,8 +28,10 @@ This note covers the BIRP plugin:
 |-----------|------------|
 | `mira.shaders.poiyomi.birp` | `Warudo Shader Plugins/Assets/PoiyomiShaderPluginBirp/` |
 
-Toon plugin notes below (keyword / SVC product). Lil Fur siblings warm via
-`ModHost.Assets.Load` only (same path as Early Outline / Grab / Two Pass).
+Toon plugin notes below (keyword / SVC product). Lil Fur / Lil Fur Two Pass also
+join `SvcWarmShaderNames` (SVC + Blit): their six effect axes stay
+`shader_feature`, unlike main Toon’s `multi_compile` keep. Sibling discovery still
+uses `ModHost.Assets.Load` like Early Outline / Grab / Two Pass.
 
 ## Scope
 
@@ -328,7 +330,8 @@ Still deferred (removed from Toon tree; filtered in `VrmxtShaderInventory`):
 |------|----------------|
 | World | `.poiyomi/Poiyomi Toon World` |
 
-Lil Fur uses the same load-warm as other siblings (not the main-Toon SVC product).
+Lil Fur: `ModHost.Assets.Load` discovery plus SVC + Blit on the same keyword
+subsets as main Toon (`SvcWarmShaderNames`). Effect axes remain `shader_feature`.
 
 ## Remaining prewarm work
 

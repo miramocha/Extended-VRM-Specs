@@ -177,7 +177,7 @@ Warmed: `ForwardBase`, `ForwardAdd`, `ShadowCaster`.
 | `Textures/Noise`, `Gifs`, `Fonts` | `vendor-stripped` | Size (Toon UMod) |
 | `Textures/Matcaps/` | `vendor-stripped` | Avatars / overrides supply matcaps; `_Matcap` defaults to `"white"` |
 | `Textures/Fur` | shipped in Toon UMod | Sample fur noise pack |
-| Lil Fur alt `.shader` files | shipped in Toon UMod | `KnownShaderFiles` warm via `ModHost.Assets.Load` |
+| Lil Fur alt `.shader` files | shipped in Toon UMod | `KnownShaderFiles` load + `SvcWarmShaderNames` SVC/Blit |
 | World alt `.shader` | `vendor-stripped` + `deferred-shader` | Still deferred |
 
 ## Outline note
