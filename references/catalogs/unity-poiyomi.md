@@ -36,15 +36,18 @@ space before `Toon`).
 
 ### Related shader names (family)
 
-First ship / Warudo Poiyomi Shader VRMXT Plugin SKU ships primary Toon plus kept alts:
-Early Outline, Grab Pass, Two Pass (and Extras).
-
-**Deferred** to a separate plugin (omit from Manager shader autocomplete):
+Warudo Poiyomi Toon SKU (`mira.shaders.poiyomi.birp`) ships primary Toon plus kept
+alts: Early Outline, Grab Pass, Two Pass (and Extras), plus Lil Fur:
 
 | ShaderLab name |
 |----------------|
 | `.poiyomi/Poiyomi Toon + Lil Fur` |
 | `.poiyomi/Poiyomi Toon + Lil Fur Two Pass` |
+
+**Still deferred** (omit from Manager shader autocomplete until a World plugin exists):
+
+| ShaderLab name |
+|----------------|
 | `.poiyomi/Poiyomi Toon World` |
 
 Other siblings (Pro, etc.) remain **TBD**. Confirm `Shader "…"` strings against the pinned
@@ -78,11 +81,9 @@ URP/HDRP hosts that cannot resolve `.poiyomi/Poiyomi Toon` keep stock VRM import
 
 ### Warudo BIRP plugins (non-normative)
 
-Warudo Poiyomi Shader Plugin (same ShaderLab name `.poiyomi/Poiyomi Toon`):
-
-| Plugin id | Notes |
-|-----------|--------|
-| `mira.shaders.poiyomi.birp` | Avatar-common `multi_compile` + expanded SVC (`PoiyomiShaderPluginBirp`) |
+| Plugin id | Mod folder | ShaderLab |
+|-----------|------------|-----------|
+| `mira.shaders.poiyomi.birp` | `PoiyomiShaderPluginBirp` | `.poiyomi/Poiyomi Toon` (+ kept alts + Lil Fur / Two Pass); avatar-common `multi_compile` + expanded SVC; `Textures/Fur` |
 
 Variant / warm / cut notes: [Warudo Poiyomi BIRP Variants](../warudo-poiyomi-birp-variants.md).
 Excluded keywords / alts: [Warudo Poiyomi Exclusions](../warudo-poiyomi-exclusions.md).

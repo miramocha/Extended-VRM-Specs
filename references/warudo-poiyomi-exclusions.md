@@ -44,14 +44,21 @@ local stubs.
 
 ## Deferred ShaderLab variants
 
+Scoped to the **Toon** BIRP UMod (`mira.shaders.poiyomi.birp`). Lil Fur ships in that
+same UMod (Manager autocomplete shows Lil Fur when the Toon mod is loaded).
+
 | ShaderLab name | Kind | Notes |
 |----------------|------|-------|
-| `.poiyomi/Poiyomi Toon + Lil Fur` | `deferred-shader` | Separate plugin later |
-| `.poiyomi/Poiyomi Toon + Lil Fur Two Pass` | `deferred-shader` | Same |
-| `.poiyomi/Poiyomi Toon World` | `deferred-shader` | Same |
+| `.poiyomi/Poiyomi Toon World` | `deferred-shader` | Separate plugin later; still filtered in `VrmxtShaderInventory` |
 
-Still shipped (not excluded): Early Outline, Grab Pass, Two Pass, Extras. Dropping those
-from warm is still open — see BIRP variants “Remaining prewarm work.”
+| ShaderLab name | Shipped by |
+|----------------|------------|
+| `.poiyomi/Poiyomi Toon + Lil Fur` | `mira.shaders.poiyomi.birp` |
+| `.poiyomi/Poiyomi Toon + Lil Fur Two Pass` | same |
+
+Still shipped in the Toon UMod (not excluded): Early Outline, Grab Pass, Two Pass,
+Extras, Lil Fur. Dropping unused alts from warm is still open — see BIRP variants
+“Remaining prewarm work.”
 
 Pro / commercial URP lines: out of scope until a documented `Shader.Find` name exists.
 
@@ -167,9 +174,11 @@ Warmed: `ForwardBase`, `ForwardAdd`, `ShadowCaster`.
 | `Scripts/` (ThryEditor, poi-tools, Editor, `*.asmdef`) | `vendor-stripped` | Warudo mods cannot ship asmdefs |
 | Legacy `Shaders/7.3` … `9.2` | `vendor-stripped` | Size |
 | `Prefabs/`, `Presets/`, `Translators/` | `vendor-stripped` | Size |
-| `Textures/Fur`, `Noise`, `Gifs`, `Fonts` | `vendor-stripped` | Size |
+| `Textures/Noise`, `Gifs`, `Fonts` | `vendor-stripped` | Size (Toon UMod) |
 | `Textures/Matcaps/` | `vendor-stripped` | Avatars / overrides supply matcaps; `_Matcap` defaults to `"white"` |
-| Lil Fur / World alt `.shader` files | `vendor-stripped` + `deferred-shader` | See above |
+| `Textures/Fur` | shipped in Toon UMod | Sample fur noise pack |
+| Lil Fur alt `.shader` files | shipped in Toon UMod | `KnownShaderFiles` load + `SvcWarmShaderNames` SVC/Blit |
+| World alt `.shader` | `vendor-stripped` + `deferred-shader` | Still deferred |
 
 ## Outline note
 
