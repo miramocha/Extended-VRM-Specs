@@ -150,7 +150,7 @@ Shared helpers live in `com.miramocha.vrmxt.unity.shader-plugins`:
 
 | Layer | Role | Typical API |
 |-------|------|-------------|
-| A | Keep ShaderLab alive via Resources / ModHost mats (Player AssetBundle host planned) | `ResourcesBirpShaderWarmHost`, host Ensure menus |
+| A | Keep ShaderLab alive via Resources / ModHost mats (Player AssetBundle host research) | `ResourcesBirpShaderWarmHost`, host Ensure menus |
 | B | Keyword subsets via SVC + Blit where the family needs it | `PoiyomiBirpWarm` (Poiyomi today) |
 | Inventory | Claimed name tests | `BirpClaimedShaderInventory` |
 

@@ -70,12 +70,13 @@ flowchart TB
 
 ### Layout
 
-Suggested on-disk paths next to the Player build:
+Suggested paths under the Standalone data `StreamingAssets` folder
+(`*_Data/StreamingAssets/…` on Windows builds):
 
-| Pack | Path |
-|------|------|
-| lilToon | `StreamingAssets/ShaderMods/liltoon.birp` |
-| Poiyomi | `StreamingAssets/ShaderMods/poiyomi.birp` |
+| Pack | Path relative to `StreamingAssets` |
+|------|-------------------------------------|
+| lilToon | `ShaderMods/liltoon.birp` |
+| Poiyomi | `ShaderMods/poiyomi.birp` |
 
 Extension `.birp` is a product label (Built-in RP). Unity still treats the file as
 an AssetBundle (`AssetBundle.LoadFromFile`).
@@ -103,6 +104,12 @@ AssetBundles; cook projects export them.
 | `liltoon.birp` | lil ShaderLab + includes; warm mats for claimed lil names | Poiyomi |
 | `poiyomi.birp` | Poiyomi Toon tree + includes; warm mats; `ShaderVariantCollection`; textures needed by claimed alts (e.g. Lil Fur) | World / Pro World / Two Pass from **warm and claim** (may still sit on disk unused) |
 
+Player deferred warm/claim for Two Pass is not the same as the Warudo Toon UMod ship
+set: Warudo still ships and ModHost-loads Two Pass alts; Player keeps them out of
+`SvcWarmShaderNames` / claim warm. See
+[Warudo Poiyomi Exclusions](warudo-poiyomi-exclusions.md) and
+[Warudo Poiyomi BIRP Variants](warudo-poiyomi-birp-variants.md).
+
 ### Not in either pack
 
 | Piece | Where it lives |
@@ -119,8 +126,10 @@ AssetBundles; cook projects export them.
 1. Discover packs under `StreamingAssets/ShaderMods/` (or configured dir).
 2. Load `liltoon.birp` if present.
 3. Load `poiyomi.birp` if present.
-4. For each **claimed** ShaderLab name (and known warm-mat / SVC asset paths),
-   `LoadAsset` / load by path. Avoid `LoadAllAssets` on the whole Poiyomi tree.
+4. For each **claimed** ShaderLab name (and known warm-mat / SVC assets),
+   `LoadAsset` / `LoadAssetAsync` by **cooked AssetBundle asset name** (or a
+   documented address map from the cook project). Avoid `LoadAllAssets` on the
+   whole Poiyomi tree.
 5. Register loaded `Shader` instances in `ShaderWarmRegistry`; keep material refs
    alive for Layer A.
 6. If Poiyomi pack loaded: run Layer B (`ShaderVariantCollection.WarmUp` + existing
@@ -136,7 +145,7 @@ Reuse package lists (do not fork a second manifest in Player):
 
 - `BirpClaimedShaderInventory`: which names may Apply
 - `PoiyomiBirpWarmKeywords.SvcWarmShaderNames`: Layer B targets
-- Deferred alts: `IsDeferredPoiyomiAlt` (World / Two Pass) stay unloaded
+- Deferred alts: `IsDeferredPoiyomiAlt` (World / Pro World / Two Pass) stay unloaded
 
 ### Resolve
 
@@ -149,12 +158,12 @@ already prefers `ShaderWarmRegistry` before Find.
 Measured against Player `Library/PackageCache` and upstream release assets
 (pin **9.3.64** / lil **1.10.3**):
 
-| Source | Approx size |
-|--------|-------------|
-| Poiyomi `com.poiyomi.toon-9.3.64.zip` (GitHub release) | ~69 MB (70,388 KB) |
-| Poiyomi `.unitypackage` (same release) | ~74 MB |
-| Poiyomi PackageCache tree (expanded) | ~168 MB |
-| lilToon PackageCache tree | ~6 MB |
+| Source | Approx size | Notes |
+|--------|-------------|-------|
+| Poiyomi `com.poiyomi.toon-9.3.64.zip` (GitHub release) | ~69 MB (70,388 KB) | Upstream release asset listing |
+| Poiyomi `.unitypackage` (same release) | ~74 MB | Upstream release asset listing |
+| Poiyomi PackageCache tree (expanded) | ~168 MB | Local Player `Library/PackageCache` measure (2026-07-29) |
+| lilToon PackageCache tree | ~6 MB | Same local measure |
 
 AssetBundle ship size is not identical to PackageCache; expect **tens of MB** for a
 full Poiyomi pack, small for lil. Selective load saves RAM, not ship size, unless
@@ -164,9 +173,9 @@ cook strips unused textures / alts.
 
 | | Warudo shader mods | Player (this note) |
 |--|--------------------|--------------------|
-| Pack format | UMod (uMod 2.0; assets bundled inside) | Unity AssetBundle files |
+| Pack format | UMod (assets bundled inside the mod package) | Unity AssetBundle files |
 | Runtime API | `ModHost.Assets.Load` | `AssetBundle.LoadFromFile` + selective load |
-| Raw `.ab` as plugin | Not the supported plugin path (IO sandbox; ModHost is the API) | First-class |
+| Raw AssetBundle as plugin | Not the Warudo plugin format; ModHost is the supported load API | First-class |
 | Split | lil UMod + Poiyomi UMod | `liltoon.birp` + `poiyomi.birp` |
 
 Same vendor source trees can feed **two export pipelines** (UMod + AssetBundle).
@@ -178,12 +187,12 @@ Prefer: Editor Play / Apply preview loads the **same** `StreamingAssets/ShaderMo
 packs. Keep lil / Poiyomi out of release Player `Packages/manifest.json` so app
 cooks stay light.
 
-Dev-only UPM pins for authoring are a temporary escape hatch; document them as
-non-shipping if used.
+Dev-only UPM pins for authoring are fine locally; document them as non-shipping if
+used.
 
 ## Non-goals
 
-- Addressables (v1 uses AssetBundles only)
+- Addressables (this note targets raw AssetBundles only)
 - Network fetch of shaders
 - Poiyomi on Always Included Shaders
 - Optimizer lock copies (`Hidden/Locked/…`) as Apply identities
@@ -195,7 +204,7 @@ non-shipping if used.
 | Topic | Status |
 |-------|--------|
 | Cook project ownership (reuse Warudo Shader Plugins trees vs dedicated Player cook) | Open |
-| Bundle file naming / versioning beside the exe | Open |
+| Bundle file naming / versioning under `StreamingAssets` | Open |
 | Thry unlocked-shader strip policy in cook project vs Player | Open |
 | Leave deferred Poiyomi alts on disk unused vs strip at cook | Open |
 | `AssetBundleBirpShaderWarmHost` in shader-plugins vs Player-only loader | Open |

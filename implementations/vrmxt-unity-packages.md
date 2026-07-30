@@ -84,7 +84,7 @@ Rules of thumb:
 - **UniVRMXT** owns format attach and materials Apply APIs. It does **not** own lil/Poiyomi
   vendor trees or SVC warm lists.
 - **Shader Plugins** owns claimed-name inventory and Layer A/B warm helpers. Hosts
-  supply Resources or ModHost asset load. Profile:
+  supply Resources, ModHost, or (Player research) AssetBundle asset load. Profile:
   [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md).
 - **Player** and **Warudo** are apps/plugins. Do not nest them inside UniVRMXT.
 - **Warudo Shader Plugins** (current): owns UMod packaging, vendor shader trees, and
