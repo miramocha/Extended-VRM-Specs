@@ -133,34 +133,43 @@ Do not downgrade the existing Extended-UniVRM `2022.3` authoring project in plac
 
 ## Consequences
 
+Historical intent of this decision (before supersession):
+
 - One player app profile
   ([VRMXT Unity Player](../implementations/vrmxt-unity-player.md)) plus two consumer
   surfaces: [VRoid Hub browser extension](../implementations/vroid-hub-browser-extension.md)
   and [Unity WebGL VRMXT viewer](../implementations/unity-webgl-vrmxt-viewer.md)
   (WebGL build of that app).
-- Desktop edit/export and Hub WebGL view/apply share load, attach, and shader inventory;
-  WebGL remains consumer-only.
-- Product needs a registered VRoid Hub OAuth application and a token broker that
+- Desktop edit/export and Hub WebGL view/apply would share load, attach, and shader
+  inventory; WebGL would remain consumer-only.
+- Product would need a registered VRoid Hub OAuth application and a token broker that
   never ships `client_secret` to clients.
-- Content-script surface stays small: route detect, indicator, open/focus viewer.
-- Confirmed-VRMXT badge costs an authorized download and GLB JSON parse.
-- UniVRMXT package baseline for the Player / WebGL pin is compatibility work tracked in
+- Content-script surface would stay small: route detect, indicator, open/focus viewer.
+- Confirmed-VRMXT badge would cost an authorized download and GLB JSON parse.
+- UniVRMXT package baseline for the Player / WebGL pin was compatibility work tracked in
   [VRMXT Unity Player](../implementations/vrmxt-unity-player.md).
-- Architecture index and README list the player and Hub consumer pair.
+- Architecture index and README listed the player and Hub consumer pair.
+
+Current product path:
+[VRMXT desktop Player primary](vrmxt-desktop-player-primary.md).
 
 ## Open questions
 
+Frozen with this ADR. Topics below were open while the Hub extension path was active;
+they are not active product questions after supersession.
+
 | Topic | Status |
 |-------|--------|
-| Token broker deployment / PKCE public-client if VRoid grants it | TBD |
-| Viewer container: extension tab vs dedicated window defaults | TBD (persistent tab preferred) |
-| Model-byte cache retention and eviction policy | TBD |
-| Whether indicator downloads eagerly or only after user opens viewer | TBD |
-| First shipped VRMXT capability set and shader inventory | TBD in Unity viewer profile |
-| Measured extension package size before second player | TBD |
+| Token broker deployment / PKCE public-client if VRoid grants it | Frozen (path superseded) |
+| Viewer container: extension tab vs dedicated window defaults | Frozen (path superseded) |
+| Model-byte cache retention and eviction policy | Frozen (path superseded) |
+| Whether indicator downloads eagerly or only after user opens viewer | Frozen (path superseded) |
+| First shipped VRMXT capability set and shader inventory | Frozen (path superseded) |
+| Measured extension package size before second player | Frozen (path superseded) |
 
 ## Related
 
+- [VRMXT desktop Player primary](vrmxt-desktop-player-primary.md) (supersedes this decision)
 - [VRMXT Unity Player](../implementations/vrmxt-unity-player.md)
 - [VRoid Hub browser extension](../implementations/vroid-hub-browser-extension.md)
 - [Unity WebGL VRMXT viewer](../implementations/unity-webgl-vrmxt-viewer.md)

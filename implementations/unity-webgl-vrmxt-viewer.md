@@ -186,10 +186,11 @@ built player and are not substituted by `dotnet test`.
 
 ## Related
 
+- [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md) (supersedes this path)
 - [VRMXT Unity Player](vrmxt-unity-player.md)
 - [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md)
-- [VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md)
-- [VRoid Hub browser extension](vroid-hub-browser-extension.md)
+- [VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md) (superseded)
+- [VRoid Hub browser extension](vroid-hub-browser-extension.md) (superseded)
 - [Warudo VRMXT](warudo-vrmxt.md)
 - [UniVRMXT](univrm-vrmxt.md)
 - [VRMXT Conformance](../specs/core/vrmxt-conformance.md)
@@ -197,10 +198,14 @@ built player and are not substituted by `dotnet test`.
 
 ## Open questions
 
+Historical / frozen with this profile. Active Player questions live on
+[VRMXT Unity Player](vrmxt-unity-player.md) and
+[VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md).
+
 | Topic | Status |
 |-------|--------|
-| Builtin vs URP for the single shipped player | TBD (also on [Player](vrmxt-unity-player.md)) |
-| UniVRM / UniVRMXT pins on 2021.3 | TBD on Player profile |
-| WebGL claim set beyond MToon + lil | See [Unity Shader Plugins](vrmxt-unity-shader-plugins.md) |
-| KTX2 / Basis support on 2021.3 WebGL | TBD |
-| Memory budget for large Hub originals (~10–15 MB+) | TBD |
+| Builtin vs URP for the single shipped player | Frozen here; track on [Player](vrmxt-unity-player.md) |
+| UniVRM / UniVRMXT pins on 2021.3 | Frozen here; track on Player profile |
+| WebGL claim set beyond MToon + lil | Frozen (Hub WebGL not a product path) |
+| KTX2 / Basis support on 2021.3 WebGL | Frozen (path superseded) |
+| Memory budget for large Hub originals (~10–15 MB+) | Frozen (path superseded) |

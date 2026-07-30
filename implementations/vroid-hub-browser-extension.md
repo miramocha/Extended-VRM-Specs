@@ -231,10 +231,13 @@ Stock VRM load MUST succeed when VRMXT data is missing or partially unsupported
 
 ## Open questions
 
+Frozen with this profile (path superseded). See
+[VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md).
+
 | Topic | Status |
 |-------|--------|
-| Default viewer: tab vs window | TBD (tab preferred) |
-| Eager vs on-open download for VRMXT confirm | TBD |
-| Byte cache TTL / disk quota | TBD |
-| Exact Hub API version header pin | TBD at implement time |
-| Broker hosting and refresh rotation | TBD |
+| Default viewer: tab vs window | Frozen (path superseded) |
+| Eager vs on-open download for VRMXT confirm | Frozen (path superseded) |
+| Byte cache TTL / disk quota | Frozen (path superseded) |
+| Exact Hub API version header pin | Frozen (path superseded) |
+| Broker hosting and refresh rotation | Frozen (path superseded) |
