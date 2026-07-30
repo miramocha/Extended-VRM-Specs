@@ -11,21 +11,24 @@ tags:
   - spec/materials
   - spec/vfx
 type: guide
-status: draft
+status: superseded
 ---
 
 # Unity WebGL VRMXT viewer
 
-Unity WebGL consumer profile for the VRoid Hub extension viewer. The WebGL build is
-one target of the shared [VRMXT Unity Player](vrmxt-unity-player.md) project (same
-tree as the desktop drag-drop player). Architecture:
-[VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md).
-Browser shell / OAuth / download:
-[VRoid Hub browser extension](vroid-hub-browser-extension.md).
+> **Superseded.** Not a Hub product profile. Desktop preview/edit:
+> [VRMXT Unity Player](vrmxt-unity-player.md). Decision:
+> [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md).
+> A WebGL build MAY remain experimental in the Player repo. Body below is historical.
 
-Consumer only on this build: load original VRM bytes and attach supported `VRMXT_*`
-runtime behavior. No authoring UI and no Hub API client inside Unity. Desktop edit /
-export lives on the standalone build of the same project, not in WebGL.
+Historical Unity WebGL consumer profile for a planned VRoid Hub extension viewer.
+WebGL was one target of [VRMXT Unity Player](vrmxt-unity-player.md). Prior architecture:
+[VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md)
+(superseded). Browser shell:
+[VRoid Hub browser extension](vroid-hub-browser-extension.md) (superseded).
+
+Consumer-only intent: load original VRM bytes and attach supported `VRMXT_*`. No
+authoring UI and no Hub API client inside Unity.
 
 ## Goal
 
@@ -45,8 +48,10 @@ the Warudo VRMXT plugin on the same editor pin.
 
 Use UniVRM + UniVRMXT pins documented on
 [VRMXT Unity Player](vrmxt-unity-player.md) (2021.3 compatibility work tracked there).
-Ship Always Included / retention shaders for claimed override inventory. Warudo
-alignment = same editor pin and Apply semantics as [Warudo VRMXT](warudo-vrmxt.md).
+Claimed override shaders follow
+[VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md) (WebGL/Hub: MToon + lil;
+omit Poiyomi until proven). Warudo alignment = same editor pin and Apply semantics as
+[Warudo VRMXT](warudo-vrmxt.md).
 
 ## Architecture fit
 
@@ -173,7 +178,8 @@ built player and are not substituted by `dotnet test`.
 2. Open / create the [VRMXT Unity Player](vrmxt-unity-player.md) project; add UniVRM +
    UniVRMXT pins that pass 2021.3 import.
 3. Configure WebGL 2, threads off, decompression fallback as required.
-4. Add Always Included shaders for claimed override inventory.
+4. Warm claimed inventory per [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md);
+   do not put Poiyomi on Always Included.
 5. Build the **WebGL** target into the extension `player/` (or equivalent) folder
    consumed by `viewer.html`. Desktop is a separate Player build from the same project.
 6. Measure packaged size before proposing a second player.
@@ -181,6 +187,7 @@ built player and are not substituted by `dotnet test`.
 ## Related
 
 - [VRMXT Unity Player](vrmxt-unity-player.md)
+- [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md)
 - [VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md)
 - [VRoid Hub browser extension](vroid-hub-browser-extension.md)
 - [Warudo VRMXT](warudo-vrmxt.md)
@@ -194,6 +201,6 @@ built player and are not substituted by `dotnet test`.
 |-------|--------|
 | Builtin vs URP for the single shipped player | TBD (also on [Player](vrmxt-unity-player.md)) |
 | UniVRM / UniVRMXT pins on 2021.3 | TBD on Player profile |
-| First shader inventory (lilToon / test overrides / …) | TBD |
+| WebGL claim set beyond MToon + lil | See [Unity Shader Plugins](vrmxt-unity-shader-plugins.md) |
 | KTX2 / Basis support on 2021.3 WebGL | TBD |
 | Memory budget for large Hub originals (~10–15 MB+) | TBD |

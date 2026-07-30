@@ -21,6 +21,9 @@ Non-normative empirical note. Records whether `VRMXT_*` metadata survives upload
 Hub also builds a separate optimized preview for the browser viewer. This note covers
 the downloaded original only. Preview GLB was not inspected in this pass.
 
+In-browser Hub preview is not a VRMXT product path
+([VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)).
+
 ## Finding (2026-07-21)
 
 `VRMXT_materials_override` survived a Hub upload → download round trip.
@@ -68,6 +71,9 @@ byte comparison in this pass.
 
 - Spec: [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
 - Warudo apply: [Warudo VRMXT materials override](../implementations/warudo-vrmxt.md#materials-override)
-- Hub extension viewer (planned): [architecture decision](../decisions/vroid-hub-browser-viewer-architecture.md),
+- Desktop preview/edit: [VRMXT Unity Player](../implementations/vrmxt-unity-player.md),
+  [desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)
+- Historical Hub extension / WebGL notes (superseded):
+  [old ADR](../decisions/vroid-hub-browser-viewer-architecture.md),
   [browser extension](../implementations/vroid-hub-browser-extension.md),
   [Unity WebGL viewer](../implementations/unity-webgl-vrmxt-viewer.md)

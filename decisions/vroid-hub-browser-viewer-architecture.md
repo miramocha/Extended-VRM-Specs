@@ -10,15 +10,21 @@ tags:
   - implementation/optional-consumer
   - compatibility/vrm1
 type: decision
-status: proposed
+status: superseded
 ---
 
 # VRoid Hub browser viewer architecture
 
+> **Superseded.** Product path is desktop
+> [VRMXT Unity Player](../implementations/vrmxt-unity-player.md). See
+> [VRMXT desktop Player primary](vrmxt-desktop-player-primary.md).
+> This note is kept for history only.
+
 ## Status
 
-Proposed. No shipped extension or Unity WebGL viewer yet. Capability schemas remain
-drafts.
+Superseded by [VRMXT desktop Player primary](vrmxt-desktop-player-primary.md).
+No Hub browser extension or Unity WebGL Hub viewer is a shipping product path.
+Body below is historical.
 
 ## Context
 

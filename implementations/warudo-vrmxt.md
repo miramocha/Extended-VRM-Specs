@@ -28,11 +28,11 @@ Warudo remains a runtime consumer: the plugin applies VRMXT data after Character
 A VRMXT patch export rewrites materials-override JSON into a copy of the original local
 VRM. It does not export live geometry or other Warudo scene state.
 
-Related: [UniVRMXT](univrm-vrmxt.md).
-Planned Hub WebGL viewer uses the same Unity `2021.3.45f2` pin via
-[VRMXT Unity Player](vrmxt-unity-player.md):
-[Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md),
-[VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md).
+Related: [UniVRMXT](univrm-vrmxt.md),
+[VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md).
+Desktop [VRMXT Unity Player](vrmxt-unity-player.md) uses the same Unity
+`2021.3.45f2` pin and claimed-shader core
+([VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)).
 
 ## Goal
 
