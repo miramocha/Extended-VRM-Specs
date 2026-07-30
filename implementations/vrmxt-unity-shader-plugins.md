@@ -150,7 +150,7 @@ Shared helpers live in `com.miramocha.vrmxt.unity.shader-plugins`:
 
 | Layer | Role | Typical API |
 |-------|------|-------------|
-| A | Keep ShaderLab alive via Resources / ModHost mats | `ResourcesBirpShaderWarmHost`, host Ensure menus |
+| A | Keep ShaderLab alive via Resources / ModHost mats (Player AssetBundle host research) | `ResourcesBirpShaderWarmHost`, host Ensure menus |
 | B | Keyword subsets via SVC + Blit where the family needs it | `PoiyomiBirpWarm` (Poiyomi today) |
 | Inventory | Claimed name tests | `BirpClaimedShaderInventory` |
 
@@ -192,6 +192,7 @@ Editor / CI scorecard for “may we claim this?”, separate from glTF file vali
 - [Warudo Poiyomi Exclusions](../references/warudo-poiyomi-exclusions.md)
 - [Warudo Poiyomi BIRP Variants](../references/warudo-poiyomi-birp-variants.md)
 - [Warudo Material Warm-Up](../references/warudo-material-warmup.md)
+- [VRMXT Player Shader AssetBundles](../references/vrmxt-player-shader-assetbundles.md)
 - [VRMXT Unity Player](vrmxt-unity-player.md)
 - [Warudo VRMXT](warudo-vrmxt.md)
 - [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)
@@ -205,3 +206,4 @@ Editor / CI scorecard for “may we claim this?”, separate from glTF file vali
 | Promote structural validator into package Editor menu | Open |
 | Per-host Always Included allowlist for claimed helpers | Per-host Player Settings |
 | Numeric cook budgets per host (desktop Player vs Warudo) | Open |
+| Player Layer A via AssetBundle packs (vs Resources UPM) | Research: [Player Shader AssetBundles](../references/vrmxt-player-shader-assetbundles.md) |

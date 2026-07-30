@@ -113,6 +113,10 @@ Unreal Editor hosts only.
 Shader resolve: [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md) —
 ship claimed shaders; missing name → stock material; no network shader fetch.
 
+Future ship path (research): load lilToon / Poiyomi from runtime AssetBundles so
+the app build does not cook those trees.
+See [VRMXT Player Shader AssetBundles](../references/vrmxt-player-shader-assetbundles.md).
+
 ## Out of scope
 
 - Replacing UniVRMXT as the library
@@ -125,6 +129,7 @@ ship claimed shaders; missing name → stock material; no network shader fetch.
 
 - [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)
 - [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md)
+- [VRMXT Player Shader AssetBundles](../references/vrmxt-player-shader-assetbundles.md)
 - [VRMXT Editor](vrmxt-editor.md)
 - [UniVRMXT](univrm-vrmxt.md)
 - [Warudo VRMXT](warudo-vrmxt.md)
@@ -142,3 +147,4 @@ ship claimed shaders; missing name → stock material; no network shader fetch.
 | First desktop edit surface (mats Transfer ± VFX; no Materialize) | TBD |
 | Desktop export path (full UniVRM export vs JSON patch like Warudo) | TBD |
 | Hub download API inside desktop Player | Deferred |
+| Runtime AssetBundle shader packs (lil / Poiyomi) | Research: [Player Shader AssetBundles](../references/vrmxt-player-shader-assetbundles.md) |

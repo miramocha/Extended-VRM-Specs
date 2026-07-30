@@ -104,6 +104,7 @@ Optional `VRMXT_*` consumers:
 | [Warudo Poiyomi BIRP Variants](references/warudo-poiyomi-birp-variants.md) | Non-normative: BIRP cook / `multi_compile` keep set / SVC warm | draft |
 | [Warudo Poiyomi Exclusions](references/warudo-poiyomi-exclusions.md) | Non-normative: excluded keywords, alts, PassTypes, vendor strips | draft |
 | [Warudo Material Warm-Up](references/warudo-material-warmup.md) | Non-normative: ModHost asset warm + Poiyomi SVC | draft |
+| [VRMXT Player Shader AssetBundles](references/vrmxt-player-shader-assetbundles.md) | Non-normative: desktop Player runtime AssetBundle packs for lil / Poiyomi | draft |
 
 ## Archive
 

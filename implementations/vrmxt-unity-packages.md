@@ -84,12 +84,15 @@ Rules of thumb:
 - **UniVRMXT** owns format attach and materials Apply APIs. It does **not** own lil/Poiyomi
   vendor trees or SVC warm lists.
 - **Shader Plugins** owns claimed-name inventory and Layer A/B warm helpers. Hosts
-  supply Resources or ModHost asset load. Profile:
+  supply Resources, ModHost, or (Player research) AssetBundle asset load. Profile:
   [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md).
 - **Player** and **Warudo** are apps/plugins. Do not nest them inside UniVRMXT.
 - **Warudo Shader Plugins** (current): owns UMod packaging, vendor shader trees, and
   local warm. **Planned:** keep vendor trees in the UMod; consume
   `com.miramocha.vrmxt.unity.shader-plugins` for inventory / warm helpers.
+- **Player** (research): may load lil / Poiyomi from runtime AssetBundles instead of
+  UPM-in-app cook.
+  See [VRMXT Player Shader AssetBundles](../references/vrmxt-player-shader-assetbundles.md).
 
 ## Install snippets
 
@@ -124,5 +127,6 @@ Player / Warudo pin Unity **`2021.3.45f2`** for Warudo-aligned shader cook
 | Topic | Status |
 |-------|--------|
 | Warudo ModHost adapter on shared shader-plugins package | Planned |
+| Player AssetBundle shader packs (lil / Poiyomi) | Research note linked above |
 | Single public npm-style registry vs git URL UPM only | Git URL for now |
 | Align UniVRMXT `package.json` Unity floor vs Player `2021.3.45f2` pin | Tracked on UniVRMXT / Player profiles |
