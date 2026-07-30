@@ -218,8 +218,10 @@ Stock VRM load MUST succeed when VRMXT data is missing or partially unsupported
 
 ## Related
 
-- [VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md)
-- [Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md)
+- [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md) (supersedes this path)
+- [VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md) (superseded)
+- [Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md) (superseded)
+- [VRMXT Unity Player](vrmxt-unity-player.md)
 - [Warudo VRMXT](warudo-vrmxt.md)
 - [VRoid Hub VRMXT round-trip](../references/vroid-hub-vrmxt-roundtrip.md)
 - [VRMXT Conformance](../specs/core/vrmxt-conformance.md)

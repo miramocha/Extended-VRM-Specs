@@ -136,7 +136,7 @@ ship claimed shaders; missing name → stock material; no network shader fetch.
 
 | Topic | Status |
 |-------|--------|
-| Public GitHub repo name | TBD |
+| Public GitHub repo | Private today (`miramocha/VRMXT-Unity-Player`); public name TBD |
 | Builtin vs URP for shipped builds | TBD (align with Warudo BIRP first) |
 | Exact UniVRM / UniVRMXT pins on 2021.3.45f2 | TBD |
 | First desktop edit surface (mats Transfer ± VFX; no Materialize) | TBD |

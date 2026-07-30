@@ -114,7 +114,10 @@ Poiyomi BIRP keyword / warm mechanics:
 
 ## Host claim matrix
 
-Pins match Warudo BIRP shader plugins unless a host documents otherwise:
+Pins match Warudo BIRP shader plugins unless a host documents otherwise.
+Warudo/Player claimed lilToon pin is **1.10.3**. Separate authoring catalog samples may
+use **2.3.4** — see [Unity lilToon Catalog](../references/catalogs/unity-liltoon.md) and
+[Warudo lilToon catalog](../references/catalogs/unity-liltoon-warudo.md).
 
 | Family | Pin | Primary ShaderLab names |
 |--------|-----|-------------------------|

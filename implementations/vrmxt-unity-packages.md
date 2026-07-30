@@ -27,15 +27,15 @@ page is the dependency index for Unity hosts only.
 | [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | Fork | UniVRM-compatible | Optional import/export extension registries (propose upstream) |
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | UPM | `com.miramocha.univrmxt` | Parse / attach / sync `VRMXT_*`; materials Apply / Transfer; VFX |
 | [VRMXT-Unity-Shader-Plugins](https://github.com/miramocha/VRMXT-Unity-Shader-Plugins) | UPM | `com.miramocha.vrmxt.unity.shader-plugins` | Claimed BIRP ShaderLab inventory + warm helpers |
-| [VRMXT Unity Player](https://github.com/miramocha/VRMXT-Unity-Player) | App | Unity `2021.3.45f2` | Desktop view / edit / export; depends on UniVRMXT + shader-plugins |
+| VRMXT Unity Player | App (private repo today) | Unity `2021.3.45f2` | Desktop view / edit / export; depends on UniVRMXT + shader-plugins. Profile: [vrmxt-unity-player.md](vrmxt-unity-player.md) |
 | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo UMod | `mira.vrmxt` | Runtime consumer; vendored or linked UniVRMXT paths |
-| [Warudo-Shader-Plugins](https://github.com/miramocha/Warudo-Shader-Plugins) | Warudo UMods | e.g. `mira.shaders.poiyomi.birp`, lil BIRP | Vendor shaders + ModHost warm; not nested in UniVRMXT |
+| Warudo Shader Plugins | Warudo UMods (private repo today) | e.g. `mira.shaders.poiyomi.birp`, lil BIRP | Vendor shaders + ModHost warm; not nested in UniVRMXT |
 
 Third-party pins used by claimed overrides (host-shipped, not VRMXT packages):
 
 | Family | Typical pin | Notes |
 |--------|-------------|--------|
-| lilToon | `1.10.3` (Warudo / Player) | UPM / git path per host |
+| lilToon | `1.10.3` (Warudo / Player claimed) | Host pin; authoring catalogs may also publish `2.3.4` samples — see [unity-liltoon.md](../references/catalogs/unity-liltoon.md) / [unity-liltoon-warudo.md](../references/catalogs/unity-liltoon-warudo.md) |
 | Poiyomi Toon | `9.3.64` | Via Warudo Shader Plugins UMod or Player UPM |
 
 ## Dependency direction
