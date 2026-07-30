@@ -41,13 +41,14 @@ stock VRM when Extended packages are absent.
 |------|---------|--------------------|
 | Blender | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) on [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | Full DCC authoring + I/O |
 | Unity (package) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) + [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) for hooks | Library: Editor import/attach, materials apply, VFX re-export; catalog authoring UI later |
-| Unity (player app) | [VRMXT Unity Player](vrmxt-unity-player.md) (planned; depends on UniVRMXT) | Desktop drag-drop view + edit + export; WebGL view/apply for Hub extension |
+| Unity (player app) | [VRMXT Unity Player](vrmxt-unity-player.md) (planned; depends on UniVRMXT) | Desktop drag-drop view + edit + export |
 | Warudo | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Runtime apply + materials-override **patch** export (source-preserving) |
 
 Profiles: [Blender VRMXT](blender-vrmxt.md), [UniVRMXT](univrm-vrmxt.md),
 [VRMXT Unity Player](vrmxt-unity-player.md), [Warudo VRMXT](warudo-vrmxt.md). Patch
 detail: [Warudo VRMXT Patch Export](../references/warudo-vrmxt-patch-export.md).
-UniVRMXT = UPM library; Player = separate app (desktop + Hub WebGL) — see Player profile.
+UniVRMXT = UPM library; Player = separate desktop app — see Player profile and
+[desktop Player primary](../decisions/vrmxt-desktop-player-primary.md).
 
 ## Shared editor contract
 
@@ -128,8 +129,8 @@ wrapper. Warudo: post-load Apply on Character materials. Both ship Apply; neithe
 | Does not mean | Apply alone; deleting the extension from the `.vrm`; replacing stock glTF MToon bytes by itself |
 
 Materialize is **not shipped** on UniVRMXT or Warudo today. Planned for **Unity Editor**
-(UniVRMXT Editor path) and **Unreal Editor** only. Unity Player (desktop and WebGL),
-Warudo, and other runtime-only hosts MUST NOT claim Materialize.
+(UniVRMXT Editor path) and **Unreal Editor** only. Unity Player (desktop), Warudo, and
+other runtime-only hosts MUST NOT claim Materialize.
 
 ### Transfer (material asset → VRMXT)
 
@@ -152,7 +153,6 @@ Transfer is the reverse of Materialize. UniVRMXT: `SyncFromOverrideMaterials` /
 |------|--------------|--------------|------------------------|
 | Unity Editor / UniVRMXT | Done | — Planned (create `.mat`) | Done |
 | Unity Player desktop | Planned | — | Planned (from `.mat` only) |
-| Unity Player WebGL | Planned | — | — |
 | Warudo | Done | — | Partial (Manager / templates; no `.mat` Materialize) |
 | Blender | — | — | — (PropertyGroups authored directly) |
 | Unreal Editor / VRM4U | Planned | Planned | Planned |
@@ -170,7 +170,7 @@ Spec: [vrmxt-sprite-particle](../specs/extensions/vfx/vrmxt-sprite-particle.md).
 | Import | Done | Done (hooks or `TryAttach` / companion prefab) | Planned (post-load attach) | Done (post-load attach) |
 | Create/edit | Done (armature emitter UIList) | Partial (edit `VrmxtVfxInstance` / live `ParticleSystem`; full from-scratch UI still prefers Blender) | Planned (desktop only; scope TBD) | — (no emitter authoring UI) |
 | Preview | Done (GeoNodes helpers; export-excluded) | Done (`ParticleSystem` children) | Planned | Done (runtime `ParticleSystem`) |
-| Export | Done (hooks; can register particle images) | Done with Extended-UniVRM export hooks; folds live preview back | Planned (desktop only; WebGL none) | Partial: patch export **preserves** existing root particle JSON; does not author emitters |
+| Export | Done (hooks; can register particle images) | Done with Extended-UniVRM export hooks; folds live preview back | Planned (desktop only) | Partial: patch export **preserves** existing root particle JSON; does not author emitters |
 | Profile | [Blender → VFX](blender-vrmxt.md#vfx) | [UniVRMXT → VFX](univrm-vrmxt.md#vfx) | [Unity Player](vrmxt-unity-player.md) | [Warudo → VFX](warudo-vrmxt.md#vfx) |
 
 ### `VRMXT_materials_override`
@@ -182,7 +182,7 @@ Catalogs: [Materials Override Catalogs](../references/materials-override-catalog
 |----|---------|----------|------------------------|--------|
 | Import | Done (PropertyGroups when Unity parse succeeds) | Done (`IMaterialDescriptorGenerator` / runtime apply) | Planned | Done (post-load apply + catalog rebuild) |
 | Create/edit | Done (Material Properties panel; Engine / Variant / Shader; Add Common Props; bindings deferred) | Partial (assign Override Materials / sync active pipeline slot; shared catalog Editor UI **later**) | Planned (desktop only) | Partial (VRMXT Manager: per-material shader autocomplete + Character property catalog; no custom shader GUI; material templates **planned**) |
-| Apply | — | Done (`Applier.Apply`; import hooks / generator) | Planned (desktop + WebGL) | Done (post-load Apply) |
+| Apply | — | Done (`Applier.Apply`; import hooks / generator) | Planned (desktop) | Done (post-load Apply) |
 | Materialize | — | — (Planned: Unity Editor create `.mat`) | — | — (no AssetDatabase) |
 | Transfer | — (PropertyGroups authored directly) | Done (Sync from Override Material **asset**; variant survival) | Planned (desktop; from `.mat` only) | Partial (Manager / templates; no `.mat` Materialize) |
 | Preview | Stock Blender viewport (override is Unity-targeted data) | Done (Editor / Play materials via Apply) | Planned | Done (live Character materials via Apply) |
@@ -230,7 +230,7 @@ Hosts that only author portable JSON without that engine’s shaders (e.g. Blend
 `unity` slots) are not required to Apply/Materialize/Transfer engine materials; they still MUST
 Import / Create-edit / Export portable fields.
 
-Runtime / consume-only surfaces (Unity Player, Hub WebGL, Warudo) MAY Apply without
+Runtime / consume-only surfaces (Unity Player, Warudo) MAY Apply without
 Materialize.
 
 ### Claims by host (today)
@@ -239,12 +239,13 @@ Materialize.
 |------|-------------------|----------------------|
 | Blender | `VRMXT_sprite_particle`, `VRMXT_materials_override` (bindings authoring deferred) | Spring override, lattice, animation |
 | UniVRMXT | `VRMXT_sprite_particle` (re-export / edit existing; from-scratch UI thin), `VRMXT_materials_override` (Apply + Transfer Done; Materialize not shipped; catalog UI later) | Spring override, lattice, animation; Materialize-to-`.mat`; full catalog-driven materials UI |
-| Unity Player | None shipped (planned desktop Apply + Transfer ± VFX; **no** Materialize) | Materialize; WebGL authoring; spring / lattice / animation |
+| Unity Player | None shipped (planned desktop Apply + Transfer ± VFX; **no** Materialize) | Materialize; spring / lattice / animation |
 | Warudo | `VRMXT_materials_override` **patch** editor + Apply (no Materialize) | VFX authoring; Materialize; general live-avatar VRM export; workshop sources |
 
 Warudo remains primarily a **runtime consumer** with a **source-preserving materials
 patch**. Treat it as a specialized editor for materials override, not a general DCC.
-Unity Player WebGL is view/apply only; desktop build is the editor surface.
+Desktop [VRMXT Unity Player](vrmxt-unity-player.md) is the Player editor surface
+([desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)).
 
 ## Recommended authoring paths (non-normative)
 

@@ -11,19 +11,23 @@ tags:
   - spec/materials
   - spec/vfx
 type: guide
-status: draft
+status: superseded
 ---
 
 # VRoid Hub browser extension
 
-Cross-browser extension profile for previewing VRoid Hub models with VRMXT support.
-Architecture decision:
-[VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md).
-Unity WebGL load and apply:
-[Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md)
-(build target of [VRMXT Unity Player](vrmxt-unity-player.md)).
+> **Superseded.** Not pursued. Preview/edit product path:
+> [VRMXT Unity Player](vrmxt-unity-player.md) (desktop). Decision:
+> [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md).
+> Body below is historical.
 
-This note is a **consumer product profile**. It does not define a glTF extension.
+Cross-browser extension profile (historical) for previewing VRoid Hub models with
+VRMXT support. Prior architecture:
+[VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md)
+(superseded). Unity WebGL notes:
+[Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md) (superseded).
+
+This note was a **consumer product profile**. It does not define a glTF extension.
 Hub's stock three-vrm viewer remains unchanged.
 
 ## Goal
@@ -214,8 +218,10 @@ Stock VRM load MUST succeed when VRMXT data is missing or partially unsupported
 
 ## Related
 
-- [VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md)
-- [Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md)
+- [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md) (supersedes this path)
+- [VRoid Hub browser viewer architecture](../decisions/vroid-hub-browser-viewer-architecture.md) (superseded)
+- [Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md) (superseded)
+- [VRMXT Unity Player](vrmxt-unity-player.md)
 - [Warudo VRMXT](warudo-vrmxt.md)
 - [VRoid Hub VRMXT round-trip](../references/vroid-hub-vrmxt-roundtrip.md)
 - [VRMXT Conformance](../specs/core/vrmxt-conformance.md)
@@ -225,10 +231,13 @@ Stock VRM load MUST succeed when VRMXT data is missing or partially unsupported
 
 ## Open questions
 
+Frozen with this profile (path superseded). See
+[VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md).
+
 | Topic | Status |
 |-------|--------|
-| Default viewer: tab vs window | TBD (tab preferred) |
-| Eager vs on-open download for VRMXT confirm | TBD |
-| Byte cache TTL / disk quota | TBD |
-| Exact Hub API version header pin | TBD at implement time |
-| Broker hosting and refresh rotation | TBD |
+| Default viewer: tab vs window | Frozen (path superseded) |
+| Eager vs on-open download for VRMXT confirm | Frozen (path superseded) |
+| Byte cache TTL / disk quota | Frozen (path superseded) |
+| Exact Hub API version header pin | Frozen (path superseded) |
+| Broker hosting and refresh rotation | Frozen (path superseded) |
