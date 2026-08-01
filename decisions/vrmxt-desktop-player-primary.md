@@ -44,8 +44,10 @@ shaders at acceptable cost:
 - Headless browser smoke is a weak shader check. Desktop Play and player builds match
   Warudo better.
 
-Claim gates and host matrices:
+Megashader ship / cook gates (deprecated UPM profile):
 [VRMXT Unity Shader Plugins](../implementations/vrmxt-unity-shader-plugins.md).
+Planned Player packs:
+[VRMXT Player Shader AssetBundles](../references/vrmxt-player-shader-assetbundles.md).
 Operational Player notes: `Assets/VRMXTPlayer/SHADERS.md` in the Player repo.
 
 ## Decision
@@ -53,9 +55,10 @@ Operational Player notes: `Assets/VRMXTPlayer/SHADERS.md` in the Player repo.
 1. The primary optional Unity consumer for **preview and edit** of VRM 1.0 +
    `VRMXT_*` is the **desktop** [VRMXT Unity Player](../implementations/vrmxt-unity-player.md)
    (drag-drop / file open, view, edit supported extensions, export / write).
-2. Keep Unity editor pin **`2021.3.45f2`** and claimed-shader discipline aligned with
-   Warudo BIRP ([Warudo VRMXT](../implementations/warudo-vrmxt.md),
-   [Unity Shader Plugins](../implementations/vrmxt-unity-shader-plugins.md)).
+2. Keep Unity editor pin **`2021.3.45f2`** and megashader ship discipline aligned with
+   Warudo BIRP ([Warudo VRMXT](../implementations/warudo-vrmxt.md);
+   Player packs research:
+   [Player Shader AssetBundles](../references/vrmxt-player-shader-assetbundles.md)).
 3. Do **not** ship the VRoid Hub browser extension or Player WebGL viewer as a product
    path for Hub preview.
 4. Local files are the first ingest path. Hub OAuth / download inside the desktop app

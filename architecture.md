@@ -180,7 +180,7 @@ a host-native avatar package. When the same package also supports editor export,
 | Consumer | Host | Integration style |
 |----------|------|-------------------|
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity + [UniVRM](https://github.com/vrm-c/UniVRM) | Optional UPM package. Parse extension JSON; attach after `Vrm10` load. Runtime does not replace UniVRM. |
-| [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Unity app | Desktop view/edit/export; Warudo-aligned pin and claimed shaders. Depends on UniVRMXT. See [desktop Player primary](decisions/vrmxt-desktop-player-primary.md). |
+| [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Unity app | Desktop view/edit/export; Warudo-aligned pin. Depends on UniVRMXT; interim shader-plugins, planned StreamingAssets megashader packs. See [desktop Player primary](decisions/vrmxt-desktop-player-primary.md), [Player Shader AssetBundles](references/vrmxt-player-shader-assetbundles.md). |
 | Godot VRMXT addon (planned) | Godot + [godot-vrm](https://github.com/V-Sekai/godot-vrm) | Optional addon. Register `GLTFDocumentExtension` beside stock VRM plugins; runtime attach when `EditorPlugin` is absent. Does not replace godot-vrm. |
 | three-vrmxt (planned) | Three.js + [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | Optional npm package. Peer `GLTFLoaderPlugin` beside `VRMLoaderPlugin`; optional explicit `tryAttach`. Does not replace three-vrm. |
 | VRM4U path | Unreal + VRM4U | Optional profile docs under `implementations/`; stock VRM4U load remains baseline. |
@@ -279,7 +279,7 @@ Implementation notes: [three-vrmxt](implementations/three-vrmxt.md).
 | Cross-host VRMXT editor contract + capability matrix | [implementations/vrmxt-editor.md](implementations/vrmxt-editor.md) |
 | VRMXT Unity packages (UPM / app map) | [implementations/vrmxt-unity-packages.md](implementations/vrmxt-unity-packages.md) |
 | VRMXT Unity Player (desktop app) | [implementations/vrmxt-unity-player.md](implementations/vrmxt-unity-player.md), [decisions/vrmxt-desktop-player-primary.md](decisions/vrmxt-desktop-player-primary.md) |
-| Unity claimed shaders | [implementations/vrmxt-unity-shader-plugins.md](implementations/vrmxt-unity-shader-plugins.md) |
+| Unity megashader ship (deprecated UPM note) | [implementations/vrmxt-unity-shader-plugins.md](implementations/vrmxt-unity-shader-plugins.md) |
 | Blender hook API | [implementations/blender-extension-hooks.md](implementations/blender-extension-hooks.md) |
 | UniVRMXT profile | [implementations/univrm-vrmxt.md](implementations/univrm-vrmxt.md) |
 | Blender VRMXT profile | [implementations/blender-vrmxt.md](implementations/blender-vrmxt.md) |

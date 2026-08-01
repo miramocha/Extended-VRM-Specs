@@ -21,29 +21,34 @@ Non-normative research note: ship lilToon and Poiyomi for
 [VRMXT Unity Player](../implementations/vrmxt-unity-player.md) as **runtime
 AssetBundles**, so the desktop app build does not cook those megashader trees.
 
-Claim gates and warm APIs stay in
-[VRMXT Unity Shader Plugins](../implementations/vrmxt-unity-shader-plugins.md)
-(`com.miramocha.vrmxt.unity.shader-plugins`). Warudo keeps UMod +
-`ModHost.Assets.Load`. See [Warudo Material Warm-Up](warudo-material-warmup.md).
+Supported ShaderLab names and warm assets come from **in-pack config** (JSON,
+ScriptableObject, or equivalent), read at boot after `AssetBundle.LoadFromFile`.
+That config is the Player ship surface. It replaces hardcoded C# claim lists in
+`com.miramocha.vrmxt.unity.shader-plugins` (deprecated transitional package;
+[VRMXT Unity Shader Plugins](../implementations/vrmxt-unity-shader-plugins.md)).
+
+Warudo keeps UMod + `ModHost.Assets.Load` and does not consume shader-plugins
+([Warudo-Shader-Plugins#7](https://github.com/miramocha/Warudo-Shader-Plugins/issues/7)
+won’t-do). See [Warudo Material Warm-Up](warudo-material-warmup.md).
 
 ## Goal
 
 Move lilToon / Poiyomi ShaderLab cook out of the Player Standalone build. Player
-loads two packs at boot (Warudo’s two shader UMods, same split). Claimed-name
-Apply behavior unchanged: missing or unresolved name → stock VRM material; no
-network shader fetch.
+loads two packs at boot (same split as Warudo’s two shader UMods). Apply behavior:
+missing or unresolved name → stock VRM material; no network shader fetch.
 
 ## Current vs proposed
 
 | | Today (Player) | Proposed |
 |--|----------------|----------|
 | Vendor trees | UPM `jp.lilxyzw.liltoon`, `com.poiyomi.toon` in Player `Packages/manifest.json` | Cooked into AssetBundles; **not** release deps of the app project |
-| Layer A | `Resources.LoadAll` under `PlayerShaderWarm` → `ShaderWarmRegistry` | Load shaders/mats from packs → same registry |
-| Layer B | SVC in Resources + `PoiyomiBirpWarm` | SVC inside Poiyomi pack + same warm API |
+| Ship surface | C# inventory in shader-plugins | In-pack config lists load / warm / Apply names |
+| Layer A | `Resources.LoadAll` under `PlayerShaderWarm` → registry | Load shaders / mats named in pack config → host registry |
+| Layer B | SVC in Resources + `PoiyomiBirpWarm` | SVC asset inside Poiyomi pack; prefer baked `WarmUp` (Blit / `SetPass` only if still needed) |
 | Resolve | `ClaimedShaderResolver` (registry, then `Shader.Find`) | Registry first; do not rely on `Shader.Find` for pack shaders |
 
 Operational today: Player repo `Assets/VRMXTPlayer/SHADERS.md`,
-`ResourcesBirpShaderWarmHost`, `ClaimedShaderResolver`.
+`ResourcesBirpShaderWarmHost`, `ClaimedShaderResolver` (interim).
 
 ## Architecture
 
@@ -51,20 +56,20 @@ Operational today: Player repo `Assets/VRMXTPlayer/SHADERS.md`,
 flowchart TB
   cookLil["Cook project lilToon pin"]
   cookPoi["Cook project Poiyomi pin"]
-  abLil["liltoon.birp"]
-  abPoi["poiyomi.birp"]
+  abLil["liltoon.birp + config"]
+  abPoi["poiyomi.birp + config"]
   player["VRMXT Unity Player boot"]
-  helpers["shader-plugins inventory + warm"]
-  reg["ShaderWarmRegistry"]
+  reg["Host shader registry"]
   apply["materials-override Apply"]
   cookLil --> abLil
   cookPoi --> abPoi
   abLil --> player
   abPoi --> player
-  helpers --> player
   player --> reg
   reg --> apply
 ```
+
+Host binds UniVRMXT `ShaderResolveProvider` to the registry after load.
 
 ## Pack contract
 
@@ -88,36 +93,49 @@ an AssetBundle (`AssetBundle.LoadFromFile`).
 | Unity | `2021.3.45f2` (same as Player / Warudo) |
 | Platform | Standalone (desktop) |
 | Pipeline | Built-in (BIRP) |
-| lilToon source pin | **1.10.3** (claimed) |
-| Poiyomi source pin | **9.3.64** (claimed) |
+| lilToon source pin | **1.10.3** |
+| Poiyomi source pin | **9.3.64** |
 
 Packs are Unity-version and platform sticky. Bump Player Unity → re-export packs.
 
 ### Content policy
 
 Put **full official-sourced** vendor trees into each pack (git/UPM pin above).
-Runtime code chooses what to load. lil / Poiyomi do not publish official
+Runtime config chooses what to load. lil / Poiyomi do not publish official
 AssetBundles; cook projects export them.
 
-| Pack | Include | Skip in load list |
-|------|---------|-------------------|
-| `liltoon.birp` | lil ShaderLab + includes; warm mats for claimed lil names | Poiyomi |
-| `poiyomi.birp` | Poiyomi Toon tree + includes; warm mats; `ShaderVariantCollection`; textures needed by claimed alts (e.g. Lil Fur) | World / Pro World / Two Pass from **warm and claim** (may still sit on disk unused) |
+| Pack | Include | Typical config omit |
+|------|---------|---------------------|
+| `liltoon.birp` | lil ShaderLab + includes; warm mats | Poiyomi |
+| `poiyomi.birp` | Poiyomi Toon tree + includes; warm mats; `ShaderVariantCollection`; textures for alts you load (e.g. Lil Fur) | World / Pro World / Two Pass from load + warm (may still sit on disk unused) |
 
-Player deferred warm/claim for Two Pass is not the same as the Warudo Toon UMod ship
-set: Warudo still ships and ModHost-loads Two Pass alts; Player keeps them out of
-`SvcWarmShaderNames` / claim warm. See
+Player load config for Two Pass need not match the Warudo Toon UMod ship set: Warudo
+may still ModHost-load Two Pass alts. See
 [Warudo Poiyomi Exclusions](warudo-poiyomi-exclusions.md) and
 [Warudo Poiyomi BIRP Variants](warudo-poiyomi-birp-variants.md).
+
+### In-pack config
+
+Each pack (or a small sidecar cooked into the same bundle) should describe at least:
+
+- ShaderLab names (or cooked asset ids) to `LoadAsset` for Apply
+- Warm materials / Layer A keep-alive assets
+- Optional Layer B: `ShaderVariantCollection` asset path; keyword / pass hints only if
+  bake is incomplete
+
+Cook should generate or validate this config so it stays in sync with what the pack
+contains. Prefer generating the list at cook time over hand-maintaining a second
+manifest in Player C#.
 
 ### Not in either pack
 
 | Piece | Where it lives |
 |-------|----------------|
-| Claim inventory, `ShaderWarmRegistry`, `PoiyomiBirpWarm` | `com.miramocha.vrmxt.unity.shader-plugins` |
-| UniVRMXT / Apply | Player UPM deps |
+| UniVRMXT / Apply / VFX particle mat | Player UPM deps / first-party app assets |
+| Host registry + `ShaderResolveProvider` bind | Player app code |
 | Test override `VRMXT/Samples/TestOverrideBuiltin` | Player app assets (tiny) |
 | Player scenes, UI, exe | Main Player build |
+| Interim inventory / warm C# | Deprecated `shader-plugins` until packs ship |
 
 ## Load and warm contract
 
@@ -126,32 +144,23 @@ set: Warudo still ships and ModHost-loads Two Pass alts; Player keeps them out o
 1. Discover packs under `StreamingAssets/ShaderMods/` (or configured dir).
 2. Load `liltoon.birp` if present.
 3. Load `poiyomi.birp` if present.
-4. For each **claimed** ShaderLab name (and known warm-mat / SVC assets),
-   `LoadAsset` / `LoadAssetAsync` by **cooked AssetBundle asset name** (or a
-   documented address map from the cook project). Avoid `LoadAllAssets` on the
-   whole Poiyomi tree.
-5. Register loaded `Shader` instances in `ShaderWarmRegistry`; keep material refs
-   alive for Layer A.
-6. If Poiyomi pack loaded: run Layer B (`ShaderVariantCollection.WarmUp` + existing
-   Blit / `SetPass` path via `PoiyomiBirpWarm`).
-7. Install `ShaderResolveProvider` (Player `ClaimedShaderResolver` or equivalent).
+4. Read each pack’s config.
+5. For each listed ShaderLab name (and warm-mat / SVC assets), `LoadAsset` /
+   `LoadAssetAsync` by cooked AssetBundle asset name (or a documented address map).
+   Avoid `LoadAllAssets` on the whole Poiyomi tree.
+6. Register loaded `Shader` instances in the host registry; keep material refs alive
+   for Layer A.
+7. If Poiyomi pack loaded and config points at an SVC: `ShaderVariantCollection.WarmUp`
+   (plus Blit / `SetPass` only if still required).
+8. Install `ShaderResolveProvider` from the registry.
 
-Missing pack → that family is absent at runtime → Apply falls through to stock for
-those names. Inventory membership alone does not create a Shader.
-
-### Selective load sources
-
-Reuse package lists (do not fork a second manifest in Player):
-
-- `BirpClaimedShaderInventory`: which names may Apply
-- `PoiyomiBirpWarmKeywords.SvcWarmShaderNames`: Layer B targets
-- Deferred alts: `IsDeferredPoiyomiAlt` (World / Pro World / Two Pass) stay unloaded
+Missing pack → that family absent at runtime → Apply falls through to stock for those
+names. Config membership alone does not create a Shader.
 
 ### Resolve
 
 Same discipline as Warudo ModHost shaders: name → registry map. `Shader.Find` may
-return null for assets that only exist inside a loaded bundle. Player resolve
-already prefers `ShaderWarmRegistry` before Find.
+return null for assets that only exist inside a loaded bundle.
 
 ## Size reality
 
@@ -175,6 +184,7 @@ cook strips unused textures / alts.
 |--|--------------------|--------------------|
 | Pack format | UMod (assets bundled inside the mod package) | Unity AssetBundle files |
 | Runtime API | `ModHost.Assets.Load` | `AssetBundle.LoadFromFile` + selective load |
+| Ship surface | UMod warm code + ModHost paths | In-pack config |
 | Raw AssetBundle as plugin | Not the Warudo plugin format; ModHost is the supported load API | First-class |
 | Split | lil UMod + Poiyomi UMod | `liltoon.birp` + `poiyomi.birp` |
 
@@ -196,8 +206,8 @@ used.
 - Network fetch of shaders
 - Poiyomi on Always Included Shaders
 - Optimizer lock copies (`Hidden/Locked/…`) as Apply identities
-- WebGL megashader claim for these packs
-- Replacing `shader-plugins` with pack-only logic
+- WebGL megashader ship for these packs
+- Keeping long-term hardcoded claim / Poiyomi warm tables in `shader-plugins`
 
 ## Open questions
 
@@ -205,14 +215,15 @@ used.
 |-------|--------|
 | Cook project ownership (reuse Warudo Shader Plugins trees vs dedicated Player cook) | Open |
 | Bundle file naming / versioning under `StreamingAssets` | Open |
+| In-pack config format (JSON vs ScriptableObject) and cook generation | Open |
 | Thry unlocked-shader strip policy in cook project vs Player | Open |
 | Leave deferred Poiyomi alts on disk unused vs strip at cook | Open |
-| `AssetBundleBirpShaderWarmHost` in shader-plugins vs Player-only loader | Open |
+| AB loader location | Player-only (not a new host type in shader-plugins) |
 
 ## Related
 
 - [VRMXT Unity Player](../implementations/vrmxt-unity-player.md)
-- [VRMXT Unity Shader Plugins](../implementations/vrmxt-unity-shader-plugins.md)
+- [VRMXT Unity Shader Plugins](../implementations/vrmxt-unity-shader-plugins.md) (deprecated)
 - [VRMXT Unity packages](../implementations/vrmxt-unity-packages.md)
 - [Warudo Material Warm-Up](warudo-material-warmup.md)
 - [Warudo Poiyomi BIRP Variants](warudo-poiyomi-birp-variants.md)

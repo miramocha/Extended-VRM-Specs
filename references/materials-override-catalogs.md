@@ -165,7 +165,7 @@ approach they use.
 
 - Spec: [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
 - Unity profile: [UniVRMXT](../implementations/univrm-vrmxt.md#materials-override)
-- Host claim / warm profile: [VRMXT Unity Shader Plugins](../implementations/vrmxt-unity-shader-plugins.md)
+- Host megashader ship note (deprecated): [VRMXT Unity Shader Plugins](../implementations/vrmxt-unity-shader-plugins.md); Player packs: [VRMXT Player Shader AssetBundles](vrmxt-player-shader-assetbundles.md)
 - Blender authoring: [Blender VRMXT](../implementations/blender-vrmxt.md#materials-override)
 - Architecture: [Extended VRM Architecture](../architecture.md)
 - Maintainer regen: [Maintaining catalogs](catalogs/maintaining-catalogs.md)
