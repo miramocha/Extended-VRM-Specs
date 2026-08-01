@@ -239,8 +239,12 @@ use stock import for that material.
 
 ### UniVRM integration
 
-UniVRM exposes `IMaterialDescriptorGenerator`. A supporting package wraps the stock
-VRM 1.0 generator:
+**Shipped Editor path:** Extended-UniVRM import hooks attach
+`VrmxtMaterialsOverrideInstance` and remember textures; stock MToon stays on renderers
+until Materialize (or runtime `Applier.Apply`). No auto-Apply on Editor import.
+
+**Planned:** wrap UniVRM `IMaterialDescriptorGenerator` so override shaders can land before
+first render. A supporting package would:
 
 1. Read `materials[i].extensions.VRMXT_materials_override`.
 2. Select the `unity` entry for the active pipeline per Selection.
@@ -249,12 +253,11 @@ VRM 1.0 generator:
    declared `bindings`.
 5. Delegate to the stock generator when any step fails.
 
-Runtime callers pass the wrapper through the `materialGenerator` argument on
-`Vrm10.LoadPathAsync`, `LoadBytesAsync`, or `LoadGltfDataAsync`.
-
-Editor import uses a `MaterialDescriptorGeneratorFactory` assigned in UniVRM project
-settings. The factory returns the same wrapper. With no factory assigned, UniVRM keeps
-its built-in MToon, unlit, and PBR selection.
+Runtime callers would pass the wrapper through the `materialGenerator` argument on
+`Vrm10.LoadPathAsync`, `LoadBytesAsync`, or `LoadGltfDataAsync`. Editor import would use
+a `MaterialDescriptorGeneratorFactory` in UniVRM project settings. Until that ships,
+UniVRM keeps built-in MToon / unlit / PBR on import; UniVRMXT Materialize / Apply handle
+overrides after attach.
 
 ### Package and shader resolution
 
@@ -289,7 +292,7 @@ Cross-host rules:
 | Op | UniVRMXT status | API |
 |----|-----------------|-----|
 | Apply | **Done** | `VrmxtMaterialsOverrideApplier.Apply` (runtime / Player). Editor import attaches only — no auto-Apply |
-| Materialize | **Done** (**Unity Editor only**) | `VrmxtMaterialsOverrideMaterialize` — create/update `Material` **asset** (`.mat`); inspector Materialize All / per-pair; Swap Back to MToon restores Source on renderers |
+| Materialize | **Done** (**Unity Editor only**) | `VrmxtMaterialsOverrideMaterialize` — create/update `Material` **asset** (`.mat`); inspector Materialize All / per-pair; Show Override Materials toggles Source vs Override on renderers |
 | Transfer | **Done** | `SyncUnityOverrideFromMaterial` / `SyncFromOverrideMaterials` (Override Material **asset** only) |
 
 ### Bindings

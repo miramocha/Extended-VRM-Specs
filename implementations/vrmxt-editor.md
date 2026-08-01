@@ -186,7 +186,7 @@ Catalogs: [Materials Override Catalogs](../references/materials-override-catalog
 | Apply | — | Done (`Applier.Apply` for runtime/Player; Editor import does not auto-Apply) | Planned (desktop) | Done (post-load Apply) |
 | Materialize | — | Done (Editor: Materialize All / per-pair → `.mat`) | — | — (no AssetDatabase) |
 | Transfer | — (PropertyGroups authored directly) | Done (Sync from Override Material **asset**; variant survival) | Planned (desktop; from `.mat` only) | Partial (Manager / templates; no `.mat` Materialize) |
-| Preview | Stock Blender viewport (override is Unity-targeted data) | Done (Materialize preview / DontSave clones; Swap Back to MToon) | Planned | Done (live Character materials via Apply) |
+| Preview | Stock Blender viewport (override is Unity-targeted data) | Done (Materialize `.mat` on slots; Show Override Materials toggle) | Planned | Done (live Character materials via Apply) |
 | Export | Done (serialize groups; texture remap when helpers available) | Done with Extended-UniVRM export hooks; variant survival rules | Planned (desktop only; path TBD — full export vs patch) | Done: **patch** rewrite of materials-override JSON into copy of local source VRM; original BIN kept; **no new image payloads** |
 | Profile | [Blender → Materials](blender-vrmxt.md#materials-override) | [UniVRMXT → Materials](univrm-vrmxt.md#materials-override) | [Unity Player](vrmxt-unity-player.md) | [Warudo → Materials](warudo-vrmxt.md#materials-override), [patch export](../references/warudo-vrmxt-patch-export.md) |
 
@@ -268,8 +268,8 @@ flowchart LR
 | New sprite emitters from scratch | Blender |
 | Unity scene re-export of emitters / override slots already on the avatar | UniVRMXT + Extended-UniVRM gates |
 | Drag-drop Unity runtime view + edit without a full DCC | Unity Player desktop (planned) |
-| Apply file override onto live mats (shader already in app) | Apply (UniVRMXT, Warudo, Player) |
-| Create Unity `.mat` (or Unreal asset) from override | Materialize (Unity Editor / Unreal Editor Planned; not Player) |
+| Apply file override onto live mats (shader already in app) | Apply (UniVRMXT, Warudo; Player desktop planned) |
+| Create Unity `.mat` (or Unreal asset) from override | Materialize (Unity Editor Done; Unreal Editor Planned; not Player) |
 | Capture tuned `.mat` into portable override | Transfer from Material asset (UniVRMXT; Player desktop planned) |
 | Tune Unity materials on a live Warudo Character, write back override JSON | Warudo VRMXT Manager patch export |
 | Cross-engine round-trip check | Export from one host → import on another; compare portable fields |
