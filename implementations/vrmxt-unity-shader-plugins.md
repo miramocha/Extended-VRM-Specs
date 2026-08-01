@@ -40,8 +40,9 @@ Unresolved override names follow materials-override rules 11–12 (stock VRM for
 material). File validity does not require catalog or inventory membership (rules
 18–19).
 
-Product consumers: [VRMXT Unity Player](vrmxt-unity-player.md) (desktop),
-[Warudo VRMXT](warudo-vrmxt.md). Poiyomi exclusion detail:
+Interim package consumer: [VRMXT Unity Player](vrmxt-unity-player.md) only.
+[Warudo VRMXT](warudo-vrmxt.md) uses separate UMod ModHost warm and does **not**
+depend on this package. Poiyomi exclusion detail:
 [Warudo Poiyomi Exclusions](../references/warudo-poiyomi-exclusions.md).
 
 Experimental WebGL notes:

@@ -180,7 +180,7 @@ a host-native avatar package. When the same package also supports editor export,
 | Consumer | Host | Integration style |
 |----------|------|-------------------|
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity + [UniVRM](https://github.com/vrm-c/UniVRM) | Optional UPM package. Parse extension JSON; attach after `Vrm10` load. Runtime does not replace UniVRM. |
-| [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Unity app | Desktop view/edit/export; Warudo-aligned pin and claimed shaders. Depends on UniVRMXT. See [desktop Player primary](decisions/vrmxt-desktop-player-primary.md). |
+| [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Unity app | Desktop view/edit/export; Warudo-aligned pin. Depends on UniVRMXT; interim shader-plugins, planned StreamingAssets megashader packs. See [desktop Player primary](decisions/vrmxt-desktop-player-primary.md), [Player Shader AssetBundles](references/vrmxt-player-shader-assetbundles.md). |
 | Godot VRMXT addon (planned) | Godot + [godot-vrm](https://github.com/V-Sekai/godot-vrm) | Optional addon. Register `GLTFDocumentExtension` beside stock VRM plugins; runtime attach when `EditorPlugin` is absent. Does not replace godot-vrm. |
 | three-vrmxt (planned) | Three.js + [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | Optional npm package. Peer `GLTFLoaderPlugin` beside `VRMLoaderPlugin`; optional explicit `tryAttach`. Does not replace three-vrm. |
 | VRM4U path | Unreal + VRM4U | Optional profile docs under `implementations/`; stock VRM4U load remains baseline. |
