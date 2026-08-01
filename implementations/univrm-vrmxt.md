@@ -288,8 +288,8 @@ Cross-host rules:
 
 | Op | UniVRMXT status | API |
 |----|-----------------|-----|
-| Apply | **Done** | `VrmxtMaterialsOverrideApplier.Apply`; import hooks / generator |
-| Materialize | **Not shipped** (Planned; **Unity Editor only**) | Create/update `Material` **asset** (`.mat`) from override |
+| Apply | **Done** | `VrmxtMaterialsOverrideApplier.Apply` (runtime / Player). Editor import attaches only — no auto-Apply |
+| Materialize | **Done** (**Unity Editor only**) | `VrmxtMaterialsOverrideMaterialize` — create/update `Material` **asset** (`.mat`); inspector Materialize All / per-pair; Swap Back to MToon restores Source on renderers |
 | Transfer | **Done** | `SyncUnityOverrideFromMaterial` / `SyncFromOverrideMaterials` (Override Material **asset** only) |
 
 ### Bindings
