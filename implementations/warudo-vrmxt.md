@@ -29,9 +29,10 @@ A VRMXT patch export rewrites materials-override JSON into a copy of the origina
 VRM. It does not export live geometry or other Warudo scene state.
 
 Related: [UniVRMXT](univrm-vrmxt.md),
-[VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md).
+[Warudo Material Warm-Up](../references/warudo-material-warmup.md)
+(UMod-local; no shader-plugins dep).
 Desktop [VRMXT Unity Player](vrmxt-unity-player.md) uses the same Unity
-`2021.3.45f2` pin and claimed-shader core
+`2021.3.45f2` pin
 ([VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)).
 
 ## Goal

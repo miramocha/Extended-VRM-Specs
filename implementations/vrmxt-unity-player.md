@@ -25,8 +25,10 @@ Product decision:
 [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)
 (supersedes Hub browser extension + WebGL as a shipping path).
 
-Authoring contract: [VRMXT Editor](vrmxt-editor.md). Claimed shaders:
+Authoring contract: [VRMXT Editor](vrmxt-editor.md). Megashader ship notes
+(deprecated UPM profile):
 [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md).
+Planned packs: [VRMXT Player Shader AssetBundles](../references/vrmxt-player-shader-assetbundles.md).
 Package map: [VRMXT Unity packages](vrmxt-unity-packages.md).
 
 ## Goal
@@ -51,7 +53,7 @@ product path and MUST NOT claim Warudo-parity megashader support. Historical not
 | Format, runtime attach, materials authoring helpers, export hooks | [UniVRMXT](https://github.com/miramocha/UniVRMXT) (`com.miramocha.univrmxt`) |
 | Stock VRM 1.0 load | UniVRM (versions compatible with `2021.3.45f2`) |
 | Player app (desktop) | VRMXT Unity Player (do not nest inside UniVRMXT or Extended-UniVRM) |
-| Claimed shader warm helpers | `com.miramocha.vrmxt.unity.shader-plugins` |
+| Megashader warm (interim) | `com.miramocha.vrmxt.unity.shader-plugins` (deprecated); planned StreamingAssets packs + in-pack config |
 
 Rejected:
 
@@ -68,17 +70,19 @@ Rejected:
 | Pin reason | Match [Warudo VRMXT](warudo-vrmxt.md) |
 | Stock VRM | UniVRM packages tested on 2021.3 |
 | Extended | UniVRMXT UPM dependency (test 2021.3 compatibility; package.json currently declares `2022.3`) |
-| Shared with Warudo | Load, UniVRMXT attach, materials Apply, claimed shader pack |
+| Shared with Warudo | Load, UniVRMXT attach, materials Apply; megashader ship differs (UMod vs planned AB packs) |
 | Desktop | File dialog / drag-drop, edit UI, export / write |
 
 ```mermaid
 flowchart TB
   pkg["UniVRMXT UPM"]
-  shaders["Unity Shader Plugins UPM"]
+  shaders["Shader Plugins UPM<br/>interim deprecated"]
+  packs["StreamingAssets packs<br/>planned"]
   app["VRMXT Unity Player<br/>2021.3.45f2"]
   desk["Desktop build<br/>view + edit + export"]
   pkg --> app
   shaders --> app
+  packs -.-> app
   app --> desk
 ```
 
@@ -110,12 +114,10 @@ Unreal Editor hosts only.
 | `VRMXT_sprite_particle` | View + edit/export as profile allows |
 | Other `VRMXT_*` | Ignore until claimed |
 
-Shader resolve: [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md) —
-ship claimed shaders; missing name → stock material; no network shader fetch.
-
-Future ship path (research): load lilToon / Poiyomi from runtime AssetBundles so
-the app build does not cook those trees.
+Shader resolve: register shaders the Player ships (interim shader-plugins inventory,
+planned pack config); missing name → stock material; no network shader fetch.
 See [VRMXT Player Shader AssetBundles](../references/vrmxt-player-shader-assetbundles.md).
+Deprecated profile note: [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md).
 
 ## Out of scope
 

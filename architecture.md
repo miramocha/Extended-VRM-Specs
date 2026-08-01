@@ -279,7 +279,7 @@ Implementation notes: [three-vrmxt](implementations/three-vrmxt.md).
 | Cross-host VRMXT editor contract + capability matrix | [implementations/vrmxt-editor.md](implementations/vrmxt-editor.md) |
 | VRMXT Unity packages (UPM / app map) | [implementations/vrmxt-unity-packages.md](implementations/vrmxt-unity-packages.md) |
 | VRMXT Unity Player (desktop app) | [implementations/vrmxt-unity-player.md](implementations/vrmxt-unity-player.md), [decisions/vrmxt-desktop-player-primary.md](decisions/vrmxt-desktop-player-primary.md) |
-| Unity claimed shaders | [implementations/vrmxt-unity-shader-plugins.md](implementations/vrmxt-unity-shader-plugins.md) |
+| Unity megashader ship (deprecated UPM note) | [implementations/vrmxt-unity-shader-plugins.md](implementations/vrmxt-unity-shader-plugins.md) |
 | Blender hook API | [implementations/blender-extension-hooks.md](implementations/blender-extension-hooks.md) |
 | UniVRMXT profile | [implementations/univrm-vrmxt.md](implementations/univrm-vrmxt.md) |
 | Blender VRMXT profile | [implementations/blender-vrmxt.md](implementations/blender-vrmxt.md) |
