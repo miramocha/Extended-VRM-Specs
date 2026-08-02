@@ -202,7 +202,8 @@ On the same **VRMXT Manager** (`VrmxtManagerAsset`):
 
 - Refresh a per-material list with shader autocomplete.
 - Apply shader overrides into the runtime `VRMXT_materials_override` store and re-apply live
-  (keeps packed `type: texture` rows; Material Transfer still strips textures).
+  (keeps packed `type: texture` rows). Material Transfer uses per-row texture handling
+  (Keep packed / Clear if set / Clear all); YAML never copies template textures.
 - Export patches current store JSON into a new file (default `Characters/<stem>.vrmxt.vrm`)
   via `PersistentDataManager`, preserving original BIN and unrelated JSON.
 
