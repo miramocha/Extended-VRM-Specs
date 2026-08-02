@@ -201,7 +201,9 @@ and [export plan](../references/warudo-vrmxt-patch-export.md)).
 On the same **VRMXT Manager** (`VrmxtManagerAsset`):
 
 - Refresh a per-material list with shader autocomplete.
-- Apply shader overrides into the runtime `VRMXT_materials_override` store and re-apply live.
+- Apply shader overrides into the runtime `VRMXT_materials_override` store and re-apply live
+  (keeps packed `type: texture` rows). Material Transfer uses per-row texture handling
+  (Keep packed / Clear if set / Clear all); YAML never copies template textures.
 - Export patches current store JSON into a new file (default `Characters/<stem>.vrmxt.vrm`)
   via `PersistentDataManager`, preserving original BIN and unrelated JSON.
 
@@ -221,8 +223,8 @@ These constraints describe the current Warudo Mod Tool and are non-normative:
 - `Shader.Find` returns null for mod-shipped shaders. `VrmxtPlugin` warms assets into
   `VrmxtMaterialsOverrideApplier.ShaderResolveProvider`. Detail:
   [Warudo Material Warm-Up](../references/warudo-material-warmup.md).
-- Pipeline detection uses `DetectActivePipelineForWarudo`: null means Builtin; any
-  active render pipeline means Urp.
+- Pipeline detection uses `DetectActivePipelineForWarudo` (null → Builtin; else Urp),
+  bound as `ActivePipelineProvider` so Transfer stamps the same `variant` as Apply.
 
 ## Local Source URIs only
 
@@ -235,11 +237,11 @@ VRMXT patch export rewrites materials-override JSON onto a copy of the original
 local VRM and keeps the original BIN (no new image payloads). Authoring in Warudo uses
 Warudo's material property catalog, not Unity's Material Inspector or custom shader GUIs.
 
-| Pain point | Workaround today | Planned |
+| Pain point | Workaround today | Notes |
 |------------|------------------|---------|
 | Export cannot pack **new** textures into the `.vrm` | Set default textures (and other defaults) on the Character asset material properties so Warudo already holds them at runtime | Packing new images stays out of export scope; reuse image indices already in the source GLB |
-| Shader / property-catalog authoring drops **custom shader UI** (lilToon, Poiyomi, etc.) | Edit properties one by one in the Character material catalog after Apply refreshes it | Author a `.mat` in Unity (Mod Tool or a shader-plugin project), copy it into a Warudo-resolvable folder, pick it as a **material template** |
-| Filling every property by hand is slow | Same Character-catalog path; prefer shaders already warm in ModHost | Material-template flow above |
+| Shader / property-catalog authoring drops **custom shader UI** (lilToon, Poiyomi, etc.) | Author a `.mat` in Unity, copy the file into StreamingAssets `VRMXT/MaterialTemplates/`, set **Shader** + Apply shader overrides, set **Material template**, run **Transfer from templates** | Transfer parses `.mat` YAML as text (floats/colors/keywords only); shader GUID and textures are skipped |
+| Filling every property by hand is slow | Same YAML Transfer path | Set Shader on the row before Transfer |
 
 ### New textures
 
@@ -258,17 +260,21 @@ After Apply, the plugin rebuilds `CharacterAsset.MaterialProperties` from the li
 shader's declared properties. That catalog is a flat property list. Custom Material
 Editor drawers and shader GUI folders from Unity do not appear in Warudo.
 
-### Planned: material templates
+### Material templates (Transfer)
 
-Not shipped yet:
+Shipped (VRMXT Manager):
 
 1. Create and tune a material in Unity with the target shader and full Inspector UI.
-2. Move the `.mat` (plus any textures Warudo can load) into a folder the plugin can
-   resolve.
-3. Select that material as a template when authoring or exporting overrides so property
-   values and texture refs come from the `.mat`.
+2. Copy the `.mat` file into Warudo StreamingAssets `VRMXT/MaterialTemplates/`
+   (Mod Tool: `Assets/StreamingAssets/VRMXT/MaterialTemplates/`).
+3. On each Materials row: set **Shader**, **Apply shader overrides**, set **Material template**
+   to `VRMXT/MaterialTemplates/Your.mat`, then **Transfer from templates**.
 
-Status: planned.
+Transfer reads the file via `PersistentDataManager` and parses Unity Material YAML as text.
+It merges **floats, ints, colors, and keywords** into the active unity override. It does
+**not** resolve `m_Shader` GUID. Per-row **Texture handling**: Keep packed (default),
+Clear if set (drop live-assigned texture slots), or Clear all. Patch export still keeps
+the original BIN.
 
 ## Out of scope
 
@@ -277,7 +283,8 @@ Status: planned.
 - New GLB image payloads in the VRMXT patch export (see
   [Limitations](#limitations-workarounds-and-planned-authoring))
 - Blueprint nodes for materials override authoring
-- Full per-shader custom Material Editor UI in Warudo (template `.mat` flow planned)
+- Full per-shader custom Material Editor UI in Warudo (use material templates + Character catalog)
+- Packing template textures into patch-export BIN
 - Workshop Character byte access
 - Hiding the Character until apply finishes (first-frame stock flash possible)
 - `IMaterialDescriptorGenerator` inject on Character load (Warudo does not expose it)

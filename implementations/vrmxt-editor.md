@@ -91,7 +91,7 @@ JSON. Deliberate extension strip is out of scope here.
 | Today | Apply (live) | Materialize (`.mat` / asset) | Transfer (from asset) |
 |-------|--------------|------------------------|------------------------|
 | UniVRMXT | Done | Done (Editor Materialize buttons) | Done |
-| Warudo | Done | — | Partial |
+| Warudo | Done | — | Done (StreamingAssets `.mat` YAML; values + texture-handling modes) |
 
 ```mermaid
 flowchart LR
@@ -154,7 +154,7 @@ Transfer is the reverse of Materialize. UniVRMXT: `SyncFromOverrideMaterials` /
 |------|--------------|--------------|------------------------|
 | Unity Editor / UniVRMXT | Done (runtime API; Editor import does not auto-Apply) | Done (create/update `.mat`) | Done |
 | Unity Player desktop | Planned | — | Planned (from `.mat` only) |
-| Warudo | Done | — | Partial (Manager / templates; no `.mat` Materialize) |
+| Warudo | Done | — | Done (StreamingAssets `.mat` YAML via PDM; no Materialize) |
 | Blender | — | — | — (PropertyGroups authored directly) |
 | Unreal Editor / VRM4U | Planned | Planned | Planned |
 
@@ -182,10 +182,10 @@ Catalogs: [Materials Override Catalogs](../references/materials-override-catalog
 | Op | Blender | UniVRMXT | Unity Player (planned) | Warudo |
 |----|---------|----------|------------------------|--------|
 | Import | Done (PropertyGroups when Unity parse succeeds) | Done (attach Instance + textures; stock MToon until Materialize) | Planned | Done (post-load apply + catalog rebuild) |
-| Create/edit | Done (Material Properties panel; Engine / Variant / Shader; Add Common Props; bindings deferred) | Partial (assign Override Materials / sync active pipeline slot; shared catalog Editor UI **later**) | Planned (desktop only) | Partial (VRMXT Manager: per-material shader autocomplete + Character property catalog; no custom shader GUI; material templates **planned**) |
+| Create/edit | Done (Material Properties panel; Engine / Variant / Shader; Add Common Props; bindings deferred) | Partial (assign Override Materials / sync active pipeline slot; shared catalog Editor UI **later**) | Planned (desktop only) | Partial (VRMXT Manager: shader autocomplete + Material template Transfer + Character property catalog; no custom shader GUI) |
 | Apply | — | Done (`Applier.Apply` for runtime/Player; Editor import does not auto-Apply) | Planned (desktop) | Done (post-load Apply) |
 | Materialize | — | Done (Editor: Materialize All / per-pair → `.mat`) | — | — (no AssetDatabase) |
-| Transfer | — (PropertyGroups authored directly) | Done (Sync from Override Material **asset**; variant survival) | Planned (desktop; from `.mat` only) | Partial (Manager / templates; no `.mat` Materialize) |
+| Transfer | — (PropertyGroups authored directly) | Done (Sync from Override Material **asset**; variant survival) | Planned (desktop; from `.mat` only) | Done (Manager: StreamingAssets `.mat` YAML floats/colors/keywords; texture-handling Keep packed / Clear if set / Clear all; no shader GUID) |
 | Preview | Stock Blender viewport (override is Unity-targeted data) | Done (Materialize `.mat` on slots; Show Override Materials toggle) | Planned | Done (live Character materials via Apply) |
 | Export | Done (serialize groups; texture remap when helpers available) | Done with Extended-UniVRM export hooks; variant survival rules | Planned (desktop only; path TBD — full export vs patch) | Done: **patch** rewrite of materials-override JSON into copy of local source VRM; original BIN kept; **no new image payloads** |
 | Profile | [Blender → Materials](blender-vrmxt.md#materials-override) | [UniVRMXT → Materials](univrm-vrmxt.md#materials-override) | [Unity Player](vrmxt-unity-player.md) | [Warudo → Materials](warudo-vrmxt.md#materials-override), [patch export](../references/warudo-vrmxt-patch-export.md) |
@@ -225,7 +225,8 @@ A host that resolves engine shaders MAY ship these ops independently:
 3. **Transfer** — Material **asset** → upsert active override slot (Unity: from `.mat` only).
 
 UniVRMXT today: **Apply Done**, **Materialize Done** (Editor), **Transfer Done**. Warudo:
-**Apply Done**, **Materialize not shipped**. Apply alone MUST NOT be reported as Materialize.
+**Apply Done**, **Transfer Done** (StreamingAssets `.mat` YAML; texture-handling modes),
+**Materialize not shipped**. Apply alone MUST NOT be reported as Materialize.
 
 Hosts that only author portable JSON without that engine’s shaders (e.g. Blender writing
 `unity` slots) are not required to Apply/Materialize/Transfer engine materials; they still MUST
@@ -301,7 +302,7 @@ For tool authors adding another editor (Godot, three-vrmxt export, VRM4U, …):
 | Unity Player desktop Apply + Transfer | Planned; **no** Materialize. UniVRMXT library has Apply / Transfer / Editor Materialize |
 | Bindings authoring | Deferred in Blender; consumers still apply `bindings[]` |
 | Warudo new textures in patch export | Out of scope; reuse source GLB images / Character defaults |
-| Warudo material templates | Planned (`.mat` → property fill) |
+| Warudo material templates | Done (StreamingAssets `.mat` YAML → floats/colors/keywords; texture-handling modes; no shader GUID) |
 | Full Unity from-scratch VFX authoring UI | Open; Blender preferred |
 | Cross-host conformance tests per `VRMXT_*` | TBD ([architecture open questions](../architecture.md#open-questions)) |
 | Spring / lattice / animation editors | Specs/decisions ahead of shipping UI |
