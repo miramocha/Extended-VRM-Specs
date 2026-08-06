@@ -146,6 +146,7 @@ after that date.
 ## Related
 
 - [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
+- [Engine material override — glTF history](research/engine-material-override-gltf-history.md) (PBR-only / no-MToon research sketch)
 - [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
 - [VRMXT_AnimationController](../specs/extensions/animation/vrmxt-animation-controller.md)
 - [VRMXT_AnimationClip](../specs/extensions/animation/vrmxt-animation-clip.md)
