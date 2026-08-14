@@ -95,6 +95,8 @@ Optional `VRMXT_*` consumers:
 | [Spring bone / secondary physics](references/spring-bone-physics-systems.md) | Non-normative: `VRMC_springBone`, MagicaCloth2, VRC PhysBones + concept maps | draft |
 | [KHR / glTF overlap](references/khr-gltf-overlap.md) | Non-normative: Khronos/EXT registry vs materials, VFX, and animation (`VRMXT_AnimationController` / `VRMXT_AnimationClip`) | draft |
 | [Engine material override glTF history](references/research/engine-material-override-gltf-history.md) | Non-normative research: `KHR_techniques_webgl` / `NV_materials_mdl` lessons; PBR-only fallback sketch (no MToon sibling) | draft |
+| [Substance 3D Painter MToon viewport](references/research/substance-painter-mtoon-viewport.md) | Non-normative research: Painter GLSL preview of `VRMC_materials_mtoon` (VRM 1.0 only; not a VRMXT host) | draft |
+| [MToon10 stencil shader fork](references/research/mtoon10-stencil-shader-fork.md) | Non-normative research: Unity MToon10 fork + `VRMXT_materials_override` stencil; stock MToon fallback | draft |
 | [Engine particle capability](references/engine-particle-capability.md) | Non-normative: Unity Particle System vs VFX Graph / BIRP; Niagara vs Cascade; VRM4U attach constraints (2026-07-21) | draft |
 | [VRoid Hub VRMXT round-trip](references/vroid-hub-vrmxt-roundtrip.md) | Non-normative: `VRMXT_materials_override` survives Hub upload → original download (2026-07-21); not an in-browser preview product | draft |
 | [Warudo VRMXT Patch Export](references/warudo-vrmxt-patch-export.md) | Plan for patching VRMXT JSON into a copy of a local Warudo Character VRM | accepted |

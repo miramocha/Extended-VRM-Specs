@@ -121,6 +121,11 @@ parallel Extended-only format.
 | Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VRMXT](implementations/godot-vrmxt.md) | **TBD** |
 | Other | Any VRM 1.0 tool | Optional Extended package | Implement specs | Implement specs |
 
+Texture painting tools such as Substance 3D Painter are not VRMXT authoring
+hosts. They do not import or export `VRMXT_*`. They produce maps consumed by stock
+`VRMC_materials_mtoon`. Viewport shader research:
+[Substance 3D Painter viewport for VRMC_materials_mtoon](references/research/substance-painter-mtoon-viewport.md).
+
 ### Blender (shipping)
 
 | Piece | Repo | Role |

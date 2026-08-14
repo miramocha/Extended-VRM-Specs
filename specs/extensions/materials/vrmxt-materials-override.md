@@ -350,6 +350,7 @@ They do not add fields to this extension.
 
 - [VRMXT Conformance](../../core/vrmxt-conformance.md)
 - Upstream MToon: `VRMC_materials_mtoon` in the VRM 1.0 specification
+- [Substance 3D Painter MToon viewport](../../../references/research/substance-painter-mtoon-viewport.md) (non-normative; stock MToon maps, not this extension)
 - Core materials: glTF 2.0 `materials` schema
 - [KHR / glTF overlap](../../../references/khr-gltf-overlap.md) (non-normative)
 - [VRoid Hub VRMXT round-trip](../../../references/vroid-hub-vrmxt-roundtrip.md) (non-normative)
