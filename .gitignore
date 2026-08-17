@@ -6,3 +6,7 @@ __pycache__/
 # Obsidian
 .obsidian/
 .trash/
+
+# Local sandbox — throwaway experiments (see Sandbox/README.md)
+/Sandbox/*
+!/Sandbox/README.md
