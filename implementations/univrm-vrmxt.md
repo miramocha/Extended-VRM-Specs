@@ -22,7 +22,7 @@ Unity implementation profile for
 [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md) and
 [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md).
 [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md) parse
-is planned; this package does **not** ship the MToonXT shader.
+and stencil apply ship in this package; it does **not** ship the MToonXT shader.
 Support belongs in [UniVRMXT](https://github.com/miramocha/UniVRMXT)
 (`com.miramocha.univrmxt`), an optional UPM package that depends on stock
 [UniVRM](https://github.com/vrm-c/UniVRM). UniVRM source changes are not required.
@@ -38,7 +38,7 @@ is absent or when either extension is missing from the file.
 | Stock VRM I/O | [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) (`0.131.1`+) |
 | Optional host fork | [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) |
 | Unity | `2022.3` |
-| Extensions | `VRMXT_sprite_particle`, `VRMXT_materials_override`; `VRMC_materials_mtoonxt` planned (no shader in this UPM) |
+| Extensions | `VRMXT_sprite_particle`, `VRMXT_materials_override`, `VRMC_materials_mtoonxt` (stencil apply; no shader in this UPM) |
 
 ## VFX
 
@@ -381,14 +381,15 @@ path is post-load re-read of the `.vrm` plus material swap. See
 - `Packages/VRM10/Editor/Settings/MaterialDescriptorGeneratorFactory.cs`
 - `Packages/VRM10/Editor/ScriptedImporter/VrmScriptedImporterImpl.cs`
 
-## MToonXT (planned)
+## MToonXT
 
 Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md).
 
-UniVRMXT MAY parse `materials[i].extensions.VRMC_materials_mtoonxt` and attach extras.
-It MUST NOT ship ShaderLab `VRMXT/MToon10`. First shader ship is the Warudo Shader
-Plugins BIRP UMod. Swap on `Shader.Find` success only, and only when
-`VRMXT_materials_override` did not apply on that material.
+UniVRMXT parses `materials[i].extensions.VRMC_materials_mtoonxt`, attaches extras, and
+MAY swap to `VRMXT/MToon10` when that shader resolves (`Shader.Find` or host
+`ShaderResolveProvider`). It MUST NOT ship ShaderLab `VRMXT/MToon10`. First shader ship
+is the Warudo Shader Plugins BIRP UMod. Skip the swap when `VRMXT_materials_override`
+would apply on that material. `faceSdf` is not applied.
 
 ## Related
 

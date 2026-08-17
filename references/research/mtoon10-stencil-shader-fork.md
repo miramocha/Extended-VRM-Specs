@@ -186,13 +186,13 @@ Stencil
 }
 ```
 
-Outline pass uses `_M_OutlineStencil*`. Depth and shadow: **TBD**. Default proposal:
-do not stencil-write on shadow/depth, or Keep/Always with write mask 0, so a face
-mask does not punch the shadow map. Confirm against UniVRM MToon10 pass list when
-the fork is cut.
+Outline pass uses `_M_OutlineStencil*`. BIRP first ship (UniVRM **0.131.2** sources):
+ForwardAdd uses the same body stencil as ForwardBase. ShadowCaster has no Stencil
+block (a face mask must not punch the shadow map). DepthNormals is URP-only.
 
-**URP `XRMotionVectors`:** **TBD**. If the fork copies UniVRM’s hardcoded
-`WriteMask 1` / `Ref 1`, avatar recipes that use ref 1 fight object motion bits.
+**URP `XRMotionVectors`:** **TBD** (no URP fork this ship). If a later URP fork copies
+UniVRM’s hardcoded `WriteMask 1` / `Ref 1`, avatar recipes that use ref 1 fight object
+motion bits.
 Options: omit the motion-vector stencil write; document reserved bit 0; tell authors
 to use refs 2–15 and a write mask that leaves bit 0 alone. URP docs limit custom
 stencil to bits 0–3 (indices 0–15) on the Universal Renderer.
@@ -274,10 +274,10 @@ out of the first ship.
 
 ## Open questions
 
-- [ ] Depth / shadow / DepthNormals stencil (off vs same as body)
+- [x] Depth / shadow / DepthNormals stencil (off vs same as body) — BIRP: ShadowCaster off; DepthNormals N/A
 - [ ] Keep UniVRM `XRMotionVectors` stencil write, omit it, or mask bit 0
-- [ ] Built-in ForwardAdd stencil (same as ForwardBase vs off)
-- [ ] First pin of UniVRM MToon10 sources the fork copies
+- [x] Built-in ForwardAdd stencil (same as ForwardBase vs off) — same as ForwardBase
+- [x] First pin of UniVRM MToon10 sources the fork copies — **0.131.2**
 - [ ] Whether Blender VRMXT authoring exposes `_M_Stencil*` as ints or named enums
 - [x] Portable sibling stencil object — `VRMC_materials_mtoonxt` `stencil` /
       `outlineStencil` (option B). Override `shaderName` → fork is not the attach path.

@@ -29,7 +29,7 @@ page is the dependency index for Unity hosts only.
 | [VRMXT-Unity-Shader-Plugins](https://github.com/miramocha/VRMXT-Unity-Shader-Plugins) | UPM (deprecated) | `com.miramocha.vrmxt.unity.shader-plugins` | Transitional Player inventory / warm C#; supersede with Player AssetBundle packs + in-pack config |
 | VRMXT Unity Player | App (private repo today) | Unity `2021.3.45f2` | Desktop view / edit / export; today UniVRMXT + shader-plugins; planned UniVRMXT + StreamingAssets packs. Profile: [vrmxt-unity-player.md](vrmxt-unity-player.md) |
 | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo UMod | `mira.vrmxt` | Runtime consumer; vendored or linked UniVRMXT paths |
-| Warudo Shader Plugins | Warudo UMods (private repo today) | e.g. `mira.shaders.poiyomi.birp`, lil BIRP; planned MToonXT BIRP fork (`VRMXT/MToon10`) | Vendor shaders + ModHost warm; not nested in UniVRMXT; does not depend on shader-plugins |
+| Warudo Shader Plugins | Warudo UMods (private repo today) | e.g. `mira.shaders.poiyomi.birp`, lil BIRP, `mira.shaders.mtoonxt.birp` (`VRMXT/MToon10`) | Vendor shaders + ModHost warm; not nested in UniVRMXT; does not depend on shader-plugins |
 
 Third-party pins used by host-shipped overrides (not VRMXT packages):
 
@@ -47,7 +47,7 @@ flowchart LR
   univrm["UniVRM / Extended-UniVRM"]
   univrmxt["UniVRMXT<br/>com.miramocha.univrmxt"]
   shaders["Shader Plugins UPM<br/>deprecated transitional"]
-  wshaders["Warudo Shader Plugins UMods<br/>vendor lil / Poiyomi / planned MToonXT + local warm"]
+  wshaders["Warudo Shader Plugins UMods<br/>vendor lil / Poiyomi / MToonXT + local warm"]
   warudo["VRMXT Plugin for Warudo"]
   player["VRMXT Unity Player"]
   univrm --> univrmxt
@@ -60,8 +60,8 @@ flowchart LR
 ### Planned
 
 Warudo Shader Plugins keep vendoring lil / Poiyomi in the UMod and keep local ModHost
-warm. Planned: Built-in MToon10 fork UMod for `VRMC_materials_mtoonxt`. They do **not**
-consume `com.miramocha.vrmxt.unity.shader-plugins`
+warm. Built-in MToon10 fork UMod (`mira.shaders.mtoonxt.birp`) ships for
+`VRMC_materials_mtoonxt`. They do **not** consume `com.miramocha.vrmxt.unity.shader-plugins`
 ([Warudo-Shader-Plugins#7](https://github.com/miramocha/Warudo-Shader-Plugins/issues/7)
 won’t-do).
 
@@ -74,7 +74,7 @@ See [VRMXT Player Shader AssetBundles](../references/vrmxt-player-shader-assetbu
 flowchart LR
   univrm["UniVRM / Extended-UniVRM"]
   univrmxt["UniVRMXT<br/>com.miramocha.univrmxt"]
-  wshaders["Warudo Shader Plugins UMods<br/>vendor lil / Poiyomi / planned MToonXT + local warm"]
+  wshaders["Warudo Shader Plugins UMods<br/>vendor lil / Poiyomi / MToonXT + local warm"]
   packs["Player AB packs<br/>+ in-pack config"]
   warudo["VRMXT Plugin for Warudo"]
   player["VRMXT Unity Player"]

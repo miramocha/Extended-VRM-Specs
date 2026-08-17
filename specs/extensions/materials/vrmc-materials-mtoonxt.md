@@ -219,13 +219,16 @@ Non-normative. Texture `4` is the Face SDF map.
 ## Optional consumer interpretation
 
 A supporting Unity consumer that has warmed ShaderLab name `VRMXT/MToon10` (Built-in)
-MAY `Shader.Find` that name and run rules 7–8. Missing shader → rule 9 (stock MToon).
+MAY resolve that shader and run rules 7–8. Missing shader → rule 9 (stock MToon).
 
-UniVRMXT (`com.miramocha.univrmxt`) does not ship that shader in the current plan. The
-first ship is a Built-in fork UMod under Warudo Shader Plugins. The VRMXT Plugin for
-Warudo parses this extension and swaps only after that UMod has loaded the shader.
-URP, Player AssetBundles, and UniVRMXT `Runtime/Shaders` copies are out of this draft's
-ship list.
+On Editor / Player hosts, resolve MAY use `Shader.Find`. Warudo UMod shaders stay
+null under `Shader.Find`; the VRMXT plugin uses `ShaderResolveProvider` (ModHost warm
+cache, then a scan of already-loaded `Shader` assets).
+
+UniVRMXT (`com.miramocha.univrmxt`) parses, attaches, and applies stencil extras. It
+does not ship `VRMXT/MToon10`. The Built-in fork UMod is `mira.shaders.mtoonxt.birp`
+under Warudo Shader Plugins. Face SDF apply, URP, Player AssetBundles, and UniVRMXT
+`Runtime/Shaders` copies are out of this draft's ship list.
 
 Unity maps portable stencil enums onto fork properties `_M_Stencil*` and
 `_M_OutlineStencil*` (integer `CompareFunction` / `StencilOp` values). Property table:
@@ -247,7 +250,7 @@ Unity maps portable stencil enums onto fork properties `_M_Stencil*` and
 - [ ] Whether SDF fully replaces N·L or only remaps it before shift/toony
 - [ ] `softness` filter (smoothstep width vs mip)
 - [ ] Extra `faceSdf` fields: tint, second UV, blend-with-NdotL
-- [ ] Depth / shadow / DepthNormals / Built-in ForwardAdd stencil
+- [x] Depth / shadow / DepthNormals / Built-in ForwardAdd stencil — BIRP first ship: ForwardAdd uses body stencil; ShadowCaster has no Stencil block. DepthNormals N/A (BIRP).
 - [ ] URP `XRMotionVectors` stencil bit 0 collision
 - [ ] Extra shade bands, face clip/mask, anisotropic highlight
 - [ ] Blender authoring (enums vs ints)
