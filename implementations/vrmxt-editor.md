@@ -194,6 +194,7 @@ Catalogs: [Materials Override Catalogs](../references/materials-override-catalog
 
 | Extension | Spec | Blender | UniVRMXT | Unity Player | Warudo |
 |-----------|------|---------|----------|--------------|--------|
+| `VRMC_materials_mtoonxt` | [spec](../specs/extensions/materials/vrmc-materials-mtoonxt.md) | — | parse planned; no shader in UPM | — | parse/swap planned; shader in Warudo Shader Plugins UMod |
 | `VRMXT_springBone_override` | [spec](../specs/extensions/physics/vrmxt-spring-bone-override.md) | — | — | — | — |
 | `VRMXT_lattice` | [spec](../specs/extensions/deformation/vrmxt-lattice.md) | — | — | — | — |
 | `VRMXT_AnimationController` + `VRMXT_AnimationClip` | [controller](../specs/extensions/animation/vrmxt-animation-controller.md), [clip](../specs/extensions/animation/vrmxt-animation-clip.md); [decision](../decisions/animation-controller-standardization.md) | Planned (phase 1 authoring pair with Unity) | Planned (Animator subset export/import) | — | — |
@@ -239,10 +240,10 @@ Materialize.
 
 | Host | Claims editor for | Does not claim (yet) |
 |------|-------------------|----------------------|
-| Blender | `VRMXT_sprite_particle`, `VRMXT_materials_override` (bindings authoring deferred) | Spring override, lattice, animation |
-| UniVRMXT | `VRMXT_sprite_particle` (re-export / edit existing; from-scratch UI thin), `VRMXT_materials_override` (Apply + Materialize + Transfer Done; catalog UI later) | Spring override, lattice, animation; full catalog-driven materials UI |
-| Unity Player | None shipped (planned desktop Apply + Transfer ± VFX; **no** Materialize) | Materialize; spring / lattice / animation |
-| Warudo | `VRMXT_materials_override` **patch** editor + Apply (no Materialize) | VFX authoring; Materialize; general live-avatar VRM export; workshop sources |
+| Blender | `VRMXT_sprite_particle`, `VRMXT_materials_override` (bindings authoring deferred) | Spring override, lattice, animation, `VRMC_materials_mtoonxt` |
+| UniVRMXT | `VRMXT_sprite_particle` (re-export / edit existing; from-scratch UI thin), `VRMXT_materials_override` (Apply + Materialize + Transfer Done; catalog UI later) | Spring override, lattice, animation; full catalog-driven materials UI; `VRMC_materials_mtoonxt` |
+| Unity Player | None shipped (planned desktop Apply + Transfer ± VFX; **no** Materialize) | Materialize; spring / lattice / animation; `VRMC_materials_mtoonxt` |
+| Warudo | `VRMXT_materials_override` **patch** editor + Apply (no Materialize) | VFX authoring; Materialize; general live-avatar VRM export; workshop sources; `VRMC_materials_mtoonxt` |
 
 Warudo remains primarily a **runtime consumer** with a **source-preserving materials
 patch**. Treat it as a specialized editor for materials override, not a general DCC.

@@ -15,9 +15,13 @@ status: draft
 
 # MToon10 stencil shader fork
 
-Non-normative research. Lives under `references/research/` only. Does **not** change
-[`VRMXT_materials_override`](../../specs/extensions/materials/vrmxt-materials-override.md)
-or `VRMC_materials_mtoon`.
+Non-normative research. Lives under `references/research/` only.
+
+Portable stencil (and Face SDF) JSON now lives on
+[`VRMC_materials_mtoonxt`](../../specs/extensions/materials/vrmc-materials-mtoonxt.md).
+Do not attach MToonXT by pointing `VRMXT_materials_override` `shaderName` at
+`VRMXT/MToon10`. This note still records Unity fork property names and ShaderLab
+stencil wiring.
 
 **Question:** how can a VRM 1.0 MToon material gain GPU stencil (mask write / test /
 outline clip) while a stock UniVRM importer still shows ordinary MToon?
@@ -98,8 +102,10 @@ upstream schema stays shade/outline/UV.
 Reject option D as the file contract: supporting and stock UniVRM cannot both own
 `VRM10/MToon10` in one project.
 
-**Recommend A.** Reuses [VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md).
-Portable string-enum stencil (B) stays TBD.
+**File contract (2026-08-17):** option B shipped as
+[`VRMC_materials_mtoonxt`](../../specs/extensions/materials/vrmc-materials-mtoonxt.md)
+(`stencil` / `outlineStencil` string enums). Override `shaderName` → `VRMXT/MToon10` is
+not the attach path. This note keeps Unity `_M_Stencil*` property names for the fork.
 
 ```mermaid
 flowchart LR
@@ -258,13 +264,13 @@ stock MToon for that material (rules 11–12).
 
 ## Ship home
 
-**TBD.** Do not add the fork to deprecated
-[`com.miramocha.vrmxt.unity.shader-plugins`](../../implementations/vrmxt-unity-shader-plugins.md)
-as the product path. Candidates: UniVRMXT `Runtime/Shaders`, or a desktop Player
-AssetBundle pack
-([Player Shader AssetBundles](../vrmxt-player-shader-assetbundles.md)). The glTF file
-never embeds shader source
-([override consumer rules](../../specs/extensions/materials/vrmxt-materials-override.md#optional-consumer-interpretation)).
+First consumer: Built-in MToon10 fork as a **shader-only Warudo UMod** (Warudo Shader
+Plugins, `ModHost.Assets.Load`). Not UniVRMXT UPM. Not VRMXT Plugin for Warudo. Not
+deprecated `com.miramocha.vrmxt.unity.shader-plugins`. See
+[VRMC_materials_mtoonxt](../../specs/extensions/materials/vrmc-materials-mtoonxt.md).
+
+Older candidates in this note (UniVRMXT `Runtime/Shaders`, Player AssetBundles) stay
+out of the first ship.
 
 ## Open questions
 
@@ -273,11 +279,13 @@ never embeds shader source
 - [ ] Built-in ForwardAdd stencil (same as ForwardBase vs off)
 - [ ] First pin of UniVRM MToon10 sources the fork copies
 - [ ] Whether Blender VRMXT authoring exposes `_M_Stencil*` as ints or named enums
-- [ ] Portable sibling `VRMXT_*` stencil object (option B) if a second engine needs the same JSON
+- [x] Portable sibling stencil object — `VRMC_materials_mtoonxt` `stencil` /
+      `outlineStencil` (option B). Override `shaderName` → fork is not the attach path.
 - [ ] Catalog JSON for `VRMXT/MToon10` (first-party row; omit lil/Poiyomi)
 
 ## Related
 
+- [VRMC_materials_mtoonxt](../../specs/extensions/materials/vrmc-materials-mtoonxt.md)
 - [VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md)
 - [UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override)
 - [VRMC_materials_mtoon 1.0](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_materials_mtoon-1.0/README.md)

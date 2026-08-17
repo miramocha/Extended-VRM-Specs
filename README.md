@@ -60,6 +60,7 @@ Optional `VRMXT_*` consumers:
 |------|-------------------|--------|
 | [VRMXT Conformance](specs/core/vrmxt-conformance.md) | Shared `VRMXT_*` family requirements | draft |
 | [VRMXT_materials_override](specs/extensions/materials/vrmxt-materials-override.md) | `VRMXT_materials_override` | draft |
+| [VRMC_materials_mtoonxt](specs/extensions/materials/vrmc-materials-mtoonxt.md) | `VRMC_materials_mtoonxt` | draft |
 | [VRMXT_springBone_override](specs/extensions/physics/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
 | [VRMXT_sprite_particle](specs/extensions/vfx/vrmxt-sprite-particle.md) | Portable sprite particle emitters | draft |
 | [VRMXT_lattice](specs/extensions/deformation/vrmxt-lattice.md) | `VRMXT_lattice` (FFD / cage) | draft |
@@ -74,8 +75,8 @@ Optional `VRMXT_*` consumers:
 | [VRMXT Unity packages](implementations/vrmxt-unity-packages.md) | Unity-space UPM / app / Warudo dependency map | draft |
 | [VRMXT Unity Player](implementations/vrmxt-unity-player.md) | Desktop Unity app (`2021.3.45f2`); Warudo-aligned; depends on UniVRMXT | draft |
 | [VRMXT Unity Shader Plugins](implementations/vrmxt-unity-shader-plugins.md) | Deprecated host megashader ship note; pack/UMod config owns supported names | deprecated |
-| [UniVRMXT](implementations/univrm-vrmxt.md) | Unity / UniVRMXT (`VRMXT_sprite_particle` + `VRMXT_materials_override`) | draft |
-| [Warudo VRMXT](implementations/warudo-vrmxt.md) | Warudo plugin / particle + materials override consumer | draft |
+| [UniVRMXT](implementations/univrm-vrmxt.md) | Unity / UniVRMXT (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMC_materials_mtoonxt` planned, no shader) | draft |
+| [Warudo VRMXT](implementations/warudo-vrmxt.md) | Warudo plugin / particle + materials override; MToonXT swap planned | draft |
 | [VRM Posing Desktop VRMXT](implementations/vrm-posing-desktop-vrmxt.md) | Posing Desktop consumer; UniVRM `0.129.3` host pin (measured) | draft |
 | [VRoid Hub browser extension](implementations/vroid-hub-browser-extension.md) | Historical Hub extension profile | superseded |
 | [Unity WebGL VRMXT viewer](implementations/unity-webgl-vrmxt-viewer.md) | Historical Player WebGL / Hub notes | superseded |
@@ -84,7 +85,7 @@ Optional `VRMXT_*` consumers:
 | [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | Unreal / VRM4U consumer (`VRMXT_materials_override` planned) | draft |
 | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) | UniVRM / Extended-UniVRM ScriptedImporter hooks (upstream propose) | draft |
 | [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hook API (prefs, exclude prop, upstream propose) | draft |
-| [Blender VRMXT](implementations/blender-vrmxt.md) | Blender VRMXT extension (`VRMXT_sprite_particle` + `VRMXT_materials_override`) | draft |
+| [Blender VRMXT](implementations/blender-vrmxt.md) | Blender VRMXT extension (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMC_materials_mtoonxt` planned) | draft |
 
 ## References
 
@@ -96,7 +97,7 @@ Optional `VRMXT_*` consumers:
 | [KHR / glTF overlap](references/khr-gltf-overlap.md) | Non-normative: Khronos/EXT registry vs materials, VFX, and animation (`VRMXT_AnimationController` / `VRMXT_AnimationClip`) | draft |
 | [Engine material override glTF history](references/research/engine-material-override-gltf-history.md) | Non-normative research: `KHR_techniques_webgl` / `NV_materials_mdl` lessons; PBR-only fallback sketch (no MToon sibling) | draft |
 | [Substance 3D Painter MToon viewport](references/research/substance-painter-mtoon-viewport.md) | Non-normative research: Painter GLSL preview of `VRMC_materials_mtoon` (VRM 1.0 only; not a VRMXT host) | draft |
-| [MToon10 stencil shader fork](references/research/mtoon10-stencil-shader-fork.md) | Non-normative research: Unity MToon10 fork + `VRMXT_materials_override` stencil; stock MToon fallback | draft |
+| [MToon10 stencil shader fork](references/research/mtoon10-stencil-shader-fork.md) | Non-normative: Unity MToon10 fork properties; portable stencil JSON is `VRMC_materials_mtoonxt` | draft |
 | [Engine particle capability](references/engine-particle-capability.md) | Non-normative: Unity Particle System vs VFX Graph / BIRP; Niagara vs Cascade; VRM4U attach constraints (2026-07-21) | draft |
 | [VRoid Hub VRMXT round-trip](references/vroid-hub-vrmxt-roundtrip.md) | Non-normative: `VRMXT_materials_override` survives Hub upload → original download (2026-07-21); not an in-browser preview product | draft |
 | [Warudo VRMXT Patch Export](references/warudo-vrmxt-patch-export.md) | Plan for patching VRMXT JSON into a copy of a local Warudo Character VRM | accepted |

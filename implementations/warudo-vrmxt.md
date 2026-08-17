@@ -18,8 +18,9 @@ status: draft
 
 # Warudo VRMXT
 
-Host integration for [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md) and
-[VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md) on
+Host integration for [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
+[VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md), and
+planned [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md) on
 [Warudo](https://warudo.app/) Characters. Implementation:
 [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo)
 (`Assets/Vrmxt/`), exported as a UMod plugin to `StreamingAssets/Plugins`.
@@ -41,13 +42,15 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 
 1. `VRMXT_sprite_particle` → ParticleSystem children
 2. `VRMXT_materials_override` → unity-slot shader/properties/bindings on matching mats
+3. `VRMC_materials_mtoonxt` → swap stock MToon to MToonXT when the shader UMod is present
+   (**planned**; override still wins when it applies)
 
 | Item | Value |
 |------|-------|
 | Plugin id | `mira.vrmxt` |
 | Mod folder | `Assets/Vrmxt` |
 | Export | `Warudo_Data/StreamingAssets/Plugins` |
-| Extensions | `VRMXT_sprite_particle`, `VRMXT_materials_override` |
+| Extensions | `VRMXT_sprite_particle`, `VRMXT_materials_override`; `VRMC_materials_mtoonxt` planned |
 | Plugin version (shipped) | `0.1.1` (see `VrmxtPlugin`) |
 | Steam Workshop | [VRMXT](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) |
 | Warudo Mod Tool | `0.14.5.1` (`app.warudo.modtool` `#upm/0.14.5.1`) |
@@ -62,6 +65,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 | Extension JSON | `.vrm` glTF |
 | Parse + VFX map + materials apply | Vendored UniVRMXT Format/Vfx/MaterialsOverride `.cs` under the mod (no UPM/DLL/`.asmdef`) |
 | Packaged shaders / mats | Particles Unlit + sample `TestOverrideBuiltin` / `TestOverrideURP` under `Assets/Vrmxt/` |
+| MToonXT shader (planned) | Separate Warudo Shader Plugins UMod (BIRP fork `VRMXT/MToon10`); not nested in this plugin |
 | Character watch + byte re-read | `VrmxtPlugin` / `VrmxtCharacterApply` |
 | Emit-axis correction | `VrmxtWarudoBoneAxisCorrection` (VRM 1.0 **ReverseX**) |
 | Stock VRM load | Warudo Character asset |
@@ -170,6 +174,20 @@ texture-targeting MToon `bindings` before GLB release. Apply resolves textures f
 
 An unresolved shader or unmatched variant leaves the stock material in place for that
 entry. Stock MToon or PBR may appear briefly before the override is applied.
+
+## MToonXT (planned)
+
+Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md).
+
+After Character load, if a material has `VRMC_materials_mtoonxt` and
+`VRMXT_materials_override` did **not** apply on that material, the plugin MAY
+`Shader.Find("VRMXT/MToon10")` and swap stock MToon onto the fork, then apply Face SDF
+and stencil extras. Missing shader UMod → keep stock MToon.
+
+Shader ship: new Built-in fork UMod in Warudo Shader Plugins (`ModHost.Assets.Load`).
+This plugin parses and swaps; it does not vendor the fork.
+
+Parse/swap C# is **not shipped**. UniVRMXT UPM does not include the shader.
 
 ## Plugin setting
 

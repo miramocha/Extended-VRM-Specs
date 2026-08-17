@@ -21,6 +21,8 @@ status: draft
 Blender add-on implementation profile for
 [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md) and
 [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md).
+[VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md)
+authoring is **planned** (not claimed).
 Support belongs in
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender),
 which registers on VRM1 hooks from
@@ -532,7 +534,8 @@ Readonly panel remains until phase 2 replaces it.
 ## Related
 
 - Specs: [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
-  [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
+  [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md),
+  [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md)
 - Catalogs: [Materials Override Catalogs](../references/materials-override-catalogs.md)
 - Unity: [UniVRMXT](univrm-vrmxt.md)
 - Unreal: [VRM4U VRMXT](vrm4u-vrmxt.md)

@@ -78,13 +78,16 @@ are implemented.
 ## File model
 
 Extended VRM is ordinary glTF 2.0 / VRM 1.0 plus optional root or per-object
-extensions named `VRMXT_*`.
+extensions named `VRMXT_*`, plus the MToon sibling `VRMC_materials_mtoonxt`
+([spec](specs/extensions/materials/vrmc-materials-mtoonxt.md)). That sibling uses the
+`VRMC_` prefix to sit next to `VRMC_materials_mtoon`. It is still an Extended draft
+(not a Consortium spec) and MUST NOT appear in `extensionsRequired`.
 
 | Rule | Requirement |
 |------|-------------|
-| Presence | `VRMXT_*` MAY be absent. Absence = stock VRM only. |
-| `extensionsUsed` | Files that write a `VRMXT_*` extension MUST list that name in `extensionsUsed`. |
-| `extensionsRequired` | Optional Extended designs MUST NOT put their `VRMXT_*` name in `extensionsRequired` (see each spec). |
+| Presence | `VRMXT_*` and `VRMC_materials_mtoonxt` MAY be absent. Absence = stock VRM only. |
+| `extensionsUsed` | Files that write a `VRMXT_*` extension MUST list that name in `extensionsUsed`. Files that write `VRMC_materials_mtoonxt` MUST list that name too. |
+| `extensionsRequired` | Optional Extended designs MUST NOT put their `VRMXT_*` name in `extensionsRequired` (see each spec). Same for `VRMC_materials_mtoonxt`. |
 | Unknown extensions | Stock importers ignore unknown extension objects per glTF rules. |
 | Target | Current drafts target VRM 1.0 (`VRMC_vrm` 1.0). VRM 0.0 is out of scope unless a spec says otherwise. |
 
