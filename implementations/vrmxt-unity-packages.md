@@ -25,11 +25,11 @@ page is the dependency index for Unity hosts only.
 |-------|------|----------------|------|
 | [UniVRM](https://github.com/vrm-c/UniVRM) | Upstream UPM | `com.vrmc.gltf`, `com.vrmc.vrm` | Stock VRM 1.0 load / export |
 | [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | Fork | UniVRM-compatible | Optional import/export extension registries (propose upstream) |
-| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | UPM | `com.miramocha.univrmxt` | Parse / attach / sync `VRMXT_*`; materials Apply / Transfer; VFX |
+| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | UPM | `com.miramocha.univrmxt` | Parse / attach / sync `VRMXT_*`; materials Apply / Transfer; VFX; MToonXT BIRP/URP forks |
 | [VRMXT-Unity-Shader-Plugins](https://github.com/miramocha/VRMXT-Unity-Shader-Plugins) | UPM (deprecated) | `com.miramocha.vrmxt.unity.shader-plugins` | Transitional Player inventory / warm C#; supersede with Player AssetBundle packs + in-pack config |
-| VRMXT Unity Player | App (private repo today) | Unity `2021.3.45f2` | Desktop view / edit / export; today UniVRMXT + shader-plugins; planned UniVRMXT + StreamingAssets packs. Profile: [vrmxt-unity-player.md](vrmxt-unity-player.md) |
+| VRMXT Unity Player | App (private repo today) | Unity `2021.3.45f2` | Desktop view / edit / export; UniVRMXT (incl. `VRMXT/MToonXT10`) + shader-plugins. Profile: [vrmxt-unity-player.md](vrmxt-unity-player.md) |
 | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo UMod | `mira.vrmxt` | Runtime consumer; vendored or linked UniVRMXT paths |
-| Warudo Shader Plugins | Warudo UMods (private repo today) | e.g. `mira.shaders.poiyomi.birp`, lil BIRP, `mira.shaders.mtoonxt.birp` (`VRMXT/MToon10`) | Vendor shaders + ModHost warm; not nested in UniVRMXT; does not depend on shader-plugins |
+| Warudo Shader Plugins | Warudo UMods (private repo today) | e.g. `mira.shaders.poiyomi.birp`, lil BIRP, `mira.shaders.mtoonxt.birp` / `mira.shaders.mtoonxt.urp` | Vendor shaders + ModHost warm; not nested in UniVRMXT; does not depend on shader-plugins |
 
 Third-party pins used by host-shipped overrides (not VRMXT packages):
 
@@ -60,8 +60,8 @@ flowchart LR
 ### Planned
 
 Warudo Shader Plugins keep vendoring lil / Poiyomi in the UMod and keep local ModHost
-warm. Built-in MToon10 fork UMod (`mira.shaders.mtoonxt.birp`) ships for
-`VRMC_materials_mtoonxt`. They do **not** consume `com.miramocha.vrmxt.unity.shader-plugins`
+warm. MToonXT shader UMods (`mira.shaders.mtoonxt.birp`, `mira.shaders.mtoonxt.urp`) ship
+`VRMXT/MToonXT10`. They do **not** consume `com.miramocha.vrmxt.unity.shader-plugins`
 ([Warudo-Shader-Plugins#7](https://github.com/miramocha/Warudo-Shader-Plugins/issues/7)
 won’t-do).
 
@@ -89,9 +89,9 @@ Rules of thumb:
 
 - **UniVRMXT** owns format attach, materials Apply / Transfer, and VFX
   (`VRMXT_sprite_particle` parse / map; packaged particle mat via `Resources.Load` or
-  host `PackagedMaterialProvider`). It does **not** own lil / Poiyomi vendor trees,
-  the MToonXT fork, or megashader SVC warm lists. Particle / VFX assets are not part of
-  Player lil / Poiyomi packs or shader-plugins.
+  host `PackagedMaterialProvider`). It ships MToonXT `VRMXT/MToonXT10` forks. It does
+  **not** own lil / Poiyomi vendor trees or megashader SVC warm lists. Particle / VFX
+  assets are not part of Player lil / Poiyomi packs or shader-plugins.
 - **Hosts** own megashader load and warm. Supported override surface = what the host
   ships and registers (Warudo ModHost UMods, or Player pack config), then binds
   `ShaderResolveProvider`. Missing name → stock VRM (materials-override rules 11–12).

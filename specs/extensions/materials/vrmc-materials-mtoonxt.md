@@ -156,6 +156,7 @@ the inverse-hull outline pass when the MToonXT shader has one.
 
 | Property | Type | Required | Default | Meaning |
 |----------|------|----------|---------|---------|
+| `enabled` | boolean | no | `false` | Apply this stencil object; omit or `false` is stencil off |
 | `ref` | integer | no | `0` | Stencil reference, inclusive `[0,255]` |
 | `readMask` | integer | no | `255` | Inclusive `[0,255]` |
 | `writeMask` | integer | no | `255` | Inclusive `[0,255]` |
@@ -172,6 +173,10 @@ the inverse-hull outline pass when the MToonXT shader has one.
 
 An out-of-range integer or unrecognized enum makes that stencil object unresolvable
 (rule 11). Depth, shadow, and motion-vector passes are **TBD**.
+
+`enabled` default `false`. A missing `enabled` key is `false`. Unity MToonXT inspector
+**Enable stencil** / **Enable outline stencil** start off. Off writes Always / Keep and
+does not test or write stencil. On applies `ref`, masks, `comp`, and ops.
 
 ## Attachment example
 
@@ -205,6 +210,7 @@ Non-normative. Texture `4` is the Face SDF map.
             "softness": 0.1
           },
           "stencil": {
+            "enabled": true,
             "ref": 1,
             "comp": "always",
             "pass": "replace"
@@ -218,17 +224,18 @@ Non-normative. Texture `4` is the Face SDF map.
 
 ## Optional consumer interpretation
 
-A supporting Unity consumer that has warmed ShaderLab name `VRMXT/MToon10` (Built-in)
+A supporting Unity consumer that has warmed the pipeline ShaderLab name
+(`VRMXT/MToonXT10` Built-in, or `VRMXT/Universal Render Pipeline/MToonXT10` URP)
 MAY resolve that shader and run rules 7–8. Missing shader → rule 9 (stock MToon).
 
 On Editor / Player hosts, resolve MAY use `Shader.Find`. Warudo UMod shaders stay
 null under `Shader.Find`; the VRMXT plugin uses `ShaderResolveProvider` (ModHost warm
 cache, then a scan of already-loaded `Shader` assets).
 
-UniVRMXT (`com.miramocha.univrmxt`) parses, attaches, and applies stencil extras. It
-does not ship `VRMXT/MToon10`. The Built-in fork UMod is `mira.shaders.mtoonxt.birp`
-under Warudo Shader Plugins. Face SDF apply, URP, Player AssetBundles, and UniVRMXT
-`Runtime/Shaders` copies are out of this draft's ship list.
+UniVRMXT (`com.miramocha.univrmxt`) parses, attaches, applies stencil extras, and ships
+the Built-in / URP forks (`Runtime/Shaders/MToonxt/`). Warudo UMods
+`mira.shaders.mtoonxt.birp` and `mira.shaders.mtoonxt.urp` warm the same ShaderLab names
+because UMod `Shader.Find` is null.
 
 Unity maps portable stencil enums onto fork properties `_M_Stencil*` and
 `_M_OutlineStencil*` (integer `CompareFunction` / `StencilOp` values). Property table:
@@ -250,11 +257,11 @@ Unity maps portable stencil enums onto fork properties `_M_Stencil*` and
 - [ ] Whether SDF fully replaces N·L or only remaps it before shift/toony
 - [ ] `softness` filter (smoothstep width vs mip)
 - [ ] Extra `faceSdf` fields: tint, second UV, blend-with-NdotL
-- [x] Depth / shadow / DepthNormals / Built-in ForwardAdd stencil — BIRP first ship: ForwardAdd uses body stencil; ShadowCaster has no Stencil block. DepthNormals N/A (BIRP).
-- [ ] URP `XRMotionVectors` stencil bit 0 collision
+- [x] Depth / shadow / DepthNormals / Built-in ForwardAdd stencil — BIRP ForwardAdd = body; ShadowCaster off. URP DepthOnly / DepthNormals / ShadowCaster off.
+- [x] URP `XRMotionVectors` stencil bit 0 — fork omits that pass
 - [ ] Extra shade bands, face clip/mask, anisotropic highlight
 - [ ] Blender authoring (enums vs ints)
-- [ ] Catalog JSON for `VRMXT/MToon10`
+- [ ] Catalog JSON for `VRMXT/MToonXT10`
 - [ ] Stable `specVersion` policy after the first accepted property set
 
 ## Related

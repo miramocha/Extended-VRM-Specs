@@ -65,7 +65,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 | Extension JSON | `.vrm` glTF |
 | Parse + VFX map + materials apply + MToonXT apply | Vendored UniVRMXT Format/Vfx/MaterialsOverride/Mtoonxt `.cs` under the mod (no UPM/DLL/`.asmdef`) |
 | Packaged shaders / mats | Particles Unlit + sample `TestOverrideBuiltin` / `TestOverrideURP` under `Assets/Vrmxt/` |
-| MToonXT shader | Separate Warudo Shader Plugins UMod `mira.shaders.mtoonxt.birp` (BIRP `VRMXT/MToon10`); not nested in this plugin |
+| MToonXT shader | Separate Warudo Shader Plugins UMods `mira.shaders.mtoonxt.birp` / `mira.shaders.mtoonxt.urp`; not nested in this plugin |
 | Character watch + byte re-read | `VrmxtPlugin` / `VrmxtCharacterApply` |
 | Emit-axis correction | `VrmxtWarudoBoneAxisCorrection` (VRM 1.0 **ReverseX**) |
 | Stock VRM load | Warudo Character asset |
@@ -181,15 +181,14 @@ Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoo
 
 After Character load (and after materials-override Apply), if a material has
 `VRMC_materials_mtoonxt` and `VRMXT_materials_override` would **not** apply on that
-material, the plugin resolves `VRMXT/MToon10` through `ShaderResolveProvider` (uMod
+material, the plugin resolves `VRMXT/MToonXT10` (Built-in) or
+`VRMXT/Universal Render Pipeline/MToonXT10` (URP) through `ShaderResolveProvider` (uMod
 `Shader.Find` is null) and swaps stock MToon onto the fork, then writes stencil
-properties. `faceSdf` is ignored. Missing shader UMod → keep stock MToon.
+properties. Missing shader UMod → keep stock MToon.
 
-Shader ship: Built-in fork UMod in Warudo Shader Plugins (`ModHost.Assets.Load`).
-This plugin parses and swaps; it does not vendor the fork.
-
-UniVRMXT UPM does not include the shader. Warudo patch export does not rewrite this
-extension this ship.
+Shader ship: `mira.shaders.mtoonxt.birp` and `mira.shaders.mtoonxt.urp` in Warudo Shader
+Plugins (`ModHost.Assets.Load`). This plugin parses and swaps; it does not vendor the
+forks. Material inspector lives in UniVRMXT (`MtoonxtInspector`), not in the shader UMods.
 
 ## Plugin setting
 
