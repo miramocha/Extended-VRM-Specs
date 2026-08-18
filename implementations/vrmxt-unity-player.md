@@ -112,6 +112,7 @@ Unreal Editor hosts only.
 | Stock VRM 1.0 | Required |
 | `VRMXT_materials_override` | View + Apply + Transfer + edit + export (planned); **no** Materialize |
 | `VRMXT_sprite_particle` | View + edit/export as profile allows |
+| `VRMC_materials_mtoonxt` | View + Apply stencil (`VRMXT/MToonXT10` from UniVRMXT) |
 | Other `VRMXT_*` | Ignore until claimed |
 
 Shader resolve: register shaders the Player ships (interim shader-plugins inventory,

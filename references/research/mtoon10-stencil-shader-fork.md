@@ -20,7 +20,7 @@ Non-normative research. Lives under `references/research/` only.
 Portable stencil (and Face SDF) JSON now lives on
 [`VRMC_materials_mtoonxt`](../../specs/extensions/materials/vrmc-materials-mtoonxt.md).
 Do not attach MToonXT by pointing `VRMXT_materials_override` `shaderName` at
-`VRMXT/MToon10`. This note still records Unity fork property names and ShaderLab
+`VRMXT/MToonXT10`. This note still records Unity fork property names and ShaderLab
 stencil wiring.
 
 **Question:** how can a VRM 1.0 MToon material gain GPU stencil (mask write / test /
@@ -104,14 +104,14 @@ Reject option D as the file contract: supporting and stock UniVRM cannot both ow
 
 **File contract (2026-08-17):** option B shipped as
 [`VRMC_materials_mtoonxt`](../../specs/extensions/materials/vrmc-materials-mtoonxt.md)
-(`stencil` / `outlineStencil` string enums). Override `shaderName` → `VRMXT/MToon10` is
+(`stencil` / `outlineStencil` string enums). Override `shaderName` → `VRMXT/MToonXT10` is
 not the attach path. This note keeps Unity `_M_Stencil*` property names for the fork.
 
 ```mermaid
 flowchart LR
   stockJson["VRMC_materials_mtoon"]
   stockShader["VRM10/MToon10"]
-  forkShader["VRMXT/MToon10"]
+  forkShader["VRMXT/MToonXT10"]
   override["VRMXT_materials_override"]
   stockJson --> stockShader
   stockJson --> override
@@ -134,8 +134,8 @@ until a first shader lands:
 
 | Pipeline | Stock | Proposed fork |
 |----------|--------|----------------|
-| Built-in | `VRM10/MToon10` | `VRMXT/MToon10` |
-| URP | `VRM10/Universal Render Pipeline/MToon10` | `VRMXT/Universal Render Pipeline/MToon10` |
+| Built-in | `VRM10/MToon10` | `VRMXT/MToonXT10` |
+| URP | `VRM10/Universal Render Pipeline/MToon10` | `VRMXT/Universal Render Pipeline/MToonXT10` |
 
 Render-state properties stay in UniVRM’s `_M_*` group (`_M_CullMode`, `_M_SrcBlend`,
 `_M_ZWrite`). Do not copy third-party stencil names.
@@ -186,16 +186,13 @@ Stencil
 }
 ```
 
-Outline pass uses `_M_OutlineStencil*`. Depth and shadow: **TBD**. Default proposal:
-do not stencil-write on shadow/depth, or Keep/Always with write mask 0, so a face
-mask does not punch the shadow map. Confirm against UniVRM MToon10 pass list when
-the fork is cut.
+Outline pass uses `_M_OutlineStencil*`. UniVRM **0.131.2** forks:
 
-**URP `XRMotionVectors`:** **TBD**. If the fork copies UniVRM’s hardcoded
-`WriteMask 1` / `Ref 1`, avatar recipes that use ref 1 fight object motion bits.
-Options: omit the motion-vector stencil write; document reserved bit 0; tell authors
-to use refs 2–15 and a write mask that leaves bit 0 alone. URP docs limit custom
-stencil to bits 0–3 (indices 0–15) on the Universal Renderer.
+- Built-in: ForwardAdd uses the same body stencil as ForwardBase. ShadowCaster has no
+  Stencil block.
+- URP: UniversalForward uses body stencil; MToonOutline uses `_M_OutlineStencil*`.
+  DepthOnly, DepthNormals, and ShadowCaster have no Stencil block. The stock UniVRM
+  `XRMotionVectors` pass (hardcoded `WriteMask 1` / `Ref 1`) is omitted.
 
 Defaults Ref 0, Comp Always, Pass Keep match “stencil off” (buffer stays 0, no
 replace).
@@ -214,7 +211,7 @@ MToon `source` for stencil.
   "engine": "unity",
   "material": {
     "idType": "shaderName",
-    "id": "VRMXT/MToon10",
+    "id": "VRMXT/MToonXT10",
     "variant": "builtin"
   },
   "bindings": [
@@ -247,7 +244,7 @@ MToon `source` for stencil.
 }
 ```
 
-URP sibling: `id` `VRMXT/Universal Render Pipeline/MToon10`, `variant` `urp`. Comp 8 =
+URP sibling: `id` `VRMXT/Universal Render Pipeline/MToonXT10`, `variant` `urp`. Comp 8 =
 Always, Pass 2 = Replace (write ref 1 where the body draws). Pair with a later hair
 material: same ref, Comp NotEqual (6), Pass Keep (0). Exact recipe is authoring, not
 schema.
@@ -259,29 +256,28 @@ does not allocate stencil IDs across the file.
 
 `extensionsRequired` MUST NOT list `VRMXT_materials_override` unless the file is
 unusable without the fork (base-spec rule 9). Supporting Player / UniVRMXT MUST
-**ship** the fork for Apply to honor `VRMXT/MToon10` (rules 27–28). Missing shader →
+**ship** the fork for Apply to honor `VRMXT/MToonXT10` (rules 27–28). Missing shader →
 stock MToon for that material (rules 11–12).
 
 ## Ship home
 
-First consumer: Built-in MToon10 fork as a **shader-only Warudo UMod** (Warudo Shader
-Plugins, `ModHost.Assets.Load`). Not UniVRMXT UPM. Not VRMXT Plugin for Warudo. Not
-deprecated `com.miramocha.vrmxt.unity.shader-plugins`. See
+Consumers: UniVRMXT UPM ships Built-in and URP forks under `Runtime/Shaders/MToonxt/`
+(`Shader.Find`). Warudo UMods `mira.shaders.mtoonxt.birp` / `.urp` warm the same
+ShaderLab names via `ModHost.Assets.Load`. Inspector GUI is UniVRMXT-only
+(`MtoonxtInspector`). Not nested in VRMXT Plugin for Warudo. Not deprecated
+`com.miramocha.vrmxt.unity.shader-plugins`. See
 [VRMC_materials_mtoonxt](../../specs/extensions/materials/vrmc-materials-mtoonxt.md).
-
-Older candidates in this note (UniVRMXT `Runtime/Shaders`, Player AssetBundles) stay
-out of the first ship.
 
 ## Open questions
 
-- [ ] Depth / shadow / DepthNormals stencil (off vs same as body)
-- [ ] Keep UniVRM `XRMotionVectors` stencil write, omit it, or mask bit 0
-- [ ] Built-in ForwardAdd stencil (same as ForwardBase vs off)
-- [ ] First pin of UniVRM MToon10 sources the fork copies
+- [x] Depth / shadow / DepthNormals stencil — BIRP ShadowCaster off; URP DepthOnly / DepthNormals / ShadowCaster off
+- [x] UniVRM `XRMotionVectors` stencil write — omitted on the URP fork
+- [x] Built-in ForwardAdd stencil (same as ForwardBase vs off) — same as ForwardBase
+- [x] First pin of UniVRM MToon10 sources the fork copies — **0.131.2**
 - [ ] Whether Blender VRMXT authoring exposes `_M_Stencil*` as ints or named enums
 - [x] Portable sibling stencil object — `VRMC_materials_mtoonxt` `stencil` /
       `outlineStencil` (option B). Override `shaderName` → fork is not the attach path.
-- [ ] Catalog JSON for `VRMXT/MToon10` (first-party row; omit lil/Poiyomi)
+- [ ] Catalog JSON for `VRMXT/MToonXT10` (first-party row; omit lil/Poiyomi)
 
 ## Related
 
