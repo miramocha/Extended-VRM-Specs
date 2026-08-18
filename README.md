@@ -60,7 +60,7 @@ Optional `VRMXT_*` consumers:
 |------|-------------------|--------|
 | [VRMXT Conformance](specs/core/vrmxt-conformance.md) | Shared `VRMXT_*` family requirements | draft |
 | [VRMXT_materials_override](specs/extensions/materials/vrmxt-materials-override.md) | `VRMXT_materials_override` | draft |
-| [VRMC_materials_mtoonxt](specs/extensions/materials/vrmc-materials-mtoonxt.md) | `VRMC_materials_mtoonxt` | draft |
+| [VRMC_materials_mtoonxt](specs/extensions/materials/vrmc-materials-mtoonxt.md) | `VRMC_materials_mtoonxt` ([stencil](specs/extensions/materials/vrmc-materials-mtoonxt-stencil.md), [Face SDF](specs/extensions/materials/vrmc-materials-mtoonxt-face-sdf.md), [zTest](specs/extensions/materials/vrmc-materials-mtoonxt-ztest.md), [renderQueueOffset](specs/extensions/materials/vrmc-materials-mtoonxt-render-queue.md), [zWrite](specs/extensions/materials/vrmc-materials-mtoonxt-zwrite.md)) | draft |
 | [VRMXT_springBone_override](specs/extensions/physics/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
 | [VRMXT_sprite_particle](specs/extensions/vfx/vrmxt-sprite-particle.md) | Portable sprite particle emitters | draft |
 | [VRMXT_lattice](specs/extensions/deformation/vrmxt-lattice.md) | `VRMXT_lattice` (FFD / cage) | draft |

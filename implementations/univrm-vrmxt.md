@@ -385,12 +385,14 @@ path is post-load re-read of the `.vrm` plus material swap. See
 
 ## MToonXT
 
-Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md).
+Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md)
+([stencil](../specs/extensions/materials/vrmc-materials-mtoonxt-stencil.md)).
 
 UniVRMXT parses `materials[i].extensions.VRMC_materials_mtoonxt`, attaches extras, and
 swaps to packaged `VRMXT/MToonXT10` or `VRMXT/Universal Render Pipeline/MToonXT10` when
 `Shader.Find` (or host `ShaderResolveProvider`) resolves. After swap it restores MToon
-pass settings from `_AlphaMode` and applies stencil / `zTest` / `renderQueue` / `zWrite`. Skip the swap when
+pass settings from `_AlphaMode` and applies compiled stencil (`op` + material indices)
+/ `zTest` / `renderQueueOffset` / `zWrite`. Skip the swap when
 `VRMXT_materials_override` would apply on that material. Warudo UMod `Shader.Find` is
 null; those hosts load the same ShaderLab names from `mira.shaders.mtoonxt.birp` /
 `mira.shaders.mtoonxt.urp`.

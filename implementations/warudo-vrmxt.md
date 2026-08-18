@@ -177,14 +177,15 @@ entry. Stock MToon or PBR may appear briefly before the override is applied.
 
 ## MToonXT
 
-Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md).
+Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md)
+([stencil](../specs/extensions/materials/vrmc-materials-mtoonxt-stencil.md)).
 
 After Character load (and after materials-override Apply), if a material has
 `VRMC_materials_mtoonxt` and `VRMXT_materials_override` would **not** apply on that
 material, the plugin resolves `VRMXT/MToonXT10` (Built-in) or
 `VRMXT/Universal Render Pipeline/MToonXT10` (URP) through `ShaderResolveProvider` (uMod
 `Shader.Find` is null) and swaps stock MToon onto the fork, then restores MToon
-blend/queue/keywords from `_AlphaMode` and writes stencil / `zTest` / `renderQueue` / `zWrite`. Missing shader UMod
+blend/queue/keywords from `_AlphaMode` and writes compiled stencil / `zTest` / `renderQueueOffset` / `zWrite`. Missing shader UMod
 → keep stock MToon.
 
 Shader ship: `mira.shaders.mtoonxt.birp` and `mira.shaders.mtoonxt.urp` in Warudo Shader

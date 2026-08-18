@@ -18,7 +18,8 @@ status: draft
 Non-normative research. Lives under `references/research/` only.
 
 Portable stencil (and Face SDF) JSON now lives on
-[`VRMC_materials_mtoonxt`](../../specs/extensions/materials/vrmc-materials-mtoonxt.md).
+[`VRMC_materials_mtoonxt`](../../specs/extensions/materials/vrmc-materials-mtoonxt.md)
+([stencil](../../specs/extensions/materials/vrmc-materials-mtoonxt-stencil.md)).
 Do not attach MToonXT by pointing `VRMXT_materials_override` `shaderName` at
 `VRMXT/MToonXT10`. This note still records Unity fork property names and ShaderLab
 stencil wiring.
@@ -282,6 +283,7 @@ ShaderLab names via `ModHost.Assets.Load`. Inspector GUI is UniVRMXT-only
 ## Related
 
 - [VRMC_materials_mtoonxt](../../specs/extensions/materials/vrmc-materials-mtoonxt.md)
+- [MToonXT stencil](../../specs/extensions/materials/vrmc-materials-mtoonxt-stencil.md)
 - [VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md)
 - [UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override)
 - [VRMC_materials_mtoon 1.0](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_materials_mtoon-1.0/README.md)
