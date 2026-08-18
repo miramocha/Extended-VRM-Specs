@@ -72,14 +72,16 @@ MUST follow the same fallback: files MUST NOT list `VRMC_materials_mtoonxt` in
    - apply shade, outline, UV animation, and other stock MToon state from the sibling
      `VRMC_materials_mtoon` using the same mapping it already uses for stock MToon;
    - then apply extras defined by this extension (`faceSdf`, `stencil`,
-     `outlineStencil`).
+     `outlineStencil`, `zTest`, `renderQueue`, `zWrite`).
 9. When rule 7 does not hold, the implementation MUST keep stock MToon for that material
    and MUST NOT apply extras.
 10. The skippable unit is this material's `VRMC_materials_mtoonxt` object. Invalid data
     there MUST NOT make the glTF or VRM 1.0 asset invalid.
 11. If an extra object (`faceSdf`, `stencil`, or `outlineStencil`) is missing, unknown,
     or unresolvable, the implementation MUST skip that object only. It MUST still attempt
-    the shader swap when rule 7 holds and remaining extras are usable.
+    the shader swap when rule 7 holds and remaining extras are usable. An unrecognized
+    `zTest` string MUST be ignored (shader default `"lessEqual"`). An out-of-range
+    `renderQueue` MUST be ignored. A non-boolean `zWrite` MUST be ignored.
 12. Unrecognized properties on the extension object MUST be ignored.
 13. This extension MUST NOT duplicate `VRMC_materials_mtoon` fields. Shade color, shading
     shift, shading toony, rim, matcap, outline width, UV animation, and related stock
@@ -122,6 +124,9 @@ flowchart TD
 | `faceSdf` | object | no | Face SDF extras; omit for off |
 | `stencil` | object | no | Body / forward-pass stencil; omit for shader defaults |
 | `outlineStencil` | object | no | Outline-pass stencil; omit for shader defaults |
+| `zTest` | string | no | Forward-pass depth compare; omit for `"lessEqual"` |
+| `renderQueue` | integer | no | Unity render queue after MToon alpha mapping; omit to keep that mapping |
+| `zWrite` | boolean | no | Override Unity ZWrite after MToon mapping; omit to keep that mapping |
 
 ### `faceSdf`
 
@@ -177,6 +182,33 @@ An out-of-range integer or unrecognized enum makes that stencil object unresolva
 `enabled` default `false`. A missing `enabled` key is `false`. Unity MToonXT inspector
 **Enable stencil** / **Enable outline stencil** start off. Off writes Always / Keep and
 does not test or write stencil. On applies `ref`, masks, `comp`, and ops.
+
+### `zTest`
+
+Forward / outline / add depth compare. Same enum as stencil `comp`. Omitted or
+`"lessEqual"` matches stock MToon. `"always"` ignores all closer depth, including
+props in front of the camera.
+
+Unity maps this to `_M_ZTest`. Shader assignment leaves that float at `0`
+(Disabled). Consumers MUST write the resolved enum after swap (`lessEqual` = `4`
+when the key is omitted).
+
+To draw an eyebrow over hair without covering scene objects and without cutting
+hair at the brow’s soft alpha: do **not** stencil-punch the hair (stencil is
+binary; fringe texels still write). Keep brow ZTest `"lessEqual"` at queue
+`3000`. On the hair cutout set `"zWrite": false` so the brow can depth-test
+against the head and props, then alpha-blend over hair that already drew.
+
+### `renderQueue`
+
+Optional integer, inclusive `[0, 5000]`. Applied after stock MToon queue mapping
+from `alphaMode` / `transparentWithZWrite`. Omit to keep that mapping.
+
+### `zWrite`
+
+Optional boolean. Applied after stock MToon ZWrite mapping. `false` turns off
+depth writes (Unity `_M_ZWrite` = 0). Omit to keep the mapping (cutout stays
+ZWrite on).
 
 ## Attachment example
 
