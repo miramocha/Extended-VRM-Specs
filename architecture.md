@@ -79,7 +79,7 @@ are implemented.
 
 Extended VRM is ordinary glTF 2.0 / VRM 1.0 plus optional root or per-object
 extensions named `VRMXT_*`, plus the MToon sibling `VRMC_materials_mtoonxt`
-([spec](specs/extensions/materials/vrmc-materials-mtoonxt.md)). That sibling uses the
+([spec](specs/extensions/materials/vrmc-materials-mtoonxt/README.md)). That sibling uses the
 `VRMC_` prefix to sit next to `VRMC_materials_mtoon`. It is still an Extended draft
 (not a Consortium spec) and MUST NOT appear in `extensionsRequired`.
 
