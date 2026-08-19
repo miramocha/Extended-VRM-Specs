@@ -29,7 +29,7 @@ Repos: [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-W
 (`Assets/Vrmxt/Scripts/VrmxtPlugin.cs`) and
 [Warudo Shader Plugins](https://github.com/miramocha/Warudo-Shader-Plugins)
 (lilToon / Poiyomi / Sample). Warudo does **not** consume
-`com.miramocha.vrmxt.unity.shader-plugins`; warm stays UMod-local
+`com.vrmxt.unity.shader-plugins`; warm stays UMod-local
 ([Warudo-Shader-Plugins#7](https://github.com/miramocha/Warudo-Shader-Plugins/issues/7)
 won’t-do). Player AssetBundle packs are a separate path:
 [VRMXT Player Shader AssetBundles](vrmxt-player-shader-assetbundles.md).

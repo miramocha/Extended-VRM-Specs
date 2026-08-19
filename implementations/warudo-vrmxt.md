@@ -52,7 +52,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 | Export | `Warudo_Data/StreamingAssets/Plugins` |
 | Extensions | `VRMXT_sprite_particle`, `VRMXT_materials_override`, `VRMC_materials_mtoonxt` (stencil) |
 | Plugin version (shipped) | `0.1.13` (see `VrmxtPlugin`) |
-| Steam Workshop | [VRMXT](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) |
+| Steam Workshop | [VRMXT](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210); MToonXT shader (BIRP): [MToonXT Shader for VRMXT (BIRP)](https://steamcommunity.com/sharedfiles/filedetails/?id=3786449905) |
 | Warudo Mod Tool | `0.14.5.1` (`app.warudo.modtool` `#upm/0.14.5.1`) |
 | UniVRM (Warudo runtime) | `0.130.1` (`UniGLTF.PackageVersion` / `UniGLTFVersion` `2.66.1` in `Warudo_Data/Managed/UniGLTF.dll`) |
 | UniVRM (Mod Tool editor) | `0.129.1` (`com.vrmc.*@96a7b03851` embedded in Mod Tool `0.14.5.1`) |
@@ -190,8 +190,10 @@ experimental `zTest` / `zWrite`. Missing shader UMod
 → keep stock MToon.
 
 Shader ship: `mira.shaders.mtoonxt.birp` and `mira.shaders.mtoonxt.urp` in Warudo Shader
-Plugins (`ModHost.Assets.Load`). This plugin parses and swaps; it does not vendor the
-forks. Material inspector lives in UniVRMXT (`MtoonxtInspector`), not in the shader UMods.
+Plugins (`ModHost.Assets.Load`). BIRP Workshop:
+[MToonXT Shader for VRMXT (BIRP)](https://steamcommunity.com/sharedfiles/filedetails/?id=3786449905).
+This plugin parses and swaps; it does not vendor the forks. Material inspector lives in
+UniVRMXT (`MtoonxtInspector`), not in the shader UMods.
 
 ## Plugin setting
 
@@ -327,4 +329,11 @@ the original BIN.
 5. Enable plugin in Warudo; load a Character whose `.vrm` contains the extensions.
 
 Repo: https://github.com/miramocha/VRMXT-Plugin-for-Warudo  
-Steam Workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210
+Steam Workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210  
+MToonXT shader (BIRP): https://steamcommunity.com/sharedfiles/filedetails/?id=3786449905
+
+## Related
+
+- Tutorials: [Warudo apply](../tutorials/warudo-apply.md),
+  [patch export](../tutorials/warudo-patch-export.md)
+

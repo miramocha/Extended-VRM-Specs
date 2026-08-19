@@ -29,7 +29,7 @@ Optional `VRMXT_*` consumers:
 |------|------|
 | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Blender authoring / I/O via VRM1 hooks |
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity UPM package on [UniVRM](https://github.com/vrm-c/UniVRM) |
-| [VRMXT-Unity-Shader-Plugins](https://github.com/miramocha/VRMXT-Unity-Shader-Plugins) | Unity UPM `com.miramocha.vrmxt.unity.shader-plugins` — deprecated transitional Player warm/inventory; supersede with AB packs + in-pack config |
+| [VRMXT-Unity-Shader-Plugins](https://github.com/miramocha/VRMXT-Unity-Shader-Plugins) | Unity UPM `com.vrmxt.unity.shader-plugins` — deprecated transitional Player warm/inventory; supersede with AB packs + in-pack config |
 | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo consumer plugin (vendored UniVRMXT VFX + materials override; UMod). Install: [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) |
 | VRMXT Unity Player (planned) | Separate Unity `2021.3.45f2` desktop app: drag-drop view/edit/export; Warudo-aligned megashaders. Today UniVRMXT + shader-plugins; planned StreamingAssets packs. See [player profile](implementations/vrmxt-unity-player.md), [Unity packages map](implementations/vrmxt-unity-packages.md), [desktop Player primary](decisions/vrmxt-desktop-player-primary.md) |
 | VRM Posing Desktop consumer (planned) | Post-load VRMXT on [VRM Posing Desktop](https://store.steampowered.com/app/1895630/VRM_Posing_Desktop/); host UniVRM `0.129.3` (measured). See [profile](implementations/vrm-posing-desktop-vrmxt.md) |
@@ -42,6 +42,21 @@ Optional `VRMXT_*` consumers:
 | Note | Topic | Status |
 |------|-------|--------|
 | [Extended VRM Architecture](architecture.md) | Multi-engine authoring + runtime consumers; stock VRM stays as-is; Extended optional per engine | draft |
+
+## Tutorials
+
+Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
+
+| Note | Outcome | Status |
+|------|---------|--------|
+| [Getting started in Blender](tutorials/getting-started-blender.md) | Install Extended VRM + VRMXT from GitHub Releases | draft |
+| [Getting started in Unity](tutorials/getting-started-unity.md) | Install Extended UniVRM + UniVRMXT via UPM git URLs | draft |
+| [Blender materials override](tutorials/blender-materials-override.md) | Author `VRMXT_materials_override` | draft |
+| [Blender sprite particles](tutorials/blender-sprite-particles.md) | Author `VRMXT_sprite_particle` | draft |
+| [Blender MToonXT stencil](tutorials/blender-mtoonxt-stencil.md) | Author `VRMC_materials_mtoonxt` stencil | draft |
+| [Unity MToonXT stencil](tutorials/unity-mtoonxt-stencil.md) | Author `VRMC_materials_mtoonxt` stencil in UniVRMXT | draft |
+| [Warudo apply](tutorials/warudo-apply.md) | Load a Character and see particles, shaders, and stencil | draft |
+| [Warudo patch export](tutorials/warudo-patch-export.md) | Patch override JSON into a file copy | draft |
 
 ## Decisions
 
@@ -75,7 +90,7 @@ Optional `VRMXT_*` consumers:
 | [VRMXT Unity packages](implementations/vrmxt-unity-packages.md) | Unity-space UPM / app / Warudo dependency map | draft |
 | [VRMXT Unity Player](implementations/vrmxt-unity-player.md) | Desktop Unity app (`2021.3.45f2`); Warudo-aligned; depends on UniVRMXT | draft |
 | [VRMXT Unity Shader Plugins](implementations/vrmxt-unity-shader-plugins.md) | Deprecated host megashader ship note; pack/UMod config owns supported names | deprecated |
-| [UniVRMXT](implementations/univrm-vrmxt.md) | Unity / UniVRMXT (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMC_materials_mtoonxt` planned, no shader) | draft |
+| [UniVRMXT](implementations/univrm-vrmxt.md) | Unity / UniVRMXT (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMC_materials_mtoonxt` stencil apply + packaged `VRMXT/MToonXT10`) | draft |
 | [Warudo VRMXT](implementations/warudo-vrmxt.md) | Warudo plugin / particle + materials override; MToonXT swap planned | draft |
 | [VRM Posing Desktop VRMXT](implementations/vrm-posing-desktop-vrmxt.md) | Posing Desktop consumer; UniVRM `0.129.3` host pin (measured) | draft |
 | [VRoid Hub browser extension](implementations/vroid-hub-browser-extension.md) | Historical Hub extension profile | superseded |
@@ -85,7 +100,7 @@ Optional `VRMXT_*` consumers:
 | [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | Unreal / VRM4U consumer (`VRMXT_materials_override` planned) | draft |
 | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) | UniVRM / Extended-UniVRM ScriptedImporter hooks (upstream propose) | draft |
 | [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hook API (prefs, exclude prop, upstream propose) | draft |
-| [Blender VRMXT](implementations/blender-vrmxt.md) | Blender VRMXT extension (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMC_materials_mtoonxt` planned) | draft |
+| [Blender VRMXT](implementations/blender-vrmxt.md) | Blender VRMXT extension (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMC_materials_mtoonxt` stencil authoring) | draft |
 
 ## References
 

@@ -32,6 +32,7 @@ After you **draft or materially edit prose** in a `.md` file (specs, ADRs, READM
 | Path | Register |
 |------|----------|
 | Specs, extensions, schema docs, `decisions/**` / ADRs | Technical specification — precise claims, no puffery |
+| `tutorials/**` | Tutorial / how-to — second person, click path, what you should see |
 | Root `README.md`, contributor/setup docs | Technical docs — imperative where appropriate |
 | Design notes / rationale essays | Essay / technical docs — commit to claims; no marketing voice |
 

@@ -190,11 +190,24 @@ Catalogs: [Materials Override Catalogs](../references/materials-override-catalog
 | Export | Done (serialize groups; texture remap when helpers available) | Done with Extended-UniVRM export hooks; variant survival rules | Planned (desktop only; path TBD — full export vs patch) | Done: **patch** rewrite of materials-override JSON into copy of local source VRM; original BIN kept; **no new image payloads** |
 | Profile | [Blender → Materials](blender-vrmxt.md#materials-override) | [UniVRMXT → Materials](univrm-vrmxt.md#materials-override) | [Unity Player](vrmxt-unity-player.md) | [Warudo → Materials](warudo-vrmxt.md#materials-override), [patch export](../references/warudo-vrmxt-patch-export.md) |
 
+### `VRMC_materials_mtoonxt`
+
+Spec: [vrmc-materials-mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+([stencil](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md)). Blender ships
+stencil authoring only. Face SDF stays out of the add-on.
+
+| Op | Blender | UniVRMXT | Unity Player (planned) | Warudo |
+|----|---------|----------|------------------------|--------|
+| Import | Done (glTF indices → material pointers) | Done (parse/apply `op` + indices) | parse/swap compiled stencil after override Apply | parse/swap compiled stencil after override Apply |
+| Create/edit | Done (**VRMXT Material** stencil panel; ops `write` / `inside` / `outside` / outline `same`) | Done (`MtoonxtInspector` **Add MToonXT extras** + stencil ops / writer dropdowns; avatar instance list) | — | — (no stencil authoring) |
+| Preview | — (no EEVEE clip; panel warns when Unity queue would stamp a writer after a clip reader) | Done (packaged `VRMXT/MToonXT10`) | Done (shader from UniVRMXT UPM) | Done (UMods `mira.shaders.mtoonxt.birp` / `.urp`) |
+| Export | Done (pointers → indices; skip clip object when writers are not body `write`; sibling MToon required) | Partial (re-export attached extras with Extended-UniVRM export hooks) | Planned | — |
+| Profile | [Blender → MToonXT stencil](blender-vrmxt.md#mtoonxt-stencil) | [UniVRMXT → MToonXT](univrm-vrmxt.md#mtoonxt) | [Unity Player](vrmxt-unity-player.md) | [Warudo VRMXT](warudo-vrmxt.md) |
+
 ### Draft capabilities (no shipping editor yet)
 
 | Extension | Spec | Blender | UniVRMXT | Unity Player | Warudo |
 |-----------|------|---------|----------|--------------|--------|
-| `VRMC_materials_mtoonxt` | [spec](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md) | — | parse/apply stencil (`op` + indices); packaged `VRMXT/MToonXT10`; `MtoonxtInspector`; clip list on `VrmcMaterialsMtoonxtInstance` | parse/swap compiled stencil after override Apply; shader from UniVRMXT UPM | parse/swap compiled stencil after override Apply; UMods `mira.shaders.mtoonxt.birp` / `mira.shaders.mtoonxt.urp` |
 | `VRMXT_springBone_override` | [spec](../specs/extensions/physics/vrmxt-spring-bone-override.md) | — | — | — | — |
 | `VRMXT_lattice` | [spec](../specs/extensions/deformation/vrmxt-lattice.md) | — | — | — | — |
 | `VRMXT_AnimationController` + `VRMXT_AnimationClip` | [controller](../specs/extensions/animation/vrmxt-animation-controller.md), [clip](../specs/extensions/animation/vrmxt-animation-clip.md); [decision](../decisions/animation-controller-standardization.md) | Planned (phase 1 authoring pair with Unity) | Planned (Animator subset export/import) | — | — |
@@ -240,8 +253,8 @@ Materialize.
 
 | Host | Claims editor for | Does not claim (yet) |
 |------|-------------------|----------------------|
-| Blender | `VRMXT_sprite_particle`, `VRMXT_materials_override` (bindings authoring deferred) | Spring override, lattice, animation, `VRMC_materials_mtoonxt` |
-| UniVRMXT | `VRMXT_sprite_particle` (re-export / edit existing; from-scratch UI thin), `VRMXT_materials_override` (Apply + Materialize + Transfer Done; catalog UI later) | Spring override, lattice, animation; full catalog-driven materials UI; `VRMC_materials_mtoonxt` |
+| Blender | `VRMXT_sprite_particle`, `VRMXT_materials_override` (bindings authoring deferred), `VRMC_materials_mtoonxt` stencil (Face SDF deferred) | Spring override, lattice, animation |
+| UniVRMXT | `VRMXT_sprite_particle` (re-export / edit existing; from-scratch UI thin), `VRMXT_materials_override` (Apply + Materialize + Transfer Done; catalog UI later) | Spring override, lattice, animation; full catalog-driven materials UI; `VRMC_materials_mtoonxt` from-scratch authoring |
 | Unity Player | None shipped (planned desktop Apply + Transfer ± VFX; **no** Materialize) | Materialize; spring / lattice / animation; `VRMC_materials_mtoonxt` |
 | Warudo | `VRMXT_materials_override` **patch** editor + Apply (no Materialize) | VFX authoring; Materialize; general live-avatar VRM export; workshop sources; `VRMC_materials_mtoonxt` |
 
@@ -268,6 +281,7 @@ flowchart LR
 | Task | Prefer |
 |------|--------|
 | New sprite emitters from scratch | Blender |
+| MToonXT stencil ops (`write` / `inside` / `outside` / outline `same`) | Blender or UniVRMXT `MtoonxtInspector` |
 | Unity scene re-export of emitters / override slots already on the avatar | UniVRMXT + Extended-UniVRM gates |
 | Drag-drop Unity runtime view + edit without a full DCC | Unity Player desktop (planned) |
 | Apply file override onto live mats (shader already in app) | Apply (UniVRMXT, Warudo; Player desktop planned) |

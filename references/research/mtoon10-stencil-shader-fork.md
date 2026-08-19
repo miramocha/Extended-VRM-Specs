@@ -266,7 +266,7 @@ Consumers: UniVRMXT UPM ships Built-in and URP forks under `Runtime/Shaders/MToo
 (`Shader.Find`). Warudo UMods `mira.shaders.mtoonxt.birp` / `.urp` warm the same
 ShaderLab names via `ModHost.Assets.Load`. Inspector GUI is UniVRMXT-only
 (`MtoonxtInspector`). Not nested in VRMXT Plugin for Warudo. Not deprecated
-`com.miramocha.vrmxt.unity.shader-plugins`. See
+`com.vrmxt.unity.shader-plugins`. See
 [VRMC_materials_mtoonxt](../../specs/extensions/materials/vrmc-materials-mtoonxt/README.md).
 
 ## Open questions
@@ -275,7 +275,7 @@ ShaderLab names via `ModHost.Assets.Load`. Inspector GUI is UniVRMXT-only
 - [x] UniVRM `XRMotionVectors` stencil write — omitted on the URP fork
 - [x] Built-in ForwardAdd stencil (same as ForwardBase vs off) — same as ForwardBase
 - [x] First pin of UniVRM MToon10 sources the fork copies — **0.131.2**
-- [ ] Whether Blender VRMXT authoring exposes `_M_Stencil*` as ints or named enums
+- [x] Whether Blender VRMXT authoring exposes `_M_Stencil*` as ints or named enums — named `op` (`write` / `inside` / `outside` / `same`); GPU ints stay a consumer mapping
 - [x] Portable sibling stencil object — `VRMC_materials_mtoonxt` `stencil` /
       `outlineStencil` (option B). Override `shaderName` → fork is not the attach path.
 - [ ] Catalog JSON for `VRMXT/MToonXT10` (first-party row; omit lil/Poiyomi)

@@ -262,18 +262,21 @@ prop on preview helpers alongside its own `vrmxt_vfx_preview` lifecycle tag.
 
 ## MToonXT stencil
 
-Authoring for `VRMC_materials_mtoonxt` `stencil` / `outlineStencil` is on the Blender material (`vrmxt_mtoonxt_settings`). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices. GPU `ref` / `comp` / `pass` are not stored. Face SDF, `zTest`, `zWrite`, and XT `renderQueueOffset` stay out of this add-on.
+Authoring for `VRMC_materials_mtoonxt` `stencil` / `outlineStencil` is on the Blender material (`vrmxt_mtoonxt_settings`). The stencil UI sits under **VRMXT Material** (same parent as materials override). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices. GPU `ref` / `comp` / `pass` are not stored. Face SDF, `zTest`, `zWrite`, and XT `renderQueueOffset` stay out of this add-on.
+
+EEVEE has no stencil buffer; the viewport does not clip. The panel warns when a writer is Transparent (or Cutout vs Opaque) and a clip reader would draw earlier under Unity's mapped queues. Outline **Same as body** is hidden while body is Off; export drops outline `same` when body stencil is missing.
 
 Export requires sibling `VRMC_materials_mtoon` on the same material (hub rule 3). If a clip list points at a material that is not body `write`, that stencil object is omitted; other extras on the material still export.
 
-Hooks: `mtoonxt/import_hook.py`, `mtoonxt/export_hook.py`, registered from `hooks/vrm1_hooks.py` after materials override. Format: `format/mtoonxt.py`. Panel / ops: `mtoonxt/panel.py`, `mtoonxt/ops.py`. Authoring only; runtime clip is Unity / Warudo.
+Hooks: `mtoonxt/import_hook.py`, `mtoonxt/export_hook.py`, registered from `hooks/vrm1_hooks.py` after materials override. Format: `format/mtoonxt.py`. Panel / ops: `mtoonxt/panel.py`, `mtoonxt/ops.py`, `mtoonxt/draw_order.py`. Authoring only; GPU clip is a Unity consumer (UniVRMXT apply; Warudo UMods).
 
 ### Checklist
 
 - [x] Parse / serialize `specVersion` `1.0` stencil objects; skip invalid `op` / lists
-- [x] Material PropertyGroups + Material PROPERTIES panel
+- [x] Material PropertyGroups + **VRMXT Material** stencil panel
 - [x] Import indices → pointers; export pointers → indices
 - [x] Skip export when sibling MToon is missing; skip clip object when writers are not body `write`
+- [x] Warn when Unity queue would stamp a writer after a clip reader; hide / drop outline `same` when body is Off
 - [ ] Face SDF extras
 
 ## Materials override
@@ -284,7 +287,7 @@ Hooks: `mtoonxt/import_hook.py`, `mtoonxt/export_hook.py`, registered from `hook
 |-------|----------|
 | Import | Read extension JSON; store on material; populate authored PropertyGroups when Unity parse succeeds. |
 | Export | Serialize authored groups (preferred) or stored raw JSON; remap texture Images into `textures[]` when export context provides buffer helpers. |
-| UI | Editable Material PROPERTIES panel: Add/Remove override slots, Engine / Variant / Material-Shader (catalog + Custom), Add Common Props / Add / Remove properties. Bindings still deferred. Unreal / unparsed payloads stay readonly via raw JSON. |
+| UI | Editable **VRMXT Material** panel: Add/Remove override slots, Engine / Variant / Material-Shader (catalog + Custom), Add Common Props / Add / Remove properties. Bindings still deferred. Unreal / unparsed payloads stay readonly via raw JSON. |
 
 Hooks: `materials_override/import_hook.py`, `materials_override/export_hook.py`,
 registered from `hooks/vrm1_hooks.py`. Format module:
@@ -550,6 +553,10 @@ Readonly panel remains until phase 2 replaces it.
 
 ## Related
 
+- Tutorials: [Getting started in Blender](../tutorials/getting-started-blender.md),
+  [materials override](../tutorials/blender-materials-override.md),
+  [sprite particles](../tutorials/blender-sprite-particles.md),
+  [MToonXT stencil](../tutorials/blender-mtoonxt-stencil.md)
 - Specs: [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
   [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md),
   [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)

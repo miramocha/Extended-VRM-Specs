@@ -18,7 +18,7 @@ status: deprecated
 
 # VRMXT Unity Shader Plugins
 
-**Deprecated.** Package id `com.miramocha.vrmxt.unity.shader-plugins`
+**Deprecated.** Package id `com.vrmxt.unity.shader-plugins`
 ([VRMXT-Unity-Shader-Plugins](https://github.com/miramocha/VRMXT-Unity-Shader-Plugins))
 is a transitional Player helper (hardcoded inventory + warm C#). Do not add a Warudo
 ModHost adapter. Do not treat `BirpClaimedShaderInventory` as the product source of
@@ -151,7 +151,7 @@ Experimental WebGL builds are outside this product ship set. Historical lite int
 
 ## Warm and cook
 
-**Today (Player interim):** helpers in `com.miramocha.vrmxt.unity.shader-plugins`
+**Today (Player interim):** helpers in `com.vrmxt.unity.shader-plugins`
 (`ResourcesBirpShaderWarmHost`, `PoiyomiBirpWarm`, `BirpClaimedShaderInventory`).
 Operational notes: Player repo `Assets/VRMXTPlayer/SHADERS.md`.
 

@@ -24,6 +24,7 @@ Separate **implementer / product** prose from **repo maintainer / agent** proces
 
 | Audience | Belongs in | Examples |
 |----------|------------|----------|
+| Creators using shipping tools | `tutorials/` | Install, author, export, Warudo apply / patch |
 | Spec readers, tool authors, consumers | `specs/`, `decisions/`, `implementations/`, `references/` | Field rules, catalog schema, vendor paths, UI policy (`common: true`) |
 | Specs maintainers and Cursor agents | `.cursor/rules/`, `.cursor/skills/`, optional `references/**/maintaining-*.md` | Regen scripts, same-PR sync habits, deslop triggers, skill workflows |
 
@@ -48,6 +49,11 @@ host table. Prefer the host profile for per-host detail; keep this matrix aligne
 - One concern per document when practical. Link related specs instead of duplicating rules.
 - Keep headings scannable: purpose, scope, normative text, data model / schema, examples,
   compatibility, open questions.
+- Tutorials (`tutorials/`): second person; what you will have at the end; what you
+  need; numbered UI steps. Authoring pages stop at export / re-import in that host.
+  Do not define success as one consumer (Warudo, UniVRMXT, …). Consumer-specific
+  checks belong on that consumer's tutorial. Spec field rules go in Related.
+  Deslop these as tutorial / how-to, not as specifications.
 - Prefer tables for fields, enums, and matrices. Prefer diagrams only when they clarify
   relationships that prose would bury.
 - When a diagram is needed, use a fenced **Mermaid** block (` ```mermaid `). Do not use
@@ -68,6 +74,9 @@ host table. Prefer the host profile for per-host detail; keep this matrix aligne
   extension name: `specs/extensions/vfx/vrmxt-sprite-particle.md` defines
   `VRMXT_sprite_particle`.
 - Add every new normative document to the registry in `README.md`.
+- Put creator how-tos in `tutorials/`. Non-normative. Link to specs and
+  implementation profiles; do not duplicate field rules. Register new tutorial
+  pages in `README.md` and `tutorials/README.md`.
 - Keep decisions, implementation profiles, and research in `decisions/`,
   `implementations/`, and `references/`.
 
