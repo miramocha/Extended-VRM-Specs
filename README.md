@@ -60,7 +60,7 @@ Optional `VRMXT_*` consumers:
 |------|-------------------|--------|
 | [VRMXT Conformance](specs/core/vrmxt-conformance.md) | Shared `VRMXT_*` family requirements | draft |
 | [VRMXT_materials_override](specs/extensions/materials/vrmxt-materials-override.md) | `VRMXT_materials_override` | draft |
-| [VRMC_materials_mtoonxt](specs/extensions/materials/vrmc-materials-mtoonxt.md) | `VRMC_materials_mtoonxt` ([stencil](specs/extensions/materials/vrmc-materials-mtoonxt-stencil.md), [Face SDF](specs/extensions/materials/vrmc-materials-mtoonxt-face-sdf.md), [zTest](specs/extensions/materials/vrmc-materials-mtoonxt-ztest.md), [renderQueueOffset](specs/extensions/materials/vrmc-materials-mtoonxt-render-queue.md), [zWrite](specs/extensions/materials/vrmc-materials-mtoonxt-zwrite.md)) | draft |
+| [VRMC_materials_mtoonxt](specs/extensions/materials/vrmc-materials-mtoonxt/README.md) | `VRMC_materials_mtoonxt` ([stencil](specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md), [Face SDF](specs/extensions/materials/vrmc-materials-mtoonxt/face-sdf.md)) | draft |
 | [VRMXT_springBone_override](specs/extensions/physics/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
 | [VRMXT_sprite_particle](specs/extensions/vfx/vrmxt-sprite-particle.md) | Portable sprite particle emitters | draft |
 | [VRMXT_lattice](specs/extensions/deformation/vrmxt-lattice.md) | `VRMXT_lattice` (FFD / cage) | draft |
@@ -98,6 +98,8 @@ Optional `VRMXT_*` consumers:
 | [Engine material override glTF history](references/research/engine-material-override-gltf-history.md) | Non-normative research: `KHR_techniques_webgl` / `NV_materials_mdl` lessons; PBR-only fallback sketch (no MToon sibling) | draft |
 | [Substance 3D Painter MToon viewport](references/research/substance-painter-mtoon-viewport.md) | Non-normative research: Painter GLSL preview of `VRMC_materials_mtoon` (VRM 1.0 only; not a VRMXT host) | draft |
 | [MToon10 stencil shader fork](references/research/mtoon10-stencil-shader-fork.md) | Non-normative: Unity MToon10 fork properties; portable stencil JSON is `VRMC_materials_mtoonxt` | draft |
+| [MToonXT zTest](references/research/mtoonxt-ztest.md) | Non-normative: Unity depth compare experiment (`zTest` key) | draft |
+| [MToonXT zWrite](references/research/mtoonxt-zwrite.md) | Non-normative: Unity depth-write experiment (`zWrite` key) | draft |
 | [Engine particle capability](references/engine-particle-capability.md) | Non-normative: Unity Particle System vs VFX Graph / BIRP; Niagara vs Cascade; VRM4U attach constraints (2026-07-21) | draft |
 | [VRoid Hub VRMXT round-trip](references/vroid-hub-vrmxt-roundtrip.md) | Non-normative: `VRMXT_materials_override` survives Hub upload → original download (2026-07-21); not an in-browser preview product | draft |
 | [Warudo VRMXT Patch Export](references/warudo-vrmxt-patch-export.md) | Plan for patching VRMXT JSON into a copy of a local Warudo Character VRM | accepted |

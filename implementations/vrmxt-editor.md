@@ -194,7 +194,7 @@ Catalogs: [Materials Override Catalogs](../references/materials-override-catalog
 
 | Extension | Spec | Blender | UniVRMXT | Unity Player | Warudo |
 |-----------|------|---------|----------|--------------|--------|
-| `VRMC_materials_mtoonxt` | [spec](../specs/extensions/materials/vrmc-materials-mtoonxt.md) | — | parse/apply stencil (`op` + indices); packaged `VRMXT/MToonXT10`; `MtoonxtInspector`; clip list on `VrmcMaterialsMtoonxtInstance` | parse/swap compiled stencil after override Apply; shader from UniVRMXT UPM | parse/swap compiled stencil after override Apply; UMods `mira.shaders.mtoonxt.birp` / `mira.shaders.mtoonxt.urp` |
+| `VRMC_materials_mtoonxt` | [spec](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md) | — | parse/apply stencil (`op` + indices); packaged `VRMXT/MToonXT10`; `MtoonxtInspector`; clip list on `VrmcMaterialsMtoonxtInstance` | parse/swap compiled stencil after override Apply; shader from UniVRMXT UPM | parse/swap compiled stencil after override Apply; UMods `mira.shaders.mtoonxt.birp` / `mira.shaders.mtoonxt.urp` |
 | `VRMXT_springBone_override` | [spec](../specs/extensions/physics/vrmxt-spring-bone-override.md) | — | — | — | — |
 | `VRMXT_lattice` | [spec](../specs/extensions/deformation/vrmxt-lattice.md) | — | — | — | — |
 | `VRMXT_AnimationController` + `VRMXT_AnimationClip` | [controller](../specs/extensions/animation/vrmxt-animation-controller.md), [clip](../specs/extensions/animation/vrmxt-animation-clip.md); [decision](../decisions/animation-controller-standardization.md) | Planned (phase 1 authoring pair with Unity) | Planned (Animator subset export/import) | — | — |

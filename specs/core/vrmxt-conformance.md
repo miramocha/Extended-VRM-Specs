@@ -77,7 +77,7 @@ are future work. They do not block experimental use of the family rules above.
 ## Related
 
 - [VRMXT_materials_override](../extensions/materials/vrmxt-materials-override.md)
-- [VRMC_materials_mtoonxt](../extensions/materials/vrmc-materials-mtoonxt.md)
+- [VRMC_materials_mtoonxt](../extensions/materials/vrmc-materials-mtoonxt/README.md)
 - [VRMXT_springBone_override](../extensions/physics/vrmxt-spring-bone-override.md)
 - [VRMXT_sprite_particle](../extensions/vfx/vrmxt-sprite-particle.md)
 - [VRMXT_lattice](../extensions/deformation/vrmxt-lattice.md)

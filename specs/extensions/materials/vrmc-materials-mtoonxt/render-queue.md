@@ -11,4 +11,4 @@ status: superseded
 
 # VRMC_materials_mtoonxt renderQueueOffset
 
-Moved to [mtoonxt-render-queue.md](../../references/research/mtoonxt-render-queue.md).
+Moved to [MToonXT renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md).

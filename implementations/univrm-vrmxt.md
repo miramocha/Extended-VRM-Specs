@@ -21,7 +21,7 @@ status: draft
 Unity implementation profile for
 [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md) and
 [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md).
-[VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md) parse
+[VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md) parse
 and stencil apply ship in this package, with Built-in and URP `VRMXT/MToonXT10` forks under
 `Runtime/Shaders/MToonxt/`. Warudo loads the same ShaderLab names from shader UMods
 (`mira.shaders.mtoonxt.birp` / `.urp`) because UMod `Shader.Find` is null.
@@ -385,14 +385,14 @@ path is post-load re-read of the `.vrm` plus material swap. See
 
 ## MToonXT
 
-Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md)
-([stencil](../specs/extensions/materials/vrmc-materials-mtoonxt-stencil.md)).
+Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+([stencil](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md)).
 
 UniVRMXT parses `materials[i].extensions.VRMC_materials_mtoonxt`, attaches extras, and
 swaps to packaged `VRMXT/MToonXT10` or `VRMXT/Universal Render Pipeline/MToonXT10` when
 `Shader.Find` (or host `ShaderResolveProvider`) resolves. After swap it restores MToon
-pass settings from `_AlphaMode` and applies compiled stencil (`op` + material indices)
-/ `zTest` / `renderQueueOffset` / `zWrite`. Skip the swap when
+pass settings from `_AlphaMode` and applies compiled stencil (`op` + material indices).
+Unity also reads experimental `zTest` / `zWrite`. Skip the swap when
 `VRMXT_materials_override` would apply on that material. Warudo UMod `Shader.Find` is
 null; those hosts load the same ShaderLab names from `mira.shaders.mtoonxt.birp` /
 `mira.shaders.mtoonxt.urp`.
@@ -401,7 +401,7 @@ null; those hosts load the same ShaderLab names from `mira.shaders.mtoonxt.birp`
 
 - Specs: [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
   [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md),
-  [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md)
+  [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
 - Backend research: [Engine particle capability](../references/engine-particle-capability.md)
   (`ParticleSystem` required; VFX Graph optional)
 - Upstream hooks / AssetDatabase workaround: [univrm-upstream-hooks.md](univrm-upstream-hooks.md)

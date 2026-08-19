@@ -20,7 +20,7 @@ status: draft
 
 Host integration for [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
 [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md), and
-[VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md) on
+[VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md) on
 [Warudo](https://warudo.app/) Characters. Implementation:
 [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo)
 (`Assets/Vrmxt/`), exported as a UMod plugin to `StreamingAssets/Plugins`.
@@ -43,7 +43,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 1. `VRMXT_sprite_particle` → ParticleSystem children
 2. `VRMXT_materials_override` → unity-slot shader/properties/bindings on matching mats
 3. `VRMC_materials_mtoonxt` → swap stock MToon to MToonXT when the shader UMod is present
-   (override still wins when it applies; stencil + `zTest`; Face SDF not applied)
+   (override still wins when it applies; stencil; Face SDF not applied)
 
 | Item | Value |
 |------|-------|
@@ -177,15 +177,16 @@ entry. Stock MToon or PBR may appear briefly before the override is applied.
 
 ## MToonXT
 
-Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt.md)
-([stencil](../specs/extensions/materials/vrmc-materials-mtoonxt-stencil.md)).
+Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+([stencil](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md)).
 
 After Character load (and after materials-override Apply), if a material has
 `VRMC_materials_mtoonxt` and `VRMXT_materials_override` would **not** apply on that
 material, the plugin resolves `VRMXT/MToonXT10` (Built-in) or
 `VRMXT/Universal Render Pipeline/MToonXT10` (URP) through `ShaderResolveProvider` (uMod
 `Shader.Find` is null) and swaps stock MToon onto the fork, then restores MToon
-blend/queue/keywords from `_AlphaMode` and writes compiled stencil / `zTest` / `renderQueueOffset` / `zWrite`. Missing shader UMod
+blend/queue/keywords from `_AlphaMode` and writes compiled stencil. Unity also reads
+experimental `zTest` / `zWrite`. Missing shader UMod
 → keep stock MToon.
 
 Shader ship: `mira.shaders.mtoonxt.birp` and `mira.shaders.mtoonxt.urp` in Warudo Shader
