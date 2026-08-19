@@ -3,6 +3,7 @@ title: VRMC_materials_mtoonxt stencil
 aliases:
   - MToonXT stencil
   - stencil clip
+  - coverage clip
 tags:
   - extended-vrm
   - spec/materials
@@ -15,13 +16,46 @@ status: draft
 
 # VRMC_materials_mtoonxt stencil
 
-Body / forward (`stencil`) and inverse-hull outline (`outlineStencil`) extras on
-[VRMC_materials_mtoonxt](README.md).
+Coverage clip extras on [VRMC_materials_mtoonxt](README.md). Serialized names stay
+`stencil` (body / forward) and `outlineStencil` (inverse-hull outline pass, when the
+shader has one). The identifier matches existing VTuber / Unity search. The extra
+describes coverage clip.
 
-Authors describe **write** vs **clip inside / outside** using glTF `materials[]`
-indices. Consumers compile that to GPU stencil `Ref` / compare / op. Files MUST NOT
-serialize `enabled`, `ref`, `readMask`, `writeMask`, `comp`, `pass`, `fail`, or `zfail`
-on these objects.
+Stock importers ignore the extra. Supporting consumers MUST produce the coverage
+relationship below. How they do it is local (GPU stencil, engine `stencil_mode`,
+material stencil state, or another method that keeps the same pixels).
+
+## Intention
+
+A **writer** is a coverage source. A **reader** is clipped against listed writers.
+
+| `op` | Intention |
+|------|-----------|
+| `write` | This material stamps coverage (Y). |
+| `inside` | Draw this material (X) only where a listed writer covered the pixel. |
+| `outside` | Draw this material (X) except where a listed writer covered the pixel. |
+| `same` | Outline only: use the body's clip relationship on the hull. |
+
+Coverage is **screen coverage after pose and skinning**, in the pass that draws the
+material (body vs outline). It is binary: cutout and soft alpha still stamp. Union of
+several listed writers is OR. AND of two different writer sets is out of scope.
+
+Writers MUST be presented before `inside` / `outside` readers that list them, so the
+coverage exists when the reader clips. Mesh primitive order MAY be enough. A supporting
+implementation SHOULD draw body `write` first when it controls pass order.
+
+On a shared mesh (VRoid Face: iris submesh before sclera), also draw `inside` before
+other cutout on that mesh so eyelids can cover iris-card pixels outside the stamp.
+
+Do not treat these as matching the intention:
+
+- deleting or Boolean-cutting triangles in object space
+- always drawing X on top of Y (overdraw / depth-read-only receiver)
+- a shade, rim, or alpha **texture** named mask
+
+Unity render-queue integers are not a stencil field. See
+[renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md)
+(non-normative).
 
 ## Scope
 
@@ -29,11 +63,14 @@ on these objects.
 |------|-------|
 | Extra names | `stencil`, `outlineStencil` |
 | Parent | `materials[i].extensions.VRMC_materials_mtoonxt` |
-| GPU buffer | one 8-bit stencil; one `Ref` per distinct writer-index set |
+| Meaning | coverage clip (`write` / `inside` / `outside`) |
 
 `stencil` applies to the body / forward pass. `outlineStencil` applies to the outline
-pass when the MToonXT shader has one. ShadowCaster, URP DepthOnly / DepthNormals have
-no stencil (BIRP ForwardAdd uses body stencil).
+pass when the MToonXT shader has one. Depth-only, shadow, and similar utility passes
+have no coverage clip unless a consumer profile says otherwise.
+
+Files MUST NOT serialize GPU stencil state on these objects: `enabled`, `ref`,
+`readMask`, `writeMask`, `comp`, `pass`, `fail`, `zfail`.
 
 ## `op` schema
 
@@ -51,66 +88,46 @@ rule 7 can swap to MToonXT.
 
 ### `inside` / `outside`
 
-Clip this material to the **union** (OR) of listed writers. `materials` MUST be a
+Clip this material to the union (OR) of listed writers. `materials` MUST be a
 non-empty array of in-range indices. Each listed material MUST have body `stencil.op`
 `write`. A self-index is unresolvable (rule 11).
 
-`inside` draws only where a listed writer covered the pixel. `outside` skips those
-pixels.
-
-True AND of two different writer sets is out of scope.
-
 ### `same` (outline only)
 
-`outlineStencil.op` `same` copies the **compiled** body stencil (Ref, compare, pass)
-into the outline pass. `materials` MUST be absent. `op` `same` on body `stencil` is
-unresolvable.
+`outlineStencil.op` `same` uses the body's clip relationship on the outline hull
+(same writers, same inside / outside / write). `materials` MUST be absent. `op` `same`
+on body `stencil` is unresolvable.
 
 ### Omit
 
-Missing `outlineStencil` is outline stencil-off (Always / Keep, not enabled). The
-consumer MUST NOT copy body stencil onto the outline pass.
+Missing `outlineStencil` means the outline pass has no coverage clip. The consumer
+MUST NOT copy body clip onto the outline hull.
 
 Outline width `none` means the outline pass does not draw; `outlineStencil` then has
 no visible effect. Do not set outline `write` on a sclera writer: the hull would grow
-the clip mask.
+the coverage region.
 
-## Compile (consumers)
+### Unresolvable objects
 
-File-local. Unique sorted writer-index sets (from `inside`/`outside` lists, plus
-singleton `{i}` for a `write` material that no reader lists) receive `Ref` 1, 2, … .
+Skip that extra object only (hub rule 11):
 
-| `op` | compare | stencil op | enabled |
-|------|---------|------------|---------|
-| `write` | always | replace | true |
-| `inside` | equal | keep | true |
-| `outside` | notEqual | keep | true |
-| omit / off | always | keep | false |
-
-`readMask` / `writeMask` 255. `fail` / `zfail` `keep`.
-
-If two `inside`/`outside` lists share a writer index and the sorted lists are not
-equal, those stencil objects are unresolvable (rule 11). A listed writer without
-`op` `write`, an out-of-range index, `write` with `materials`, `inside`/`outside`
-without `materials`, or `same` on body: skip that object only.
-
-Writers MUST draw before `inside` / `outside` readers that list them. Mesh primitive
-order MAY be enough. A supporting implementation SHOULD draw body `write` before
-those readers when it controls pass order. On a shared mesh (VRoid Face: iris
-submesh before sclera), also draw `inside` before other cutout on that mesh so
-eyelids can cover iris-card pixels outside the stamp. Stencil is binary: soft alpha
-still writes. Unity queue integers are not a stencil field; see
-[renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md)
-(non-normative).
-
-An object without `op`, or with unrecognized `op`, is unresolvable (hub rule 11).
-Unity Comp 0 is Disabled and hides the mesh; after compile, consumers MUST write
-Always (8) when stencil is off.
+- missing or unrecognized `op`
+- two `inside`/`outside` lists share a writer index but the sorted lists are not equal
+- listed writer without body `op` `write`
+- out-of-range index
+- `write` with `materials`
+- `inside`/`outside` without `materials`
+- `same` on body `stencil`
 
 ## Examples
 
 Non-normative. Same ops as `mirabunny2026_2.stencil_2.vrm` (White `3`, Iris `1`,
 Brow `4`, Hair `16`).
+
+- Iris `inside` White: draw iris only on sclera coverage.
+- Hair-Highlight `outside` Brow: skip highlight on brow coverage.
+- White and Brow `write`: coverage sources. Brow outline `write` stamps in the outline
+  pass. Iris and Hair-Highlight `outlineStencil` `same` follow the body clip.
 
 ```json
 {
@@ -166,6 +183,28 @@ materials `"op": "write"`.
 glTF stores indices. The material ShaderGUI MUST NOT persist a material list (shader
 properties cannot). UniVRMXT: `VrmcMaterialsMtoonxtInstance` editor uses `Material`
 object fields; export writes indices. Warudo uses JSON only.
+
+## GPU stencil consumer (non-normative)
+
+Typical mapping when the engine exposes an 8-bit stencil on the toon color pass.
+File-local. Unique sorted writer-index sets (from `inside`/`outside` lists, plus
+singleton `{i}` for a `write` material that no reader lists) receive `Ref` 1, 2, … .
+
+| `op` | compare | stencil op | enabled |
+|------|---------|------------|---------|
+| `write` | always | replace | true |
+| `inside` | equal | keep | true |
+| `outside` | notEqual | keep | true |
+| omit / off | always | keep | false |
+
+`readMask` / `writeMask` 255. `fail` / `zfail` `keep`.
+
+Unity Comp 0 is Disabled and hides the mesh. After this mapping, write Always (8)
+when clip is off.
+
+Unity pass notes: BIRP ForwardAdd uses body clip; ShadowCaster has none. URP
+UniversalForward uses body clip; DepthOnly / DepthNormals / ShadowCaster have none.
+See [MToon10 stencil shader fork](../../../../references/research/mtoon10-stencil-shader-fork.md).
 
 ## Related
 

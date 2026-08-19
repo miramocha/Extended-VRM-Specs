@@ -168,13 +168,14 @@ On Editor / Player hosts, resolve MAY use `Shader.Find`. Warudo UMod shaders sta
 null under `Shader.Find`; the VRMXT plugin uses `ShaderResolveProvider` (ModHost warm
 cache, then a scan of already-loaded `Shader` assets).
 
-UniVRMXT (`com.miramocha.univrmxt`) parses, attaches, compiles stencil extras, and ships
-the Built-in / URP forks (`Runtime/Shaders/MToonxt/`). Warudo UMods
-`mira.shaders.mtoonxt.birp` and `mira.shaders.mtoonxt.urp` warm the same ShaderLab names
-because UMod `Shader.Find` is null.
+UniVRMXT (`com.miramocha.univrmxt`) parses, attaches, and applies
+[stencil](stencil.md) coverage clip extras, and ships the Built-in / URP forks
+(`Runtime/Shaders/MToonxt/`). Warudo UMods `mira.shaders.mtoonxt.birp` and
+`mira.shaders.mtoonxt.urp` warm the same ShaderLab names because UMod `Shader.Find`
+is null.
 
-Unity maps compiled stencil onto fork properties `_M_Stencil*` and
-`_M_OutlineStencil*`. Property table:
+Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStencil*`
+(GPU stencil `Ref` / compare / op is a consumer mapping). Property table:
 [MToon10 stencil shader fork](../../../../references/research/mtoon10-stencil-shader-fork.md).
 
 ## Relationship to other material extensions
