@@ -24,7 +24,7 @@ AssetBundles**, so the desktop app build does not cook those megashader trees.
 Supported ShaderLab names and warm assets come from **in-pack config** (JSON,
 ScriptableObject, or equivalent), read at boot after `AssetBundle.LoadFromFile`.
 That config is the Player ship surface. It replaces hardcoded C# claim lists in
-`com.miramocha.vrmxt.unity.shader-plugins` (deprecated transitional package;
+`com.vrmxt.unity.shader-plugins` (deprecated transitional package;
 [VRMXT Unity Shader Plugins](../implementations/vrmxt-unity-shader-plugins.md)).
 
 Warudo keeps UMod + `ModHost.Assets.Load` and does not consume shader-plugins

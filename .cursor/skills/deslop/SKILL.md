@@ -29,7 +29,7 @@ Workflow: **Scan → Diagnose → Rewrite by meaning → Re-scan → (repeat) �
 
 Before touching the text, establish:
 
-- **Genre and venue** — academic article, tweet, reddit post, LinkedIn, email, blog, docs, marketing. If not stated and not obvious from the text, ask. Genre decides which tells are fatal and what "good" means; see [references/voices.md](references/voices.md).
+- **Genre and venue** — academic article, tweet, reddit post, LinkedIn, email, blog, docs, tutorial/how-to, marketing. If not stated and not obvious from the text, ask. Genre decides which tells are fatal and what "good" means; see [references/voices.md](references/voices.md). `tutorials/**` in this repo is tutorial/how-to, not specification.
 - **Audience and stance** — who reads it, and what the author actually claims. Slop is what fills the space where a claim should be; you cannot remove it without knowing the claim.
 - **Constraints** — length limits, required citations, house style.
 

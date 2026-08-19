@@ -3,7 +3,7 @@ title: VRMXT Unity packages
 aliases:
   - Unity UPM dependency map
   - VRMXT Unity package landscape
-  - com.miramocha Unity packages
+  - com.vrmxt Unity packages
 tags:
   - extended-vrm
   - implementation/unity
@@ -25,8 +25,8 @@ page is the dependency index for Unity hosts only.
 |-------|------|----------------|------|
 | [UniVRM](https://github.com/vrm-c/UniVRM) | Upstream UPM | `com.vrmc.gltf`, `com.vrmc.vrm` | Stock VRM 1.0 load / export |
 | [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | Fork | UniVRM-compatible | Optional import/export extension registries (propose upstream) |
-| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | UPM | `com.miramocha.univrmxt` | Parse / attach / sync `VRMXT_*`; materials Apply / Transfer; VFX; MToonXT BIRP/URP forks |
-| [VRMXT-Unity-Shader-Plugins](https://github.com/miramocha/VRMXT-Unity-Shader-Plugins) | UPM (deprecated) | `com.miramocha.vrmxt.unity.shader-plugins` | Transitional Player inventory / warm C#; supersede with Player AssetBundle packs + in-pack config |
+| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | UPM | `com.vrmxt.univrmxt` | Parse / attach / sync `VRMXT_*`; materials Apply / Transfer; VFX; MToonXT BIRP/URP forks |
+| [VRMXT-Unity-Shader-Plugins](https://github.com/miramocha/VRMXT-Unity-Shader-Plugins) | UPM (deprecated) | `com.vrmxt.unity.shader-plugins` | Transitional Player inventory / warm C#; supersede with Player AssetBundle packs + in-pack config |
 | VRMXT Unity Player | App (private repo today) | Unity `2021.3.45f2` | Desktop view / edit / export; UniVRMXT (incl. `VRMXT/MToonXT10`) + shader-plugins. Profile: [vrmxt-unity-player.md](vrmxt-unity-player.md) |
 | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo UMod | `mira.vrmxt` | Runtime consumer; vendored or linked UniVRMXT paths |
 | Warudo Shader Plugins | Warudo UMods (private repo today) | e.g. `mira.shaders.poiyomi.birp`, lil BIRP, `mira.shaders.mtoonxt.birp` / `mira.shaders.mtoonxt.urp` | Vendor shaders + ModHost warm; not nested in UniVRMXT; does not depend on shader-plugins |
@@ -45,7 +45,7 @@ Third-party pins used by host-shipped overrides (not VRMXT packages):
 ```mermaid
 flowchart LR
   univrm["UniVRM / Extended-UniVRM"]
-  univrmxt["UniVRMXT<br/>com.miramocha.univrmxt"]
+  univrmxt["UniVRMXT<br/>com.vrmxt.univrmxt"]
   shaders["Shader Plugins UPM<br/>deprecated transitional"]
   wshaders["Warudo Shader Plugins UMods<br/>vendor lil / Poiyomi / MToonXT + local warm"]
   warudo["VRMXT Plugin for Warudo"]
@@ -61,7 +61,7 @@ flowchart LR
 
 Warudo Shader Plugins keep vendoring lil / Poiyomi in the UMod and keep local ModHost
 warm. MToonXT shader UMods (`mira.shaders.mtoonxt.birp`, `mira.shaders.mtoonxt.urp`) ship
-`VRMXT/MToonXT10`. They do **not** consume `com.miramocha.vrmxt.unity.shader-plugins`
+`VRMXT/MToonXT10`. They do **not** consume `com.vrmxt.unity.shader-plugins`
 ([Warudo-Shader-Plugins#7](https://github.com/miramocha/Warudo-Shader-Plugins/issues/7)
 won’t-do).
 
@@ -73,7 +73,7 @@ See [VRMXT Player Shader AssetBundles](../references/vrmxt-player-shader-assetbu
 ```mermaid
 flowchart LR
   univrm["UniVRM / Extended-UniVRM"]
-  univrmxt["UniVRMXT<br/>com.miramocha.univrmxt"]
+  univrmxt["UniVRMXT<br/>com.vrmxt.univrmxt"]
   wshaders["Warudo Shader Plugins UMods<br/>vendor lil / Poiyomi / MToonXT + local warm"]
   packs["Player AB packs<br/>+ in-pack config"]
   warudo["VRMXT Plugin for Warudo"]
@@ -96,7 +96,7 @@ Rules of thumb:
   ships and registers (Warudo ModHost UMods, or Player pack config), then binds
   `ShaderResolveProvider`. Missing name → stock VRM (materials-override rules 11–12).
   No closed claim inventory in UniVRMXT or a shared UPM.
-- **`com.miramocha.vrmxt.unity.shader-plugins`** is deprecated transitional Player code.
+- **`com.vrmxt.unity.shader-plugins`** is deprecated transitional Player code.
   Profile note: [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins.md).
 - **Player** and **Warudo** are apps / plugins. Do not nest them inside UniVRMXT.
 - **Warudo Shader Plugins**: UMod packaging, vendor trees, local warm. No planned
@@ -107,16 +107,23 @@ Rules of thumb:
 
 ## Install snippets
 
-UniVRMXT (see package README for exact UniVRM version):
+Extended UniVRM, then UniVRMXT. Exact steps:
+[Getting started in Unity](../tutorials/getting-started-unity.md).
 
 ```json
-"com.miramocha.univrmxt": "https://github.com/miramocha/UniVRMXT.git"
+{
+  "dependencies": {
+    "com.vrmc.gltf": "https://github.com/miramocha/Extended-UniVRM.git?path=/Packages/UniGLTF",
+    "com.vrmc.vrm": "https://github.com/miramocha/Extended-UniVRM.git?path=/Packages/VRM10",
+    "com.vrmxt.univrmxt": "https://github.com/miramocha/UniVRMXT.git"
+  }
+}
 ```
 
 Shader Plugins (Player interim only; do not add for Warudo):
 
 ```json
-"com.miramocha.vrmxt.unity.shader-plugins": "https://github.com/miramocha/VRMXT-Unity-Shader-Plugins.git"
+"com.vrmxt.unity.shader-plugins": "https://github.com/miramocha/VRMXT-Unity-Shader-Plugins.git"
 ```
 
 Player / Warudo pin Unity **`2021.3.45f2`** for Warudo-aligned shader cook

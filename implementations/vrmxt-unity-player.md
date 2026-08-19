@@ -50,10 +50,10 @@ product path and MUST NOT claim Warudo-parity megashader support. Historical not
 
 | Piece | Repo |
 |-------|------|
-| Format, runtime attach, materials authoring helpers, export hooks | [UniVRMXT](https://github.com/miramocha/UniVRMXT) (`com.miramocha.univrmxt`) |
+| Format, runtime attach, materials authoring helpers, export hooks | [UniVRMXT](https://github.com/miramocha/UniVRMXT) (`com.vrmxt.univrmxt`) |
 | Stock VRM 1.0 load | UniVRM (versions compatible with `2021.3.45f2`) |
 | Player app (desktop) | VRMXT Unity Player (do not nest inside UniVRMXT or Extended-UniVRM) |
-| Megashader warm (interim) | `com.miramocha.vrmxt.unity.shader-plugins` (deprecated); planned StreamingAssets packs + in-pack config |
+| Megashader warm (interim) | `com.vrmxt.unity.shader-plugins` (deprecated); planned StreamingAssets packs + in-pack config |
 
 Rejected:
 

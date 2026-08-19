@@ -168,7 +168,7 @@ On Editor / Player hosts, resolve MAY use `Shader.Find`. Warudo UMod shaders sta
 null under `Shader.Find`; the VRMXT plugin uses `ShaderResolveProvider` (ModHost warm
 cache, then a scan of already-loaded `Shader` assets).
 
-UniVRMXT (`com.miramocha.univrmxt`) parses, attaches, and applies
+UniVRMXT (`com.vrmxt.univrmxt`) parses, attaches, and applies
 [stencil](stencil.md) coverage clip extras, and ships the Built-in / URP forks
 (`Runtime/Shaders/MToonxt/`). Warudo UMods `mira.shaders.mtoonxt.birp` and
 `mira.shaders.mtoonxt.urp` warm the same ShaderLab names because UMod `Shader.Find`
@@ -197,7 +197,7 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 - [x] Depth / shadow / DepthNormals / Built-in ForwardAdd stencil — BIRP ForwardAdd = body; ShadowCaster off. URP DepthOnly / DepthNormals / ShadowCaster off.
 - [x] URP `XRMotionVectors` stencil bit 0 — fork omits that pass
 - [ ] Extra shade bands, face clip/mask, anisotropic highlight
-- [ ] Blender authoring (material pointers → indices)
+- [x] Blender authoring (material pointers → indices) — VRMXT-Extension-for-Blender 0.2.4; [Blender VRMXT](../../../../implementations/blender-vrmxt.md#mtoonxt-stencil)
 - [ ] Catalog JSON for `VRMXT/MToonXT10`
 - [ ] Stable `specVersion` policy after the first accepted property set
 
@@ -213,5 +213,6 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 - [MToonXT zWrite](../../../../references/research/mtoonxt-zwrite.md) (non-normative)
 - [MToon10 stencil shader fork](../../../../references/research/mtoon10-stencil-shader-fork.md) (non-normative)
 - [UniVRMXT](../../../../implementations/univrm-vrmxt.md)
+- [Blender VRMXT](../../../../implementations/blender-vrmxt.md#mtoonxt-stencil)
 - [Warudo VRMXT](../../../../implementations/warudo-vrmxt.md)
 - [VRMXT Unity packages](../../../../implementations/vrmxt-unity-packages.md)

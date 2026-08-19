@@ -44,7 +44,7 @@ Property lists match. Only `shaderName`, `displayName`, `defaultVariant`,
 
 | Field | Value |
 |-------|-------|
-| `provider.id` | `com.miramocha.univrmxt` |
+| `provider.id` | `com.vrmxt.univrmxt` |
 | `provider.version` | `0.1.0` (sample examples) |
 
 ### Render pipeline support

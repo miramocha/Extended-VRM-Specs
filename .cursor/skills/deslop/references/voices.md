@@ -54,6 +54,14 @@ What "good" means per genre, what tells are fatal there, and what the de-slopped
 - **Fatal tells here**: "robust", "powerful", "blazingly fast" without benchmarks, "simply"/"just" before steps that aren't, marketing voice in reference material, emoji section headers.
 - **De-slop moves**: imperative mood, exact commands, exact versions, expected output. Adjectives almost to zero. Lists are fine here — docs are the one genre where "Term: definition" bullets are legitimate structure, so don't strip them; strip the puffery inside them.
 
+## Tutorial / how-to (`tutorials/**`)
+
+- **Goal**: someone following along finishes a task. Second person. Open with what they will have at the end. Name the clicks and what this host's viewport or file should look like after each stretch. Authoring tutorials stop at export / re-import; do not add a "What success looks like" section that names one consumer.
+- **Fatal tells here**: spec telegram ("Ship X on Y."), opening with compatibility claims, "Audience" as a classifier, MUST/SHOULD, "non-normative", "source of truth", dumping JSON field paths before the UI path, "Check" lists that only validate `extensionsUsed`. Compressing a walkthrough into two 12-word sentences is a register miss even when the scan is clean.
+- **Fatal tells here**: spec telegram ("Ship X on Y."), opening with compatibility claims, "Audience" as a classifier, MUST/SHOULD, "non-normative", "source of truth", dumping JSON field paths before the UI path, "Check" lists that only validate `extensionsUsed`. Compressing a walkthrough into two 12-word sentences is a register miss even when the scan is clean.
+- **De-slop moves**: keep versions, UI labels, and file names. Move schemas and host seams to Related. "What you'll need" and "If something looks wrong" beat Audience/Check. Contractions are fine. Do not pad with "simply", "just click", or a not-X-but-Y lede to sound friendlier.
+- **Cadence**: mix short commands with one-sentence why. A tutorial that reads like a conformance note failed Phase 4 even if grep is quiet.
+
 ## Technical specification / ADR / Extended VRM extension docs
 
 - **Goal**: implementers can implement or reject a requirement without guessing. Normative language is precise; examples are labeled as examples.

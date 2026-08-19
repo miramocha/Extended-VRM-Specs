@@ -26,7 +26,7 @@ and stencil apply ship in this package, with Built-in and URP `VRMXT/MToonXT10` 
 `Runtime/Shaders/MToonxt/`. Warudo loads the same ShaderLab names from shader UMods
 (`mira.shaders.mtoonxt.birp` / `.urp`) because UMod `Shader.Find` is null.
 Support belongs in [UniVRMXT](https://github.com/miramocha/UniVRMXT)
-(`com.miramocha.univrmxt`), an optional UPM package that depends on stock
+(`com.vrmxt.univrmxt`), an optional UPM package that depends on stock
 [UniVRM](https://github.com/vrm-c/UniVRM). UniVRM source changes are not required.
 
 VRM 1.0 only. Extensions are optional: stock UniVRM load MUST succeed when UniVRMXT
@@ -36,8 +36,8 @@ is absent or when either extension is missing from the file.
 
 | Item | Value |
 |------|-------|
-| UPM id | `com.miramocha.univrmxt` |
-| Stock VRM I/O | [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) (`0.131.1`+) |
+| UPM id | `com.vrmxt.univrmxt` |
+| Stock VRM I/O | [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) (`0.131.2`) |
 | Optional host fork | [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) |
 | Unity | `2022.3` |
 | Extensions | `VRMXT_sprite_particle`, `VRMXT_materials_override`, `VRMC_materials_mtoonxt` (stencil apply + packaged `VRMXT/MToonXT10`) |
@@ -392,7 +392,13 @@ UniVRMXT parses `materials[i].extensions.VRMC_materials_mtoonxt`, attaches extra
 swaps to packaged `VRMXT/MToonXT10` or `VRMXT/Universal Render Pipeline/MToonXT10` when
 `Shader.Find` (or host `ShaderResolveProvider`) resolves. After swap it restores MToon
 pass settings from `_AlphaMode` and applies compiled stencil (`op` + material indices).
-Unity also reads experimental `zTest` / `zWrite`. Skip the swap when
+`MtoonxtInspector` authors stencil ops and writer lists as Unity fields on the instance.
+**Add MToonXT extras** (material inspector or avatar component) creates those pairs on a
+loaded avatar after the material uses `VRMXT/MToonXT10`.
+Export remaps MToonXT shaders to stock MToon10 on the export copy (UniVRMXT
+PreHierarchy). UniVRM then writes sibling `VRMC_materials_mtoon`. UniVRMXT writes
+`VRMC_materials_mtoonxt`.
+Experimental `zTest` / `zWrite` are still parsed on apply ([research](../references/research/mtoonxt-ztest.md)); they are not inspector fields. Skip the swap when
 `VRMXT_materials_override` would apply on that material. Warudo UMod `Shader.Find` is
 null; those hosts load the same ShaderLab names from `mira.shaders.mtoonxt.birp` /
 `mira.shaders.mtoonxt.urp`.
@@ -409,3 +415,4 @@ null; those hosts load the same ShaderLab names from `mira.shaders.mtoonxt.birp`
 - Planned app (not this package): [VRMXT Unity Player](vrmxt-unity-player.md)
 - [Blender VRMXT](blender-vrmxt.md)
 - [Warudo VRMXT](warudo-vrmxt.md)
+- Tutorial: [Unity MToonXT stencil](../tutorials/unity-mtoonxt-stencil.md)
