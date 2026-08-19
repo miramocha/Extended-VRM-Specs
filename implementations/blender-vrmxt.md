@@ -6,6 +6,7 @@ aliases:
   - VRMXT_sprite_particle for Blender
   - VRMXT_materials_override for Blender
   - Blender particle emitters
+  - Blender MToonXT stencil
 tags:
   - extended-vrm
   - implementation/blender
@@ -19,10 +20,10 @@ status: draft
 # Blender VRMXT
 
 Blender add-on implementation profile for
-[VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md) and
-[VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md).
-[VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
-authoring is **planned** (not claimed).
+[VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
+[VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md),
+and [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+stencil (`stencil` / `outlineStencil` on the material).
 Support belongs in
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender),
 which registers on VRM1 hooks from
@@ -258,6 +259,22 @@ prop on preview helpers alongside its own `vrmxt_vfx_preview` lifecycle tag.
 | VFX texture sampler defaults | TBD |
 | Axis conversion if preview gizmos are added | Open; attach-node transform is source of truth |
 | UniVRM / Godot / three-vrm / VRM4U consumer packages | See [UniVRMXT VFX](univrm-vrmxt.md#vfx), [Godot VRMXT](godot-vrmxt.md), [three-vrmxt](three-vrmxt.md), and [VRM4U VRMXT](vrm4u-vrmxt.md); backend notes in [Engine particle capability](../references/engine-particle-capability.md) |
+
+## MToonXT stencil
+
+Authoring for `VRMC_materials_mtoonxt` `stencil` / `outlineStencil` is on the Blender material (`vrmxt_mtoonxt_settings`). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices. GPU `ref` / `comp` / `pass` are not stored. Face SDF, `zTest`, `zWrite`, and XT `renderQueueOffset` stay out of this add-on.
+
+Export requires sibling `VRMC_materials_mtoon` on the same material (hub rule 3). If a clip list points at a material that is not body `write`, that stencil object is omitted; other extras on the material still export.
+
+Hooks: `mtoonxt/import_hook.py`, `mtoonxt/export_hook.py`, registered from `hooks/vrm1_hooks.py` after materials override. Format: `format/mtoonxt.py`. Panel / ops: `mtoonxt/panel.py`, `mtoonxt/ops.py`. Authoring only; runtime clip is Unity / Warudo.
+
+### Checklist
+
+- [x] Parse / serialize `specVersion` `1.0` stencil objects; skip invalid `op` / lists
+- [x] Material PropertyGroups + Material PROPERTIES panel
+- [x] Import indices → pointers; export pointers → indices
+- [x] Skip export when sibling MToon is missing; skip clip object when writers are not body `write`
+- [ ] Face SDF extras
 
 ## Materials override
 
