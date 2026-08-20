@@ -30,8 +30,8 @@ flowchart LR
   unity[Unity]
   file[".vrm / .glb"]
   app[VRMXT-supported app]
-  blend --> file
-  unity --> file
+  blend <--> file
+  unity <--> file
   file --> app
 ```
 
@@ -41,9 +41,9 @@ flowchart LR
 |------|------------------|--------|
 | [Getting started in Blender](getting-started-blender.md) | Install Extended VRM + VRMXT from GitHub Releases | draft |
 | [Getting started in Unity](getting-started-unity.md) | Install Extended UniVRM + UniVRMXT via UPM git URLs | draft |
+| [Getting started in Warudo](getting-started-warudo.md) | Subscribe Workshop plugins and load a Character | draft |
 | [Blender materials override](blender-materials-override.md) | Point a material at a Unity shader | draft |
 | [Blender sprite particles](blender-sprite-particles.md) | Add sprite emitters on the armature | draft |
 | [Blender MToonXT stencil](blender-mtoonxt-stencil.md) | Set MToon stencil | draft |
 | [Unity MToonXT stencil](unity-mtoonxt-stencil.md) | Set MToon stencil in UniVRMXT | draft |
-| [Warudo apply](warudo-apply.md) | Load the file and see particles, shaders, and stencil | draft |
 | [Warudo patch export](warudo-patch-export.md) | Write Warudo override edits back to a copy | draft |

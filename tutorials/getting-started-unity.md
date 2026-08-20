@@ -16,10 +16,10 @@ status: draft
 
 Install the Unity packages from git URLs. Minimum Unity **2022.3 LTS**.
 
-Use these URLs, not [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) Releases. UniVRMXT
-needs the Extended UniVRM fork.
+Use these URLs, not [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) Releases.
+UniVRMXT needs the Extended UniVRM fork.
 
-These packages are not on Unity’s registry.
+These packages are not on Unity's registry.
 
 | Package | Git URL |
 |---------|---------|

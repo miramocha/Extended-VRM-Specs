@@ -7,7 +7,6 @@ tags:
   - extended-vrm
   - type/guide
   - implementation/warudo
-  - format/glb
   - compatibility/vrm1
 type: guide
 status: draft
@@ -19,9 +18,12 @@ After you change shader overrides in Warudo, save them into a **copy** of the
 Character's original `.vrm`. Meshes and textures stay as they were. This is not
 an export of the live Warudo avatar.
 
-Use it when you need a file to take back to Blender. You should already have
-[Warudo apply](warudo-apply.md) working. Put the `.vrm` in the folder from
-**Open Character Folder** on the Character **Source** dropdown.
+Finish [Getting started in Warudo](getting-started-warudo.md) first.
+
+## What you'll need
+
+Put the `.vrm` in the folder from **Open Character Folder** on the Character
+**Source** dropdown. Use this when you need a file to take back to Blender.
 
 ## Steps
 
@@ -43,4 +45,4 @@ Manager.
 
 ## Related
 
-- [Warudo apply](warudo-apply.md)
+- [Getting started in Warudo](getting-started-warudo.md)

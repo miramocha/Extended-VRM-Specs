@@ -51,11 +51,11 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 |------|---------|--------|
 | [Getting started in Blender](tutorials/getting-started-blender.md) | Install Extended VRM + VRMXT from GitHub Releases | draft |
 | [Getting started in Unity](tutorials/getting-started-unity.md) | Install Extended UniVRM + UniVRMXT via UPM git URLs | draft |
+| [Getting started in Warudo](tutorials/getting-started-warudo.md) | Subscribe Workshop plugins and load a Character | draft |
 | [Blender materials override](tutorials/blender-materials-override.md) | Author `VRMXT_materials_override` | draft |
 | [Blender sprite particles](tutorials/blender-sprite-particles.md) | Author `VRMXT_sprite_particle` | draft |
 | [Blender MToonXT stencil](tutorials/blender-mtoonxt-stencil.md) | Author `VRMC_materials_mtoonxt` stencil | draft |
 | [Unity MToonXT stencil](tutorials/unity-mtoonxt-stencil.md) | Author `VRMC_materials_mtoonxt` stencil in UniVRMXT | draft |
-| [Warudo apply](tutorials/warudo-apply.md) | Load a Character and see particles, shaders, and stencil | draft |
 | [Warudo patch export](tutorials/warudo-patch-export.md) | Patch override JSON into a file copy | draft |
 
 ## Decisions

@@ -15,17 +15,15 @@ status: draft
 # Blender materials override
 
 Point a material at a Unity shader so a VRMXT-supported app (Warudo, VRMXT
-Player, etc) can apply it after load.
-Blender keeps showing MToon or Principled. You will not see that Unity shader in
-the EEVEE viewport.
+Player, etc) can apply it after load. Blender keeps showing MToon or
+Principled. You will not see that Unity shader in the EEVEE viewport.
 
-Finish [Getting started in Blender](getting-started-blender.md) first, and select a material on a VRM 1.0
-mesh.
+Finish [Getting started in Blender](getting-started-blender.md) first.
 
 ## What you'll need
 
-The VRMXT add-on lists known shaders in a dropdown. **Custom…** lets you type any
-Unity shader name.
+The VRMXT add-on lists known shaders in a dropdown. **Custom…** lets you type
+any Unity shader name.
 
 ## Steps
 

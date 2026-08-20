@@ -21,8 +21,11 @@ VRMXT-supported app (Warudo, VRMXT Player, etc) after export.
 Use the VRMXT **VFX** list, not a Blender particle system. Viewport preview
 objects are temporary; they are not part of the exported avatar.
 
-Finish [Getting started in Blender](getting-started-blender.md) first. A sprite
-image is optional until you want a textured sprite.
+Finish [Getting started in Blender](getting-started-blender.md) first.
+
+## What you'll need
+
+A sprite image is optional until you want a textured sprite.
 
 ## Steps
 

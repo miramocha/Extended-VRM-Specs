@@ -18,10 +18,12 @@ Set **Stencil** and **Outline stencil** on a material that already uses MToon
 1.0, then switch the shader to MToonXT so the Scene view can clip. Export
 writes those settings into the `.vrm`.
 
-Finish [Getting started in Unity](getting-started-unity.md) first. Load a VRM 1.0
-avatar into the scene and select it (a mesh on the avatar is enough).
+Finish [Getting started in Unity](getting-started-unity.md) first.
 
-Built-In uses `VRMXT/MToonXT10`. URP uses
+## What you'll need
+
+Load a VRM 1.0 avatar into the scene and select it (a mesh on the avatar is
+enough). Built-In uses `VRMXT/MToonXT10`. URP uses
 `VRMXT/Universal Render Pipeline/MToonXT10`.
 
 ## Steps

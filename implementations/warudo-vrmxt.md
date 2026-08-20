@@ -334,6 +334,6 @@ MToonXT shader (BIRP): https://steamcommunity.com/sharedfiles/filedetails/?id=37
 
 ## Related
 
-- Tutorials: [Warudo apply](../tutorials/warudo-apply.md),
+- Tutorials: [Getting started in Warudo](../tutorials/getting-started-warudo.md),
   [patch export](../tutorials/warudo-patch-export.md)
 

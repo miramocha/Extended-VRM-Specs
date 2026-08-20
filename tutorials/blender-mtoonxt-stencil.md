@@ -16,8 +16,7 @@ status: draft
 
 Set **Stencil** and **Outline stencil** on a material that already uses MToon
 1.0. Clip shows up in a VRMXT-supported app (Warudo, VRMXT Player, etc) that
-has MToonXT shaders. The Blender
-viewport will not clip.
+has MToonXT shaders. The Blender viewport will not clip.
 
 Finish [Getting started in Blender](getting-started-blender.md) first. This
 panel is stencil only.
