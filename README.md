@@ -114,6 +114,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VRM to Roblox](references/research/vrm-to-roblox.md) | Non-normative research: experience `Model` (FBX dump + Humanoid) vs Marketplace 15 `_Geo` body; `VRMC_*` / `VRMXT_*` unused; no author shaders (2026-08-20) | draft |
 | [Substance 3D Painter MToon viewport](references/research/substance-painter-mtoon-viewport.md) | Non-normative research: Painter GLSL preview of `VRMC_materials_mtoon` (VRM 1.0 only; not a VRMXT host) | draft |
 | [MToon10 stencil shader fork](references/research/mtoon10-stencil-shader-fork.md) | Non-normative: Unity MToon10 fork properties; portable stencil JSON is `VRMC_materials_mtoonxt` | draft |
+| [Unity MToonXT stencil Ref offset](references/research/mtoonxt-stencil-ref-offset.md) | Non-normative: load-time GPU Ref band from 32 (skip 0/1/51/255); not in glTF | draft |
 | [MToonXT zTest](references/research/mtoonxt-ztest.md) | Non-normative: Unity depth compare experiment (`zTest` key) | draft |
 | [MToonXT zWrite](references/research/mtoonxt-zwrite.md) | Non-normative: Unity depth-write experiment (`zWrite` key) | draft |
 | [Engine particle capability](references/engine-particle-capability.md) | Non-normative: Unity Particle System vs VFX Graph / BIRP; Niagara vs Cascade; VRM4U attach constraints (2026-07-21) | draft |

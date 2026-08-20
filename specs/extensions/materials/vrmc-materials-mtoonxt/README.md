@@ -212,6 +212,7 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 - [MToonXT zTest](../../../../references/research/mtoonxt-ztest.md) (non-normative)
 - [MToonXT zWrite](../../../../references/research/mtoonxt-zwrite.md) (non-normative)
 - [MToon10 stencil shader fork](../../../../references/research/mtoon10-stencil-shader-fork.md) (non-normative)
+- [Unity MToonXT stencil Ref offset](../../../../references/research/mtoonxt-stencil-ref-offset.md) (non-normative)
 - [UniVRMXT](../../../../implementations/univrm-vrmxt.md)
 - [Blender VRMXT](../../../../implementations/blender-vrmxt.md#mtoonxt-stencil)
 - [Warudo VRMXT](../../../../implementations/warudo-vrmxt.md)

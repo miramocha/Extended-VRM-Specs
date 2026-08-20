@@ -217,6 +217,11 @@ glTF stores indices. The material ShaderGUI MUST NOT persist a material list (sh
 properties cannot). UniVRMXT: `VrmcMaterialsMtoonxtInstance` editor uses `Material`
 object fields; export writes indices. Warudo uses JSON only.
 
+UniVRMXT Apply then leases a per-root GPU `Ref` offset so two loaded avatars do not
+share file-local 1 on the same camera stencil (`VrmcMaterialsMtoonxtStencilRefs`).
+That offset is not serialized. See
+[Unity MToonXT stencil Ref offset](../../../../references/research/mtoonxt-stencil-ref-offset.md).
+
 ## GPU stencil consumer (non-normative)
 
 Typical mapping when the engine exposes an 8-bit stencil on the toon color pass.
@@ -245,3 +250,4 @@ See [MToon10 stencil shader fork](../../../../references/research/mtoon10-stenci
 - [MToonXT renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md) (non-normative)
 - [MToonXT zWrite](../../../../references/research/mtoonxt-zwrite.md) (non-normative)
 - [MToon10 stencil shader fork](../../../../references/research/mtoon10-stencil-shader-fork.md)
+- [Unity MToonXT stencil Ref offset](../../../../references/research/mtoonxt-stencil-ref-offset.md) (non-normative)
