@@ -111,6 +111,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [Spring bone / secondary physics](references/spring-bone-physics-systems.md) | Non-normative: `VRMC_springBone`, MagicaCloth2, VRC PhysBones + concept maps | draft |
 | [KHR / glTF overlap](references/khr-gltf-overlap.md) | Non-normative: Khronos/EXT registry vs materials, VFX, and animation (`VRMXT_AnimationController` / `VRMXT_AnimationClip`) | draft |
 | [Engine material override glTF history](references/research/engine-material-override-gltf-history.md) | Non-normative research: `KHR_techniques_webgl` / `NV_materials_mdl` lessons; PBR-only fallback sketch (no MToon sibling) | draft |
+| [VRM to Roblox](references/research/vrm-to-roblox.md) | Non-normative research: importer types ≈ core glTF; Marketplace body = 15 `_Geo` + named rig + cages + FACS; `VRMC_*` / `VRMXT_*` unused; no author shaders (2026-08-20) | draft |
 | [Substance 3D Painter MToon viewport](references/research/substance-painter-mtoon-viewport.md) | Non-normative research: Painter GLSL preview of `VRMC_materials_mtoon` (VRM 1.0 only; not a VRMXT host) | draft |
 | [MToon10 stencil shader fork](references/research/mtoon10-stencil-shader-fork.md) | Non-normative: Unity MToon10 fork properties; portable stencil JSON is `VRMC_materials_mtoonxt` | draft |
 | [MToonXT zTest](references/research/mtoonxt-ztest.md) | Non-normative: Unity depth compare experiment (`zTest` key) | draft |
