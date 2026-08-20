@@ -50,11 +50,6 @@ Open **VRMXT** plugin settings and turn on **Enable VRMXT** (default on).
      on the same material still replaces MToonXT)
 4. Check the viewport, and the plugin status / log for skipped materials.
 
-## What success looks like
-
-Look-at and expressions still work. Particles follow the bones you authored.
-Override materials match the Blender slot when that shader is installed.
-
 If nothing extra appears, the plugin may be off, or you loaded an older export
 from before VRMXT was on at export.
 

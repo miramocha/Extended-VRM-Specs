@@ -15,8 +15,8 @@ status: draft
 
 # Blender sprite particles
 
-Add camera-facing sprite emitters on the VRM 1.0 armature. They play in a VRMXT
-app after export.
+Add camera-facing sprite emitters on the VRM 1.0 armature. They play in a
+VRMXT-supported app (Warudo, VRMXT Player, etc) after export.
 
 Use the VRMXT **VFX** list, not a Blender particle system. Viewport preview
 objects are temporary; they are not part of the exported avatar.

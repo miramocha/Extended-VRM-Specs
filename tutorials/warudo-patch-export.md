@@ -38,12 +38,8 @@ Use it when you need a file to take back to Blender. You should already have
 The copy gets your shader-override edits. Sprite emitters stay as you authored
 them in Blender (this patch does not add new textures). The Character you are
 playing keeps its current Source; the original file is not overwritten.
-
-## What success looks like
-
-The original Character file is untouched. The copy still opens in ordinary VRM
-apps. Re-import in Blender and the override rows should match what you set in
-the Manager.
+Re-import in Blender and the override rows should match what you set in the
+Manager.
 
 ## Related
 

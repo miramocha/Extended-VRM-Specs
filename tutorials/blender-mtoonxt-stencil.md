@@ -15,7 +15,8 @@ status: draft
 # Blender MToonXT stencil
 
 Set **Stencil** and **Outline stencil** on a material that already uses MToon
-1.0. Clip shows up in a VRMXT app that has MToonXT shaders. The Blender
+1.0. Clip shows up in a VRMXT-supported app (Warudo, VRMXT Player, etc) that
+has MToonXT shaders. The Blender
 viewport will not clip.
 
 Finish [Getting started in Blender](getting-started-blender.md) first. This
@@ -60,7 +61,7 @@ pixels.
    brow material to Opaque when you can, or export knowing clip can miss.
 7. Export as VRM 1.0.
 
-EEVEE still will not clip the hair. Check the file in a VRMXT app.
+EEVEE still will not clip the hair. Check the file in a VRMXT-supported app.
 
 MToon **Transparent** hair still counts every drawn pixel as solid, so the hole
 is a hard edge. **Cutout** hair already has that hard alpha, so front hair over
@@ -83,4 +84,4 @@ VRoid often names the sclera **White**.
 5. Do not clip the sclera to the iris.
 6. Export as VRM 1.0.
 
-EEVEE still will not clip the iris. Check the file in a VRMXT app.
+EEVEE still will not clip the iris. Check the file in a VRMXT-supported app.

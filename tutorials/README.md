@@ -13,24 +13,26 @@ status: draft
 # Tutorials
 
 Walkthroughs if you already have a VRM 1.0 avatar and want to add VRMXT in
-Blender, then see it in Warudo.
+Blender or Unity, then load the file in a VRMXT-supported app (Warudo, VRMXT
+Player, etc).
 
 Implementing an importer or editor? Use [specs/](../specs/) and
 [implementations/](../implementations/) instead.
 
 ## Path that ships today
 
-1. Author and export in Blender.
-2. Load the same `.vrm` as a Warudo Character with the VRMXT plugin.
-
-There is no Unity Player tutorial yet (the app is still planned).
+1. Author and export in Blender or Unity.
+2. Load the same `.vrm` in a VRMXT-supported app.
 
 ```mermaid
 flowchart LR
-  blend[Blender author + export]
+  blend[Blender]
+  unity[Unity]
   file[".vrm / .glb"]
-  warudo[Warudo Character + plugin]
-  blend --> file --> warudo
+  app[VRMXT-supported app]
+  blend --> file
+  unity --> file
+  file --> app
 ```
 
 ## Pages
