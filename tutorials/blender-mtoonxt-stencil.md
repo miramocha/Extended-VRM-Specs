@@ -30,8 +30,10 @@ panel is stencil only.
    **Off**.
 4. For **Clip inside** or **Clip outside**, under **Clip against writers** add
    materials whose **Stencil** is **Write**. Export skips other targets.
-5. If the panel warns about draw order, clip may fail until the **Write**
-   material is **Opaque**.
+5. If the panel warns about draw order, the **Write** material is in a later MToon
+   mode than the clip material (Transparent Write vs Cutout or Opaque, or Cutout
+   Write vs Opaque). Switch Write to the same mode or an earlier one (prefer
+   Opaque), or export knowing clip can miss.
 6. Export as VRM 1.0.
 
 The material must already be MToon. If it is not, these stencil settings stay
@@ -57,7 +59,8 @@ pixels.
 5. Repeat 2–4 for every overlapping hair material. One brow on **Write** and
    several hair materials is the usual setup. Do not clip the brow to the hair.
 6. If the panel warns that the **Write** material is Transparent, switch the
-   brow material to Opaque when you can, or export knowing clip can miss.
+   brow to Opaque or Cutout so it draws before Transparent or Cutout hair, or
+   export knowing clip can miss.
 7. Export as VRM 1.0.
 
 EEVEE still will not clip the hair. Check the file in a VRMXT-supported app.

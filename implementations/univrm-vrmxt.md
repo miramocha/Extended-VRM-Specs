@@ -393,6 +393,8 @@ swaps to packaged `VRMXT/MToonXT10` or `VRMXT/Universal Render Pipeline/MToonXT1
 `Shader.Find` (or host `ShaderResolveProvider`) resolves. After swap it restores MToon
 pass settings from `_AlphaMode` and applies compiled stencil (`op` + material indices).
 `MtoonxtInspector` authors stencil ops and writer lists as Unity fields on the instance.
+The inspector warns when Write `_AlphaMode` is a later MToon bucket than a clip reader
+(Transparent Write vs Cutout or Opaque; Cutout Write vs Opaque).
 **Add MToonXT extras** (material inspector or avatar component) creates those pairs on a
 loaded avatar after the material uses `VRMXT/MToonXT10`.
 Export remaps MToonXT shaders to stock MToon10 on the export copy (UniVRMXT

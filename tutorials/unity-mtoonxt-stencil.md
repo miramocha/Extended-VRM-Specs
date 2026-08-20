@@ -45,7 +45,11 @@ enough). Built-In uses `VRMXT/MToonXT10`. URP uses
 6. For **Clip inside** or **Clip outside**, assign **Write** materials under
    **Clip against writers** (drag slots; Size grows the list). Export skips
    other targets.
-7. Export as VRM 1.0. Keep **Project Settings → VRM10 → Enable VRM Export
+7. If the inspector warns that Write may draw too late, the **Write** material
+   is Transparent against Cutout or Opaque clip, or Cutout against Opaque clip.
+   Switch Write to the same MToon mode or an earlier one (prefer Opaque), or
+   export knowing clip can miss.
+8. Export as VRM 1.0. Keep **Project Settings → VRM10 → Enable VRM Export
    Extensions** on.
 
 The material must already be MToon, then MToonXT. If a materials override
@@ -70,7 +74,10 @@ pixels.
    the outline skips the same pixels.
 5. Repeat 2–4 for every overlapping hair material. One brow on **Write** and
    several hair materials is the usual setup. Do not clip the brow to the hair.
-6. Export as VRM 1.0 with export extensions on.
+6. If the inspector warns that the **Write** material is Transparent, switch the
+   brow to Opaque or Cutout so it draws before the hair, or export knowing clip
+   can miss.
+7. Export as VRM 1.0 with export extensions on.
 
 The Game view and Scene view clip the hair once MToonXT is on the mesh.
 
