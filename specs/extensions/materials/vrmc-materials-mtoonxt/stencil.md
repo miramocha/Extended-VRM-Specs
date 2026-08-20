@@ -57,6 +57,39 @@ Unity render-queue integers are not a stencil field. See
 [renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md)
 (non-normative).
 
+## Sibling `alphaMode`
+
+`VRMC_materials_mtoon` `alphaMode` is not a stencil property. Consumers that draw
+MToon in `alphaMode` buckets still MUST present writers before the `inside` /
+`outside` readers that list them.
+
+Typical Unity MToon buckets, earliest first: Opaque, `MASK` (cutout),
+`BLEND` (transparent). UniVRMXT only moves body `write` two Unity queue slots
+inside the mapped bucket. That nudge cannot pull a later bucket in front of an
+earlier one.
+
+| Writer `alphaMode` | Reader in an earlier bucket | Stamp in time |
+|--------------------|-----------------------------|---------------|
+| Opaque | none | yes |
+| `MASK` | Opaque | late (two-slot `write` nudge stays in the `MASK` bucket) |
+| `BLEND` | Opaque or `MASK` | late |
+
+`transparentWithZWrite` on `BLEND` uses the sibling transparent-with-Z path. Unity
+MToon draws that after `MASK`. Count it as later than cutout for this table.
+
+Authoring SHOULD:
+
+- Give each writer an `alphaMode` at the same rank or earlier than every reader
+  that lists that writer (Opaque, then `MASK`, then `BLEND`).
+- Prefer Opaque writers.
+
+Opaque or `MASK` write with a `BLEND` reader is in-order (writer first). That is
+the brow-write / hair-clip setup. Soft-alpha `BLEND` coverage stays binary: every
+fragment the pass shades stamps, including low alpha.
+
+A writer that misses the rank rule stays a valid extra. Hub rule 11 does not list
+`alphaMode`. Exporters SHOULD warn. Clip MAY miss.
+
 ## Scope
 
 | Item | Value |
