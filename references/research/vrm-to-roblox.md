@@ -19,15 +19,21 @@ Non-normative research. Lives under `references/research/` only. Does **not** ad
 Roblox consumer, a `VRMXT_*` field, or a planned product row in [README](../../README.md).
 No VRMXT→Roblox converter is in scope here.
 
-**Question:** can a VRM 0.x / 1.0 (plus optional `VRMXT_*`) avatar become a Roblox
-character, and what is discarded?
+**Question:** can a VRM 0.x / 1.0 (plus optional `VRMXT_*`) avatar land in Roblox,
+as a place `Model` and/or as a Marketplace character body, and what is discarded?
 
 **Short finding:** Studio has no VRM loader and no author GPU shaders. The 3D Importer
 takes `.fbx` / `.gltf` into `MeshPart` + `SurfaceAppearance` PBR. Those **types** are
-core glTF (mesh, skin, PBR maps). A Marketplace **character body** is a second
-contract: 15 named limb meshes, a named humanoid hierarchy, cages, `*_Att` points,
-studs-scale, and Dynamic Head FACS. VRM does not ship that layout. `VRMC_*` /
-`VRM 0.x` / `VRMXT_*` are unused. Roblox never executes them.
+core glTF (mesh, skin, PBR maps). `VRMC_*` / `VRM 0.x` / `VRMXT_*` are unused.
+
+Two products:
+
+| Target | Viable? | Extra beyond glTF mesh+skin |
+|--------|---------|-------------------------------|
+| **Experience `Model`** (one published place) | Yes. Community already FBX-dumps VRoid/VRM. | `Humanoid` + `HumanoidRootPart` + `Head` assembly to walk. Default `Animate` wants R15/R6 Motor6D names; a VRM skeleton needs its own clips or a bone remap. |
+| **Marketplace character body** (platform avatar) | Hard. VRM layout does not match. | 15 `_Geo` meshes, named humanoid tree, cages, `*_Att`, studs boxes, Dynamic Head FACS. |
+
+An experience `Model` is not the player’s account avatar. Other places still show the Roblox avatar unless *that* place overrides `StarterCharacter`.
 
 Checked against public Roblox Creator Hub docs and VRM 1.0 specs as of **2026-08-20**,
 including
@@ -43,6 +49,9 @@ a named setting.
 | [Materials / `MaterialVariant`](https://create.roblox.com/docs/parts/materials) | “Custom material” = PBR texture variant on Roblox’s shader |
 | [`SurfaceAppearance` class](https://create.roblox.com/docs/reference/engine/classes/SurfaceAppearance) | MeshPart PBR override; `EditableImage` still feeds that path |
 | [3D Importer](https://create.roblox.com/docs/studio/importer) | `.fbx` / `.gltf` / `.obj`; PBR, skin, animation; Rig Type R15 / Custom / No Rig |
+| [`Humanoid`](https://create.roblox.com/docs/reference/engine/classes/Humanoid) | Place character: `HumanoidRootPart`, `Head`, `StarterCharacter` |
+| [Test character in Studio](https://create.roblox.com/docs/art/characters/testing/studio) | Rename model `StarterCharacter`, parent under `StarterPlayer` |
+| [How to Import VRMs & PMXs to Roblox](https://devforum.roblox.com/t/how-to-import-vrms-pmxs-mmd-to-roblox/1364444) (DevForum, 2021–2025) | Community FBX dump; OP Avatar Importer Custom; [#9](https://devforum.roblox.com/t/how-to-import-vrms-pmxs-mmd-to-roblox/1364444/9) Import 3D + `SurfaceAppearance` |
 | [Character body specifications](https://create.roblox.com/docs/avatar/character-bodies/specifications) | 15 `_Geo` meshes, R15-style hierarchy, cages, attachments, tri caps, skinning (4 influences) |
 | [Dynamic head specifications](https://create.roblox.com/docs/avatar/dynamic-heads/specifications) | Head cage landmarks; min 17 FACS poses for Marketplace chat |
 | [Import character bodies](https://create.roblox.com/docs/art/characters/import) | Character import → `Model`; textures as `SurfaceAppearance` or `TextureID` |
@@ -104,13 +113,56 @@ flowchart LR
 | VRM 0.x `VRM` extension | If 0.x | Unused |
 | `VRMXT_*` (materials override, sprite particle, lattice, MToonXT, …) | If authored | Unused |
 
-**Types** Roblox can keep are already in base glTF. The **character-body layout** is
-not. A typical VRM is a few skinned meshes (body, face, hair, clothes) on a VRM
-humanoid. Marketplace bodies are 15 watertight `_Geo` meshes plus cages and
-attachments. See [Character body contract](#character-body-contract-marketplace).
+**Types** Roblox can keep are already in base glTF. The **Marketplace character-body
+layout** is not. A typical VRM is a few skinned meshes on a VRM humanoid. Keep that
+layout for an [experience Model](#experience-model-one-place). Rebuild it for a
+[Marketplace body](#character-body-contract-marketplace).
 
 `KHR_materials_unlit` is an extension, not core. Roblox shading is still their PBR /
 built-in `Material` list, not unlit-as-specified.
+
+## Experience Model (one place)
+
+“Experience” here is Roblox’s word for a published place (a game). Importing a VRM as
+a `Model` in that place does **not** change the player’s platform avatar.
+
+### Community FBX dump
+
+[How to Import VRMs & PMXs to Roblox](https://devforum.roblox.com/t/how-to-import-vrms-pmxs-mmd-to-roblox/1364444)
+(2021 OP; replies through 2025):
+
+- OP: CATS (VRChat-oriented Blender plugin) → FBX → Studio **Avatar Importer → Custom**.
+  Keep VRM/MMD mesh layout. Delete MMD rigid bodies. Import FBX clips in Animation
+  Editor. Custom rig **in the place**, not a Marketplace body.
+- [#9](https://devforum.roblox.com/t/how-to-import-vrms-pmxs-mmd-to-roblox/1364444/9)
+  (2025-05): VRoid → `.vrm` → Blender **VRM Format** add-on → FBX → **Import 3D**.
+  Grey MeshParts, then `SurfaceAppearance` + atlas / re-UV. Author reports hours of
+  texture work. Still the fused VRM meshes. No 15 `_Geo` split, cages, or FACS.
+
+That path is the realistic converter: glTF mesh + skin + maps into a place.
+
+### Playable character in that place
+
+WASD/jump is [`Humanoid`](https://create.roblox.com/docs/reference/engine/classes/Humanoid),
+not VRM. The `Model` needs:
+
+- `Humanoid` child
+- Assembly root part named `HumanoidRootPart` (movement/camera)
+- A part named `Head` connected to the torso chain (directly or indirectly)
+- `Animator` on the Humanoid (clips)
+- Scale / `HipHeight` so meters→studs does not float or sink
+
+Playtest as that mesh: rename the model `StarterCharacter` and parent it under
+`StarterPlayer` ([Studio character test](https://create.roblox.com/docs/art/characters/testing/studio)).
+Other experiences still use the account avatar.
+
+Default Roblox `Animate` drives **R6/R15 Motor6D names**. A VRM/`J_Bip_*` skeleton
+T-poses or mis-plays those clips. Options: author or retarget clips **on the VRM
+tree**, or rename/retarget bones toward R15 (more Marketplace-like work; still skip
+cages/FACS/15-split). NPCs use the same Humanoid + clips (or `AnimationController`).
+
+MToon, spring bone, VRM look-at / expression graph still drop. Optional Luau on
+remaining morphs. High VRoid poly counts can hitch on Roblox clients.
 
 ## Character body contract (Marketplace)
 
@@ -118,10 +170,10 @@ Source:
 [Character body specifications](https://create.roblox.com/docs/avatar/character-bodies/specifications)
 and
 [Dynamic head specifications](https://create.roblox.com/docs/avatar/dynamic-heads/specifications)
-(2026-08-20). This is the Roblox avatar product, not a generic mesh import.
-
-Experience-only `Model` import can be looser. Selling or using Marketplace avatar
-features (layered clothing, Dynamic Head chat) hits this list.
+(2026-08-20). Platform avatar item, not a place `Model`. See
+[Experience Model](#experience-model-one-place) for the looser dump. Selling or
+using Marketplace avatar features (layered clothing, Dynamic Head chat) needs this
+list.
 
 ### Geometry
 
@@ -198,15 +250,14 @@ pose remap or a new FACS rig.
 
 ## Partial (rebuild in Roblox)
 
-| Source | Typical leftover |
-|--------|------------------|
-| Skinned meshes | Split/cap into 15 `_Geo` `MeshPart`s; tri caps if Marketplace |
-| Humanoid bones | Rename to `HumanoidRootNode` / `LowerTorso` / …; drop or accessory extra bones |
-| Morph targets | `FaceControls` / Dynamic Head FACS if remapped; VRoid `Fcl_*` is not FACS |
-| Albedo / normal | `SurfaceAppearance` ColorMap / NormalMap |
-| Packed ORM / MToon shade tex | Split or bake into roughness / metalness / color |
-| Extra clothing meshes | Accessories or layered clothing cages; else fuse |
-| FBX/glTF animation | Roblox clips after retarget |
+| Source | Experience `Model` | Marketplace body |
+|--------|--------------------|------------------|
+| Skinned meshes | Keep fused VRM pieces if importer accepts | Split/cap into 15 `_Geo`; tri caps |
+| Humanoid bones | Keep VRM names **or** remap toward R15 for `Animate` | `HumanoidRootNode` / `LowerTorso` / … |
+| Morph targets | Optional Luau weights | `FaceControls` / FACS remap |
+| Albedo / normal | `SurfaceAppearance` (atlas/re-UV common) | Same maps + skin-tone alpha rules |
+| Extra clothing / hair | Stay on the character mesh or separate MeshParts | Accessories / layered cages |
+| FBX animation | Clips on **that** skeleton | R15 / higher-fid after retarget |
 
 ## Shaders
 
@@ -226,18 +277,21 @@ usually poor).
 
 ## Practical pipeline (non-normative)
 
-VRM → Blender or Unity → split/cap 15 `_Geo` meshes → remap to the documented
-humanoid tree → cages + `*_Att` (or Avatar Setup) → bake or flatten maps →
-meters to studs → export FBX or glTF → Studio 3D Importer → Avatar Setup /
-FACS if Marketplace.
+**Experience `Model` (viable community path):** VRM → Blender (VRM add-on) or Unity →
+bake/flatten maps if needed → FBX or glTF → Studio Import 3D or Avatar Importer
+Custom → `SurfaceAppearance` → add `Humanoid` / `HumanoidRootPart` / `Head` if
+missing → clips on that rig **or** bone remap toward R15 → `StarterCharacter` under
+`StarterPlayer` to play as it.
 
-That is the same class of work as any glTF humanoid → Roblox. VRM adds the cut list
-above and the usual VRoid extra bones.
+**Marketplace body:** VRM → split/cap 15 `_Geo` → documented humanoid tree → cages +
+`*_Att` (or Avatar Setup) → meters to studs → FACS head → 3D Importer → Avatar Setup.
+Same class of work as any glTF humanoid → Roblox avatar. VRM adds the cut list and
+VRoid extra bones.
 
 ## License
 
 VRM meta usage flags are stripped. They do not grant Roblox redistribution. Check
-the author’s VRM license before shipping a converted avatar.
+the author’s VRM license before shipping a converted `Model` or Marketplace body.
 
 ## Related
 
