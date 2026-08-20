@@ -28,19 +28,24 @@ enough). Built-In uses `VRMXT/MToonXT10`. URP uses
 
 ## Steps
 
-1. On the material, set **Shader** to the MToonXT name for your pipeline. Stock
+1. If the material sits nested under the `.vrm` in Project, extract it first.
+   Select the `.vrm`, open the importer inspector **Materials** tab, and click
+   **Extract Materials And Textures ...**. Edit the extracted `.mat` files in
+   the `YourAvatar.vrm1.Materials` folder next to the VRM. Nested materials stay
+   greyed out, and reimport wipes shader edits on them.
+2. On the material, set **Shader** to the MToonXT name for your pipeline. Stock
    MToon has no stencil block.
-2. Open the material inspector. If it says there are no stencil settings yet,
+3. Open the material inspector. If it says there are no stencil settings yet,
    click **Add MToonXT extras**. You can also select the avatar root, find the
    `VrmcMaterialsMtoonxtInstance` component, and click **Add extras from MToonXT
    materials**.
-3. Set **Stencil** to **Off**, **Write**, **Clip inside**, or **Clip outside**.
-4. Set **Outline stencil**. Use **Same as body** to copy the body clip onto the
+4. Set **Stencil** to **Off**, **Write**, **Clip inside**, or **Clip outside**.
+5. Set **Outline stencil**. Use **Same as body** to copy the body clip onto the
    outline. Leave it **Off** while **Stencil** is **Off**.
-5. For **Clip inside** or **Clip outside**, assign **Write** materials under
+6. For **Clip inside** or **Clip outside**, assign **Write** materials under
    **Clip against writers** (drag slots; Size grows the list). Export skips
    other targets.
-6. Export as VRM 1.0. Keep **Project Settings → VRM10 → Enable VRM Export
+7. Export as VRM 1.0. Keep **Project Settings → VRM10 → Enable VRM Export
    Extensions** on.
 
 The material must already be MToon, then MToonXT. If a materials override
