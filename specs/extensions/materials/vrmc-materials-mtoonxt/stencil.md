@@ -67,7 +67,8 @@ MToon in `alphaMode` buckets still MUST present writers before the `inside` /
 
 Typical Unity MToon buckets, earliest first: Opaque, `MASK` (cutout),
 `BLEND` (transparent). UniVRMXT only moves body `write` two Unity queue slots
-inside the mapped bucket, and `inside` / `insideOverlay` one slot. That nudge
+inside the mapped bucket, and `inside` one slot earlier. `insideOverlay` one slot
+later in the same bucket so it paints after occluders. That nudge
 cannot pull a later bucket in front of an earlier one.
 
 | Writer `alphaMode` | Reader in an earlier bucket | Stamp in time |
@@ -135,8 +136,9 @@ this reader. Iris on sclera uses `inside`.
 closer depth is already in the buffer. Occluders keep their fragments (no screen-space
 hole). Supporting consumers MUST map `insideOverlay` with a local depth-ignore on that
 color pass (Unity `ZTest Always`, three.js `depthFunc` Always / `depthTest` false, or
-equivalent). They MUST NOT implement it by setting `outside` on the occluder. `outside`
-on the body is a framebuffer hole: every body fragment in the writer blob is skipped,
+equivalent) and MUST NOT write depth for that pass (Unity `ZWrite` off). They MUST NOT
+implement it by setting `outside` on the occluder. `outside` on
+the body is a framebuffer hole: every body fragment in the writer blob is skipped,
 including limbs that share those pixels.
 
 Closer scene fragments in the same clip region MAY still lose. One depth test cannot
@@ -285,7 +287,7 @@ receive `Ref` 1, 2, … .
 |------|---------|------------|---------|------------------|
 | `write` | always | replace | true | stock LessEqual |
 | `inside` | equal | keep | true | stock LessEqual |
-| `insideOverlay` | equal | keep | true | Always (Unity `_M_ZTest` = 8) |
+| `insideOverlay` | equal | keep | true | Always, ZWrite off (Unity `_M_ZTest` = 8, `_M_ZWrite` = 0) |
 | `outside` | notEqual | keep | true | stock LessEqual |
 | omit / off | always | keep | false | stock LessEqual |
 

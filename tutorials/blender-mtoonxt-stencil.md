@@ -25,11 +25,13 @@ panel is stencil only.
 
 1. Select the MToon material. Open **VRMXT Material** (same parent panel as
    materials override).
-2. Set **Stencil** to **Off**, **Write**, **Clip inside**, or **Clip outside**.
+2. Set **Stencil** to **Off**, **Write**, **Clip inside**, **Clip inside overlay**,
+   or **Clip outside**.
 3. Set **Outline stencil**. **Same as body** is hidden while **Stencil** is
    **Off**.
-4. For **Clip inside** or **Clip outside**, under **Clip against writers** add
-   materials whose **Stencil** is **Write**. Export skips other targets.
+4. For **Clip inside**, **Clip inside overlay**, or **Clip outside**, under
+   **Clip against writers** add materials whose **Stencil** is **Write**. Export
+   skips other targets.
 5. If the panel warns about draw order, the **Write** material is in a later MToon
    mode than the clip material (Transparent Write vs Cutout or Opaque, or Cutout
    Write vs Opaque). Switch Write to the same mode or an earlier one (prefer
@@ -87,3 +89,18 @@ VRoid often names the sclera **White**.
 6. Export as VRM 1.0.
 
 EEVEE still will not clip the iris. Check the file in a VRMXT-supported app.
+
+## Example: skeleton on swimsuit
+
+Show bones only on swimsuit pixels. Leave body **Stencil** **Off** so the mesh
+stays solid (no hole through a leg).
+
+1. Select the swimsuit material. Set **Stencil** to **Write**.
+2. Select the skeleton material. Set **Stencil** to **Clip inside overlay**.
+3. Under **Clip against writers**, add the swimsuit. Set **Outline stencil** to
+   **Same as body** if the skeleton draws an outline.
+4. Leave skin / body **Stencil** **Off**.
+5. Export as VRM 1.0.
+
+EEVEE still will not overlay the bones. Check the file in a VRMXT-supported app.
+A hand or mic in front of the swimsuit can disappear in those pixels.

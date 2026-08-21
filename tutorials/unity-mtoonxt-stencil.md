@@ -39,12 +39,13 @@ enough). Built-In uses `VRMXT/MToonXT10`. URP uses
    click **Add MToonXT extras**. You can also select the avatar root, find the
    `VrmcMaterialsMtoonxtInstance` component, and click **Add extras from MToonXT
    materials**.
-4. Set **Stencil** to **Off**, **Write**, **Clip inside**, or **Clip outside**.
+4. Set **Stencil** to **Off**, **Write**, **Clip inside**, **Clip inside overlay**,
+   or **Clip outside**.
 5. Set **Outline stencil**. Use **Same as body** to copy the body clip onto the
    outline. Leave it **Off** while **Stencil** is **Off**.
-6. For **Clip inside** or **Clip outside**, assign **Write** materials under
-   **Clip against writers** (drag slots; Size grows the list). Export skips
-   other targets.
+6. For **Clip inside**, **Clip inside overlay**, or **Clip outside**, assign
+   **Write** materials under **Clip against writers** (drag slots; Size grows the
+   list). Export skips other targets.
 7. If the inspector warns that Write may draw too late, the **Write** material
    is Transparent against Cutout or Opaque clip, or Cutout against Opaque clip.
    Switch Write to the same MToon mode or an earlier one (prefer Opaque), or
@@ -100,3 +101,18 @@ VRoid often names the sclera **White**.
 4. If the iris uses outline, set **Outline stencil** to **Same as body**.
 5. Do not clip the sclera to the iris.
 6. Export as VRM 1.0 with export extensions on.
+
+## Example: skeleton on swimsuit
+
+Show bones only on swimsuit pixels. Leave body **Stencil** **Off** so the mesh
+stays solid (no hole through a leg).
+
+1. Select the swimsuit material. Set **Stencil** to **Write**.
+2. Select the skeleton material. Set **Stencil** to **Clip inside overlay**.
+3. Under **Clip against writers**, assign the swimsuit. Set **Outline stencil**
+   to **Same as body** if the skeleton draws an outline.
+4. Leave skin / body **Stencil** **Off**.
+5. Export as VRM 1.0 with export extensions on.
+
+The Game view and Scene view overlay the bones once MToonXT is on the mesh.
+A hand or mic in front of the swimsuit can disappear in those pixels.
