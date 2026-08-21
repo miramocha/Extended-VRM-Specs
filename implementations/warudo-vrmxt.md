@@ -185,9 +185,7 @@ After Character load (and after materials-override Apply), if a material has
 material, the plugin resolves `VRMXT/MToonXT10` (Built-in) or
 `VRMXT/Universal Render Pipeline/MToonXT10` (URP) through `ShaderResolveProvider` (uMod
 `Shader.Find` is null) and swaps stock MToon onto the fork, then restores MToon
-blend/queue/keywords from `_AlphaMode` and writes compiled stencil. `inside` /
-`insideOverlay` readers disable `ShadowCaster` / `DepthOnly` / `DepthNormals` so BIRP
-SSAO does not see the unclipped card. Unity also reads
+blend/queue/keywords from `_AlphaMode` and writes compiled stencil. Unity also reads
 experimental `zTest` / `zWrite`. Missing shader UMod
 → keep stock MToon.
 
