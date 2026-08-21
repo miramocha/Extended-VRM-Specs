@@ -104,9 +104,13 @@ stays solid (no hole through a leg).
 
 EEVEE still will not overlay the bones. Check the file in a VRMXT-supported app.
 
-If a cube or another material that is not MToonXT sits in those swimsuit pixels,
-the bones paint on it. The iris example uses **Clip inside**, so the face can
-still cover the card.
+An Opaque mesh that already covered those swimsuit pixels (a cube, a hand, a
+material that is not MToonXT) shows bones on the overlap. Cutout and Transparent
+draws run after an Opaque overlay, so those objects can hide the bones. If a
+Cutout prop covers the skeleton, set only the skeleton material to Cutout in
+MToon. Overlay then runs after default cutout. Swimsuit can stay Opaque
+**Write**. Leave skin Opaque. The iris example uses **Clip inside**, so the face
+can still cover the card.
 
 ## Related
 

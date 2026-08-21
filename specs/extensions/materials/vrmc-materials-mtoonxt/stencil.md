@@ -183,8 +183,10 @@ one clip list (OR). AND of two writer sets is still out of scope.
 
 UniVRMXT: `_M_ZTest` Always, `_M_ZWrite` off, render queue one slot after the mapped
 `alphaMode` bucket. Opaque Geometry (hands on the avatar) already ran, so overlay
-paints over those pixels in the stamp. Transparent in a later bucket can still cover
-the bones. Hosts MAY redraw closer opaques after the overlay pass.
+paints over those pixels in the stamp. A later `MASK` (cutout) or `BLEND` draw can
+still cover the bones. An `insideOverlay` reader authored as `MASK` sits after Unity
+AlphaTest 2450, so overlay color can paint over default cutout in the stamp. Hosts MAY
+redraw closer opaques after the overlay pass.
 
 Utility depth (shadow maps, camera depth for AO) is a separate mapping. Color-pass
 depth-ignore does not clip those draws unless the consumer profile says so. See
