@@ -199,7 +199,7 @@ stencil authoring only. Face SDF stays out of the add-on.
 | Op | Blender | UniVRMXT | Unity Player (planned) | Warudo |
 |----|---------|----------|------------------------|--------|
 | Import | Done (glTF indices → material pointers) | Done (parse/apply `op` + indices) | parse/swap compiled stencil after override Apply | parse/swap compiled stencil after override Apply |
-| Create/edit | Done (**VRMXT Material** stencil panel; ops `write` / `inside` / `outside` / outline `same`) | Done (`MtoonxtInspector` **Add MToonXT extras** + stencil ops / writer dropdowns; avatar instance list) | — | — (no stencil authoring) |
+| Create/edit | Done (**VRMXT Material** stencil panel; ops `write` / `inside` / `insideOverlay` / `outside` / outline `same`) | Done (`MtoonxtInspector` **Add MToonXT extras** + stencil ops / writer dropdowns; avatar instance list) | — | — (no stencil authoring) |
 | Preview | — (no EEVEE clip; panel warns when Unity queue would stamp a writer after a clip reader) | Done (packaged `VRMXT/MToonXT10`) | Done (shader from UniVRMXT UPM) | Done (UMods `mira.shaders.mtoonxt.birp` / `.urp`) |
 | Export | Done (pointers → indices; skip clip object when writers are not body `write`; sibling MToon required) | Partial (re-export attached extras with Extended-UniVRM export hooks) | Planned | — |
 | Profile | [Blender → MToonXT stencil](blender-vrmxt.md#mtoonxt-stencil) | [UniVRMXT → MToonXT](univrm-vrmxt.md#mtoonxt) | [Unity Player](vrmxt-unity-player.md) | [Warudo VRMXT](warudo-vrmxt.md) |
@@ -281,7 +281,7 @@ flowchart LR
 | Task | Prefer |
 |------|--------|
 | New sprite emitters from scratch | Blender |
-| MToonXT stencil ops (`write` / `inside` / `outside` / outline `same`) | Blender or UniVRMXT `MtoonxtInspector` |
+| MToonXT stencil ops (`write` / `inside` / `insideOverlay` / `outside` / outline `same`) | Blender or UniVRMXT `MtoonxtInspector` |
 | Unity scene re-export of emitters / override slots already on the avatar | UniVRMXT + Extended-UniVRM gates |
 | Drag-drop Unity runtime view + edit without a full DCC | Unity Player desktop (planned) |
 | Apply file override onto live mats (shader already in app) | Apply (UniVRMXT, Warudo; Player desktop planned) |

@@ -193,7 +193,10 @@ Shader ship: `mira.shaders.mtoonxt.birp` and `mira.shaders.mtoonxt.urp` in Warud
 Plugins (`ModHost.Assets.Load`). BIRP Workshop:
 [MToonXT Shader for VRMXT (BIRP)](https://steamcommunity.com/sharedfiles/filedetails/?id=3786449905).
 This plugin parses and swaps; it does not vendor the forks. Material inspector lives in
-UniVRMXT (`MtoonxtInspector`), not in the shader UMods.
+UniVRMXT (`MtoonxtInspector`), not in the shader UMods. `insideOverlay` Always can
+paint over avatar-opaque hands in the swimsuit stamp; scene objects drawn after the
+Character still cover those pixels.
+[`insideOverlay` tradeoffs](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs).
 
 ## Plugin setting
 

@@ -155,7 +155,7 @@ Non-normative. Writer material with no clip list.
 }
 ```
 
-Clip-inside and Face SDF examples: [stencil](stencil.md),
+Clip-inside, `insideOverlay`, and Face SDF examples: [stencil](stencil.md),
 [Face SDF](face-sdf.md).
 
 ## Optional consumer interpretation
@@ -198,6 +198,7 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 - [x] URP `XRMotionVectors` stencil bit 0 — fork omits that pass
 - [ ] Extra shade bands, face clip/mask, anisotropic highlight
 - [x] Blender authoring (material pointers → indices) — VRMXT-Extension-for-Blender 0.2.4; [Blender VRMXT](../../../../implementations/blender-vrmxt.md#mtoonxt-stencil)
+- [x] `stencil.op` `insideOverlay` authoring and Apply (UniVRMXT, Blender)
 - [ ] Catalog JSON for `VRMXT/MToonXT10`
 - [ ] Stable `specVersion` policy after the first accepted property set
 
