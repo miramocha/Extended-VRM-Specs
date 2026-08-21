@@ -115,4 +115,11 @@ stays solid (no hole through a leg).
 5. Export as VRM 1.0 with export extensions on.
 
 The Game view and Scene view overlay the bones once MToonXT is on the mesh.
-A hand or mic in front of the swimsuit can disappear in those pixels.
+
+Drop a cube in front of the swimsuit. You'll see bones on the cube in that
+overlap. A material that is not MToonXT does the same. The iris example uses
+**Clip inside**, so the face can still cover the card.
+
+## Related
+
+- [VRMC_materials_mtoonxt stencil](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs)

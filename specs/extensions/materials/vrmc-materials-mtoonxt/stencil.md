@@ -141,8 +141,54 @@ implement it by setting `outside` on the occluder. `outside` on
 the body is a framebuffer hole: every body fragment in the writer blob is skipped,
 including limbs that share those pixels.
 
-Closer scene fragments in the same clip region MAY still lose. One depth test cannot
-ignore the swimsuit and keep a hand in front of it.
+### `insideOverlay` tradeoffs
+
+Bones sit behind swimsuit in camera Z. Stock MToon LessEqual then drops the bone
+fragments. Depth-ignore is the map that still paints them in the writer stamp.
+
+One compare on the scene depth buffer cannot do both of:
+
+- ignore writer Z (swimsuit)
+- honor closer unrelated Z (hand, mic, hair that already shaded those pixels)
+
+So in the stamp, overlay color MAY replace whatever drew earlier, including meshes
+that should stay in front. Depth-ignore has no per-shader block list.
+`ZWrite` off leaves writer and hand depth in the buffer. Overlay color already
+replaced those pixels.
+
+```mermaid
+flowchart TD
+  stamp[Writer coverage stamp]
+  overlay[insideOverlay color pass]
+  stamp --> overlay
+  overlay --> paint[Replace color in stamp]
+  overlay --> zoff[Do not write depth]
+  zoff --> keepDepth[Writer and hand depth stay]
+```
+
+Use `inside` when the reader is in front of the writer (iris on sclera). Use
+`insideOverlay` when the reader is behind the writer and must still show in the stamp.
+
+### `insideOverlay` consumer alleviation
+
+Non-normative except the MUST NOT (`outside` on the body writer). File schema stays
+one clip list (OR). AND of two writer sets is still out of scope.
+
+| Approach | Who | Effect |
+|----------|-----|--------|
+| Author `inside` | file | Stock depth test. Front-of-writer meshes (iris). |
+| Draw the blocker after overlay | consumer | Later color overwrites overlay in those pixels. Scene after the avatar, or a second draw of closer opaques. |
+| Extra local clip | consumer | Second coverage test (hand as a write) ANDed in the engine. Do not invent a second `materials` list in glTF. |
+| Occlusion depth target | consumer | Overlay LessEqual a depth buffer with writer fragments removed or pushed far. Engine RT / blit. |
+
+UniVRMXT: `_M_ZTest` Always, `_M_ZWrite` off, render queue one slot after the mapped
+`alphaMode` bucket. Opaque Geometry (hands on the avatar) already ran, so overlay
+paints over those pixels in the stamp. Transparent in a later bucket can still cover
+the bones. Hosts MAY redraw closer opaques after the overlay pass.
+
+Utility depth (shadow maps, camera depth for AO) is a separate mapping. Color-pass
+depth-ignore does not clip those draws unless the consumer profile says so. See
+[GPU stencil consumer](#gpu-stencil-consumer-non-normative).
 
 ### `same` (outline only)
 
@@ -287,7 +333,7 @@ receive `Ref` 1, 2, … .
 |------|---------|------------|---------|------------------|
 | `write` | always | replace | true | stock LessEqual |
 | `inside` | equal | keep | true | stock LessEqual |
-| `insideOverlay` | equal | keep | true | Always, ZWrite off (Unity `_M_ZTest` = 8, `_M_ZWrite` = 0) |
+| `insideOverlay` | equal | keep | true | Always, ZWrite off (Unity `_M_ZTest` = 8, `_M_ZWrite` = 0). Color in the stamp can overwrite earlier draws. See [`insideOverlay` tradeoffs](#insideoverlay-tradeoffs). |
 | `outside` | notEqual | keep | true | stock LessEqual |
 | omit / off | always | keep | false | stock LessEqual |
 

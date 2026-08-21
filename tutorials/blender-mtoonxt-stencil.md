@@ -103,4 +103,11 @@ stays solid (no hole through a leg).
 5. Export as VRM 1.0.
 
 EEVEE still will not overlay the bones. Check the file in a VRMXT-supported app.
-A hand or mic in front of the swimsuit can disappear in those pixels.
+
+If a cube or another material that is not MToonXT sits in those swimsuit pixels,
+the bones paint on it. The iris example uses **Clip inside**, so the face can
+still cover the card.
+
+## Related
+
+- [VRMC_materials_mtoonxt stencil](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs)
