@@ -105,6 +105,11 @@ A writer that misses the rank rule stays a valid extra. Hub rule 11 does not lis
 pass when the MToonXT shader has one. Depth-only, shadow, and similar utility passes
 have no coverage clip unless a consumer profile says otherwise.
 
+Unity BIRP fills `_CameraDepthTexture` from ShadowCaster. That target has no stencil
+plane, so color-pass Equal clip never reaches SSAO. UniVRMXT disables ShadowCaster,
+DepthOnly, and DepthNormals on `inside` / `insideOverlay` readers. Writers keep those
+passes. `outside` readers still write full utility depth.
+
 Files MUST NOT serialize GPU stencil or depth state on these objects: `enabled`,
 `ref`, `readMask`, `writeMask`, `comp`, `pass`, `fail`, `zfail`, `zTest`,
 `zWrite`, or engine compare enums.
@@ -297,9 +302,11 @@ glTF.
 Unity Comp 0 is Disabled and hides the mesh. After this mapping, write Always (8)
 when clip is off.
 
-Unity pass notes: BIRP ForwardAdd uses body clip; ShadowCaster has none. URP
-UniversalForward uses body clip; DepthOnly / DepthNormals / ShadowCaster have none.
-See [MToon10 stencil shader fork](../../../../references/research/mtoon10-stencil-shader-fork.md).
+Unity pass notes: BIRP ForwardAdd uses body clip. URP UniversalForward uses body clip.
+ShadowCaster, DepthOnly, and DepthNormals have no Stencil block. UniVRMXT disables
+those three passes on `inside` / `insideOverlay` readers so SSAO and shadows do not
+see the unclipped card. Writers keep the passes. See
+[MToon10 stencil shader fork](../../../../references/research/mtoon10-stencil-shader-fork.md).
 
 ## Related
 

@@ -190,9 +190,11 @@ Stencil
 Outline pass uses `_M_OutlineStencil*`. UniVRM **0.131.2** forks:
 
 - Built-in: ForwardAdd uses the same body stencil as ForwardBase. ShadowCaster has no
-  Stencil block.
+  Stencil block. Apply disables that pass on `inside` / `insideOverlay` readers so BIRP
+  SSAO (`_CameraDepthTexture`) does not see the unclipped card.
 - URP: UniversalForward uses body stencil; MToonOutline uses `_M_OutlineStencil*`.
-  DepthOnly, DepthNormals, and ShadowCaster have no Stencil block. The stock UniVRM
+  DepthOnly, DepthNormals, and ShadowCaster have no Stencil block. Apply disables those
+  three on the same readers. The stock UniVRM
   `XRMotionVectors` pass (hardcoded `WriteMask 1` / `Ref 1`) is omitted.
 
 Defaults Ref 0, Comp Always, Pass Keep match “stencil off” (buffer stays 0, no
@@ -271,7 +273,7 @@ ShaderLab names via `ModHost.Assets.Load`. Inspector GUI is UniVRMXT-only
 
 ## Open questions
 
-- [x] Depth / shadow / DepthNormals stencil — BIRP ShadowCaster off; URP DepthOnly / DepthNormals / ShadowCaster off
+- [x] Depth / shadow / DepthNormals stencil — no Stencil block; UniVRMXT disables those passes on `inside` / `insideOverlay` readers
 - [x] UniVRM `XRMotionVectors` stencil write — omitted on the URP fork
 - [x] Built-in ForwardAdd stencil (same as ForwardBase vs off) — same as ForwardBase
 - [x] First pin of UniVRM MToon10 sources the fork copies — **0.131.2**

@@ -194,7 +194,7 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 - [ ] Whether SDF fully replaces N·L or only remaps it before shift/toony
 - [ ] `softness` filter (smoothstep width vs mip)
 - [ ] Extra `faceSdf` fields: tint, second UV, blend-with-NdotL
-- [x] Depth / shadow / DepthNormals / Built-in ForwardAdd stencil — BIRP ForwardAdd = body; ShadowCaster off. URP DepthOnly / DepthNormals / ShadowCaster off.
+- [x] Depth / shadow / DepthNormals / Built-in ForwardAdd stencil — BIRP ForwardAdd = body; ShadowCaster / URP DepthOnly / DepthNormals have no stencil. UniVRMXT disables those three on `inside` / `insideOverlay` readers (BIRP SSAO depth).
 - [x] URP `XRMotionVectors` stencil bit 0 — fork omits that pass
 - [ ] Extra shade bands, face clip/mask, anisotropic highlight
 - [x] Blender authoring (material pointers → indices) — VRMXT-Extension-for-Blender 0.2.4; [Blender VRMXT](../../../../implementations/blender-vrmxt.md#mtoonxt-stencil)
