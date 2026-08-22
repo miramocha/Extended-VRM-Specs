@@ -5,31 +5,53 @@ aliases:
   - VRMXT_sprite_particle for three-vrm
   - Three.js VRM particles
   - WebGL VRMXT_sprite_particle
+  - @vrmxt/three-vrmxt
 tags:
   - extended-vrm
   - implementation/three-js
   - spec/vfx
+  - spec/materials
   - compatibility/vrm1
+  - implementation/optional-consumer
 type: guide
 status: draft
 ---
 
 # three-vrmxt
 
-Three.js / web consumer profile for Extended VRM. Support belongs in a **separate**
-optional npm package (working name `@miramocha/three-vrmxt`), registered beside
-[@pixiv/three-vrm](https://github.com/pixiv/three-vrm). Current scope covers
-[VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md). Do not fork
-or replace the stock VRM loader plugin.
+Three.js consumer library for Extended VRM. Repo:
+[miramocha/three-vrmxt](https://github.com/miramocha/three-vrmxt) (pnpm workspace).
+Publish `packages/three-vrmxt` as **`@vrmxt/three-vrmxt`** (fallback
+**`@miramocha/three-vrmxt`** if the npm org is missing). Peers: `three`,
+`@pixiv/three-vrm`.
 
-VRM 1.0 only. The extension is optional: stock three-vrm load MUST succeed when the
-VRMXT package is absent or when `VRMXT_sprite_particle` is missing.
+This package is a peer `GLTFLoaderPlugin` beside
+[`VRMLoaderPlugin`](https://github.com/pixiv/three-vrm). Do not fork pixiv/three-vrm.
+Do not add UniVRM/Blender-style importer hooks into pixiv.
+
+Product hosts:
+
+| Piece | Role |
+|-------|------|
+| `packages/three-vrmxt` | Publishable library |
+| `apps/viewer` | v1 Vite local-file viewer ([web viewer](vrmxt-web-viewer.md)) |
+| `packages/viewer-core` | Shared view/load used by `apps/viewer` and later Hub WXT |
+| Later Hub WXT | [VRMXT Hub extension](vrmxt-hub-extension.md) (not v1) |
+
+Decision: [VRMXT three-vrm web viewer](../decisions/vrmxt-three-vrm-web-viewer.md).
+
+VRM 1.0 only. Stock three-vrm load MUST succeed when this package is absent.
+
+Renderer: enable stencil on `WebGLRenderer` (`stencil: true` / `renderer.stencil = true`)
+when applying MToonXT stencil.
 
 ## Supported features
 
 | Extension | Status |
 |-----------|--------|
+| `VRMC_materials_mtoonxt` stencil | Claimed: map extras onto Three.js material stencil state. Face SDF later. |
 | `VRMXT_sprite_particle` | Planned |
+| Export write | Planned (Editor contract; never `extensionsRequired`) |
 
 Host stack is **Three.js**. Typical renderers:
 
@@ -43,8 +65,8 @@ Host stack is **Three.js**. Typical renderers:
 | Item | Value |
 |------|-------|
 | Host VRM importer | [`@pixiv/three-vrm`](https://www.npmjs.com/package/@pixiv/three-vrm) (`VRMLoaderPlugin` on Three.js `GLTFLoader`) |
-| Extended package | Separate npm package (name TBD); peer on `three` |
-| three-vrm peer | Soft; load only needs `GLTF` + node `Object3D` list |
+| Extended package | `@vrmxt/three-vrmxt` (fallback `@miramocha/three-vrmxt`) |
+| Peers | `three`, `@pixiv/three-vrm` |
 | Integration API | `GLTFLoaderPlugin` via `loader.register((parser) => …)` |
 
 three-vrm already splits `VRMC_*` features into loader plugins (springBone, MToon,
@@ -58,12 +80,12 @@ consumer package row:
 | Architecture rule | three-vrm approach |
 |-------------------|--------------------|
 | Stock VRM load unchanged | Keep `@pixiv/three-vrm`; add VRMXT package separately |
-| Do not replace stock import | Own `GLTFLoaderPlugin`; do not patch `VRMLoaderPlugin` |
+| Do not replace stock import | Own `GLTFLoaderPlugin`; do not patch `VRMLoaderPlugin`; do not fork pixiv |
 | Parse + attach | `afterRoot` and/or explicit `tryAttach` helper |
-| No `extensionsRequired` | Never list `VRMXT_sprite_particle` there |
-| Missing package / missing ext | Avatar loads; no emitters |
+| No `extensionsRequired` | Never list `VRMXT_*` or `VRMC_materials_mtoonxt` there |
+| Missing package / missing ext | Avatar loads; extras skipped |
 
-Rejected: shipping Extended VFX only by forking pixiv/three-vrm.
+Rejected: shipping Extended features only by forking pixiv/three-vrm.
 
 ## Import seam (GLTFLoader plugin)
 
@@ -72,17 +94,18 @@ Preferred path: register a VRMXT plugin next to `VRMLoaderPlugin`:
 ```js
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { VRMLoaderPlugin } from '@pixiv/three-vrm';
-// import { VRMXTVfxLoaderPlugin } from '@miramocha/three-vrmxt'; // planned
+import { VRMXTLoaderPlugin } from '@vrmxt/three-vrmxt';
 
 const loader = new GLTFLoader();
 loader.register((parser) => new VRMLoaderPlugin(parser));
-loader.register((parser) => new VRMXTVfxLoaderPlugin(parser));
+loader.register((parser) => new VRMXTLoaderPlugin(parser));
 ```
 
 Plugin behavior (mirror `VRMSpringBoneLoaderPlugin`):
 
 1. `afterRoot(gltf)`:
-   - If `json.extensionsUsed` lacks `VRMXT_sprite_particle`, store null / no-op and return.
+   - Apply `VRMC_materials_mtoonxt` stencil when present (v1).
+   - If `json.extensionsUsed` lacks `VRMXT_sprite_particle`, skip emitters (planned).
    - Read `json.extensions.VRMXT_sprite_particle`.
    - Require `specVersion` `"1.0"` for this draft; other versions: **TBD**.
    - `const nodes = await gltf.parser.getDependencies('node')`.
@@ -144,14 +167,30 @@ Field meaning and units follow the base spec.
 WebGL vs WebGPU material choice is **TBD**. Prefer one MVP path (likely WebGL
 `Points` + `PointsMaterial` or textured quads) before a NodeMaterial variant.
 
+## MToonXT stencil (claimed)
+
+Spec: [VRMC_materials_mtoonxt stencil](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md).
+
+After stock MToon materials exist, read per-material `VRMC_materials_mtoonxt` stencil /
+`outlineStencil` extras and set Three.js material stencil state so writer / reader
+coverage matches the spec intention (`write`, `inside`, `insideOverlay`, `outside`,
+outline `same`). GPU stencil requires `WebGLRenderer` constructed with stencil
+enabled.
+
+Face SDF stays later. lilToon / Poiyomi `VRMXT_materials_override` is out of scope
+in this library.
+
 ## Export
 
-Export of authored VFX from three-vrm / Three.js editors is **TBD**. Prefer Blender
-([Blender VRMXT VFX](blender-vrmxt.md#vfx)) as the authoring path until a web exporter lands.
+Planned. When a host writes files, follow [VRMXT Editor](vrmxt-editor.md): append
+supported extras, list them in `extensionsUsed`, never in `extensionsRequired`.
+v1 `apps/viewer` does not write.
 
-If export is added later: write root `extensions.VRMXT_sprite_particle`, add
-`VRMXT_sprite_particle` to `extensionsUsed`, and do **not** add it to
-`extensionsRequired`.
+Until web export ships, prefer Blender or UniVRMXT for authoring
+([Blender VRMXT](blender-vrmxt.md)).
+
+If sprite VFX export is added: write root `extensions.VRMXT_sprite_particle` and add
+that name to `extensionsUsed` only.
 
 ## Validation and fallback
 
@@ -182,21 +221,27 @@ Minimum coverage:
 
 ## Related
 
+- [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
 - [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
+- [VRMXT three-vrm web viewer](../decisions/vrmxt-three-vrm-web-viewer.md)
+- [VRMXT web viewer](vrmxt-web-viewer.md)
+- [VRMXT Hub extension](vrmxt-hub-extension.md)
 - [Extended VRM Architecture](../architecture.md)
-- [UniVRMXT VFX](univrm-vrmxt.md#vfx)
+- [UniVRMXT](univrm-vrmxt.md)
 - [Godot VRMXT](godot-vrmxt.md)
-- [Blender VRMXT VFX](blender-vrmxt.md#vfx)
+- [Blender VRMXT](blender-vrmxt.md)
 - [pixiv/three-vrm](https://github.com/pixiv/three-vrm)
+- [miramocha/three-vrmxt](https://github.com/miramocha/three-vrmxt)
 
 ## Open questions
 
 | Topic | Status |
 |-------|--------|
-| Final npm package name | TBD |
+| npm package name | `@vrmxt/three-vrmxt`; fallback `@miramocha/three-vrmxt` |
 | `Points` vs instanced quad default | TBD |
 | WebGPU / NodeMaterial particle path | TBD |
 | `userData` key name for manager | TBD |
 | Unknown `specVersion` policy | TBD (shared with base spec) |
 | Trigger / play mode | TBD |
-| three.js export | TBD |
+| three.js export | Planned (not v1 viewer) |
+| Face SDF on Three.js | Later |

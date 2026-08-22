@@ -34,7 +34,7 @@ Optional `VRMXT_*` consumers:
 | VRMXT Unity Player (planned) | Separate Unity `2021.3.45f2` desktop app: drag-drop view/edit/export; Warudo-aligned megashaders. Today UniVRMXT + shader-plugins; planned StreamingAssets packs. See [player profile](implementations/vrmxt-unity-player.md), [Unity packages map](implementations/vrmxt-unity-packages.md), [desktop Player primary](decisions/vrmxt-desktop-player-primary.md) |
 | VRM Posing Desktop consumer (planned) | Post-load VRMXT on [VRM Posing Desktop](https://store.steampowered.com/app/1895630/VRM_Posing_Desktop/); host UniVRM `0.129.3` (measured). See [profile](implementations/vrm-posing-desktop-vrmxt.md) |
 | Godot VRMXT addon (planned) | Optional Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm) |
-| three-vrmxt (planned) | Optional npm package beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) |
+| [three-vrmxt](https://github.com/miramocha/three-vrmxt) | Optional npm `@vrmxt/three-vrmxt` (fallback `@miramocha/three-vrmxt`) beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm). Peer `GLTFLoaderPlugin`. Vite `apps/viewer` local files; later Hub WXT. See [library](implementations/three-vrmxt.md), [web viewer](implementations/vrmxt-web-viewer.md), [decision](decisions/vrmxt-three-vrm-web-viewer.md) |
 | VRMXT → VRChat converter (planned) | Separate product. Offline Unity conversion of `.vrm` (`VRMC_*` + `VRMXT_*`) into a VRChat-ready avatar. Consumes the portable contract; does not put VRChat SDK types in the file schema. See [Animation controller standardization](decisions/animation-controller-standardization.md) |
 
 ## Architecture
@@ -66,8 +66,9 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VFX capability boundaries](decisions/vfx-capability-boundaries.md) | One extension per capability; node-based particle attachment; lattice stays separate | accepted |
 | [Billboard sprite ownership](decisions/billboard-sprite-ownership.md) | Flatten particle appearance; no Billboard Sprite fragment; runtime geometry is consumer-owned | accepted |
 | [VFX capability naming](decisions/vfx-capability-naming.md) | `VRMXT_sprite_particle` and candidate VFX family names | accepted |
-| [VRMXT desktop Player primary](decisions/vrmxt-desktop-player-primary.md) | Desktop Unity Player for preview/edit; drop Hub extension + WebGL product path | accepted |
-| [VRoid Hub browser viewer architecture](decisions/vroid-hub-browser-viewer-architecture.md) | Historical Hub extension + Player WebGL; superseded by desktop Player primary | superseded |
+| [VRMXT desktop Player primary](decisions/vrmxt-desktop-player-primary.md) | Desktop Unity Player for preview/edit; drop Hub + Unity WebGL; three-vrm viewer is a separate consumer | accepted |
+| [VRMXT three-vrm web viewer](decisions/vrmxt-three-vrm-web-viewer.md) | Peer `three-vrmxt` + Vite local viewer; later Hub WXT; no in-browser lil/Poiyomi | accepted |
+| [VRoid Hub browser viewer architecture](decisions/vroid-hub-browser-viewer-architecture.md) | Historical Hub extension + Player WebGL; superseded | superseded |
 
 ## Drafts
 
@@ -89,14 +90,16 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VRMXT Editor](implementations/vrmxt-editor.md) | Cross-host editor contract + capability matrix (Blender / UniVRMXT / Unity Player / Warudo) | draft |
 | [VRMXT Unity packages](implementations/vrmxt-unity-packages.md) | Unity-space UPM / app / Warudo dependency map | draft |
 | [VRMXT Unity Player](implementations/vrmxt-unity-player.md) | Desktop Unity app (`2021.3.45f2`); Warudo-aligned; depends on UniVRMXT | draft |
+| [VRMXT web viewer](implementations/vrmxt-web-viewer.md) | Vite `apps/viewer` in three-vrmxt; local file view + MToonXT stencil | draft |
+| [VRMXT Hub extension](implementations/vrmxt-hub-extension.md) | Planned WXT + Hub API; same `viewer-core`; Three.js | draft |
 | [VRMXT Unity Shader Plugins](implementations/vrmxt-unity-shader-plugins.md) | Deprecated host megashader ship note; pack/UMod config owns supported names | deprecated |
 | [UniVRMXT](implementations/univrm-vrmxt.md) | Unity / UniVRMXT (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMC_materials_mtoonxt` stencil apply + packaged `VRMXT/MToonXT10`) | draft |
 | [Warudo VRMXT](implementations/warudo-vrmxt.md) | Warudo plugin / particle + materials override; MToonXT swap planned | draft |
 | [VRM Posing Desktop VRMXT](implementations/vrm-posing-desktop-vrmxt.md) | Posing Desktop consumer; UniVRM `0.129.3` host pin (measured) | draft |
-| [VRoid Hub browser extension](implementations/vroid-hub-browser-extension.md) | Historical Hub extension profile | superseded |
+| [VRoid Hub browser extension](implementations/vroid-hub-browser-extension.md) | Historical Unity Hub extension profile | superseded |
 | [Unity WebGL VRMXT viewer](implementations/unity-webgl-vrmxt-viewer.md) | Historical Player WebGL / Hub notes | superseded |
 | [Godot VRMXT](implementations/godot-vrmxt.md) | Godot / godot-vrm consumer (`VRMXT_sprite_particle` planned) | draft |
-| [three-vrmxt](implementations/three-vrmxt.md) | Three.js / three-vrm consumer (`VRMXT_sprite_particle` planned) | draft |
+| [three-vrmxt](implementations/three-vrmxt.md) | Three.js library: MToonXT stencil claimed; sprite VFX planned; [web viewer](implementations/vrmxt-web-viewer.md) | draft |
 | [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | Unreal / VRM4U consumer (`VRMXT_materials_override` planned) | draft |
 | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) | UniVRM / Extended-UniVRM ScriptedImporter hooks (upstream propose) | draft |
 | [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hook API (prefs, exclude prop, upstream propose) | draft |

@@ -23,7 +23,8 @@ Separate from the [UniVRMXT](https://github.com/miramocha/UniVRMXT) UPM library.
 
 Product decision:
 [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)
-(supersedes Hub browser extension + WebGL as a shipping path).
+(supersedes Hub + **Unity** WebGL as a shipping path). Browser three-vrm view is a
+separate consumer: [VRMXT web viewer](vrmxt-web-viewer.md).
 
 Authoring contract: [VRMXT Editor](vrmxt-editor.md). Megashader ship notes
 (deprecated UPM profile):
@@ -59,8 +60,9 @@ Rejected:
 
 - Putting the player inside the UniVRMXT UPM package (bloated consumers; app ≠ library).
 - Downgrading Extended-UniVRM `2022.3.62f2` in place to host this app.
-- Shipping Hub browser extension + WebGL as the preview product
+- Shipping Hub browser extension + **Unity** WebGL as the preview product
   ([desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)).
+  three-vrmxt `apps/viewer` is out of this Unity project.
 
 ## Project baseline
 
@@ -126,7 +128,8 @@ Deprecated profile note: [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins
 - Hub OAuth / download-license client in Unity (deferred)
 - Nesting this app under Extended-UniVRM Samples
 - Claiming every third-party avatar shader
-- Hub browser extension or WebGL as a shipping consumer
+- Hub browser extension or **Unity** WebGL as a shipping consumer (three-vrm web
+  viewers are documented on [VRMXT web viewer](vrmxt-web-viewer.md))
 
 ## Related
 
@@ -137,8 +140,9 @@ Deprecated profile note: [VRMXT Unity Shader Plugins](vrmxt-unity-shader-plugins
 - [UniVRMXT](univrm-vrmxt.md)
 - [Warudo VRMXT](warudo-vrmxt.md)
 - [Architecture](../architecture.md)
+- [VRMXT web viewer](vrmxt-web-viewer.md) (Three.js; separate repo)
 - [Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md) (superseded)
-- [VRoid Hub browser extension](vroid-hub-browser-extension.md) (superseded)
+- [VRoid Hub browser extension](vroid-hub-browser-extension.md) (superseded Unity Hub notes)
 
 ## Open questions
 

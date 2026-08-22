@@ -20,7 +20,9 @@ status: accepted
 ## Status
 
 Accepted. Supersedes
-[VRoid Hub browser viewer architecture](vroid-hub-browser-viewer-architecture.md).
+[VRoid Hub browser viewer architecture](vroid-hub-browser-viewer-architecture.md)
+for **Hub + Unity WebGL**. A separate Three.js consumer is
+[VRMXT three-vrm web viewer](vrmxt-three-vrm-web-viewer.md).
 
 ## Context
 
@@ -59,37 +61,45 @@ Operational Player notes: `Assets/VRMXTPlayer/SHADERS.md` in the Player repo.
    Warudo BIRP ([Warudo VRMXT](../implementations/warudo-vrmxt.md);
    Player packs research:
    [Player Shader AssetBundles](../references/vrmxt-player-shader-assetbundles.md)).
-3. Do **not** ship the VRoid Hub browser extension or Player WebGL viewer as a product
-   path for Hub preview.
-4. Local files are the first ingest path. Hub OAuth / download inside the desktop app
-   is deferred.
-5. A WebGL build MAY remain in the Player project for experiments. It is not a claimed
-   Hub product and MUST NOT be documented as Warudo-parity shader support.
+3. Do **not** ship a VRoid Hub extension that embeds **Unity WebGL**, and do **not**
+   ship Player WebGL as a Hub preview product. In-browser lilToon / Poiyomi cook
+   stays rejected.
+4. Local files are the first ingest path for the **Unity** Player. Hub OAuth / download
+   inside that desktop app is deferred.
+5. A WebGL build MAY remain in the Unity Player project for experiments. It is not a
+   claimed Hub product and MUST NOT be documented as Warudo-parity shader support.
+6. A **separate** web consumer uses `@pixiv/three-vrm` plus optional `three-vrmxt`
+   ([three-vrm web viewer](vrmxt-three-vrm-web-viewer.md)). Unity Player stays **desktop
+   Unity** for megashaders and Player edit/export. Browser MToonXT is Three.js stencil
+   state, not ShaderLab packs.
 
 ## Alternatives considered
 
 | Alternative | Outcome |
 |-------------|---------|
-| Keep extension + WebGL with full Poiyomi claim | Rejected — cook / strip / size vs Warudo parity |
-| WebGL lite only (MToon + lil) | Deferred as experiment; not the Hub product path |
-| Keep extension + WebGL as planned product | Superseded — same WebGL shader limits |
+| Keep extension + Unity WebGL with full Poiyomi claim | Rejected — cook / strip / size vs Warudo parity |
+| Unity WebGL lite only (MToon + lil) | Deferred as Player experiment; not the Hub product path |
+| Keep extension + Unity WebGL as planned product | Superseded — same WebGL shader limits |
 | Desktop app embeds Hub site in a WebView beside Unity | Deferred — local Player first |
+| three-vrm + three-vrmxt browser viewer | Accepted as a **separate** consumer; see [three-vrm web viewer](vrmxt-three-vrm-web-viewer.md) |
 
 ## Consequences
 
-- [VRMXT Unity Player](../implementations/vrmxt-unity-player.md) is desktop-first.
-- [VRoid Hub browser viewer architecture](vroid-hub-browser-viewer-architecture.md),
-  [VRoid Hub browser extension](../implementations/vroid-hub-browser-extension.md), and
-  [Unity WebGL VRMXT viewer](../implementations/unity-webgl-vrmxt-viewer.md) are
-  superseded / historical.
-- Architecture and README list desktop Player as the planned app consumer; Hub
-  extension + WebGL rows point here as superseded.
-- Hub round-trip evidence remains useful for file survival; it does not imply an
-  in-browser VRMXT preview product.
+- [VRMXT Unity Player](../implementations/vrmxt-unity-player.md) is desktop-first Unity.
+- Unity Hub WebGL notes stay superseded:
+  [old ADR](vroid-hub-browser-viewer-architecture.md),
+  [old extension](../implementations/vroid-hub-browser-extension.md),
+  [Unity WebGL VRMXT viewer](../implementations/unity-webgl-vrmxt-viewer.md).
+- Later Hub preview, if shipped, is WXT + Three.js
+  ([VRMXT Hub extension](../implementations/vrmxt-hub-extension.md)), not a Unity iframe.
+- Architecture and README list desktop Player as the Unity app consumer.
+- Hub round-trip evidence remains useful for file survival. It does not imply Unity
+  WebGL Hub preview.
 
 ## Related
 
 - [VRMXT Unity Player](../implementations/vrmxt-unity-player.md)
+- [VRMXT three-vrm web viewer](vrmxt-three-vrm-web-viewer.md)
 - [VRMXT Unity Shader Plugins](../implementations/vrmxt-unity-shader-plugins.md)
 - [Warudo VRMXT](../implementations/warudo-vrmxt.md)
 - [VRoid Hub VRMXT round-trip](../references/vroid-hub-vrmxt-roundtrip.md)

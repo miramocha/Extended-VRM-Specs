@@ -42,11 +42,14 @@ stock VRM when Extended packages are absent.
 | Blender | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) on [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | Full DCC authoring + I/O |
 | Unity (package) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) + [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) for hooks | Library: Editor import/attach, materials apply, VFX re-export; catalog authoring UI later |
 | Unity (player app) | [VRMXT Unity Player](vrmxt-unity-player.md) (planned; depends on UniVRMXT) | Desktop drag-drop view + edit + export |
+| Three.js (web viewer) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) `apps/viewer` | v1 local-file view + MToonXT Apply. Edit/export planned. [Profile](vrmxt-web-viewer.md) |
+| Three.js (Hub WXT) | Same repo, later | View-only planned. [Profile](vrmxt-hub-extension.md). Not an editor host |
 | Warudo | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Runtime apply + materials-override **patch** export (source-preserving) |
 
 Profiles: [Blender VRMXT](blender-vrmxt.md), [UniVRMXT](univrm-vrmxt.md),
-[VRMXT Unity Player](vrmxt-unity-player.md), [Warudo VRMXT](warudo-vrmxt.md). Patch
-detail: [Warudo VRMXT Patch Export](../references/warudo-vrmxt-patch-export.md).
+[VRMXT Unity Player](vrmxt-unity-player.md), [Warudo VRMXT](warudo-vrmxt.md),
+[VRMXT web viewer](vrmxt-web-viewer.md), [VRMXT Hub extension](vrmxt-hub-extension.md).
+Patch detail: [Warudo VRMXT Patch Export](../references/warudo-vrmxt-patch-export.md).
 UniVRMXT = UPM library; Player = separate desktop app — see Player profile and
 [desktop Player primary](../decisions/vrmxt-desktop-player-primary.md).
 
@@ -256,6 +259,7 @@ Materialize.
 | Blender | `VRMXT_sprite_particle`, `VRMXT_materials_override` (bindings authoring deferred), `VRMC_materials_mtoonxt` stencil (Face SDF deferred) | Spring override, lattice, animation |
 | UniVRMXT | `VRMXT_sprite_particle` (re-export / edit existing; from-scratch UI thin), `VRMXT_materials_override` (Apply + Materialize + Transfer Done; catalog UI later) | Spring override, lattice, animation; full catalog-driven materials UI; `VRMC_materials_mtoonxt` from-scratch authoring |
 | Unity Player | None shipped (planned desktop Apply + Transfer ± VFX; **no** Materialize) | Materialize; spring / lattice / animation; `VRMC_materials_mtoonxt` |
+| three-vrmxt web viewer | None shipped (v1 is view / MToonXT Apply only) | Create/edit/Export until claimed; Hub WXT is not an editor host |
 | Warudo | `VRMXT_materials_override` **patch** editor + Apply (no Materialize) | VFX authoring; Materialize; general live-avatar VRM export; workshop sources; `VRMC_materials_mtoonxt` |
 
 Warudo remains primarily a **runtime consumer** with a **source-preserving materials
@@ -329,6 +333,9 @@ For tool authors adding another editor (Godot, three-vrmxt export, VRM4U, …):
 - [Blender VRMXT](blender-vrmxt.md)
 - [UniVRMXT](univrm-vrmxt.md)
 - [VRMXT Unity Player](vrmxt-unity-player.md)
+- [VRMXT web viewer](vrmxt-web-viewer.md)
+- [VRMXT Hub extension](vrmxt-hub-extension.md)
+- [three-vrmxt](three-vrmxt.md)
 - [Warudo VRMXT](warudo-vrmxt.md)
 - [Warudo VRMXT Patch Export](../references/warudo-vrmxt-patch-export.md)
 - [Materials Override Catalogs](../references/materials-override-catalogs.md)

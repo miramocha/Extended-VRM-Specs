@@ -16,10 +16,13 @@ status: superseded
 
 # VRoid Hub browser extension
 
-> **Superseded.** Not pursued. Preview/edit product path:
-> [VRMXT Unity Player](vrmxt-unity-player.md) (desktop). Decision:
-> [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md).
-> Body below is historical.
+> **Superseded.** Unity iframe path is not pursued. Desktop Unity preview/edit:
+> [VRMXT Unity Player](vrmxt-unity-player.md). Three.js Hub (planned, not v1):
+> [VRMXT Hub extension](vrmxt-hub-extension.md). v1 local files:
+> [VRMXT web viewer](vrmxt-web-viewer.md). Decision:
+> [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)
+> plus [three-vrm web viewer](../decisions/vrmxt-three-vrm-web-viewer.md).
+> Body below is historical Unity WebGL.
 
 Cross-browser extension profile (historical) for previewing VRoid Hub models with
 VRMXT support. Prior architecture:
