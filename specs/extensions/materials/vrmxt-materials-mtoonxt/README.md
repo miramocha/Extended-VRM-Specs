@@ -1,5 +1,5 @@
 ---
-title: VRMC_materials_mtoonxt
+title: VRMXT_materials_mtoonxt
 aliases:
   - MToonXT
   - extended MToon
@@ -14,14 +14,13 @@ type: specification
 status: draft
 ---
 
-# VRMC_materials_mtoonxt
+# VRMXT_materials_mtoonxt
 
 Per-material glTF extension. Carries extras for a VRM 1.0 MToon material next to stock
 `VRMC_materials_mtoon` on the same `materials[]` entry.
 
-The serialized name uses the `VRMC_` prefix so the two objects sit as a pair. This
-document is an Extended VRM draft in this repository. It is not a VRM Consortium
-specification.
+The extras object is named `VRMXT_materials_mtoonxt`. This document is an Extended VRM
+draft. It is not a VRM Consortium specification.
 
 Stock VRM 1.0 importers ignore unrecognized material extensions and keep ordinary MToon.
 
@@ -32,9 +31,9 @@ extension identity, conformance, and load gate.
 
 | Item | Value |
 |------|-------|
-| Extension name | `VRMC_materials_mtoonxt` |
+| Extension name | `VRMXT_materials_mtoonxt` |
 | Target | VRM 1.0 (`VRMC_vrm` 1.0) only |
-| Attachment | `materials[i].extensions.VRMC_materials_mtoonxt` |
+| Attachment | `materials[i].extensions.VRMXT_materials_mtoonxt` |
 | Required sibling | `VRMC_materials_mtoon` on the same material |
 | Root `extensions` | not used for this extension |
 | Stock importer | no required change |
@@ -48,20 +47,16 @@ selects an engine shader (lilToon, Poiyomi, and similar).
 
 This specification conforms to [VRMXT Conformance](../../../core/vrmxt-conformance.md).
 
-Family rule 6 is written for names matching `VRMXT_*`. This extension uses `VRMC_` and
-MUST follow the same fallback: files MUST NOT list `VRMC_materials_mtoonxt` in
-`extensionsRequired`.
-
 ## Normative requirements
 
-1. Files that use this extension MUST list `VRMC_materials_mtoonxt` in `extensionsUsed`.
+1. Files that use this extension MUST list `VRMXT_materials_mtoonxt` in `extensionsUsed`.
 2. The extension object MUST appear on a glTF `materials[]` entry under
-   `extensions.VRMC_materials_mtoonxt`.
+   `extensions.VRMXT_materials_mtoonxt`.
 3. The same material MUST also contain `extensions.VRMC_materials_mtoon`. If that sibling
-   is missing, a supporting implementation MUST ignore `VRMC_materials_mtoonxt` on that
+   is missing, a supporting implementation MUST ignore `VRMXT_materials_mtoonxt` on that
    material and keep stock VRM 1.0 material import.
 4. The extension object MUST contain `specVersion` with value `"1.0"` for this draft.
-5. Files MUST NOT list `VRMC_materials_mtoonxt` in `extensionsRequired`.
+5. Files MUST NOT list `VRMXT_materials_mtoonxt` in `extensionsRequired`.
 6. Implementations that do not support the extension MUST ignore it.
 7. A supporting implementation MAY swap the material to its MToonXT shader only when all
    of the following hold:
@@ -77,7 +72,7 @@ MUST follow the same fallback: files MUST NOT list `VRMC_materials_mtoonxt` in
      `outlineStencil`).
 9. When rule 7 does not hold, the implementation MUST keep stock MToon for that material
    and MUST NOT apply extras.
-10. The skippable unit is this material's `VRMC_materials_mtoonxt` object. Invalid data
+10. The skippable unit is this material's `VRMXT_materials_mtoonxt` object. Invalid data
     there MUST NOT make the glTF or VRM 1.0 asset invalid.
 11. If an extra object (`faceSdf`, `stencil`, or `outlineStencil`) is missing, unknown,
     or unresolvable, the implementation MUST skip that object only. It MUST still attempt
@@ -105,7 +100,7 @@ MUST follow the same fallback: files MUST NOT list `VRMC_materials_mtoonxt` in
 flowchart TD
   mat["materials i"]
   mtoon["VRMC_materials_mtoon"]
-  xt["VRMC_materials_mtoonxt"]
+  xt["VRMXT_materials_mtoonxt"]
   ov["VRMXT_materials_override optional"]
   mat --> mtoon
   mat --> xt
@@ -136,7 +131,7 @@ Non-normative. Writer material with no clip list.
   "extensionsUsed": [
     "VRMC_vrm",
     "VRMC_materials_mtoon",
-    "VRMC_materials_mtoonxt"
+    "VRMXT_materials_mtoonxt"
   ],
   "materials": [
     {
@@ -145,7 +140,7 @@ Non-normative. Writer material with no clip list.
         "VRMC_materials_mtoon": {
           "specVersion": "1.0"
         },
-        "VRMC_materials_mtoonxt": {
+        "VRMXT_materials_mtoonxt": {
           "specVersion": "1.0",
           "stencil": { "op": "write" }
         }
@@ -182,7 +177,7 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 
 - Core glTF material fields remain the portable base.
 - `VRMC_materials_mtoon` remains the VRM 1.0 toon material when present.
-- `VRMC_materials_mtoonxt` is a sibling under `materials[i].extensions`. It does not
+- `VRMXT_materials_mtoonxt` is a sibling under `materials[i].extensions`. It does not
   replace MToon JSON.
 - `VRMXT_materials_override` is a separate sibling. When it applies, it wins (rule 14).
 - `KHR_materials_unlit` and core PBR follow existing VRM 1.0 material precedence when

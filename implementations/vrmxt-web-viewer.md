@@ -33,7 +33,7 @@ This is a **view** surface. Create/edit/Export follow
 | Ingest | File picker and drag-drop (local bytes) |
 | Camera | Orbit |
 | Stock VRM | VRM 1.0 MToon via `@pixiv/three-vrm` |
-| MToonXT | Apply / view [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md) stencil |
+| MToonXT | Apply / view [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md) stencil |
 | Renderer | Three.js `WebGLRenderer` constructed with `stencil: true` |
 | Shared code | `packages/viewer-core` (also the later Hub mount) |
 
@@ -42,7 +42,7 @@ This is a **view** surface. Create/edit/Export follow
 | Capability | v1 | Later |
 |------------|----|-------|
 | Stock VRM 1.0 | View | — |
-| `VRMC_materials_mtoonxt` stencil | View + Apply onto Three.js material stencil state | Face SDF |
+| `VRMXT_materials_mtoonxt` stencil | View + Apply onto Three.js material stencil state | Face SDF |
 | `VRMXT_sprite_particle` | — | Planned (library) |
 | `VRMXT_materials_override` (lil / Poiyomi) | — | Out of scope in-browser |
 | Create/edit portable fields | — | Planned in-memory |
@@ -86,7 +86,7 @@ Do not persist the file to a server. Do not call VRoid Hub APIs from this app.
 ## MToonXT apply
 
 Stencil extras follow the portable spec
-([stencil](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md)). Mapping
+([stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)). Mapping
 is Three.js material stencil state, not Unity ShaderLab. Face SDF is later.
 
 If the extra is absent, keep stock three-vrm MToon.

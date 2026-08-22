@@ -242,7 +242,7 @@ pose remap or a new FACS rig.
 
 - VRM container identity (`VRMC_vrm` / `VRM` 0.x, `specVersion`, thumbnail as VRM meta).
 - MToon and every author shader: lilToon, Poiyomi, `VRMXT_materials_override` catalogs,
-  `VRMC_materials_mtoonxt` (stencil, Face SDF, experimental zTest/zWrite).
+  `VRMXT_materials_mtoonxt` (stencil, Face SDF, experimental zTest/zWrite).
 - LookAt, firstPerson mesh annotations, VRM expression **graph** (preset combine,
   binary, overrideMouth).
 - SpringBone joints/colliders, node constraints.

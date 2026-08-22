@@ -18,8 +18,8 @@ status: draft
 Non-normative research. Lives under `references/research/` only.
 
 Portable stencil (and Face SDF) JSON now lives on
-[`VRMC_materials_mtoonxt`](../../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
-([stencil](../../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md)).
+[`VRMXT_materials_mtoonxt`](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
+([stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)).
 Do not attach MToonXT by pointing `VRMXT_materials_override` `shaderName` at
 `VRMXT/MToonXT10`. This note still records Unity fork property names and ShaderLab
 stencil wiring.
@@ -104,7 +104,7 @@ Reject option D as the file contract: supporting and stock UniVRM cannot both ow
 `VRM10/MToon10` in one project.
 
 **File contract (2026-08-17):** option B shipped as
-[`VRMC_materials_mtoonxt`](../../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+[`VRMXT_materials_mtoonxt`](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 (`stencil` / `outlineStencil` string enums). Override `shaderName` → `VRMXT/MToonXT10` is
 not the attach path. This note keeps Unity `_M_Stencil*` property names for the fork.
 
@@ -267,7 +267,7 @@ Consumers: UniVRMXT UPM ships Built-in and URP forks under `Runtime/Shaders/MToo
 ShaderLab names via `ModHost.Assets.Load`. Inspector GUI is UniVRMXT-only
 (`MtoonxtInspector`). Not nested in VRMXT Plugin for Warudo. Not deprecated
 `com.vrmxt.unity.shader-plugins`. See
-[VRMC_materials_mtoonxt](../../specs/extensions/materials/vrmc-materials-mtoonxt/README.md).
+[VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md).
 
 ## Open questions
 
@@ -276,14 +276,14 @@ ShaderLab names via `ModHost.Assets.Load`. Inspector GUI is UniVRMXT-only
 - [x] Built-in ForwardAdd stencil (same as ForwardBase vs off) — same as ForwardBase
 - [x] First pin of UniVRM MToon10 sources the fork copies — **0.131.2**
 - [x] Whether Blender VRMXT authoring exposes `_M_Stencil*` as ints or named enums — named `op` (`write` / `inside` / `outside` / `same`); GPU ints stay a consumer mapping
-- [x] Portable sibling stencil object — `VRMC_materials_mtoonxt` `stencil` /
+- [x] Portable sibling stencil object — `VRMXT_materials_mtoonxt` `stencil` /
       `outlineStencil` (option B). Override `shaderName` → fork is not the attach path.
 - [ ] Catalog JSON for `VRMXT/MToonXT10` (first-party row; omit lil/Poiyomi)
 
 ## Related
 
-- [VRMC_materials_mtoonxt](../../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
-- [MToonXT stencil](../../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md)
+- [VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
+- [MToonXT stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
 - [VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md)
 - [UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override)
 - [VRMC_materials_mtoon 1.0](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_materials_mtoon-1.0/README.md)

@@ -1,7 +1,7 @@
 ---
 title: Blender MToonXT stencil
 aliases:
-  - author VRMC_materials_mtoonxt stencil
+  - author VRMXT_materials_mtoonxt stencil
 tags:
   - extended-vrm
   - type/guide
@@ -114,4 +114,4 @@ can still cover the card.
 
 ## Related
 
-- [VRMC_materials_mtoonxt stencil](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs)
+- [VRMXT_materials_mtoonxt stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs)

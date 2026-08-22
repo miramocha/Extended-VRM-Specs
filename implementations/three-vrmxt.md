@@ -50,7 +50,7 @@ buffer (Three.js r163+).
 
 | Extension | Status |
 |-----------|--------|
-| `VRMC_materials_mtoonxt` stencil | Claimed: map extras onto Three.js material stencil state. Face SDF later. |
+| `VRMXT_materials_mtoonxt` stencil | Claimed: map extras onto Three.js material stencil state. Face SDF later. |
 | `VRMXT_sprite_particle` | Planned |
 | Export write | Planned (Editor contract; never `extensionsRequired`) |
 
@@ -83,7 +83,7 @@ consumer package row:
 | Stock VRM load unchanged | Keep `@pixiv/three-vrm`; add VRMXT package separately |
 | Do not replace stock import | Own `GLTFLoaderPlugin`; do not patch `VRMLoaderPlugin`; do not fork pixiv |
 | Parse + attach | `afterRoot` and/or explicit `tryAttach` helper |
-| No `extensionsRequired` | Never list `VRMXT_*` or `VRMC_materials_mtoonxt` there |
+| No `extensionsRequired` | Never list `VRMXT_*` or `VRMXT_materials_mtoonxt` there |
 | Missing package / missing ext | Avatar loads; extras skipped |
 
 Rejected: shipping Extended features only by forking pixiv/three-vrm.
@@ -105,7 +105,7 @@ loader.register((parser) => new VRMXTLoaderPlugin(parser));
 Plugin behavior (mirror `VRMSpringBoneLoaderPlugin`):
 
 1. `afterRoot(gltf)`:
-   - Apply `VRMC_materials_mtoonxt` stencil when present (v1).
+   - Apply `VRMXT_materials_mtoonxt` stencil when present (v1).
    - If `json.extensionsUsed` lacks `VRMXT_sprite_particle`, skip emitters (planned).
    - Read `json.extensions.VRMXT_sprite_particle`.
    - Require `specVersion` `"1.0"` for this draft; other versions: **TBD**.
@@ -170,9 +170,9 @@ WebGL vs WebGPU material choice is **TBD**. Prefer one MVP path (likely WebGL
 
 ## MToonXT stencil (claimed)
 
-Spec: [VRMC_materials_mtoonxt stencil](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md).
+Spec: [VRMXT_materials_mtoonxt stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
 
-After stock MToon materials exist, read per-material `VRMC_materials_mtoonxt` stencil /
+After stock MToon materials exist, read per-material `VRMXT_materials_mtoonxt` stencil /
 `outlineStencil` extras and set Three.js material stencil state so writer / reader
 coverage matches the spec intention (`write`, `inside`, `insideOverlay`, `outside`,
 outline `same`). GPU stencil requires `WebGLRenderer` constructed with stencil
@@ -222,7 +222,7 @@ Minimum coverage:
 
 ## Related
 
-- [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+- [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 - [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
 - [VRMXT three-vrm web viewer](../decisions/vrmxt-three-vrm-web-viewer.md)
 - [VRMXT web viewer](vrmxt-web-viewer.md)

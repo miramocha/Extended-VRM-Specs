@@ -16,11 +16,11 @@ status: draft
 # Unity MToonXT stencil Ref offset
 
 Non-normative. Unity 8-bit stencil occupancy for the GPU mapping on
-[stencil](../../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md).
+[stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
 Not a glTF field. Files still MUST NOT serialize `ref` / `comp` / `pass`.
 
 UniVRMXT (`com.vrmxt.univrmxt`) implements this at Apply as
-`VrmcMaterialsMtoonxtStencilRefs` (2026-08-20). Warudo vendors the same type and
+`VrmxtMaterialsMtoonxtStencilRefs` (2026-08-20). Warudo vendors the same type and
 releases the lease on character unbind.
 
 ## Collision
@@ -75,5 +75,5 @@ helpers. VRChat upload C#. Serializing GPU `Ref` in the VRM.
 
 ## Related
 
-- [Stencil](../../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md)
+- [Stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
 - [MToon10 stencil shader fork](mtoon10-stencil-shader-fork.md)

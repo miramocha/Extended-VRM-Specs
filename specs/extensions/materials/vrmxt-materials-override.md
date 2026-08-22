@@ -291,9 +291,9 @@ omitted here; see the Unity and Unreal profile notes for fuller single-slot exam
 - Core glTF material fields remain the portable base (base color, alpha, normals,
   emissive, double-sided).
 - `VRMC_materials_mtoon` remains the VRM 1.0 toon material extension when present.
-- `VRMC_materials_mtoonxt` is a sibling for MToon extras (Face SDF, stencil) and an
+- `VRMXT_materials_mtoonxt` is a sibling for MToon extras (Face SDF, stencil) and an
   MToonXT shader swap. Spec:
-  [VRMC_materials_mtoonxt](vrmc-materials-mtoonxt/README.md). When this override **applies**
+  [VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md). When this override **applies**
   (engine selected, material resolved, shader or parent present), it wins: do not swap
   that material to MToonXT. If this override is absent or fails to resolve, the consumer
   MAY run the MToonXT load gate. That rule does not settle override vs core PBR / unlit
@@ -357,7 +357,7 @@ They do not add fields to this extension.
 
 - [VRMXT Conformance](../../core/vrmxt-conformance.md)
 - Upstream MToon: `VRMC_materials_mtoon` in the VRM 1.0 specification
-- [VRMC_materials_mtoonxt](vrmc-materials-mtoonxt/README.md)
+- [VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md)
 - [Substance 3D Painter MToon viewport](../../../references/research/substance-painter-mtoon-viewport.md) (non-normative; stock MToon maps, not this extension)
 - Core materials: glTF 2.0 `materials` schema
 - [KHR / glTF overlap](../../../references/khr-gltf-overlap.md) (non-normative)

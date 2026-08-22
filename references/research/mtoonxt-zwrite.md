@@ -13,7 +13,7 @@ status: draft
 
 # MToonXT zWrite (Unity experiment)
 
-Non-normative. Not a [VRMC_materials_mtoonxt](../../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+Non-normative. Not a [VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 extra. UniVRMXT may still read a `zWrite` boolean on that object (hub rule 12:
 unrecognized keys ignored by other consumers).
 
@@ -26,7 +26,7 @@ stencil clip.
 
 ## Related
 
-- [VRMC_materials_mtoonxt](../../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+- [VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 - [MToonXT zTest](mtoonxt-ztest.md)
-- [Stencil](../../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md)
+- [Stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
 - [renderQueueOffset](mtoonxt-render-queue.md)
