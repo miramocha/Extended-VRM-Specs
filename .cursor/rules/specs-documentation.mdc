@@ -71,8 +71,9 @@ host table. Prefer the host profile for per-host detail; keep this matrix aligne
   `animation`, `deformation`, `materials`, `physics`, and `vfx`.
 - Do not place a concrete extension spec directly under `specs/`.
 - Folder names are editorial taxonomy. They MUST NOT add a segment to the serialized
-  extension name: `specs/extensions/vfx/vrmxt-sprite-particle.md` defines
-  `VRMXT_sprite_particle`.
+  extension name. The path stem maps by replacing hyphens with underscores:
+  `specs/extensions/vfx/vrmxt-sprite-particle.md` defines `VRMXT_sprite_particle`.
+  A folder `vrmxt-materials-mtoonxt/` is the same stem (multi-page spec).
 - Serialized glTF extension names authored here MUST use `VRMXT_*`. Do not invent
   `VRMC_*` names. `VRMC_` is VRM Consortium only (`VRMC_vrm`, `VRMC_materials_mtoon`,
   `VRMC_springBone`, `VRMC_springBone_extended_collider`, …).

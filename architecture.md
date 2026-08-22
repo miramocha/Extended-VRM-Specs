@@ -104,8 +104,9 @@ Extended names MUST NOT appear in `extensionsRequired`.
   beside `VRMC_springBone`.
 - Inner JSON keys (fields inside the extension object) are unprefixed camelCase
   (`specVersion`, `stencil`, `faceSdf`). Do not prefix properties `VRMC_` or `VRMXT_`.
-- Repo paths match the serialized name: `specs/extensions/<domain>/vrmxt-<rest>.md`
-  defines `VRMXT_<rest>`.
+- Repo path stem maps to the glTF name by replacing hyphens with underscores:
+  `specs/extensions/vfx/vrmxt-sprite-particle.md` → `VRMXT_sprite_particle`.
+  A folder `vrmxt-materials-mtoonxt/` is the same stem (multi-page spec).
 - Code types SHOULD use `Vrmxt*` / `vrmxt_*` for Extended types. Stock UniVRM/MToon10
   shader includes keep `vrmc_materials_mtoon_*.hlsl`.
 - ShaderLab product names may stay `VRMXT/...`. That is not a glTF key.
