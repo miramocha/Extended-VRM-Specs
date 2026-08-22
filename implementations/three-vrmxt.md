@@ -42,8 +42,9 @@ Decision: [VRMXT three-vrm web viewer](../decisions/vrmxt-three-vrm-web-viewer.m
 
 VRM 1.0 only. Stock three-vrm load MUST succeed when this package is absent.
 
-Renderer: enable stencil on `WebGLRenderer` (`stencil: true` / `renderer.stencil = true`)
-when applying MToonXT stencil.
+Renderer: pass `stencil: true` into the `WebGLRenderer` constructor when applying
+MToonXT stencil. Assigning `renderer.stencil` after construct does not allocate the
+buffer (Three.js r163+).
 
 ## Supported features
 

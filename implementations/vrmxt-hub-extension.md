@@ -42,7 +42,7 @@ This host is **view-only**. It is not a [VRMXT Editor](vrmxt-editor.md) host.
 | Bytes | Official Hub API original download (OAuth + download-license), same sequence as the historical extension note |
 | Renderer | Three.js in the extension origin; **no** Unity iframe |
 | View core | Same `packages/viewer-core` as `apps/viewer` |
-| MToonXT | Stencil apply when the extra is present; `renderer.stencil = true` |
+| MToonXT | Stencil apply when the extra is present; construct `WebGLRenderer` with `stencil: true` |
 | Edit / export | Out of scope |
 
 Hub's stock three-vrm canvas stays Hub's. The extension does not replace that canvas

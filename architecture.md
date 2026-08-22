@@ -121,7 +121,7 @@ parallel Extended-only format.
 | Blender | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | [Blender VRMXT](implementations/blender-vrmxt.md) | Same (Addon Preferences enable hooks) |
 | Unity (package / Editor) | [UniVRM](https://github.com/vrm-c/UniVRM) / [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | [UniVRMXT](implementations/univrm-vrmxt.md) | Same via Extended-UniVRM export hooks (Project Settings gate) |
 | Unity (Player app) | UniVRM in [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Same Player (depends on UniVRMXT; desktop edit) | Planned | Planned (desktop) |
-| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md) (MToonXT stencil view/Apply) | Planned (not v1) |
+| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): v1 Apply `VRMC_materials_mtoonxt` stencil; `VRMXT_*` import planned | Planned (not v1) |
 | Unreal | VRM4U | VRM4U VRMXT package (planned) | Planned: [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | **TBD** |
 | Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VRMXT](implementations/godot-vrmxt.md) | **TBD** |
 | Other | Any VRM 1.0 tool | Optional Extended package | Implement specs | Implement specs |

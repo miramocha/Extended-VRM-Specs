@@ -34,7 +34,7 @@ This is a **view** surface. Create/edit/Export follow
 | Camera | Orbit |
 | Stock VRM | VRM 1.0 MToon via `@pixiv/three-vrm` |
 | MToonXT | Apply / view [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md) stencil |
-| Renderer | Three.js `WebGLRenderer` with `stencil: true` (`renderer.stencil = true`) |
+| Renderer | Three.js `WebGLRenderer` constructed with `stencil: true` |
 | Shared code | `packages/viewer-core` (also the later Hub mount) |
 
 ## Claimed vs planned
