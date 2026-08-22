@@ -316,11 +316,11 @@ through a leg).
 ## Unity authoring
 
 glTF stores indices. The material ShaderGUI MUST NOT persist a material list (shader
-properties cannot). UniVRMXT: `VrmcMaterialsMtoonxtInstance` editor uses `Material`
+properties cannot). UniVRMXT: `VrmxtMaterialsMtoonxtInstance` editor uses `Material`
 object fields; export writes indices. Warudo uses JSON only.
 
 UniVRMXT Apply then leases a per-root GPU `Ref` offset so two loaded avatars do not
-share file-local 1 on the same camera stencil (`VrmcMaterialsMtoonxtStencilRefs`).
+share file-local 1 on the same camera stencil (`VrmxtMaterialsMtoonxtStencilRefs`).
 That offset is not serialized. See
 [Unity MToonXT stencil Ref offset](../../../../references/research/mtoonxt-stencil-ref-offset.md).
 

@@ -20,7 +20,7 @@ Non-normative. Unity 8-bit stencil occupancy for the GPU mapping on
 Not a glTF field. Files still MUST NOT serialize `ref` / `comp` / `pass`.
 
 UniVRMXT (`com.vrmxt.univrmxt`) implements this at Apply as
-`VrmcMaterialsMtoonxtStencilRefs` (2026-08-20). Warudo vendors the same type and
+`VrmxtMaterialsMtoonxtStencilRefs` (2026-08-20). Warudo vendors the same type and
 releases the lease on character unbind.
 
 ## Collision

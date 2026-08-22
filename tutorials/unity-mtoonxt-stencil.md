@@ -37,7 +37,7 @@ enough). Built-In uses `VRMXT/MToonXT10`. URP uses
    MToon has no stencil block.
 3. Open the material inspector. If it says there are no stencil settings yet,
    click **Add MToonXT extras**. You can also select the avatar root, find the
-   `VrmcMaterialsMtoonxtInstance` component, and click **Add extras from MToonXT
+   `VrmxtMaterialsMtoonxtInstance` component, and click **Add extras from MToonXT
    materials**.
 4. Set **Stencil** to **Off**, **Write**, **Clip inside**, **Clip inside overlay**,
    or **Clip outside**.
