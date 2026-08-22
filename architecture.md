@@ -32,7 +32,8 @@ integration seams only.
 4. Extended support ships as an optional add-on package on each engine (for
    example [UniVRMXT](https://github.com/miramocha/UniVRMXT) on Unity, a
    separate Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm),
-   or an npm package beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)).
+   or [three-vrmxt](https://github.com/miramocha/three-vrmxt) beside
+   [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)).
    Baseline avatar import keeps the stock VRM loader; replacing or forking that
    loader is not required.
 5. Authoring is multi-engine. Any host with stock VRM 1.0 import/export MAY add an
@@ -120,7 +121,7 @@ parallel Extended-only format.
 | Blender | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | [Blender VRMXT](implementations/blender-vrmxt.md) | Same (Addon Preferences enable hooks) |
 | Unity (package / Editor) | [UniVRM](https://github.com/vrm-c/UniVRM) / [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | [UniVRMXT](implementations/univrm-vrmxt.md) | Same via Extended-UniVRM export hooks (Project Settings gate) |
 | Unity (Player app) | UniVRM in [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Same Player (depends on UniVRMXT; desktop edit) | Planned | Planned (desktop) |
-| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | three-vrmxt (planned) | Planned: [three-vrmxt](implementations/three-vrmxt.md) | **TBD** |
+| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): v1 Apply `VRMC_materials_mtoonxt` stencil; `VRMXT_*` import planned | Planned (not v1) |
 | Unreal | VRM4U | VRM4U VRMXT package (planned) | Planned: [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | **TBD** |
 | Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VRMXT](implementations/godot-vrmxt.md) | **TBD** |
 | Other | Any VRM 1.0 tool | Optional Extended package | Implement specs | Implement specs |
@@ -192,10 +193,10 @@ a host-native avatar package. When the same package also supports editor export,
 | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity + [UniVRM](https://github.com/vrm-c/UniVRM) | Optional UPM package. Parse extension JSON; attach after `Vrm10` load. Runtime does not replace UniVRM. |
 | [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Unity app | Desktop view/edit/export; Warudo-aligned pin. Depends on UniVRMXT; interim shader-plugins, planned StreamingAssets megashader packs. See [desktop Player primary](decisions/vrmxt-desktop-player-primary.md), [Player Shader AssetBundles](references/vrmxt-player-shader-assetbundles.md). |
 | Godot VRMXT addon (planned) | Godot + [godot-vrm](https://github.com/V-Sekai/godot-vrm) | Optional addon. Register `GLTFDocumentExtension` beside stock VRM plugins; runtime attach when `EditorPlugin` is absent. Does not replace godot-vrm. |
-| three-vrmxt (planned) | Three.js + [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | Optional npm package. Peer `GLTFLoaderPlugin` beside `VRMLoaderPlugin`; optional explicit `tryAttach`. Does not replace three-vrm. |
+| [three-vrmxt](https://github.com/miramocha/three-vrmxt) | Three.js + [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | Optional npm `@vrmxt/three-vrmxt`. Peer `GLTFLoaderPlugin` beside `VRMLoaderPlugin`; `tryAttach`. Vite [web viewer](implementations/vrmxt-web-viewer.md) is the v1 host. Later Hub WXT. Does not replace three-vrm. |
 | VRM4U path | Unreal + VRM4U | Optional profile docs under `implementations/`; stock VRM4U load remains baseline. |
 | VRMXT → VRChat converter (planned) | Unity + VRChat Avatar SDK | Separate product. Offline conversion: read `.vrm`, emit VRChat-ready prefab / Animator setup. Consumes `VRMXT_*` (+ stock VRM); schema does not embed VRChat SDK types. See [animation controller standardization](decisions/animation-controller-standardization.md). |
-| VRoid Hub browser extension + Unity WebGL (superseded) | — | Not a product path. See [desktop Player primary](decisions/vrmxt-desktop-player-primary.md); historical: [old ADR](decisions/vroid-hub-browser-viewer-architecture.md). |
+| VRoid Hub + Unity WebGL (superseded) | — | Not a product path. See [desktop Player primary](decisions/vrmxt-desktop-player-primary.md). Planned Three.js Hub: [Hub extension](implementations/vrmxt-hub-extension.md). Historical: [old ADR](decisions/vroid-hub-browser-viewer-architecture.md). |
 | VRM Posing Desktop (planned) | [VRM Posing Desktop](https://store.steampowered.com/app/1895630/VRM_Posing_Desktop/) | Post-load attach onto host UniVRM (`0.129.3` measured). See [Posing Desktop profile](implementations/vrm-posing-desktop-vrmxt.md). |
 | Other engines | Any VRM 1.0 loader | Implement the specs; ignore unknown `VRMXT_*` if unsupported. |
 
@@ -252,10 +253,11 @@ support is a separate npm package:
 1. App keeps `@pixiv/three-vrm` and registers `VRMLoaderPlugin` on `GLTFLoader`.
 2. App MAY also register a VRMXT `GLTFLoaderPlugin` (or call an explicit attach
    helper after load).
-3. The VRMXT plugin reads root `extensions.VRMXT_*` in `afterRoot`, resolves nodes
-   via `parser.getDependencies('node')`, and attaches engine objects under those
-   nodes.
+3. The VRMXT plugin runs in `afterRoot`: MToonXT stencil on materials (v1); later
+   `VRMXT_sprite_particle` emitters on nodes from `parser.getDependencies('node')`.
 4. Missing extension or missing package → no Extended objects; avatar still valid.
+5. First-party v1 host: [web viewer](implementations/vrmxt-web-viewer.md) (`apps/viewer`).
+   Construct `WebGLRenderer` with `stencil: true`. Edit/export is planned, not claimed.
 
 Do not fork pixiv/three-vrm or patch `VRMLoaderPlugin` as the only path.
 
@@ -296,7 +298,9 @@ Implementation notes: [three-vrmxt](implementations/three-vrmxt.md).
 | UniVRM upstream hooks | [implementations/univrm-upstream-hooks.md](implementations/univrm-upstream-hooks.md) |
 | Warudo VRMXT host | [implementations/warudo-vrmxt.md](implementations/warudo-vrmxt.md) |
 | VRM Posing Desktop consumer | [implementations/vrm-posing-desktop-vrmxt.md](implementations/vrm-posing-desktop-vrmxt.md) |
-| VRoid Hub extension viewer (superseded) | [decisions/vrmxt-desktop-player-primary.md](decisions/vrmxt-desktop-player-primary.md); historical [old ADR](decisions/vroid-hub-browser-viewer-architecture.md) |
+| VRoid Hub + Unity WebGL (superseded) | [decisions/vrmxt-desktop-player-primary.md](decisions/vrmxt-desktop-player-primary.md); historical [old ADR](decisions/vroid-hub-browser-viewer-architecture.md) |
+| three-vrm web viewer (v1 local files) | [implementations/vrmxt-web-viewer.md](implementations/vrmxt-web-viewer.md), [decisions/vrmxt-three-vrm-web-viewer.md](decisions/vrmxt-three-vrm-web-viewer.md) |
+| Hub extension (planned, Three.js) | [implementations/vrmxt-hub-extension.md](implementations/vrmxt-hub-extension.md) |
 | Godot VRMXT profile | [implementations/godot-vrmxt.md](implementations/godot-vrmxt.md) |
 | three-vrmxt profile | [implementations/three-vrmxt.md](implementations/three-vrmxt.md) |
 | VRM4U VRMXT profile | [implementations/vrm4u-vrmxt.md](implementations/vrm4u-vrmxt.md) |
