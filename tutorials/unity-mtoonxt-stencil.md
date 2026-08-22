@@ -116,9 +116,13 @@ stays solid (no hole through a leg).
 
 The Game view and Scene view overlay the bones once MToonXT is on the mesh.
 
-Drop a cube in front of the swimsuit. You'll see bones on the cube in that
-overlap. A material that is not MToonXT does the same. The iris example uses
-**Clip inside**, so the face can still cover the card.
+An Opaque mesh that already covered those swimsuit pixels (a cube, a hand, a
+material that is not MToonXT) shows bones on the overlap. Cutout and Transparent
+draws run after an Opaque overlay, so those objects can hide the bones. If a
+Cutout prop covers the skeleton, set only the skeleton material to Cutout. Overlay
+then runs after default cutout (Unity AlphaTest 2450). Swimsuit can stay Opaque
+**Write**. Leave skin Opaque. The iris example uses **Clip inside**, so the face
+can still cover the card.
 
 ## Related
 

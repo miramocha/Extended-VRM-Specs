@@ -394,7 +394,8 @@ swaps to packaged `VRMXT/MToonXT10` or `VRMXT/Universal Render Pipeline/MToonXT1
 pass settings from `_AlphaMode` and applies compiled stencil (`op` + material indices).
 `insideOverlay` uses the same stencil mapping as `inside` and sets `_M_ZTest` Always
 plus `_M_ZWrite` off (queue one slot after mapped). Always paints over earlier color
-in the stamp (avatar-opaque hands); later transparents can still cover the bones.
+in the stamp (avatar-opaque hands). Later cutout (`MASK`) or transparent draws can
+still cover the bones. A `MASK` overlay reader runs after Unity AlphaTest 2450.
 Tradeoffs and host redraw options:
 [`insideOverlay` tradeoffs](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs).
 `MtoonxtInspector` authors stencil ops and writer lists as Unity fields on the instance.
