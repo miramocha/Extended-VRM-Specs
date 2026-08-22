@@ -31,7 +31,7 @@ package beside pixiv/three-vrm. That package had no repo, no claimed MToonXT pat
 no local viewer.
 
 [VRoid Hub](https://hub.vroid.com/) still previews with stock three-vrm and ignores
-`VRMXT_*` / `VRMC_materials_mtoonxt`. Original downloads can keep extension JSON
+`VRMXT_*` / `VRMXT_materials_mtoonxt`. Original downloads can keep extension JSON
 ([round-trip note](../references/vroid-hub-vrmxt-roundtrip.md)). An earlier Hub product
 tried to embed a Unity WebGL build of
 [VRMXT Unity Player](../implementations/vrmxt-unity-player.md) to get Warudo-class
@@ -52,7 +52,7 @@ three-vrm plus portable MToonXT extras mapped onto Three.js material stencil sta
    `@pixiv/three-vrm`. Register a `GLTFLoaderPlugin` beside `VRMLoaderPlugin`.
 3. **v1 viewer** is a standalone Vite app at `apps/viewer`. Local file ingest only
    (picker + drag-drop). Orbit camera. Stock VRM 1.0 MToon via three-vrm. Apply / view
-   [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+   [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
    with **stencil first**. Construct `WebGLRenderer` with `stencil: true`. No edit UI, no export write,
    no Hub API, no Electron/Tauri.
 4. Shared view logic lives in `packages/viewer-core`. Later a Hub [WXT](https://wxt.dev/)
@@ -108,7 +108,7 @@ later Face SDF) on three-vrm MToon material state.
 - [VRMXT web viewer](../implementations/vrmxt-web-viewer.md)
 - [VRMXT Hub extension](../implementations/vrmxt-hub-extension.md)
 - [VRMXT Editor](../implementations/vrmxt-editor.md)
-- [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+- [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 - [Extended VRM Architecture](../architecture.md)
 - [pixiv/three-vrm](https://github.com/pixiv/three-vrm)
 - [miramocha/three-vrmxt](https://github.com/miramocha/three-vrmxt)

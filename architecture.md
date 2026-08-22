@@ -80,18 +80,38 @@ are implemented.
 ## File model
 
 Extended VRM is ordinary glTF 2.0 / VRM 1.0 plus optional root or per-object
-extensions named `VRMXT_*`, plus the MToon sibling `VRMC_materials_mtoonxt`
-([spec](specs/extensions/materials/vrmc-materials-mtoonxt/README.md)). That sibling uses the
-`VRMC_` prefix to sit next to `VRMC_materials_mtoon`. It is still an Extended draft
-(not a Consortium spec) and MUST NOT appear in `extensionsRequired`.
+extensions named `VRMXT_*`. Stock Consortium names stay `VRMC_*`
+(`VRMC_vrm`, `VRMC_materials_mtoon`, `VRMC_springBone`, …). MToon extras are
+`VRMXT_materials_mtoonxt` on the same `materials[i]` as `VRMC_materials_mtoon`
+([spec](specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)). Optional
+Extended names MUST NOT appear in `extensionsRequired`.
 
 | Rule | Requirement |
 |------|-------------|
-| Presence | `VRMXT_*` and `VRMC_materials_mtoonxt` MAY be absent. Absence = stock VRM only. |
-| `extensionsUsed` | Files that write a `VRMXT_*` extension MUST list that name in `extensionsUsed`. Files that write `VRMC_materials_mtoonxt` MUST list that name too. |
-| `extensionsRequired` | Optional Extended designs MUST NOT put their `VRMXT_*` name in `extensionsRequired` (see each spec). Same for `VRMC_materials_mtoonxt`. |
+| Presence | `VRMXT_*` MAY be absent. Absence = stock VRM only. |
+| `extensionsUsed` | Files that write a `VRMXT_*` extension MUST list that name in `extensionsUsed`. |
+| `extensionsRequired` | Optional Extended designs MUST NOT put their `VRMXT_*` name in `extensionsRequired` (see each spec). |
 | Unknown extensions | Stock importers ignore unknown extension objects per glTF rules. |
 | Target | Current drafts target VRM 1.0 (`VRMC_vrm` 1.0). VRM 0.0 is out of scope unless a spec says otherwise. |
+
+### Naming
+
+- Serialized glTF extension names authored in this family MUST use `VRMXT_*`. Do not
+  invent `VRMC_*` names. `VRMC_` is VRM Consortium only.
+- Sitting next to a stock object does not change the prefix. MToon extras stay a sibling
+  on `materials[i].extensions` beside `VRMC_materials_mtoon`, named
+  `VRMXT_materials_mtoonxt`. Future spring extras: `VRMXT_springBone_xt` (name TBD)
+  beside `VRMC_springBone`.
+- Inner JSON keys (fields inside the extension object) are unprefixed camelCase
+  (`specVersion`, `stencil`, `faceSdf`). Do not prefix properties `VRMC_` or `VRMXT_`.
+- Repo paths match the serialized name: `specs/extensions/<domain>/vrmxt-<rest>.md`
+  defines `VRMXT_<rest>`.
+- Code types SHOULD use `Vrmxt*` / `vrmxt_*` for Extended types. Stock UniVRM/MToon10
+  shader includes keep `vrmc_materials_mtoon_*.hlsl`.
+- ShaderLab product names may stay `VRMXT/...`. That is not a glTF key.
+- Engine override extensions stay `VRMXT_*` (`VRMXT_materials_override`,
+  `VRMXT_springBone_override`). Family extras are a different `VRMXT_*` name, not keys
+  stuffed into stock `VRMC_*` objects (export may drop unknown fields).
 
 Stock tools that never heard of Extended VRM still open the avatar. Extended data
 is skipped.
@@ -121,7 +141,7 @@ parallel Extended-only format.
 | Blender | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | [Blender VRMXT](implementations/blender-vrmxt.md) | Same (Addon Preferences enable hooks) |
 | Unity (package / Editor) | [UniVRM](https://github.com/vrm-c/UniVRM) / [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | [UniVRMXT](implementations/univrm-vrmxt.md) | Same via Extended-UniVRM export hooks (Project Settings gate) |
 | Unity (Player app) | UniVRM in [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Same Player (depends on UniVRMXT; desktop edit) | Planned | Planned (desktop) |
-| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): v1 Apply `VRMC_materials_mtoonxt` stencil; `VRMXT_*` import planned | Planned (not v1) |
+| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): v1 Apply `VRMXT_materials_mtoonxt` stencil; `VRMXT_*` import planned | Planned (not v1) |
 | Unreal | VRM4U | VRM4U VRMXT package (planned) | Planned: [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | **TBD** |
 | Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VRMXT](implementations/godot-vrmxt.md) | **TBD** |
 | Other | Any VRM 1.0 tool | Optional Extended package | Implement specs | Implement specs |
@@ -137,7 +157,7 @@ hosts. They do not import or export `VRMXT_*`. They produce maps consumed by sto
 |-------|------|------|
 | Stock Blender VRM add-on | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) (fork of [saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender); generic hooks to propose upstream) | Import/export `VRMC_*`, build node/bone maps |
 | VRM1 extension hooks | Same add-on: `io_scene_vrm.extension_hooks` | After stock maps exist, call registered third-party callbacks when Addon Preferences enable import/export hooks (default off) |
-| VRMXT Blender extension | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Registers hooks; authors and serializes `VRMXT_*` plus `VRMC_materials_mtoonxt` stencil |
+| VRMXT Blender extension | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Registers hooks; authors and serializes `VRMXT_*` plus `VRMXT_materials_mtoonxt` stencil |
 
 Hooks exist because glTF2 user extensions run too early to receive final VRM bone
 and object index maps. Details:
@@ -149,7 +169,7 @@ Blender flow (non-normative):
 2. Optional: enable the VRMXT Blender extension and author Extended data (emitters,
    overrides, MToonXT stencil, …).
 3. Export writes stock `VRMC_*` first. When export extension hooks are enabled in
-   Addon Preferences, hook callbacks append `VRMXT_*`, `VRMC_materials_mtoonxt` when
+   Addon Preferences, hook callbacks append `VRMXT_*`, `VRMXT_materials_mtoonxt` when
    present, and `extensionsUsed` entries.
 4. Result is one `.vrm` / `.glb`. No second file format.
 

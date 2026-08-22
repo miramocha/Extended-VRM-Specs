@@ -56,6 +56,25 @@ This document is not a glTF extension. Its name MUST NOT appear in `extensionsUs
 10. Numeric data MUST use glTF units and coordinate conventions unless a capability
     specification explicitly defines another representation.
 
+## Extension names
+
+Serialized glTF extension names defined by this family MUST use the `VRMXT_` prefix.
+`VRMC_` names are VRM Consortium identifiers (`VRMC_vrm`, `VRMC_materials_mtoon`,
+`VRMC_springBone`, `VRMC_springBone_extended_collider`, and other stock extensions).
+Capability specifications in this repository MUST NOT invent new `VRMC_*` names.
+
+A sibling extra on the same glTF object as a stock `VRMC_*` extension is still a
+`VRMXT_*` name. `VRMXT_materials_mtoonxt` sits on `materials[i].extensions` beside
+`VRMC_materials_mtoon`. Future spring extras use a `VRMXT_*` name beside
+`VRMC_springBone` (example: `VRMXT_springBone_xt`; exact name TBD).
+
+Properties inside an extension object are unprefixed camelCase (`specVersion`,
+`stencil`, `faceSdf`). They MUST NOT use a `VRMC_` or `VRMXT_` property prefix.
+
+Engine override extensions (`VRMXT_materials_override`, `VRMXT_springBone_override`)
+are separate `VRMXT_*` names. Family extras MUST NOT be written as unknown fields
+inside stock `VRMC_*` objects.
+
 ## Capability support
 
 Support is declared per concrete extension, not for the `VRMXT_*` family as a whole.
@@ -77,7 +96,7 @@ are future work. They do not block experimental use of the family rules above.
 ## Related
 
 - [VRMXT_materials_override](../extensions/materials/vrmxt-materials-override.md)
-- [VRMC_materials_mtoonxt](../extensions/materials/vrmc-materials-mtoonxt/README.md)
+- [VRMXT_materials_mtoonxt](../extensions/materials/vrmxt-materials-mtoonxt/README.md)
 - [VRMXT_springBone_override](../extensions/physics/vrmxt-spring-bone-override.md)
 - [VRMXT_sprite_particle](../extensions/vfx/vrmxt-sprite-particle.md)
 - [VRMXT_lattice](../extensions/deformation/vrmxt-lattice.md)

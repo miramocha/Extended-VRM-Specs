@@ -1,5 +1,5 @@
 ---
-title: VRMC_materials_mtoonxt stencil
+title: VRMXT_materials_mtoonxt stencil
 aliases:
   - MToonXT stencil
   - stencil clip
@@ -14,9 +14,9 @@ type: specification
 status: draft
 ---
 
-# VRMC_materials_mtoonxt stencil
+# VRMXT_materials_mtoonxt stencil
 
-Coverage clip extras on [VRMC_materials_mtoonxt](README.md). Serialized names stay
+Coverage clip extras on [VRMXT_materials_mtoonxt](README.md). Serialized names stay
 `stencil` (body / forward) and `outlineStencil` (inverse-hull outline pass, when the
 shader has one). The identifier matches existing VTuber / Unity search. The extra
 describes coverage clip.
@@ -98,7 +98,7 @@ A writer that misses the rank rule stays a valid extra. Hub rule 11 does not lis
 | Item | Value |
 |------|-------|
 | Extra names | `stencil`, `outlineStencil` |
-| Parent | `materials[i].extensions.VRMC_materials_mtoonxt` |
+| Parent | `materials[i].extensions.VRMXT_materials_mtoonxt` |
 | Meaning | coverage clip (`write` / `inside` / `insideOverlay` / `outside`) |
 
 `stencil` applies to the body / forward pass. `outlineStencil` applies to the outline
@@ -236,7 +236,7 @@ Brow `4`, Hair `16`).
     {
       "name": "Iris_Eye-NoRim.NoOutline.MatcapTexture",
       "extensions": {
-        "VRMC_materials_mtoonxt": {
+        "VRMXT_materials_mtoonxt": {
           "specVersion": "1.0",
           "stencil": { "op": "inside", "materials": [3] },
           "outlineStencil": { "op": "same" }
@@ -246,7 +246,7 @@ Brow `4`, Hair `16`).
     {
       "name": "White-NoRim.NoOutline",
       "extensions": {
-        "VRMC_materials_mtoonxt": {
+        "VRMXT_materials_mtoonxt": {
           "specVersion": "1.0",
           "stencil": { "op": "write" }
         }
@@ -255,7 +255,7 @@ Brow `4`, Hair `16`).
     {
       "name": "Brow_Face-NoRim",
       "extensions": {
-        "VRMC_materials_mtoonxt": {
+        "VRMXT_materials_mtoonxt": {
           "specVersion": "1.0",
           "stencil": { "op": "write" },
           "outlineStencil": { "op": "write" }
@@ -265,7 +265,7 @@ Brow `4`, Hair `16`).
     {
       "name": "Hair-Highlight",
       "extensions": {
-        "VRMC_materials_mtoonxt": {
+        "VRMXT_materials_mtoonxt": {
           "specVersion": "1.0",
           "stencil": { "op": "outside", "materials": [4] },
           "outlineStencil": { "op": "same" }
@@ -290,7 +290,7 @@ through a leg).
     {
       "name": "Swimsuit",
       "extensions": {
-        "VRMC_materials_mtoonxt": {
+        "VRMXT_materials_mtoonxt": {
           "specVersion": "1.0",
           "stencil": { "op": "write" }
         }
@@ -299,7 +299,7 @@ through a leg).
     {
       "name": "Skeleton",
       "extensions": {
-        "VRMC_materials_mtoonxt": {
+        "VRMXT_materials_mtoonxt": {
           "specVersion": "1.0",
           "stencil": {
             "op": "insideOverlay",
@@ -351,7 +351,7 @@ See [MToon10 stencil shader fork](../../../../references/research/mtoon10-stenci
 
 ## Related
 
-- [VRMC_materials_mtoonxt](README.md)
+- [VRMXT_materials_mtoonxt](README.md)
 - [MToonXT renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md) (non-normative)
 - [MToonXT zTest](../../../../references/research/mtoonxt-ztest.md) (non-normative)
 - [MToonXT zWrite](../../../../references/research/mtoonxt-zwrite.md) (non-normative)

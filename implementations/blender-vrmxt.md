@@ -22,7 +22,7 @@ status: draft
 Blender add-on implementation profile for
 [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
 [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md),
-and [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+and [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 stencil (`stencil` / `outlineStencil` on the material).
 Support belongs in
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender),
@@ -262,7 +262,7 @@ prop on preview helpers alongside its own `vrmxt_vfx_preview` lifecycle tag.
 
 ## MToonXT stencil
 
-Authoring for `VRMC_materials_mtoonxt` `stencil` / `outlineStencil` is on the Blender material (`vrmxt_mtoonxt_settings`). Ops: `write`, `inside`, `insideOverlay`, `outside`, outline `same`. The stencil UI sits under **VRMXT Material** (same parent as materials override). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices. GPU `ref` / `comp` / `pass` are not stored. Face SDF, `zTest`, `zWrite`, and XT `renderQueueOffset` stay out of this add-on.
+Authoring for `VRMXT_materials_mtoonxt` `stencil` / `outlineStencil` is on the Blender material (`vrmxt_mtoonxt_settings`). Ops: `write`, `inside`, `insideOverlay`, `outside`, outline `same`. The stencil UI sits under **VRMXT Material** (same parent as materials override). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices. GPU `ref` / `comp` / `pass` are not stored. Face SDF, `zTest`, `zWrite`, and XT `renderQueueOffset` stay out of this add-on.
 
 EEVEE has no stencil buffer; the viewport does not clip. The panel warns when a writer is Transparent (or Cutout vs Opaque) and a clip reader would draw earlier under Unity's mapped queues. Outline **Same as body** is hidden while body is Off; export drops outline `same` when body stencil is missing.
 
@@ -559,7 +559,7 @@ Readonly panel remains until phase 2 replaces it.
   [MToonXT stencil](../tutorials/blender-mtoonxt-stencil.md)
 - Specs: [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
   [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md),
-  [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+  [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 - Catalogs: [Materials Override Catalogs](../references/materials-override-catalogs.md)
 - Unity: [UniVRMXT](univrm-vrmxt.md)
 - Unreal: [VRM4U VRMXT](vrm4u-vrmxt.md)

@@ -15,7 +15,7 @@ status: draft
 # MToonXT renderQueueOffset (Unity experiment)
 
 Non-normative. Not a
-[VRMC_materials_mtoonxt](../../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
+[VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 extra. UniVRMXT ignores `renderQueueOffset` on that object (hub rule 12). Stock
 MToon still uses `renderQueueOffsetNumber` on `VRMC_materials_mtoon`.
 
@@ -39,11 +39,11 @@ Unity queue outside `[0, 5000]` is ignored. Non-integer ignored.
 
 On `mirabunny2026_2.stencil_2.vrm`, White `-2` / Iris `-1` ordered sclera before
 iris; Hair `551` moved hair to ~3001. Iris-in-sclera and brow-through-hair use
-[stencil](../../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md) ops.
+[stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md) ops.
 
 ## Related
 
-- [VRMC_materials_mtoonxt](../../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
-- [Stencil](../../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md)
+- [VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
+- [Stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
 - [MToonXT zWrite](mtoonxt-zwrite.md)
 - [MToonXT zTest](mtoonxt-ztest.md)

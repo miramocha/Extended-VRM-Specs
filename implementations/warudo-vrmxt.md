@@ -20,7 +20,7 @@ status: draft
 
 Host integration for [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
 [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md), and
-[VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md) on
+[VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md) on
 [Warudo](https://warudo.app/) Characters. Implementation:
 [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo)
 (`Assets/Vrmxt/`), exported as a UMod plugin to `StreamingAssets/Plugins`.
@@ -42,7 +42,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 
 1. `VRMXT_sprite_particle` → ParticleSystem children
 2. `VRMXT_materials_override` → unity-slot shader/properties/bindings on matching mats
-3. `VRMC_materials_mtoonxt` → swap stock MToon to MToonXT when the shader UMod is present
+3. `VRMXT_materials_mtoonxt` → swap stock MToon to MToonXT when the shader UMod is present
    (override still wins when it applies; stencil; Face SDF not applied)
 
 | Item | Value |
@@ -50,7 +50,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 | Plugin id | `mira.vrmxt` |
 | Mod folder | `Assets/Vrmxt` |
 | Export | `Warudo_Data/StreamingAssets/Plugins` |
-| Extensions | `VRMXT_sprite_particle`, `VRMXT_materials_override`, `VRMC_materials_mtoonxt` (stencil) |
+| Extensions | `VRMXT_sprite_particle`, `VRMXT_materials_override`, `VRMXT_materials_mtoonxt` (stencil) |
 | Plugin version (shipped) | `0.1.13` (see `VrmxtPlugin`) |
 | Steam Workshop | [VRMXT](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210); MToonXT shader (BIRP): [MToonXT Shader for VRMXT (BIRP)](https://steamcommunity.com/sharedfiles/filedetails/?id=3786449905) |
 | Warudo Mod Tool | `0.14.5.1` (`app.warudo.modtool` `#upm/0.14.5.1`) |
@@ -177,11 +177,11 @@ entry. Stock MToon or PBR may appear briefly before the override is applied.
 
 ## MToonXT
 
-Spec: [VRMC_materials_mtoonxt](../specs/extensions/materials/vrmc-materials-mtoonxt/README.md)
-([stencil](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md)).
+Spec: [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
+([stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)).
 
 After Character load (and after materials-override Apply), if a material has
-`VRMC_materials_mtoonxt` and `VRMXT_materials_override` would **not** apply on that
+`VRMXT_materials_mtoonxt` and `VRMXT_materials_override` would **not** apply on that
 material, the plugin resolves `VRMXT/MToonXT10` (Built-in) or
 `VRMXT/Universal Render Pipeline/MToonXT10` (URP) through `ShaderResolveProvider` (uMod
 `Shader.Find` is null) and swaps stock MToon onto the fork, then restores MToon
@@ -197,7 +197,7 @@ UniVRMXT (`MtoonxtInspector`), not in the shader UMods. `insideOverlay` Always c
 paint over avatar-opaque hands in the swimsuit stamp. Cutout or Transparent objects
 that draw after the overlay pass and win depth can hide those pixels. A Cutout overlay
 reader runs after default AlphaTest.
-[`insideOverlay` tradeoffs](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs).
+[`insideOverlay` tradeoffs](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs).
 
 ## Plugin setting
 

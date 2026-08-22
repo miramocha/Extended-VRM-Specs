@@ -1,5 +1,5 @@
 ---
-title: VRMC_materials_mtoonxt Face SDF
+title: VRMXT_materials_mtoonxt Face SDF
 aliases:
   - MToonXT Face SDF
   - faceSdf
@@ -13,9 +13,9 @@ type: specification
 status: draft
 ---
 
-# VRMC_materials_mtoonxt Face SDF
+# VRMXT_materials_mtoonxt Face SDF
 
-`faceSdf` extra on [VRMC_materials_mtoonxt](README.md).
+`faceSdf` extra on [VRMXT_materials_mtoonxt](README.md).
 
 ## `faceSdf`
 
@@ -51,7 +51,7 @@ its normal glTF texture export path (hub rule 16).
 Non-normative. Texture `4` is the Face SDF map.
 
 ```json
-"VRMC_materials_mtoonxt": {
+"VRMXT_materials_mtoonxt": {
   "specVersion": "1.0",
   "faceSdf": {
     "enabled": true,
@@ -63,5 +63,5 @@ Non-normative. Texture `4` is the Face SDF map.
 
 ## Related
 
-- [VRMC_materials_mtoonxt](README.md)
+- [VRMXT_materials_mtoonxt](README.md)
 - [MToon10 stencil shader fork](../../../../references/research/mtoon10-stencil-shader-fork.md)

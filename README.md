@@ -54,8 +54,8 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [Getting started in Warudo](tutorials/getting-started-warudo.md) | Subscribe Workshop plugins and load a Character | draft |
 | [Blender materials override](tutorials/blender-materials-override.md) | Author `VRMXT_materials_override` | draft |
 | [Blender sprite particles](tutorials/blender-sprite-particles.md) | Author `VRMXT_sprite_particle` | draft |
-| [Blender MToonXT stencil](tutorials/blender-mtoonxt-stencil.md) | Author `VRMC_materials_mtoonxt` stencil | draft |
-| [Unity MToonXT stencil](tutorials/unity-mtoonxt-stencil.md) | Author `VRMC_materials_mtoonxt` stencil in UniVRMXT | draft |
+| [Blender MToonXT stencil](tutorials/blender-mtoonxt-stencil.md) | Author `VRMXT_materials_mtoonxt` stencil | draft |
+| [Unity MToonXT stencil](tutorials/unity-mtoonxt-stencil.md) | Author `VRMXT_materials_mtoonxt` stencil in UniVRMXT | draft |
 | [Warudo patch export](tutorials/warudo-patch-export.md) | Patch override JSON into a file copy | draft |
 
 ## Decisions
@@ -76,7 +76,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 |------|-------------------|--------|
 | [VRMXT Conformance](specs/core/vrmxt-conformance.md) | Shared `VRMXT_*` family requirements | draft |
 | [VRMXT_materials_override](specs/extensions/materials/vrmxt-materials-override.md) | `VRMXT_materials_override` | draft |
-| [VRMC_materials_mtoonxt](specs/extensions/materials/vrmc-materials-mtoonxt/README.md) | `VRMC_materials_mtoonxt` ([stencil](specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md), [Face SDF](specs/extensions/materials/vrmc-materials-mtoonxt/face-sdf.md)) | draft |
+| [VRMXT_materials_mtoonxt](specs/extensions/materials/vrmxt-materials-mtoonxt/README.md) | `VRMXT_materials_mtoonxt` ([stencil](specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md), [Face SDF](specs/extensions/materials/vrmxt-materials-mtoonxt/face-sdf.md)) | draft |
 | [VRMXT_springBone_override](specs/extensions/physics/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
 | [VRMXT_sprite_particle](specs/extensions/vfx/vrmxt-sprite-particle.md) | Portable sprite particle emitters | draft |
 | [VRMXT_lattice](specs/extensions/deformation/vrmxt-lattice.md) | `VRMXT_lattice` (FFD / cage) | draft |
@@ -93,7 +93,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VRMXT web viewer](implementations/vrmxt-web-viewer.md) | Vite `apps/viewer` in three-vrmxt; local file view + MToonXT stencil | draft |
 | [VRMXT Hub extension](implementations/vrmxt-hub-extension.md) | Planned WXT + Hub API; same `viewer-core`; Three.js | draft |
 | [VRMXT Unity Shader Plugins](implementations/vrmxt-unity-shader-plugins.md) | Deprecated host megashader ship note; pack/UMod config owns supported names | deprecated |
-| [UniVRMXT](implementations/univrm-vrmxt.md) | Unity / UniVRMXT (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMC_materials_mtoonxt` stencil apply + packaged `VRMXT/MToonXT10`) | draft |
+| [UniVRMXT](implementations/univrm-vrmxt.md) | Unity / UniVRMXT (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMXT_materials_mtoonxt` stencil apply + packaged `VRMXT/MToonXT10`) | draft |
 | [Warudo VRMXT](implementations/warudo-vrmxt.md) | Warudo plugin / particle + materials override; MToonXT swap planned | draft |
 | [VRM Posing Desktop VRMXT](implementations/vrm-posing-desktop-vrmxt.md) | Posing Desktop consumer; UniVRM `0.129.3` host pin (measured) | draft |
 | [VRoid Hub browser extension](implementations/vroid-hub-browser-extension.md) | Historical Unity Hub extension profile | superseded |
@@ -103,7 +103,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | Unreal / VRM4U consumer (`VRMXT_materials_override` planned) | draft |
 | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) | UniVRM / Extended-UniVRM ScriptedImporter hooks (upstream propose) | draft |
 | [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hook API (prefs, exclude prop, upstream propose) | draft |
-| [Blender VRMXT](implementations/blender-vrmxt.md) | Blender VRMXT extension (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMC_materials_mtoonxt` stencil authoring) | draft |
+| [Blender VRMXT](implementations/blender-vrmxt.md) | Blender VRMXT extension (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMXT_materials_mtoonxt` stencil authoring) | draft |
 
 ## References
 
@@ -116,7 +116,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [Engine material override glTF history](references/research/engine-material-override-gltf-history.md) | Non-normative research: `KHR_techniques_webgl` / `NV_materials_mdl` lessons; PBR-only fallback sketch (no MToon sibling) | draft |
 | [VRM to Roblox](references/research/vrm-to-roblox.md) | Non-normative research: experience `Model` (FBX dump + Humanoid) vs Marketplace 15 `_Geo` body; `VRMC_*` / `VRMXT_*` unused; no author shaders (2026-08-20) | draft |
 | [Substance 3D Painter MToon viewport](references/research/substance-painter-mtoon-viewport.md) | Non-normative research: Painter GLSL preview of `VRMC_materials_mtoon` (VRM 1.0 only; not a VRMXT host) | draft |
-| [MToon10 stencil shader fork](references/research/mtoon10-stencil-shader-fork.md) | Non-normative: Unity MToon10 fork properties; portable stencil JSON is `VRMC_materials_mtoonxt` | draft |
+| [MToon10 stencil shader fork](references/research/mtoon10-stencil-shader-fork.md) | Non-normative: Unity MToon10 fork properties; portable stencil JSON is `VRMXT_materials_mtoonxt` | draft |
 | [Unity MToonXT stencil Ref offset](references/research/mtoonxt-stencil-ref-offset.md) | Non-normative: load-time GPU Ref band from 32 (skip 0/1/51/255); not in glTF | draft |
 | [MToonXT zTest](references/research/mtoonxt-ztest.md) | Non-normative: Unity depth compare experiment (`zTest` key) | draft |
 | [MToonXT zWrite](references/research/mtoonxt-zwrite.md) | Non-normative: Unity depth-write experiment (`zWrite` key) | draft |

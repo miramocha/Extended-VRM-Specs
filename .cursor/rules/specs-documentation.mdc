@@ -73,6 +73,18 @@ host table. Prefer the host profile for per-host detail; keep this matrix aligne
 - Folder names are editorial taxonomy. They MUST NOT add a segment to the serialized
   extension name: `specs/extensions/vfx/vrmxt-sprite-particle.md` defines
   `VRMXT_sprite_particle`.
+- Serialized glTF extension names authored here MUST use `VRMXT_*`. Do not invent
+  `VRMC_*` names. `VRMC_` is VRM Consortium only (`VRMC_vrm`, `VRMC_materials_mtoon`,
+  `VRMC_springBone`, `VRMC_springBone_extended_collider`, …).
+- Sitting next to a stock object does not change the prefix. MToon extras:
+  `VRMXT_materials_mtoonxt` beside `VRMC_materials_mtoon`. Future spring extras:
+  `VRMXT_springBone_xt` (name TBD), not `VRMC_springBone_xt`.
+- Inner JSON keys stay unprefixed camelCase (`specVersion`, `stencil`, `faceSdf`).
+  Do not prefix properties `VRMC_` or `VRMXT_`.
+- Code types SHOULD use `Vrmxt*` / `vrmxt_*`. Stock UniVRM/MToon10 hlsl includes keep
+  `vrmc_materials_mtoon_*.hlsl`. ShaderLab `VRMXT/...` is not a glTF key.
+- Engine overrides stay `VRMXT_*`. Family extras are a different `VRMXT_*` name; do
+  not stuff extras into stock `VRMC_*` objects.
 - Add every new normative document to the registry in `README.md`.
 - Put creator how-tos in `tutorials/`. Non-normative. Link to specs and
   implementation profiles; do not duplicate field rules. Register new tutorial
