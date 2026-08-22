@@ -195,8 +195,8 @@ Plugins (`ModHost.Assets.Load`). BIRP Workshop:
 This plugin parses and swaps; it does not vendor the forks. Material inspector lives in
 UniVRMXT (`MtoonxtInspector`), not in the shader UMods. `insideOverlay` Always can
 paint over avatar-opaque hands in the swimsuit stamp. Cutout or Transparent objects
-that draw after an Opaque overlay can hide the bones. A Cutout overlay reader runs
-after default AlphaTest.
+that draw after the overlay pass and win depth can hide those pixels. A Cutout overlay
+reader runs after default AlphaTest.
 [`insideOverlay` tradeoffs](../specs/extensions/materials/vrmc-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs).
 
 ## Plugin setting
