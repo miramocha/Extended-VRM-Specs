@@ -47,3 +47,5 @@ flowchart LR
 | [Blender MToonXT stencil](blender-mtoonxt-stencil.md) | Set MToon stencil | draft |
 | [Unity MToonXT stencil](unity-mtoonxt-stencil.md) | Set MToon stencil in UniVRMXT | draft |
 | [Warudo patch export](warudo-patch-export.md) | Write Warudo override edits back to a copy | draft |
+
+Working Warudo captures (not a click-path): [MToonXT stencil and lilToon materials override in Warudo](../implementations/mtoonxt-liltoon-override-warudo.md).

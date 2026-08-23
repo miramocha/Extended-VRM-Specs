@@ -191,7 +191,7 @@ Unity flow (non-normative):
 4. Author: edit `VrmxtVfxInstance` / ParticleSystems, or assign Override Materials on `VrmxtMaterialsOverrideInstance`.
 5. Export: with export hooks enabled, UniVRMXT writes `VRMXT_*` after stock `VRMC_*`. One `.vrm` / `.glb`.
 
-Stock UniVRM without the Extended export registry does not write `VRMXT_*`. Full from-scratch VFX emitter UI still prefers Blender; Unity covers re-export and materials override authoring. Details: [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md), [UniVRMXT](implementations/univrm-vrmxt.md).
+Stock UniVRM without the Extended export registry does not write `VRMXT_*`. Full from-scratch VFX emitter UI still prefers Blender; Unity covers re-export and materials override authoring. Working Warudo captures (stock MToon, MToonXT stencil, lilToon override): [MToonXT stencil and lilToon materials override in Warudo](implementations/mtoonxt-liltoon-override-warudo.md). Details: [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md), [UniVRMXT](implementations/univrm-vrmxt.md).
 
 Planned drag-drop runtime app: [VRMXT Unity Player](implementations/vrmxt-unity-player.md).
 
