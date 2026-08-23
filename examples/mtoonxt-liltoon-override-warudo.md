@@ -44,7 +44,7 @@ flowchart TB
 
 ## Warudo (Unity) stack
 
-After the Character loads, [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) (`mira.vrmxt`) runs. Warudo still loads stock VRM through UniVRM. The plugin includes UniVRMXT. [Warudo Shader Plugins](https://github.com/miramocha/Warudo-Shader-Plugins) ship lilToon and `VRMXT/MToonXT10` (Built-in).
+After the Character loads, [VRMXT Plugin for Warudo](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) (`mira.vrmxt`) runs. Warudo still loads stock VRM through UniVRM. The plugin includes UniVRMXT. [lilToon](https://steamcommunity.com/sharedfiles/filedetails/?id=3768913139) and [MToonXT](https://steamcommunity.com/sharedfiles/filedetails/?id=3786449905) ship lilToon and `VRMXT/MToonXT10` (Built-in).
 
 ```mermaid
 flowchart TB
