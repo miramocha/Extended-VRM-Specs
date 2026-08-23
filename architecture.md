@@ -81,10 +81,9 @@ are implemented.
 
 Extended VRM is ordinary glTF 2.0 / VRM 1.0 plus optional root or per-object
 extensions named `VRMXT_*`. Stock Consortium names stay `VRMC_*`
-(`VRMC_vrm`, `VRMC_materials_mtoon`, `VRMC_springBone`, …). MToon extras are
-`VRMXT_materials_mtoonxt` on the same `materials[i]` as `VRMC_materials_mtoon`
-([spec](specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)). Optional
-Extended names MUST NOT appear in `extensionsRequired`.
+(`VRMC_vrm`, `VRMC_materials_mtoon`, `VRMC_springBone`,
+`VRMC_springBone_extended_collider`, …). Optional Extended names
+MUST NOT appear in `extensionsRequired`.
 
 | Rule | Requirement |
 |------|-------------|
@@ -98,21 +97,44 @@ Extended names MUST NOT appear in `extensionsRequired`.
 
 - Serialized glTF extension names authored in this family MUST use `VRMXT_*`. Do not
   invent `VRMC_*` names. `VRMC_` is VRM Consortium only.
-- Sitting next to a stock object does not change the prefix. MToon extras stay a sibling
-  on `materials[i].extensions` beside `VRMC_materials_mtoon`, named
-  `VRMXT_materials_mtoonxt`. Future spring extras: `VRMXT_springBone_xt` (name TBD)
-  beside `VRMC_springBone`.
+- Two optional `VRMXT_*` roles per stock capability:
+
+  | Role | Recipe | Materials | Spring |
+  |------|--------|-----------|--------|
+  | Family fork | `VRMXT_` + stock stem + `xt` (no extra underscore) | `VRMXT_materials_mtoonxt` | `VRMXT_springBonext` |
+  | Third-party replace | `VRMXT_` + domain + `_override` | `VRMXT_materials_override` | `VRMXT_springBone_override` |
+
+  Stock spring also uses Consortium
+  [`VRMC_springBone_extended_collider`](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_springBone_extended_collider-1.0)
+  on each collider for plane and inside shapes. That is not a `VRMXT_*` name.
+
+  Family fork stays in the VRM shading or spring family (MToonXT shader; springBonext
+  solver). `_override` selects an engine backend (lilToon, Poiyomi, MagicaCloth2,
+  PhysBone). Override JSON stores ids and parameters; it MUST NOT embed host SDK
+  component types. Override names use the domain (`materials`, `springBone`) because
+  Apply replaces the slot's runtime (shader or solver).
+- Sit-site follows the stock object. MToon, MToonXT, and materials override sit on
+  `materials[i].extensions`. `VRMC_springBone`, `VRMXT_springBonext`, and
+  `VRMXT_springBone_override` sit on root `extensions`.
+  `VRMC_springBone_extended_collider` sits on
+  `VRMC_springBone.colliders[i].extensions`. Springs have no glTF core object; XT
+  and override index `VRMC_springBone.springs[]`. Do not write `VRMXT_*` on
+  `springs[i].extensions` (stock export may drop unknown keys).
+- If `_override` Apply succeeds on that material or spring, skip the `…xt` fork for
+  that item. Fail or absent override → run the `…xt` gate → else stock `VRMC_*`.
 - Inner JSON keys (fields inside the extension object) are unprefixed camelCase
   (`specVersion`, `stencil`, `faceSdf`). Do not prefix properties `VRMC_` or `VRMXT_`.
 - Repo path stem maps to the glTF name by replacing hyphens with underscores:
   `specs/extensions/vfx/vrmxt-sprite-particle.md` → `VRMXT_sprite_particle`.
   A folder `vrmxt-materials-mtoonxt/` is the same stem (multi-page spec).
+  Exception: camelCase `Bone` matching `VRMC_springBone`.
+  `specs/extensions/physics/vrmxt-springbonext/` → `VRMXT_springBonext`.
+  `specs/extensions/physics/vrmxt-spring-bone-override.md` →
+  `VRMXT_springBone_override`.
 - Code types SHOULD use `Vrmxt*` / `vrmxt_*` for Extended types. Stock UniVRM/MToon10
   shader includes keep `vrmc_materials_mtoon_*.hlsl`.
 - ShaderLab product names may stay `VRMXT/...`. That is not a glTF key.
-- Engine override extensions stay `VRMXT_*` (`VRMXT_materials_override`,
-  `VRMXT_springBone_override`). Family extras are a different `VRMXT_*` name, not keys
-  stuffed into stock `VRMC_*` objects (export may drop unknown fields).
+- Family extras MUST NOT be written as unknown fields inside stock `VRMC_*` objects.
 
 Stock tools that never heard of Extended VRM still open the avatar. Extended data
 is skipped.

@@ -64,16 +64,20 @@ Serialized glTF extension names defined by this family MUST use the `VRMXT_` pre
 Capability specifications in this repository MUST NOT invent new `VRMC_*` names.
 
 A sibling extra on the same glTF object as a stock `VRMC_*` extension is still a
-`VRMXT_*` name. `VRMXT_materials_mtoonxt` sits on `materials[i].extensions` beside
-`VRMC_materials_mtoon`. Future spring extras use a `VRMXT_*` name beside
-`VRMC_springBone` (example: `VRMXT_springBone_xt`; exact name TBD).
+`VRMXT_*` name. Family-fork names append `xt` to the stock stem with no extra
+underscore: `VRMXT_materials_mtoonxt` on `materials[i].extensions` beside
+`VRMC_materials_mtoon`; `VRMXT_springBonext` on root `extensions` beside
+`VRMC_springBone`. Third-party replace names use `_override`:
+`VRMXT_materials_override`, `VRMXT_springBone_override`. See
+[Architecture Naming](../../architecture.md#naming).
 
 Properties inside an extension object are unprefixed camelCase (`specVersion`,
 `stencil`, `faceSdf`). They MUST NOT use a `VRMC_` or `VRMXT_` property prefix.
 
-Engine override extensions (`VRMXT_materials_override`, `VRMXT_springBone_override`)
-are separate `VRMXT_*` names. Family extras MUST NOT be written as unknown fields
-inside stock `VRMC_*` objects.
+Engine override extensions and family-fork `…xt` extensions are separate `VRMXT_*`
+names. Family extras MUST NOT be written as unknown fields inside stock `VRMC_*`
+objects. When an `_override` Apply succeeds on a material or spring, a supporting
+implementation MUST skip the `…xt` fork for that item.
 
 ## Capability support
 
@@ -97,6 +101,7 @@ are future work. They do not block experimental use of the family rules above.
 
 - [VRMXT_materials_override](../extensions/materials/vrmxt-materials-override.md)
 - [VRMXT_materials_mtoonxt](../extensions/materials/vrmxt-materials-mtoonxt/README.md)
+- [VRMXT_springBonext](../extensions/physics/vrmxt-springbonext/README.md)
 - [VRMXT_springBone_override](../extensions/physics/vrmxt-spring-bone-override.md)
 - [VRMXT_sprite_particle](../extensions/vfx/vrmxt-sprite-particle.md)
 - [VRMXT_lattice](../extensions/deformation/vrmxt-lattice.md)

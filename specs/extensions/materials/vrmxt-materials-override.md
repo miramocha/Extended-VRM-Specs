@@ -297,7 +297,8 @@ omitted here; see the Unity and Unreal profile notes for fuller single-slot exam
   (engine selected, material resolved, shader or parent present), it wins: do not swap
   that material to MToonXT. If this override is absent or fails to resolve, the consumer
   MAY run the MToonXT load gate. That rule does not settle override vs core PBR / unlit
-  (still **TBD** below).
+  (still **TBD** below). Same pair as `VRMXT_springBone_override` vs
+  `VRMXT_springBonext`: [Architecture Naming](../../../architecture.md#naming).
 - `VRMXT_materials_override` is a sibling under `materials[i].extensions`. It does not
   replace MToon JSON.
 - `bindings` transfer existing MToon shade values to target material parameters. They do
@@ -358,6 +359,8 @@ They do not add fields to this extension.
 - [VRMXT Conformance](../../core/vrmxt-conformance.md)
 - Upstream MToon: `VRMC_materials_mtoon` in the VRM 1.0 specification
 - [VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md)
+- [Architecture Naming](../../../architecture.md#naming)
+- [VRMXT_springBone_override](../physics/vrmxt-spring-bone-override.md) (same `_override` role)
 - [Substance 3D Painter MToon viewport](../../../references/research/substance-painter-mtoon-viewport.md) (non-normative; stock MToon maps, not this extension)
 - Core materials: glTF 2.0 `materials` schema
 - [KHR / glTF overlap](../../../references/khr-gltf-overlap.md) (non-normative)
@@ -367,5 +370,4 @@ They do not add fields to this extension.
 - [VRM4U VRMXT](../../../implementations/vrm4u-vrmxt.md)
 - [Blender VRMXT materials override](../../../implementations/blender-vrmxt.md#materials-override)
 - [VRMXT_sprite_particle](../vfx/vrmxt-sprite-particle.md)
-- [VRMXT_springBone_override](../physics/vrmxt-spring-bone-override.md)
 - [VRMXT_lattice](../deformation/vrmxt-lattice.md) (research draft)

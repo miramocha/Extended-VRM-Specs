@@ -78,6 +78,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VRMXT_materials_override](specs/extensions/materials/vrmxt-materials-override.md) | `VRMXT_materials_override` | draft |
 | [VRMXT_materials_mtoonxt](specs/extensions/materials/vrmxt-materials-mtoonxt/README.md) | `VRMXT_materials_mtoonxt` ([stencil](specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md), [Face SDF](specs/extensions/materials/vrmxt-materials-mtoonxt/face-sdf.md)) | draft |
 | [VRMXT_springBone_override](specs/extensions/physics/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
+| [VRMXT_springBonext](specs/extensions/physics/vrmxt-springbonext/README.md) | `VRMXT_springBonext` (identity / load gate; extras TBD) | draft |
 | [VRMXT_sprite_particle](specs/extensions/vfx/vrmxt-sprite-particle.md) | Portable sprite particle emitters | draft |
 | [VRMXT_lattice](specs/extensions/deformation/vrmxt-lattice.md) | `VRMXT_lattice` (FFD / cage) | draft |
 | [VRMXT_AnimationController](specs/extensions/animation/vrmxt-animation-controller.md) | Root flat FSM; bridge one-shots; packaging A | draft |

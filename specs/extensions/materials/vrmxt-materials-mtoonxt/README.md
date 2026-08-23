@@ -41,7 +41,9 @@ extension identity, conformance, and load gate.
 
 Do not add extra keys inside `VRMC_materials_mtoon`. UniVRM export may drop unknown
 fields there. Do not attach MToonXT through `VRMXT_materials_override`; that extension
-selects an engine shader (lilToon, Poiyomi, and similar).
+selects an engine shader (lilToon, Poiyomi, and similar). The `…xt` / `_override` pair
+matches spring (`VRMXT_springBonext`, `VRMXT_springBone_override`):
+[Architecture Naming](../../../../architecture.md#naming).
 
 ## Conformance
 
@@ -202,6 +204,8 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 - [VRMXT Conformance](../../../core/vrmxt-conformance.md)
 - Upstream MToon: [VRMC_materials_mtoon 1.0](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_materials_mtoon-1.0/README.md)
 - [VRMXT_materials_override](../vrmxt-materials-override.md)
+- [Architecture Naming](../../../../architecture.md#naming)
+- [VRMXT_springBonext](../../physics/vrmxt-springbonext/README.md) (same `…xt` role)
 - [Stencil](stencil.md)
 - [Face SDF](face-sdf.md)
 - [MToonXT renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md) (non-normative)

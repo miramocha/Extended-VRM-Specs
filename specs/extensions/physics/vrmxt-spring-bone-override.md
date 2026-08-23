@@ -19,9 +19,16 @@ status: draft
 Root glTF extension for selecting an optional engine-specific simulation backend for
 VRM 1.0 spring definitions. `VRMC_springBone` remains the portable source and fallback.
 
-The first target use case translates VRM spring chains to MagicaCloth2 BoneCloth or
-BoneSpring at runtime. Unsupported consumers continue using their normal
-`VRMC_springBone` implementation.
+This is the `_override` role in [Architecture Naming](../../../architecture.md#naming):
+third-party replace of the spring runtime. MagicaCloth2 (BoneCloth / BoneSpring) is
+the first Unity target. PhysBone is another engine (VRChat converter / host Apply).
+The file stores `engine` / `backend` ids and parameters. It MUST NOT embed Magica or
+`VRCPhysBone` SDK types.
+
+Family extras live on [`VRMXT_springBonext`](vrmxt-springbonext/README.md). When this
+override **applies** on a spring, skip `VRMXT_springBonext` for that spring.
+
+Unsupported consumers continue using their normal `VRMC_springBone` implementation.
 
 ## Scope
 
@@ -59,6 +66,12 @@ This specification conforms to [VRMXT Conformance](../../core/vrmxt-conformance.
     mixed backends; otherwise it MUST fall back for the whole model.
 12. Files using this fallback design MUST NOT list `VRMXT_springBone_override` in
     `extensionsRequired`.
+13. When a binding **applies** (engine selected, backend resolved, runtime present),
+    a supporting implementation MUST use that backend for that spring and MUST NOT
+    apply [`VRMXT_springBonext`](vrmxt-springbonext/README.md) extras or a
+    springBonext solver swap on that spring. If the binding is absent, is for another
+    engine, or fails to resolve, the implementation MUST keep stock
+    `VRMC_springBone` for that spring unless `VRMXT_springBonext` rules 8–10 apply.
 
 ## Extension properties
 
@@ -154,7 +167,9 @@ Non-normative. Engine, backend, and preset identifiers are provisional.
 
 BoneCloth is the closer default for ordinary VRM spring chains. BoneSpring MUST be
 selected explicitly because its translation-based spring behavior cannot be inferred
-reliably from VRM spring data.
+reliably from VRM spring data. Magica **MeshCloth** is out of scope for this
+extension: vertex paint / attribute arrays are not comparable to `VRMC_springBone`.
+A supporting implementation MUST NOT emit MeshCloth from this override.
 
 The adapter SHOULD:
 
@@ -212,16 +227,20 @@ Non-normative research (VRM / Magica / VRC PhysBones concept map):
 [Spring bone / secondary physics systems](../../../references/spring-bone-physics-systems.md).
 
 - [VRM 1.0 Spring Bone](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_springBone-1.0)
+- [VRMC_springBone_extended_collider 1.0](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_springBone_extended_collider-1.0)
 - [MagicaCloth2 cloth types](https://magicasoft.jp/en/mc2_magicacloth_basic/)
 - [MagicaCloth2 runtime construction](https://magicasoft.jp/en/mc2_runtime_build/)
 - [MagicaCloth2 BoneSpring guide](https://magicasoft.jp/en/mc2_bonespring_startguide/)
 - [MagicaCloth2 collision setup](https://magicasoft.jp/en/mc2_collision_setup/)
-- [VRChat PhysBones](https://creators.vrchat.com/common-components/physbones/) (`VRCPhysBone` / colliders; converter target, not file schema)
+- [VRChat PhysBones](https://creators.vrchat.com/common-components/physbones/) (`VRCPhysBone` / colliders; override engine / converter target, not file schema)
 
 ## Related
 
 - [VRMXT Conformance](../../core/vrmxt-conformance.md)
-- [VRMXT_materials_override](../materials/vrmxt-materials-override.md)
+- [Architecture Naming](../../../architecture.md#naming)
+- [VRMXT_springBonext](vrmxt-springbonext/README.md)
+- [VRMC_springBone_extended_collider 1.0](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_springBone_extended_collider-1.0)
+- [VRMXT_materials_override](../materials/vrmxt-materials-override.md) (same `_override` role)
 - [VRMXT_sprite_particle](../vfx/vrmxt-sprite-particle.md)
 - [VRMXT_lattice](../deformation/vrmxt-lattice.md) (research draft; may reuse override-engine pattern)
 - [Spring bone / secondary physics systems](../../../references/spring-bone-physics-systems.md)

@@ -31,18 +31,25 @@ VRChat's retired Dynamic Bones path):
 Solvers differ. Parameter names that look related are **not** interchangeable.
 Numeric conversion formulas stay product policy until specified and tested.
 
-Stock VRM owns portable spring data. Extended VRM
-[`VRMXT_springBone_override`](../specs/extensions/physics/vrmxt-spring-bone-override.md)
-only selects an optional engine backend (first target: MagicaCloth2). It does
-**not** put Magica or VRC SDK types in the file schema. The planned
-VRMXT→VRChat converter ([README](../README.md)) is the expected place for
-`VRMC_springBone` → PhysBones emission.
+Stock VRM owns portable spring data. Extended VRM adds two root siblings (see
+[Architecture Naming](../architecture.md#naming)):
+
+| Extension | Role |
+|-----------|------|
+| [`VRMXT_springBonext`](../specs/extensions/physics/vrmxt-springbonext/README.md) | Family fork of `VRMC_springBone`; extras TBD; FastSpringBone (or equivalent) until extras exist |
+| [`VRMXT_springBone_override`](../specs/extensions/physics/vrmxt-spring-bone-override.md) | Engine backend pick. MagicaCloth2 is the first Unity target. PhysBone is a converter / VRChat host engine. File stores ids, not SDK types |
+
+When override Apply succeeds on a spring, skip `VRMXT_springBonext` for that spring.
+The planned VRMXT→VRChat converter ([README](../README.md)) is one PhysBone Apply
+path: emit `VRCPhysBone` from `VRMC_springBone` plus override `engine` / `backend`
+when present.
 
 ## Sources
 
 | Source | Role |
 |--------|------|
 | [`VRMC_springBone` 1.0](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_springBone-1.0) | Portable springs, joints, colliders, collider groups |
+| [`VRMC_springBone_extended_collider` 1.0](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_springBone_extended_collider-1.0) | Plane and inside sphere/capsule on `colliders[i].extensions` |
 | [MagicaCloth2 cloth types](https://magicasoft.jp/en/mc2_magicacloth_basic/) | BoneCloth / MeshCloth / BoneSpring roles |
 | [MagicaCloth2 BoneCloth start](https://magicasoft.jp/en/bonecloth-start-2/) | Transform cloth setup + Magica colliders |
 | [MagicaCloth2 BoneSpring guide](https://magicasoft.jp/en/mc2_bonespring_startguide/) | Translation spring; collision registration rules |
@@ -64,24 +71,28 @@ Community converters (research only; not normative):
 
 ```mermaid
 flowchart TB
-  file["File: VRMC_springBone<br/>(portable source)"]
-  override["optional VRMXT_springBone_override<br/>engine backend pick"]
+  file["File: VRMC_springBone"]
+  xt["optional VRMXT_springBonext"]
+  override["optional VRMXT_springBone_override"]
   univrm["UniVRM FastSpringBone / stock runtime"]
+  xtRuntime["springBonext solver"]
   magica["MagicaCloth2 BoneCloth / BoneSpring"]
-  converter["planned VRMXT → VRChat converter"]
-  physbone["VRCPhysBone + VRCPhysBoneCollider"]
+  converter["planned VRMXT to VRChat converter"]
+  physbone["VRCPhysBone plus colliders"]
 
   file --> univrm
+  file --> xt
+  xt --> xtRuntime
   file --> override
   override --> magica
+  override --> converter
   file --> converter
-  override -.->|"ignore Magica ids;<br/>read VRMC_springBone"| converter
   converter --> physbone
 ```
 
-Portable truth stays in `VRMC_springBone`. Magica override is a Unity consumer
-choice. PhysBones are a **host SDK** target for the converter, not a glTF
-extension.
+Portable truth stays in `VRMC_springBone`. `springBonext` is the VRM-family fork.
+Override replaces that spring's solver with Magica, PhysBone, or another named
+backend. PhysBone components are host SDK objects, not a glTF extension name.
 
 ## VRMC_springBone (portable)
 
@@ -89,7 +100,7 @@ Location: root `extensions.VRMC_springBone`.
 
 | Block | Role |
 |-------|------|
-| `colliders[]` | Sphere or capsule (incl. inside variants per spec) on nodes |
+| `colliders[]` | Sphere or capsule on nodes; plane / inside via [`VRMC_springBone_extended_collider`](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_springBone_extended_collider-1.0) |
 | `colliderGroups[]` | Named groups of collider indices |
 | `springs[]` | Named chains: `joints[]`, optional `colliderGroups`, optional `center` |
 
@@ -98,7 +109,8 @@ Per-joint fields (conceptually): `node`, `stiffness`, `gravityPower`,
 data where present.
 
 Runtime behavior is host-owned (UniVRM FastSpringBone, three-vrm spring bone,
-etc.). Extended override MAY replace that backend for listed springs only.
+etc.). `VRMXT_springBonext` MAY decorate listed springs. Override MAY replace
+the backend for listed springs only.
 
 ## MagicaCloth2
 
@@ -108,15 +120,15 @@ One `MagicaCloth` component; inspector changes with **ClothType**:
 |-----------|--------|---------------------------|
 | `BoneCloth` | Transform chain cloth | VRM spring chains; PhysBone hair / skirt / accessory chains |
 | `BoneSpring` | Transform spring (translation-style) | Soft local jiggle (chest); **not** inferred from VRM alone |
-| `MeshCloth` | Mesh vertices | No `VRMC_springBone` equivalent; skirt cloth without bones |
+| `MeshCloth` | Mesh vertices | **Skip for VRMXT.** Vertex paint / attribute arrays / proxy mesh; not comparable to `VRMC_springBone`. No MeshCloth file schema, no collider family split for MeshCloth. |
 
 Magica colliders (`MagicaSphereCollider`, `MagicaCapsuleCollider`,
 `MagicaPlaneCollider`) are **not** Unity physics colliders. Register them on
 each cloth team. BoneSpring needs explicit **Collision Bones** registration;
 collision is off for transforms by default.
 
-Features Magica has that VRM springs do not: MeshCloth, backstop, self /
-mutual collision, rich constraint sets, paint / vertex attribute workflows.
+Features Magica has that VRM springs do not: MeshCloth (skipped in VRMXT), backstop,
+self / mutual collision, rich constraint sets, paint / vertex attribute workflows.
 
 Features VRM / PhysBones may have that Magica maps poorly: PhysBone Hinge /
 Polar limits (PhysicsConverter notes Magica lacks those limit types; skirt
@@ -191,7 +203,7 @@ PhysBones directly.
 | Colliders | Sphere / capsule (+ inside) groups | Magica sphere / capsule / plane | Sphere / capsule / plane; Inside Bounds |
 | Soft length change | — | Limited / type-dependent | Stretch & Squish (1.1) |
 | Player grab / pose | — | — | First-class; avatar permissions |
-| Mesh vertex cloth | — | MeshCloth | Docs: PhysBones as interim cloth stand-in |
+| Mesh vertex cloth | — | MeshCloth (VRMXT skip) | Not a PhysBone / spring file target |
 
 ## Collider shape map
 
@@ -226,9 +238,11 @@ tests.
 | Topic | Status |
 |-------|--------|
 | Portable springs | Stay in `VRMC_springBone` |
-| `VRMXT_springBone_override` | Optional Unity Magica (and future engine) backend select; fallback to stock VRM |
-| Magica / VRC types in `.vrm` | **Out of scope** for schema; converter / runtime only |
-| VRMXT→VRChat converter | Planned; emit PhysBones from portable springs (+ ignore or strip Magica override ids) |
+| `VRMXT_springBonext` | Family extras on root; index `springs[]`; extra fields TBD |
+| `VRMXT_springBone_override` | Magica BoneCloth / BoneSpring or PhysBone; **not** MeshCloth. Fallback to stock or springBonext |
+| Magica MeshCloth in `.vrm` | **Skip.** Not comparable to spring bone; no extra collider family |
+| Magica / VRC types in `.vrm` | **Out of scope** for schema; override ids only |
+| VRMXT→VRChat converter | Planned; emit PhysBones from portable springs (+ override engine when present) |
 
 ## Open questions
 
@@ -239,4 +253,4 @@ tests.
 | BoneSpring / chest authoring in file? | Today: Magica `mode` on override only; no PhysBone stretch/squish encoding |
 | Plane / inside collider round-trip? | TBD across all three systems |
 | Should converter preserve grab/pose defaults? | Product UX; not portable |
-| MeshCloth / true cloth in VRMXT? | Out of spring-bone override scope; separate capability if ever |
+| MeshCloth / true cloth in VRMXT? | **Skip.** Vertex attributes, paint maps, proxy meshes: too much data, not comparable to `VRMC_springBone`. No MeshCloth schema. Colliders stay in the spring-bone family; do not split a collider `…xt` / `_override` pair for MeshCloth. |

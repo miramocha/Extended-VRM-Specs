@@ -78,9 +78,12 @@ host table. Prefer the host profile for per-host detail; keep this matrix aligne
 - Serialized glTF extension names authored here MUST use `VRMXT_*`. Do not invent
   `VRMC_*` names. `VRMC_` is VRM Consortium only (`VRMC_vrm`, `VRMC_materials_mtoon`,
   `VRMC_springBone`, `VRMC_springBone_extended_collider`, …).
-- Sitting next to a stock object does not change the prefix. MToon extras:
-  `VRMXT_materials_mtoonxt` beside `VRMC_materials_mtoon`. Future spring extras:
-  `VRMXT_springBone_xt` (name TBD), not `VRMC_springBone_xt`.
+- Sitting next to a stock object does not change the prefix. Pairing is `…xt` (family
+  fork) and `_override` (third-party replace). MToon:
+  `VRMXT_materials_mtoonxt` / `VRMXT_materials_override`. Spring:
+  `VRMXT_springBonext` / `VRMXT_springBone_override`. Path exception: camelCase
+  `Bone` in `vrmxt-springbonext/` → `VRMXT_springBonext`. Details:
+  `architecture.md` Naming.
 - Inner JSON keys stay unprefixed camelCase (`specVersion`, `stencil`, `faceSdf`).
   Do not prefix properties `VRMC_` or `VRMXT_`.
 - Code types SHOULD use `Vrmxt*` / `vrmxt_*`. Stock UniVRM/MToon10 hlsl includes keep
