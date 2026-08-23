@@ -1,5 +1,5 @@
 ---
-description: How to author Extended VRM specs, ADRs, and schema docs
+description: How to author Extended VRM specs, ADRs, example notes, and schema docs
 globs: "**/*.md"
 alwaysApply: false
 ---
@@ -26,6 +26,7 @@ Separate **implementer / product** prose from **repo maintainer / agent** proces
 |----------|------------|----------|
 | Creators using shipping tools | `tutorials/` | Install, author, export, Warudo getting started / patch |
 | Spec readers, tool authors, consumers | `specs/`, `decisions/`, `implementations/`, `references/` | Field rules, catalog schema, vendor paths, UI policy (`common: true`) |
+| Readers of a loaded file | `examples/` | Images, clipped JSON, stack mermaid (Warudo MToonXT + lilToon) |
 | Specs maintainers and Cursor agents | `.cursor/rules/`, `.cursor/skills/`, optional `references/**/maintaining-*.md` | Regen scripts, same-PR sync habits, deslop triggers, skill workflows |
 
 - Do **not** put `.cursor/**` paths in normative specs or in family/reference notes aimed at
@@ -91,7 +92,52 @@ host table. Prefer the host profile for per-host detail; keep this matrix aligne
   implementation profiles; do not duplicate field rules. Register new tutorial
   pages in `README.md` and `tutorials/README.md`.
 - Keep decisions, implementation profiles, and research in `decisions/`,
-  `implementations/`, and `references/`.
+  `implementations/`, and `references/`. Host profiles (`warudo-vrmxt.md`,
+  packages) stay in `implementations/`. Do not park loaded-file illustrations
+  next to the profile.
+- Put loaded-file illustrations in `examples/`. Folder is plural even for one
+  file. Images: `examples/images/<note-stem>/`. Cite:
+  [mtoonxt-liltoon-override-warudo.md](../../examples/mtoonxt-liltoon-override-warudo.md).
+- Do not put those notes under `specs/extensions/materials/` or `mtoonxt/`. Do
+  not invent `captures/`. When moving a note, update README / architecture /
+  tutorials / host Related. Do not leave a redirect stub at the old path.
+- Register new example notes in `README.md` **Examples** (not Implementation
+  profiles), `tutorials/README.md` if creators might look there, architecture
+  only if that paragraph already points at working hosts, and the host profile
+  Related list.
+- Tag line-edited example notes `editorial/manual-review` (`obsidian-markdown.mdc`).
+- Tutorials stay click-path how-tos. Example notes show the loaded file. Do not
+  call them tutorials or write “not a click-path” in the vault.
+
+## Example notes (`examples/`)
+
+Non-normative. Deslop as Technical docs / examples (`voices.md`).
+
+- Index / Related labels: **Example**. Not captures, shots, click-path, loaded
+  result, or Working Warudo captures.
+- Related links only. No writer-routing (“field rules stay in specs”, “click-path
+  authoring stays in tutorials”, “Apply implementation”).
+- Do not use **Apply** as a noun. Verb: parse / swap shaders / apply extras.
+  Apply / Materialize / Transfer stay on `implementations/vrmxt-editor.md` and
+  host profiles that already define those ops.
+- Spec headings (`load gate`) stay on the spec. Example pages may use **Which
+  shader wins** and link the spec.
+- Stack mermaid names extras (`VRMXT_materials_override`, `VRMXT_materials_mtoonxt`).
+  Skip-rules belong in a sentence or the which-shader diagram, not `if no override`
+  on an arrow.
+- Do not restamp a fact that already has a section. Fix stale version/index rows.
+- Caption from the frame. If the picture shows hair over eyes, say that; do not
+  caption from the extra you meant. Conversion leftovers (matcap blend) go in a
+  subsection, not the 3-up caption.
+- One demo avatar in prose even if two `.vrm`s were inspected. No BIN hashes, no
+  local Steam paths, no “two files”.
+- Prose and tables: material **names**. Leave glTF indices inside JSON when that
+  is the file (`stencil.materials: [1]`).
+- JSON snippets: real payload, one material, clip with a `...` line. Do not invent
+  a stripped identity object if the file has `properties`.
+- Internals (`Shader.Find`, ModHost warm, UPM soup) stay on the host profile, not
+  the example lede. Install links (Steam Workshop, GitHub) on the example page are
+  fine.
 
 ## Accuracy and provenance
 

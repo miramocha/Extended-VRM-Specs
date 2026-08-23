@@ -30,6 +30,10 @@ python scripts/inspect_vrm.py compare "before.vrm" "after.vrm"
    - float-spelling differences when equal JSON was reserialized.
 4. Use `extract` only when the user wants the complete JSON written or printed.
 
+When the output will go into a vault **example** note (`examples/**`): clip long
+`properties` arrays with a `...` line; quote materials by `name` in surrounding
+prose; leave glTF indices inside the JSON when that is the file.
+
 Never infer data loss from a changed whole-file hash alone. GLB JSON may change byte
 length because equivalent floats use fixed or scientific notation. Treat equal parsed
 JSON plus an equal BIN chunk as a semantic round trip.

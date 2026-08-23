@@ -54,10 +54,20 @@ What "good" means per genre, what tells are fatal there, and what the de-slopped
 - **Fatal tells here**: "robust", "powerful", "blazingly fast" without benchmarks, "simply"/"just" before steps that aren't, marketing voice in reference material, emoji section headers.
 - **De-slop moves**: imperative mood, exact commands, exact versions, expected output. Adjectives almost to zero. Lists are fine here — docs are the one genre where "Term: definition" bullets are legitimate structure, so don't strip them; strip the puffery inside them.
 
+## Technical docs / host profiles (`implementations/**`)
+
+Same as Technical docs / README. Seams, versions, ModHost, Shader.Find belong here.
+
+## Technical docs / examples (`examples/**`)
+
+- **Goal**: show what a loaded file does on a host. Cite install URLs (Workshop, GitHub) when that is how the reader gets the plugins.
+- **Fatal tells here**: captures, shots, click-path, loaded result, Apply as a noun, writer-routing (“field rules stay in specs”), Shader.Find / ModHost in the lede, “vendors” when includes / bundles will do, two-file BIN-hash lab notes.
+- **De-slop moves**: index label **Example**. Caption from the frame. Material names in prose; glTF indices stay inside JSON. Clip `properties` with a `...` line. Stack arrows name extras; skip-rules in a sentence. Internals on the host profile.
+- **Cadence**: short claims next to the picture and the JSON. Do not telegram like a spec, and do not walk clicks like a tutorial.
+
 ## Tutorial / how-to (`tutorials/**`)
 
 - **Goal**: someone following along finishes a task. Second person. Open with what they will have at the end. Name the clicks and what this host's viewport or file should look like after each stretch. Authoring tutorials stop at export / re-import; do not add a "What success looks like" section that names one consumer.
-- **Fatal tells here**: spec telegram ("Ship X on Y."), opening with compatibility claims, "Audience" as a classifier, MUST/SHOULD, "non-normative", "source of truth", dumping JSON field paths before the UI path, "Check" lists that only validate `extensionsUsed`. Compressing a walkthrough into two 12-word sentences is a register miss even when the scan is clean.
 - **Fatal tells here**: spec telegram ("Ship X on Y."), opening with compatibility claims, "Audience" as a classifier, MUST/SHOULD, "non-normative", "source of truth", dumping JSON field paths before the UI path, "Check" lists that only validate `extensionsUsed`. Compressing a walkthrough into two 12-word sentences is a register miss even when the scan is clean.
 - **De-slop moves**: keep versions, UI labels, and file names. Move schemas and host seams to Related. "What you'll need" and "If something looks wrong" beat Audience/Check. Contractions are fine. Do not pad with "simply", "just click", or a not-X-but-Y lede to sound friendlier.
 - **Cadence**: mix short commands with one-sentence why. A tutorial that reads like a conformance note failed Phase 4 even if grep is quiet.
