@@ -11,6 +11,7 @@ tags:
   - implementation/warudo
   - spec/materials
   - compatibility/vrm1
+  - editorial/manual-review
 type: guide
 status: draft
 ---

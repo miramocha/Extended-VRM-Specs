@@ -35,7 +35,11 @@ status: draft
 ## Tags
 
 - Tags use lowercase kebab-case. Prefer stable namespaces such as `spec/*`, `format/*`,
-  `compatibility/*`, `implementation/*`, and `decision/*`. Do not invent near-duplicates.
+  `compatibility/*`, `implementation/*`, `decision/*`, and `editorial/*`. Do not invent
+  near-duplicates.
+- `editorial/manual-review`: the note was line-edited by hand (wording, captions,
+  examples). Do not invent `manually-reviewed` or Title Case tag names. Preserve
+  existing wording unless the task is to change that page.
 - Put all classification tags in YAML properties. Do not use inline `#tags`.
 
 ## GitHub-compatible body
