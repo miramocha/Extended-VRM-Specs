@@ -83,6 +83,12 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VRMXT_AnimationController](specs/extensions/animation/vrmxt-animation-controller.md) | Root flat FSM; bridge one-shots; packaging A | draft |
 | [VRMXT_AnimationClip](specs/extensions/animation/vrmxt-animation-clip.md) | Per-`animations[i]` metadata; required on controller-bound clips | draft |
 
+## Examples
+
+| Note | Topic | Status |
+|------|-------|--------|
+| [MToonXT stencil and lilToon materials override in Warudo](examples/mtoonxt-liltoon-override-warudo.md) | Stock MToon, MToonXT stencil, lilToon override | draft |
+
 ## Implementation profiles
 
 | Note | Target | Status |
@@ -94,7 +100,6 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VRMXT Hub extension](implementations/vrmxt-hub-extension.md) | Planned WXT + Hub API; same `viewer-core`; Three.js | draft |
 | [VRMXT Unity Shader Plugins](implementations/vrmxt-unity-shader-plugins.md) | Deprecated host megashader ship note; pack/UMod config owns supported names | deprecated |
 | [UniVRMXT](implementations/univrm-vrmxt.md) | Unity / UniVRMXT (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMXT_materials_mtoonxt` stencil apply + packaged `VRMXT/MToonXT10`) | draft |
-| [MToonXT stencil and lilToon materials override in Warudo](implementations/mtoonxt-liltoon-override-warudo.md) | Example: stock MToon, MToonXT stencil, lilToon override | draft |
 | [Warudo VRMXT](implementations/warudo-vrmxt.md) | Warudo plugin / particle + materials override + MToonXT stencil (`0.1.16`) | draft |
 | [VRM Posing Desktop VRMXT](implementations/vrm-posing-desktop-vrmxt.md) | Posing Desktop consumer; UniVRM `0.129.3` host pin (measured) | draft |
 | [VRoid Hub browser extension](implementations/vroid-hub-browser-extension.md) | Historical Unity Hub extension profile | superseded |

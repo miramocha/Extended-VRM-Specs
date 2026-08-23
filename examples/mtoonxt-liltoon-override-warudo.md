@@ -40,7 +40,7 @@ flowchart TB
   pkg -->|"MToonXT"| mtoonxt["VRMXT_materials_mtoonxt"]
 ```
 
-[UniVRMXT](univrm-vrmxt.md), [UniVRM upstream hooks](univrm-upstream-hooks.md), [architecture](../architecture.md).
+[UniVRMXT](../implementations/univrm-vrmxt.md), [UniVRM upstream hooks](../implementations/univrm-upstream-hooks.md), [architecture](../architecture.md).
 
 ## Warudo (Unity) stack
 
@@ -61,7 +61,7 @@ flowchart TB
   plugin -->|"MToonXT"| mtoonxt["VRMXT_materials_mtoonxt"]
 ```
 
-[Warudo VRMXT](warudo-vrmxt.md), [VRMXT Unity packages](vrmxt-unity-packages.md).
+[Warudo VRMXT](../implementations/warudo-vrmxt.md), [VRMXT Unity packages](../implementations/vrmxt-unity-packages.md).
 
 ## Which shader wins
 
@@ -141,7 +141,7 @@ Field table: [stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/ste
 
 ### lilToon override
 
-Every material carries `VRMXT_materials_override`: Unity, shader name `lilToon`, Built-in (`builtin`), provider `com.vrmxt.univrmxt`. Transparent clothing uses `Hidden/lilToonTransparent` (`SiuSiu_Alpha_MToonXT`). Each override lists about 470 lilToon properties (including leftover `_DummyProperty` rows). No MToon-to-lilToon `bindings`. Stencil JSON is still on `SiuSiu_FaceStencil_MToonXT` and `SiuSiu_HairStencil_MToonXT`; once lilToon is on the material, MToonXT and stencil are not applied. Hair lighting is lilToon matcap with multiply. Conversion left MToon matcap addition blend unmapped. Tutorial: [Blender materials override](../tutorials/blender-materials-override.md). [VRMXT Editor](vrmxt-editor.md#materials-apply-materialize-and-transfer).
+Every material carries `VRMXT_materials_override`: Unity, shader name `lilToon`, Built-in (`builtin`), provider `com.vrmxt.univrmxt`. Transparent clothing uses `Hidden/lilToonTransparent` (`SiuSiu_Alpha_MToonXT`). Each override lists about 470 lilToon properties (including leftover `_DummyProperty` rows). No MToon-to-lilToon `bindings`. Stencil JSON is still on `SiuSiu_FaceStencil_MToonXT` and `SiuSiu_HairStencil_MToonXT`; once lilToon is on the material, MToonXT and stencil are not applied. Hair lighting is lilToon matcap with multiply. Conversion left MToon matcap addition blend unmapped. Tutorial: [Blender materials override](../tutorials/blender-materials-override.md). [VRMXT Editor](../implementations/vrmxt-editor.md#materials-apply-materialize-and-transfer).
 
 On `SiuSiu_Face_MToonXT`. About 470 `properties` follow; three shown:
 
@@ -176,5 +176,5 @@ On `SiuSiu_Face_MToonXT`. About 470 `properties` follow; three shown:
 
 - [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md)
 - [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
-- [Warudo VRMXT](warudo-vrmxt.md)
+- [Warudo VRMXT](../implementations/warudo-vrmxt.md)
 - [Unity lilToon catalog](../references/catalogs/unity-liltoon.md) (`shaderName` `lilToon`)
