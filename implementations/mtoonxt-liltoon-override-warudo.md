@@ -44,7 +44,7 @@ flowchart TB
 
 ## Warudo (Unity) stack
 
-After the Character loads, [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) (`mira.vrmxt`) runs. [Warudo Shader Plugins](https://github.com/miramocha/Warudo-Shader-Plugins) install lilToon and `VRMXT/MToonXT10`. Warudo still loads stock VRM through UniVRM. The plugin includes UniVRMXT. Without the shader plugins, lilToon and MToonXT are missing.
+After the Character loads, [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) (`mira.vrmxt`) runs. Warudo still loads stock VRM through UniVRM. The plugin includes UniVRMXT. [Warudo Shader Plugins](https://github.com/miramocha/Warudo-Shader-Plugins) ship lilToon and `VRMXT/MToonXT10` (Built-in).
 
 ```mermaid
 flowchart TB
@@ -84,7 +84,7 @@ flowchart TD
   mtoon --> stock
 ```
 
-If the lilToon (or other named) shader is installed, that material stays on it. MToonXT and stencil do not run on that material.
+If the lilToon (or other named) shader is installed, that override is applied. MToonXT and stencil are not applied on that material.
 
 ## Images
 
@@ -102,7 +102,7 @@ Hair draws in front of eyes, eyebrows, and eyelashes. `VRMC_materials_mtoon` and
 
 ### MToonXT stencil
 
-Shader `VRMXT/MToonXT10` (URP equivalent: `VRMXT/Universal Render Pipeline/MToonXT10`). Eyes, eyebrows, and eyelashes write a stencil mask. Hair is clipped where that mask is set (`outside`). Tutorial: [Unity MToonXT stencil](../tutorials/unity-mtoonxt-stencil.md).
+Shader `VRMXT/MToonXT10` (Built-in). Eyes, eyebrows, and eyelashes write a stencil mask. Hair is clipped where that mask is set (`outside`). Tutorial: [Unity MToonXT stencil](../tutorials/unity-mtoonxt-stencil.md).
 
 Stencil is on two of twelve materials:
 
@@ -141,7 +141,7 @@ Field table: [stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/ste
 
 ### lilToon override
 
-Every material carries `VRMXT_materials_override`: Unity, shader name `lilToon`, Built-in (`builtin`), provider `com.vrmxt.univrmxt`. Transparent clothing uses `Hidden/lilToonTransparent` (`SiuSiu_Alpha_MToonXT`). Each override lists about 470 lilToon properties (including leftover `_DummyProperty` rows). No MToon-to-lilToon `bindings`. Stencil JSON is still on `SiuSiu_FaceStencil_MToonXT` and `SiuSiu_HairStencil_MToonXT`; once lilToon is on the material, MToonXT and stencil do not run. Hair lighting is lilToon matcap with multiply. Conversion left MToon matcap addition blend unmapped. Tutorial: [Blender materials override](../tutorials/blender-materials-override.md). [VRMXT Editor](vrmxt-editor.md#materials-apply-materialize-and-transfer).
+Every material carries `VRMXT_materials_override`: Unity, shader name `lilToon`, Built-in (`builtin`), provider `com.vrmxt.univrmxt`. Transparent clothing uses `Hidden/lilToonTransparent` (`SiuSiu_Alpha_MToonXT`). Each override lists about 470 lilToon properties (including leftover `_DummyProperty` rows). No MToon-to-lilToon `bindings`. Stencil JSON is still on `SiuSiu_FaceStencil_MToonXT` and `SiuSiu_HairStencil_MToonXT`; once lilToon is on the material, MToonXT and stencil are not applied. Hair lighting is lilToon matcap with multiply. Conversion left MToon matcap addition blend unmapped. Tutorial: [Blender materials override](../tutorials/blender-materials-override.md). [VRMXT Editor](vrmxt-editor.md#materials-apply-materialize-and-transfer).
 
 On `SiuSiu_Face_MToonXT`. About 470 `properties` follow; three shown:
 
@@ -171,8 +171,6 @@ On `SiuSiu_Face_MToonXT`. About 470 `properties` follow; three shown:
   }
 }
 ```
-
-`engine` / `material` / `properties` / `bindings` match the Consortium draft [VRMC_materials_override](https://github.com/miramocha/vrm-specification/tree/master/specification/VRMC_materials_override-1.0) on the miramocha vrm-specification fork. Files still name the extension `VRMXT_materials_override`.
 
 ## Related
 
