@@ -51,7 +51,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 | Mod folder | `Assets/Vrmxt` |
 | Export | `Warudo_Data/StreamingAssets/Plugins` |
 | Extensions | `VRMXT_sprite_particle`, `VRMXT_materials_override`, `VRMXT_materials_mtoonxt` (stencil) |
-| Plugin version (shipped) | `0.1.13` (see `VrmxtPlugin`) |
+| Plugin version (shipped) | `0.1.16` (see `VrmxtPlugin`) |
 | Steam Workshop | [VRMXT](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210); MToonXT shader (BIRP): [MToonXT Shader for VRMXT (BIRP)](https://steamcommunity.com/sharedfiles/filedetails/?id=3786449905) |
 | Warudo Mod Tool | `0.14.5.1` (`app.warudo.modtool` `#upm/0.14.5.1`) |
 | UniVRM (Warudo runtime) | `0.130.1` (`UniGLTF.PackageVersion` / `UniGLTFVersion` `2.66.1` in `Warudo_Data/Managed/UniGLTF.dll`) |
@@ -73,7 +73,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 
 ## Flow
 
-**Status: shipped** (plugin `0.1.13`). Warudo owns stock VRM load; the plugin attaches
+**Status: shipped** (plugin `0.1.16`). Warudo owns stock VRM load; the plugin attaches
 after the Character is active.
 
 ```mermaid
@@ -340,4 +340,5 @@ MToonXT shader (BIRP): https://steamcommunity.com/sharedfiles/filedetails/?id=37
 
 - Tutorials: [Getting started in Warudo](../tutorials/getting-started-warudo.md),
   [patch export](../tutorials/warudo-patch-export.md)
+- Example: [MToonXT stencil and lilToon materials override in Warudo](mtoonxt-liltoon-override-warudo.md)
 
