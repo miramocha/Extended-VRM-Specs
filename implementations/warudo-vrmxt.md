@@ -340,5 +340,5 @@ MToonXT shader (BIRP): https://steamcommunity.com/sharedfiles/filedetails/?id=37
 
 - Tutorials: [Getting started in Warudo](../tutorials/getting-started-warudo.md),
   [patch export](../tutorials/warudo-patch-export.md)
-- Captures: [MToonXT stencil and lilToon materials override in Warudo](mtoonxt-liltoon-override-warudo.md)
+- Example: [MToonXT stencil and lilToon materials override in Warudo](mtoonxt-liltoon-override-warudo.md)
 

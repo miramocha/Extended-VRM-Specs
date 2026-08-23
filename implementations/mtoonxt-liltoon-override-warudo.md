@@ -4,7 +4,7 @@ aliases:
   - Example use case
   - UniVRMXT materials overview
   - Unity materials working example
-  - MToonXT and override captures
+  - MToonXT and lilToon override example
 tags:
   - extended-vrm
   - implementation/unity
@@ -37,7 +37,7 @@ flowchart TB
   fork --> file
   file --> pkg
   pkg -->|"parse and swap shaders"| override["VRMXT_materials_override"]
-  pkg -->|"MToonXT load gate"| mtoonxt["VRMXT_materials_mtoonxt"]
+  pkg -->|"MToonXT"| mtoonxt["VRMXT_materials_mtoonxt"]
 ```
 
 [UniVRMXT](univrm-vrmxt.md), [UniVRM upstream hooks](univrm-upstream-hooks.md), [architecture](../architecture.md).
@@ -58,7 +58,7 @@ flowchart TB
   warudo --> plugin
   shaders -->|"install shaders"| plugin
   plugin -->|"parse and swap shaders"| override["VRMXT_materials_override"]
-  plugin -->|"MToonXT load gate"| mtoonxt["VRMXT_materials_mtoonxt"]
+  plugin -->|"MToonXT"| mtoonxt["VRMXT_materials_mtoonxt"]
 ```
 
 [Warudo VRMXT](warudo-vrmxt.md), [VRMXT Unity packages](vrmxt-unity-packages.md).
@@ -77,7 +77,7 @@ flowchart TD
   mat --> xt
   mat --> ov
   ov -->|"shader found"| engineShader["lilToon / Poiyomi / named shader"]
-  ov -->|"no matching shader"| xtGate["MToonXT gate"]
+  ov -->|"no matching shader"| xtGate["MToonXT"]
   xtGate --> xt
   xt -->|"MToonXT shader present"| mtoonxt["MToonXT shader"]
   xt -->|"no MToonXT shader"| stock["stock MToon"]
