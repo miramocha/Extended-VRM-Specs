@@ -109,6 +109,11 @@ Files MUST NOT serialize GPU stencil or depth state on these objects: `enabled`,
 `ref`, `readMask`, `writeMask`, `comp`, `pass`, `fail`, `zfail`, `zTest`,
 `zWrite`, or engine compare enums.
 
+This restriction applies to the per-material shorthand. Portable multi-pass visual
+intent and depth comparisons belong in the root
+[`stencilRelationships`](stencil-relationships.md) graph; numeric stencil refs and
+engine shader-property names remain local state.
+
 ## `op` schema
 
 `op` is required when the object is present.
@@ -352,6 +357,7 @@ See [MToon10 stencil shader fork](../../../../references/research/mtoon10-stenci
 ## Related
 
 - [VRMXT_materials_mtoonxt](README.md)
+- [Stencil relationships](stencil-relationships.md)
 - [MToonXT renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md) (non-normative)
 - [MToonXT zTest](../../../../references/research/mtoonxt-ztest.md) (non-normative)
 - [MToonXT zWrite](../../../../references/research/mtoonxt-zwrite.md) (non-normative)

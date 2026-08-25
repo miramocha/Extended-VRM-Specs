@@ -113,8 +113,10 @@ MUST NOT appear in `extensionsRequired`.
   PhysBone). Override JSON stores ids and parameters; it MUST NOT embed host SDK
   component types. Override names use the domain (`materials`, `springBone`) because
   Apply replaces the slot's runtime (shader or solver).
-- Sit-site follows the stock object. MToon, MToonXT, and materials override sit on
-  `materials[i].extensions`. `VRMC_springBone`, `VRMXT_springBonext`, and
+- Sit-site follows the stock object. MToon, MToonXT per-material extras, and materials
+  override sit on `materials[i].extensions`. MToonXT MAY also use its root extension
+  object for a cross-material `stencilRelationships` graph. `VRMC_springBone`,
+  `VRMXT_springBonext`, and
   `VRMXT_springBone_override` sit on root `extensions`.
   `VRMC_springBone_extended_collider` sits on
   `VRMC_springBone.colliders[i].extensions`. Springs have no glTF core object; XT

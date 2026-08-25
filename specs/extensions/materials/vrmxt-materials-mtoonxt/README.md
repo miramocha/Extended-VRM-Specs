@@ -16,8 +16,9 @@ status: draft
 
 # VRMXT_materials_mtoonxt
 
-Per-material glTF extension. Carries extras for a VRM 1.0 MToon material next to stock
-`VRMC_materials_mtoon` on the same `materials[]` entry.
+Material-family glTF extension. It carries per-material extras next to stock
+`VRMC_materials_mtoon` and an optional root relationship graph for portable stencil
+presentation that spans several materials.
 
 The extras object is named `VRMXT_materials_mtoonxt`. This document is an Extended VRM
 draft. It is not a VRM Consortium specification.
@@ -33,9 +34,9 @@ extension identity, conformance, and load gate.
 |------|-------|
 | Extension name | `VRMXT_materials_mtoonxt` |
 | Target | VRM 1.0 (`VRMC_vrm` 1.0) only |
-| Attachment | `materials[i].extensions.VRMXT_materials_mtoonxt` |
+| Attachment | `materials[i].extensions.VRMXT_materials_mtoonxt`; optional root `extensions.VRMXT_materials_mtoonxt` for `stencilRelationships` |
 | Required sibling | `VRMC_materials_mtoon` on the same material |
-| Root `extensions` | not used for this extension |
+| Root `extensions` | optional `stencilRelationships`; see [Stencil relationships](stencil-relationships.md) |
 | Stock importer | no required change |
 | Consumer package | optional; swaps to an MToonXT shader when that shader is installed |
 
@@ -52,8 +53,10 @@ This specification conforms to [VRMXT Conformance](../../../core/vrmxt-conforman
 ## Normative requirements
 
 1. Files that use this extension MUST list `VRMXT_materials_mtoonxt` in `extensionsUsed`.
-2. The extension object MUST appear on a glTF `materials[]` entry under
-   `extensions.VRMXT_materials_mtoonxt`.
+2. A per-material extension object appears on a glTF `materials[]` entry under
+   `extensions.VRMXT_materials_mtoonxt`. A root object MAY appear at
+   `extensions.VRMXT_materials_mtoonxt` only for fields defined by
+   [Stencil relationships](stencil-relationships.md).
 3. The same material MUST also contain `extensions.VRMC_materials_mtoon`. If that sibling
    is missing, a supporting implementation MUST ignore `VRMXT_materials_mtoonxt` on that
    material and keep stock VRM 1.0 material import.
@@ -95,6 +98,9 @@ This specification conforms to [VRMXT Conformance](../../../core/vrmxt-conforman
 16. An exporter that emits `faceSdf.sdfTexture` MUST register the referenced image
     through its normal glTF texture export path so the index resolves in the output
     file.
+17. Root `stencilRelationships` are independent of the MToonXT shader swap gate in rule
+    7. A consumer MAY implement their portable presentation with another compatible
+    shader or render pipeline while stock MToon remains the material baseline.
 
 ## Load gate
 
@@ -123,6 +129,10 @@ flowchart TD
 | `faceSdf` | object | no | [Face SDF](face-sdf.md) |
 | `stencil` | object | no | [Stencil](stencil.md) |
 | `outlineStencil` | object | no | [Stencil](stencil.md) |
+
+The root extension object contains `specVersion` and optional
+[`stencilRelationships`](stencil-relationships.md). It does not contain per-material
+`faceSdf`, `stencil`, or `outlineStencil` objects.
 
 ## Attachment example
 
@@ -207,6 +217,7 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 - [Architecture Naming](../../../../architecture.md#naming)
 - [VRMXT_springBonext](../../physics/vrmxt-springbonext/README.md) (same `…xt` role)
 - [Stencil](stencil.md)
+- [Stencil relationships](stencil-relationships.md)
 - [Face SDF](face-sdf.md)
 - [MToonXT renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md) (non-normative)
 - [MToonXT zTest](../../../../references/research/mtoonxt-ztest.md) (non-normative)

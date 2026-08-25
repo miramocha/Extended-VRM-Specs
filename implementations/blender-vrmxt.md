@@ -23,7 +23,7 @@ Blender add-on implementation profile for
 [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
 [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md),
 and [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
-stencil (`stencil` / `outlineStencil` on the material).
+stencil (material shorthand plus root stencil relationships).
 Support belongs in
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender),
 which registers on VRM1 hooks from
@@ -262,7 +262,11 @@ prop on preview helpers alongside its own `vrmxt_vfx_preview` lifecycle tag.
 
 ## MToonXT stencil
 
-Authoring for `VRMXT_materials_mtoonxt` `stencil` / `outlineStencil` is on the Blender material (`vrmxt_mtoonxt_settings`). Ops: `write`, `inside`, `insideOverlay`, `outside`, outline `same`. The stencil UI sits under **VRMXT Material** (same parent as materials override). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices. GPU `ref` / `comp` / `pass` are not stored. Face SDF, `zTest`, `zWrite`, and XT `renderQueueOffset` stay out of this add-on.
+Authoring for the `VRMXT_materials_mtoonxt` `stencil` / `outlineStencil` shorthand is on the Blender material (`vrmxt_mtoonxt_settings`). Ops: `write`, `inside`, `insideOverlay`, `outside`, outline `same`. The stencil UI sits under **VRMXT Material** (same parent as materials override). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices.
+
+Root `stencilRelationships` authoring is stored on the Scene. Each relationship holds writer and reader material pointers plus the portable presentation and depth fields. Import appends relationships for newly imported materials without deleting relationships already in the Scene. Export resolves pointers through the host's final `materials[]` map and omits duplicate serialized relationships. Embedded hosts can supply the same data through `integration.register_embedded()` callbacks without registering standalone RNA or panels.
+
+GPU stencil references and pass operations are consumer state and are not stored. Face SDF and XT `renderQueueOffset` stay out of this add-on.
 
 EEVEE has no stencil buffer; the viewport does not clip. The panel warns when a writer is Transparent (or Cutout vs Opaque) and a clip reader would draw earlier under Unity's mapped queues. Outline **Same as body** is hidden while body is Off; export drops outline `same` when body stencil is missing.
 
@@ -274,6 +278,7 @@ Hooks: `mtoonxt/import_hook.py`, `mtoonxt/export_hook.py`, registered from `hook
 
 - [x] Parse / serialize `specVersion` `1.0` stencil objects; skip invalid `op` / lists
 - [x] Material PropertyGroups + **VRMXT Material** stencil panel
+- [x] Parse / serialize root `stencilRelationships`; Scene authoring panel and embedded host callbacks
 - [x] Import indices → pointers; export pointers → indices
 - [x] Skip export when sibling MToon is missing; skip clip object when writers are not body `write`
 - [x] Warn when Unity queue would stamp a writer after a clip reader; hide / drop outline `same` when body is Off
