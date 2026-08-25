@@ -177,10 +177,10 @@ stays Consortium.
       "overrides": [
         {
           "engine": "unity",
+          "backend": "magicaCloth2",
           "bindings": [
             {
               "spring": 1,
-              "backend": "magicaCloth2",
               "mode": "boneSpring"
             }
           ]

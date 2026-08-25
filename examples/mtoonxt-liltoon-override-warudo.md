@@ -18,7 +18,7 @@ status: draft
 
 # MToonXT stencil and lilToon materials override in Warudo
 
-A VRM 1.0 Character in Warudo can be loaded three ways: stock MToon, MToonXT stencil, and a Unity lilToon override. UniVRMXT (`com.vrmxt.univrmxt`) reads the extras and swaps shaders on the loaded avatar. The Warudo VRMXT plugin includes that package; shader plugins install lilToon and MToonXT.
+A VRM 1.0 Character in Warudo can load stock MToon, MToonXT stencil, or a Unity materials override (`VRMXT_materials_override`: named shader such as lilToon or Poiyomi). This page uses lilToon. UniVRMXT (`com.vrmxt.univrmxt`) reads the extras and swaps shaders on the loaded avatar. The Warudo VRMXT plugin includes that package; shader plugins install lilToon and MToonXT.
 
 ## Unity stack
 

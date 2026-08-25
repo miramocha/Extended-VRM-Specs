@@ -21,7 +21,13 @@ VRM 1.0 spring definitions. `VRMC_springBone` remains the portable source and fa
 
 This is the `_override` role in [Architecture Naming](../../../architecture.md#naming):
 third-party replace of the spring runtime. MagicaCloth2 (BoneCloth / BoneSpring) is
-the first Unity target. PhysBone is another engine (VRChat converter / host Apply).
+the first Unity `backend`. PhysBone is another Unity `backend` (VRChat converter /
+host Apply), not a second `engine`. VRChat runs Unity; this draft has no consumer-app
+selection key. A file MUST NOT contain more than one override for `engine` `unity`
+(rule 7). `backend` sits on that override next to `engine` (one solver for all
+bindings). Magica and PhysBone MUST NOT appear together. Springs with no binding stay
+stock `VRMC_springBone`.
+
 The file stores `engine` / `backend` ids and parameters. It MUST NOT embed Magica or
 `VRCPhysBone` SDK types.
 
@@ -54,24 +60,27 @@ This specification conforms to [VRMXT Conformance](../../core/vrmxt-conformance.
 3. The file MUST also contain a valid root `VRMC_springBone` extension.
 4. The extension object MUST contain `specVersion` with value `"1.0"` for this draft.
 5. The extension object MUST contain a non-empty `overrides` array.
-6. Each override MUST contain a case-sensitive `engine` string and a non-empty
-   `bindings` array.
+6. Each override MUST contain a case-sensitive `engine` string, a non-empty
+   `backend` string, and a non-empty `bindings` array.
 7. A file MUST NOT contain more than one override for the same engine.
 8. Each binding MUST contain `spring`, a zero-based index into
-   `VRMC_springBone.springs`, and a non-empty engine-specific `backend` identifier.
+   `VRMC_springBone.springs`.
 9. One engine override MUST NOT contain more than one binding for the same `spring`.
 10. Consumers MUST ignore unknown engines, backends, modes, and properties.
-11. If an override or binding cannot be applied, the consumer MUST preserve normal
-    `VRMC_springBone` behavior. It MAY fall back for that spring when its runtime supports
-    mixed backends; otherwise it MUST fall back for the whole model.
+11. If the selected override or any of its bindings cannot be applied, the consumer
+    MUST preserve normal `VRMC_springBone` behavior for every spring (whole-model
+    fallback). It MUST NOT run Magica on some springs and PhysBone or stock simulation
+    on other bound springs from the same override.
 12. Files using this fallback design MUST NOT list `VRMXT_springBone_override` in
     `extensionsRequired`.
-13. When a binding **applies** (engine selected, backend resolved, runtime present),
-    a supporting implementation MUST use that backend for that spring and MUST NOT
-    apply [`VRMXT_springBonext`](vrmxt-springbonext/README.md) extras or a
-    springBonext solver swap on that spring. If the binding is absent, is for another
-    engine, or fails to resolve, the implementation MUST keep stock
-    `VRMC_springBone` for that spring unless `VRMXT_springBonext` rules 8–10 apply.
+13. When the override **applies** (engine selected, backend resolved, runtime present
+    for every binding), a supporting implementation MUST use that override's `backend`
+    for each bound spring and MUST NOT apply [`VRMXT_springBonext`](vrmxt-springbonext/README.md)
+    extras or a springBonext solver swap on those springs. Springs with no binding
+    keep stock `VRMC_springBone` (then `VRMXT_springBonext` rules 8–10 MAY apply).
+    If the override is absent, is for another engine, or fails to resolve, the
+    implementation MUST keep stock `VRMC_springBone` for all springs unless
+    `VRMXT_springBonext` rules 8–10 apply.
 
 ## Extension properties
 
@@ -80,9 +89,9 @@ This specification conforms to [VRMXT Conformance](../../core/vrmxt-conformance.
 | `specVersion` | string | yes | Extension version; currently `"1.0"` |
 | `overrides` | object[] | yes | Non-empty engine override list |
 | `overrides[].engine` | string | yes | Case-sensitive target engine |
-| `overrides[].bindings` | object[] | yes | Per-spring backend selections |
+| `overrides[].backend` | string | yes | Simulation backend for every binding in this override |
+| `overrides[].bindings` | object[] | yes | Per-spring selections |
 | `bindings[].spring` | integer | yes | Index into `VRMC_springBone.springs` |
-| `bindings[].backend` | string | yes | Engine-specific simulation backend |
 | `bindings[].mode` | string | no | Backend-specific simulation mode |
 | `bindings[].preset` | string | no | Backend-specific preset identifier |
 | `bindings[].parameters` | object | no | Backend-specific parameters; schema TBD |
@@ -134,16 +143,15 @@ Non-normative. Engine, backend, and preset identifiers are provisional.
       "overrides": [
         {
           "engine": "unity",
+          "backend": "magicaCloth2",
           "bindings": [
             {
               "spring": 0,
-              "backend": "magicaCloth2",
               "mode": "boneCloth",
               "preset": "hair-soft"
             },
             {
               "spring": 1,
-              "backend": "magicaCloth2",
               "mode": "boneSpring",
               "preset": "body-medium"
             }

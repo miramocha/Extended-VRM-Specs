@@ -37,12 +37,12 @@ Stock VRM owns portable spring data. Extended VRM adds two root siblings (see
 | Extension | Role |
 |-----------|------|
 | [`VRMXT_springBonext`](../specs/extensions/physics/vrmxt-springbonext/README.md) | Family fork of `VRMC_springBone`; extras TBD; FastSpringBone (or equivalent) until extras exist |
-| [`VRMXT_springBone_override`](../specs/extensions/physics/vrmxt-spring-bone-override.md) | Engine backend pick. MagicaCloth2 is the first Unity target. PhysBone is a converter / VRChat host engine. File stores ids, not SDK types |
+| [`VRMXT_springBone_override`](../specs/extensions/physics/vrmxt-spring-bone-override.md) | Unity (and later engines) backend pick. MagicaCloth2 and PhysBone are Unity `backend` values. No consumer-app key in this draft. File stores ids, not SDK types |
 
 When override Apply succeeds on a spring, skip `VRMXT_springBonext` for that spring.
 The planned VRMXT→VRChat converter ([README](../README.md)) is one PhysBone Apply
-path: emit `VRCPhysBone` from `VRMC_springBone` plus override `engine` / `backend`
-when present.
+path: emit `VRCPhysBone` from `VRMC_springBone` plus a Unity override whose
+`backend` is PhysBone when present. Hosts ignore backends they do not implement.
 
 ## Sources
 
