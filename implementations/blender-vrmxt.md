@@ -264,7 +264,7 @@ prop on preview helpers alongside its own `vrmxt_vfx_preview` lifecycle tag.
 
 Authoring for the `VRMXT_materials_mtoonxt` `stencil` / `outlineStencil` shorthand is on the Blender material (`vrmxt_mtoonxt_settings`). Ops: `write`, `inside`, `insideOverlay`, `outside`, outline `same`. The stencil UI sits under **VRMXT Material** (same parent as materials override). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices.
 
-Root `stencilRelationships` authoring is stored on the Scene. Each relationship holds writer and reader material pointers plus the portable presentation and depth fields. Import appends relationships for newly imported materials without deleting relationships already in the Scene. Export resolves pointers through the host's final `materials[]` map and omits duplicate serialized relationships. Embedded hosts can supply the same data through `integration.register_embedded()` callbacks without registering standalone RNA or panels.
+Root `stencilRelationships` authoring is stored on the Scene. Each relationship holds writer and reader material pointers plus the portable color, presentation, and depth fields, including independent `writersWriteColor` and `writersWriteDepth` controls. Import appends relationships for newly imported materials without deleting relationships already in the Scene. Export resolves pointers through the host's final `materials[]` map and omits duplicate serialized relationships. Embedded hosts can supply the same data through `integration.register_embedded()` callbacks without registering standalone RNA or panels.
 
 GPU stencil references and pass operations are consumer state and are not stored. Face SDF and XT `renderQueueOffset` stay out of this add-on.
 

@@ -54,7 +54,8 @@ file contract so exporters MAY omit properties whose value equals the default.
 | `writersOnlyOutsideReaders` | boolean | no | `false` | Present writers only outside the reader screen silhouette. With show-through enabled, material silhouettes reject the writer and clear background remains eligible. |
 | `writersSelfOcclude` | boolean | no | `true` | Resolve each writer to its nearest authored face before final color presentation. |
 | `ignoreOccludedReaderAreas` | boolean | no | `true` | Use only reader pixels that pass ordinary scene depth. `false` uses the reader's complete projected silhouette without forcing reader color through occluders. |
-| `writersWriteDepth` | boolean | no | `true` | Publish accepted writer depth after color presentation. |
+| `writersWriteColor` | boolean | no | `true` | Publish accepted writer color. `false` keeps the writer colorless while retaining its stencil and optional depth effects. |
+| `writersWriteDepth` | boolean | no | `true` | Publish accepted writer depth independently of writer color. |
 | `readersWriteDepth` | boolean | no | `true` | Publish accepted reader depth after color presentation. |
 | `writerDepthTest` | string | no | `lessEqual` | Portable depth comparison for writer fragments. |
 | `readerDepthTest` | string | no | `lessEqual` | Portable depth comparison for reader fragments. |
@@ -62,6 +63,10 @@ file contract so exporters MAY omit properties whose value equals the default.
 `writersOnlyInsideReaders` and `writersOnlyOutsideReaders` MUST NOT both be `true`.
 A material index MUST be in range and MUST NOT appear in both arrays of the same
 relationship. Unknown or invalid relationship entries are skipped individually.
+Exporters SHOULD combine relationships that have the same writer set and identical
+presentation fields by unioning their reader arrays. Consumers MUST treat such equivalent
+rows as one relationship so one writer material is not assigned competing stencil
+references.
 
 Depth comparisons are `never`, `less`, `equal`, `lessEqual`, `greater`, `notEqual`,
 `greaterEqual`, and `always`. They describe the comparison result, not an engine enum
@@ -87,7 +92,11 @@ implementation.
 5. `writersSelfOcclude: false` MUST preserve the authored face presentation even when
    multiple writer faces overlap. `writersWriteDepth` remains independent; enabling it
    MUST NOT silently re-enable self-occlusion during color presentation.
-6. Body and outline passes that participate in a relationship MUST use the same semantic
+6. `writersWriteColor: false` MUST suppress writer body and outline color while preserving
+   the relationship's stencil writes. `writersWriteDepth` independently controls whether
+   those accepted writer fragments publish depth. This supports invisible avatar masks,
+   such as a moving control plane that reveals or hides selected hair materials.
+7. Body and outline passes that participate in a relationship MUST use the same semantic
    relationship unless the file also supplies a valid per-material `outlineStencil`
    override.
 
@@ -108,7 +117,8 @@ The following mappings are exact shorthand fallbacks:
 | Writers only inside readers plus show-through | each reader `write`; each writer `insideOverlay` targeting readers |
 | Writers only outside readers without show-through | each reader `write`; each writer `outside` targeting readers |
 
-Other combinations MUST NOT be approximated by a misleading shorthand.
+Relationships with `writersWriteColor: false` and other combinations not listed above
+MUST NOT be approximated by a misleading shorthand.
 
 ## Non-normative Unity mapping
 
@@ -153,4 +163,3 @@ geometry only on reader `0`, self-occludes, and publishes depth.
 - [VRMXT_materials_mtoonxt](README.md)
 - [Per-material stencil shorthand](stencil.md)
 - [VRMXT Conformance](../../../core/vrmxt-conformance.md)
-
