@@ -164,7 +164,7 @@ parallel Extended-only format.
 | Blender | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | [Blender VRMXT](implementations/blender-vrmxt.md) | Same (Addon Preferences enable hooks) |
 | Unity (package / Editor) | [UniVRM](https://github.com/vrm-c/UniVRM) / [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | [UniVRMXT](implementations/univrm-vrmxt.md) | Same via Extended-UniVRM export hooks (Project Settings gate) |
 | Unity (Player app) | UniVRM in [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Same Player (depends on UniVRMXT; desktop edit) | Planned | Planned (desktop) |
-| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): v1 Apply `VRMXT_materials_mtoonxt` stencil; `VRMXT_*` import planned | Planned (not v1) |
+| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): Apply `VRMXT_materials_mtoonxt` stencil; viewer Create/edit | Viewer stencil Export (GLB JSON patch) |
 | Unreal | VRM4U | VRM4U VRMXT package (planned) | Planned: [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | **TBD** |
 | Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VRMXT](implementations/godot-vrmxt.md) | **TBD** |
 | Other | Any VRM 1.0 tool | Optional Extended package | Implement specs | Implement specs |
@@ -299,8 +299,9 @@ support is a separate npm package:
 3. The VRMXT plugin runs in `afterRoot`: MToonXT stencil on materials (v1); later
    `VRMXT_sprite_particle` emitters on nodes from `parser.getDependencies('node')`.
 4. Missing extension or missing package → no Extended objects; avatar still valid.
-5. First-party v1 host: [web viewer](implementations/vrmxt-web-viewer.md) (`apps/viewer`).
-   Construct `WebGLRenderer` with `stencil: true`. Edit/export is planned, not claimed.
+5. First-party host: [web viewer](implementations/vrmxt-web-viewer.md) (`apps/viewer`).
+   Construct `WebGLRenderer` with `stencil: true`. Stencil Create/edit/Export is
+   claimed; Hub WXT stays view-first.
 
 Do not fork pixiv/three-vrm or patch `VRMLoaderPlugin` as the only path.
 

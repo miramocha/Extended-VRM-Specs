@@ -80,7 +80,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VRMXT_springBone_override](specs/extensions/physics/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
 | [VRMXT_springBonext](specs/extensions/physics/vrmxt-springbonext/README.md) | `VRMXT_springBonext` (identity / load gate; extras TBD) | draft |
 | [VRMXT_sprite_particle](specs/extensions/vfx/vrmxt-sprite-particle.md) | Portable sprite particle emitters | draft |
-| [VRMXT_lattice](specs/extensions/deformation/vrmxt-lattice.md) | `VRMXT_lattice` (FFD / cage) | draft |
+| [VRMXT_lattice](specs/extensions/deformation/vrmxt-lattice.md) | `VRMXT_lattice` (after-skin FFD cage) | draft |
 | [VRMXT_AnimationController](specs/extensions/animation/vrmxt-animation-controller.md) | Root flat FSM; bridge one-shots; packaging A | draft |
 | [VRMXT_AnimationClip](specs/extensions/animation/vrmxt-animation-clip.md) | Per-`animations[i]` metadata; required on controller-bound clips | draft |
 
@@ -94,10 +94,10 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 
 | Note | Target | Status |
 |------|--------|--------|
-| [VRMXT Editor](implementations/vrmxt-editor.md) | Cross-host editor contract + capability matrix (Blender / UniVRMXT / Unity Player / Warudo) | draft |
+| [VRMXT Editor](implementations/vrmxt-editor.md) | Cross-host editor contract + capability matrix (Blender / UniVRMXT / Unity Player / Warudo / three-vrmxt viewer) | draft |
 | [VRMXT Unity packages](implementations/vrmxt-unity-packages.md) | Unity-space UPM / app / Warudo dependency map | draft |
 | [VRMXT Unity Player](implementations/vrmxt-unity-player.md) | Desktop Unity app (`2021.3.45f2`); Warudo-aligned; depends on UniVRMXT | draft |
-| [VRMXT web viewer](implementations/vrmxt-web-viewer.md) | Vite `apps/viewer` in three-vrmxt; local file view + MToonXT stencil | draft |
+| [VRMXT web viewer](implementations/vrmxt-web-viewer.md) | Vite `apps/viewer` in three-vrmxt; local file view + MToonXT stencil edit/export | draft |
 | [VRMXT Hub extension](implementations/vrmxt-hub-extension.md) | Planned WXT + Hub API; same `viewer-core`; Three.js | draft |
 | [VRMXT Unity Shader Plugins](implementations/vrmxt-unity-shader-plugins.md) | Deprecated host megashader ship note; pack/UMod config owns supported names | deprecated |
 | [UniVRMXT](implementations/univrm-vrmxt.md) | Unity / UniVRMXT (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMXT_materials_mtoonxt` stencil apply + packaged `VRMXT/MToonXT10`) | draft |
@@ -106,7 +106,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VRoid Hub browser extension](implementations/vroid-hub-browser-extension.md) | Historical Unity Hub extension profile | superseded |
 | [Unity WebGL VRMXT viewer](implementations/unity-webgl-vrmxt-viewer.md) | Historical Player WebGL / Hub notes | superseded |
 | [Godot VRMXT](implementations/godot-vrmxt.md) | Godot / godot-vrm consumer (`VRMXT_sprite_particle` planned) | draft |
-| [three-vrmxt](implementations/three-vrmxt.md) | Three.js library: MToonXT stencil claimed; sprite VFX planned; [web viewer](implementations/vrmxt-web-viewer.md) | draft |
+| [three-vrmxt](implementations/three-vrmxt.md) | Three.js library: MToonXT stencil Apply + viewer edit/export; sprite VFX planned; [web viewer](implementations/vrmxt-web-viewer.md) | draft |
 | [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | Unreal / VRM4U consumer (`VRMXT_materials_override` planned) | draft |
 | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) | UniVRM / Extended-UniVRM ScriptedImporter hooks (upstream propose) | draft |
 | [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hook API (prefs, exclude prop, upstream propose) | draft |

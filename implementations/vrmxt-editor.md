@@ -42,7 +42,7 @@ stock VRM when Extended packages are absent.
 | Blender | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) on [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | Full DCC authoring + I/O |
 | Unity (package) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) + [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) for hooks | Library: Editor import/attach, materials apply, VFX re-export; catalog authoring UI later |
 | Unity (player app) | [VRMXT Unity Player](vrmxt-unity-player.md) (planned; depends on UniVRMXT) | Desktop drag-drop view + edit + export |
-| Three.js (web viewer) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) `apps/viewer` | v1 local-file view + MToonXT Apply. Edit/export planned. [Profile](vrmxt-web-viewer.md) |
+| Three.js (web viewer) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) `apps/viewer` | Local-file view + MToonXT stencil Apply / Create/edit / Export. [Profile](vrmxt-web-viewer.md) |
 | Three.js (Hub WXT) | Same repo, later | View-only planned. [Profile](vrmxt-hub-extension.md). Not an editor host |
 | Warudo | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Runtime apply + materials-override **patch** export (source-preserving) |
 
@@ -199,13 +199,13 @@ Spec: [vrmxt-materials-mtoonxt](../specs/extensions/materials/vrmxt-materials-mt
 ([stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)). Blender ships
 stencil authoring only. Face SDF stays out of the add-on.
 
-| Op | Blender | UniVRMXT | Unity Player (planned) | Warudo |
-|----|---------|----------|------------------------|--------|
-| Import | Done (glTF indices → material pointers) | Done (parse/apply `op` + indices) | parse/swap compiled stencil after override Apply | parse/swap compiled stencil after override Apply |
-| Create/edit | Done (**VRMXT Material** stencil panel; ops `write` / `inside` / `insideOverlay` / `outside` / outline `same`) | Done (`MtoonxtInspector` **Add MToonXT extras** + stencil ops / writer dropdowns; avatar instance list) | — | — (no stencil authoring) |
-| Preview | — (no EEVEE clip; panel warns when Unity queue would stamp a writer after a clip reader) | Done (packaged `VRMXT/MToonXT10`) | Done (shader from UniVRMXT UPM) | Done (UMods `mira.shaders.mtoonxt.birp` / `.urp`) |
-| Export | Done (pointers → indices; skip clip object when writers are not body `write`; sibling MToon required) | Partial (re-export attached extras with Extended-UniVRM export hooks) | Planned | — |
-| Profile | [Blender → MToonXT stencil](blender-vrmxt.md#mtoonxt-stencil) | [UniVRMXT → MToonXT](univrm-vrmxt.md#mtoonxt) | [Unity Player](vrmxt-unity-player.md) | [Warudo VRMXT](warudo-vrmxt.md) |
+| Op | Blender | UniVRMXT | Unity Player (planned) | Warudo | three-vrmxt viewer |
+|----|---------|----------|------------------------|--------|--------------------|
+| Import | Done (glTF indices → material pointers) | Done (parse/apply `op` + indices) | parse/swap compiled stencil after override Apply | parse/swap compiled stencil after override Apply | Done (parse extras on load) |
+| Create/edit | Done (**VRMXT Material** stencil panel; ops `write` / `inside` / `insideOverlay` / `outside` / outline `same`) | Done (`MtoonxtInspector` **Add MToonXT extras** + stencil ops / writer dropdowns; avatar instance list) | — | — (no stencil authoring) | Done (inspector **MToonXT stencil**; same ops; MToon sibling required) |
+| Preview | — (no EEVEE clip; panel warns when Unity queue would stamp a writer after a clip reader) | Done (packaged `VRMXT/MToonXT10`) | Done (shader from UniVRMXT UPM) | Done (UMods `mira.shaders.mtoonxt.birp` / `.urp`) | Done (Three.js material stencil; `WebGLRenderer` `stencil: true`) |
+| Export | Done (pointers → indices; skip clip object when writers are not body `write`; sibling MToon required) | Partial (re-export attached extras with Extended-UniVRM export hooks) | Planned | — | Done (GLB JSON patch + original BIN; skip unresolvable clip; never `extensionsRequired`) |
+| Profile | [Blender → MToonXT stencil](blender-vrmxt.md#mtoonxt-stencil) | [UniVRMXT → MToonXT](univrm-vrmxt.md#mtoonxt) | [Unity Player](vrmxt-unity-player.md) | [Warudo VRMXT](warudo-vrmxt.md) | [VRMXT web viewer](vrmxt-web-viewer.md) |
 
 ### Draft capabilities (no shipping editor yet)
 
@@ -259,7 +259,7 @@ Materialize.
 | Blender | `VRMXT_sprite_particle`, `VRMXT_materials_override` (bindings authoring deferred), `VRMXT_materials_mtoonxt` stencil (Face SDF deferred) | Spring override, lattice, animation |
 | UniVRMXT | `VRMXT_sprite_particle` (re-export / edit existing; from-scratch UI thin), `VRMXT_materials_override` (Apply + Materialize + Transfer Done; catalog UI later) | Spring override, lattice, animation; full catalog-driven materials UI; `VRMXT_materials_mtoonxt` from-scratch authoring |
 | Unity Player | None shipped (planned desktop Apply + Transfer ± VFX; **no** Materialize) | Materialize; spring / lattice / animation; `VRMXT_materials_mtoonxt` |
-| three-vrmxt web viewer | None shipped (v1 is view / MToonXT Apply only) | Create/edit/Export until claimed; Hub WXT is not an editor host |
+| three-vrmxt web viewer | `VRMXT_materials_mtoonxt` stencil (Face SDF deferred) | Sprite VFX, materials override, Hub WXT editor |
 | Warudo | `VRMXT_materials_override` **patch** editor + Apply (no Materialize) | VFX authoring; Materialize; general live-avatar VRM export; workshop sources; `VRMXT_materials_mtoonxt` |
 
 Warudo remains primarily a **runtime consumer** with a **source-preserving materials
@@ -285,7 +285,7 @@ flowchart LR
 | Task | Prefer |
 |------|--------|
 | New sprite emitters from scratch | Blender |
-| MToonXT stencil ops (`write` / `inside` / `insideOverlay` / `outside` / outline `same`) | Blender or UniVRMXT `MtoonxtInspector` |
+| MToonXT stencil ops (`write` / `inside` / `insideOverlay` / `outside` / outline `same`) | Blender, UniVRMXT `MtoonxtInspector`, or three-vrmxt web viewer |
 | Unity scene re-export of emitters / override slots already on the avatar | UniVRMXT + Extended-UniVRM gates |
 | Drag-drop Unity runtime view + edit without a full DCC | Unity Player desktop (planned) |
 | Apply file override onto live mats (shader already in app) | Apply (UniVRMXT, Warudo; Player desktop planned) |
