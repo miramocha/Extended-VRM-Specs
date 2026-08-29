@@ -50,7 +50,7 @@ buffer (Three.js r163+).
 
 | Extension | Status |
 |-----------|--------|
-| `VRMXT_materials_mtoonxt` stencil | Claimed: map extras onto Three.js material stencil state. `VRMXT_materials_face_sdf` and `VRMXT_materials_directional_dissolve` later. `apps/viewer` Import + Create/edit + Export. |
+| `VRMXT_materials_mtoonxt` stencil | Claimed: map extras onto Three.js material stencil state. `VRMXT_materials_face_sdf` later. `apps/viewer` Import + Create/edit + Export. |
 | `VRMXT_materials_directional_dissolve` | Not claimed. MiraSite `heightWipe.ts` is a world-Y host patch; it is not this extra on disk. |
 | `VRMXT_sprite_particle` | Claimed: instanced camera-facing quads; `tryAttach` + viewer update loop |
 | Export write | Claimed for `apps/viewer` MToonXT stencil (GLB JSON patch). Never `extensionsRequired`. |
