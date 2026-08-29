@@ -114,4 +114,5 @@ can still cover the card.
 
 ## Related
 
-- [VRMXT_materials_mtoonxt stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs)
+- [VRMXT_materials_mtoonxt stencil](../specs/extensions/materials/vrmxt-materials-stencil.md#insideoverlay-tradeoffs)
+  (field tables). Shipping export still nests on `VRMXT_materials_mtoonxt`.

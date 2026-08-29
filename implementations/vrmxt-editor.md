@@ -196,8 +196,9 @@ Catalogs: [Materials Override Catalogs](../references/materials-override-catalog
 ### `VRMXT_materials_mtoonxt`
 
 Spec: [vrmxt-materials-mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
-([stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)). Blender ships
-stencil authoring only. Face SDF stays out of the add-on.
+([stencil](../specs/extensions/materials/vrmxt-materials-stencil.md)). Blender ships
+nested stencil authoring on `VRMXT_materials_mtoonxt`. `VRMXT_materials_face_sdf` stays
+out of the add-on. No host emits `VRMXT_materials_stencil` yet.
 
 | Op | Blender | UniVRMXT | Unity Player (planned) | Warudo | three-vrmxt viewer |
 |----|---------|----------|------------------------|--------|--------------------|
@@ -256,10 +257,10 @@ Materialize.
 
 | Host | Claims editor for | Does not claim (yet) |
 |------|-------------------|----------------------|
-| Blender | `VRMXT_sprite_particle`, `VRMXT_materials_override` (bindings authoring deferred), `VRMXT_materials_mtoonxt` stencil (Face SDF deferred) | Spring override, lattice, animation |
+| Blender | `VRMXT_sprite_particle`, `VRMXT_materials_override` (bindings authoring deferred), `VRMXT_materials_mtoonxt` stencil (`VRMXT_materials_face_sdf` deferred) | Spring override, lattice, animation |
 | UniVRMXT | `VRMXT_sprite_particle` (re-export / edit existing; from-scratch UI thin), `VRMXT_materials_override` (Apply + Materialize + Transfer Done; catalog UI later) | Spring override, lattice, animation; full catalog-driven materials UI; `VRMXT_materials_mtoonxt` from-scratch authoring |
 | Unity Player | None shipped (planned desktop Apply + Transfer ± VFX; **no** Materialize) | Materialize; spring / lattice / animation; `VRMXT_materials_mtoonxt` |
-| three-vrmxt web viewer | `VRMXT_materials_mtoonxt` stencil (Face SDF deferred) | Sprite VFX, materials override, Hub WXT editor |
+| three-vrmxt web viewer | `VRMXT_materials_mtoonxt` stencil (`VRMXT_materials_face_sdf` deferred) | Sprite VFX, materials override, Hub WXT editor |
 | Warudo | `VRMXT_materials_override` **patch** editor + Apply (no Materialize) | VFX authoring; Materialize; general live-avatar VRM export; workshop sources; `VRMXT_materials_mtoonxt` |
 
 Warudo remains primarily a **runtime consumer** with a **source-preserving materials

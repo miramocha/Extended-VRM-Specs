@@ -1,5 +1,5 @@
 ---
-title: VRMXT_materials_mtoonxt stencil
+title: VRMXT_materials_stencil
 aliases:
   - MToonXT stencil
   - stencil clip
@@ -14,16 +14,71 @@ type: specification
 status: draft
 ---
 
-# VRMXT_materials_mtoonxt stencil
+# VRMXT_materials_stencil
 
-Coverage clip extras on [VRMXT_materials_mtoonxt](README.md). Serialized names stay
-`stencil` (body / forward) and `outlineStencil` (inverse-hull outline pass, when the
-shader has one). The identifier matches existing VTuber / Unity search. The extra
-describes coverage clip.
+Per-material glTF extension. Coverage clip for a VRM 1.0 MToon material. Sibling of
+`VRMC_materials_mtoon` on the same `materials[]` entry. Independent of
+[VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md) (shader swap).
 
-Stock importers ignore the extra. Supporting consumers MUST produce the coverage
+Serialized inner names stay `stencil` (body / forward) and `outlineStencil`
+(inverse-hull outline pass, when the shader has one). The identifier matches existing
+VTuber / Unity search. The extra describes coverage clip.
+
+This document is an Extended VRM draft. It is not a VRM Consortium specification.
+
+Stock importers ignore the extension. Supporting consumers MUST produce the coverage
 relationship below. How they do it is local (GPU stencil, engine `stencil_mode`,
 material stencil state, or another method that keeps the same pixels).
+
+Shipping UniVRMXT, Blender, three-vrmxt, and Warudo still write nested
+`VRMXT_materials_mtoonxt.stencil` / `outlineStencil`. That attach is deprecated and
+stays defined on the mtoonxt hub. Canonical attach is this extension. Do not claim
+those tools emit `VRMXT_materials_stencil` yet.
+
+## Scope
+
+| Item | Value |
+|------|-------|
+| Extension name | `VRMXT_materials_stencil` |
+| Target | VRM 1.0 (`VRMC_vrm` 1.0) only |
+| Attachment | `materials[i].extensions.VRMXT_materials_stencil` |
+| Required sibling | `VRMC_materials_mtoon` on the same material |
+| Inner keys | `stencil`, `outlineStencil` |
+| Root `extensions` | not used |
+
+Do not flatten `op` onto the extension root.
+
+## Conformance
+
+This specification conforms to [VRMXT Conformance](../../core/vrmxt-conformance.md).
+
+## Normative requirements
+
+1. Files that use this extension MUST list `VRMXT_materials_stencil` in
+   `extensionsUsed`.
+2. The extension object MUST appear under
+   `materials[i].extensions.VRMXT_materials_stencil`.
+3. The same material MUST contain `extensions.VRMC_materials_mtoon`. If that sibling
+   is missing, a supporting implementation MUST ignore this extension on that material.
+4. The extension object MUST contain `specVersion` with value `"1.0"` for this draft.
+5. Files MUST NOT list `VRMXT_materials_stencil` in `extensionsRequired`.
+6. Implementations that do not support the extension MUST ignore it.
+7. The skippable units are the `stencil` and `outlineStencil` objects. Unresolvable
+   cases are listed under [Unresolvable objects](#unresolvable-objects). Invalid data
+   MUST NOT make the glTF or VRM 1.0 asset invalid.
+8. Unrecognized properties on the extension object MUST be ignored.
+9. When `VRMXT_materials_override` **applies** on the same material, a supporting
+   implementation MUST NOT apply this extension on that material.
+10. This extension does not require `VRMXT_materials_mtoonxt` on the same material.
+    `write` does not exist to trigger the mtoonxt shader-swap gate.
+11. If the same material has this extension **and** nested
+    `VRMXT_materials_mtoonxt.stencil` / `outlineStencil`, a supporting reader of this
+    extension MUST use this object and MUST ignore nested clip on that material.
+
+Unity (and any engine whose stock MToon has no coverage-clip pass): a supporting
+consumer of **this** extension MUST bind a shader that honors clip (typical:
+`VRMXT/MToonXT10`). That swap is stencil Apply. three-vrmxt maps clip onto Three.js
+material stencil state on stock MToon.
 
 ## Intention
 
@@ -56,7 +111,7 @@ Coverage clip is not:
 - a shade, rim, or alpha **texture** named mask
 
 Unity render-queue integers are not a stencil field. See
-[renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md)
+[renderQueueOffset](../../../references/research/mtoonxt-render-queue.md)
 (non-normative).
 
 ## Sibling `alphaMode`
@@ -90,15 +145,15 @@ Opaque or `MASK` write with a `BLEND` reader is in-order (writer first). That is
 the brow-write / hair-clip setup. Soft-alpha `BLEND` coverage stays binary: every
 fragment the pass shades stamps, including low alpha.
 
-A writer that misses the rank rule stays a valid extra. Hub rule 11 does not list
-`alphaMode`. Exporters SHOULD warn. Clip MAY miss.
+A writer that misses the rank rule stays a valid extra. Unresolvable cases do not
+include `alphaMode`. Exporters SHOULD warn. Clip MAY miss.
 
 ## Scope
 
 | Item | Value |
 |------|-------|
 | Extra names | `stencil`, `outlineStencil` |
-| Parent | `materials[i].extensions.VRMXT_materials_mtoonxt` |
+| Parent | `materials[i].extensions.VRMXT_materials_stencil` |
 | Meaning | coverage clip (`write` / `inside` / `insideOverlay` / `outside`) |
 
 `stencil` applies to the body / forward pass. `outlineStencil` applies to the outline
@@ -120,14 +175,16 @@ Files MUST NOT serialize GPU stencil or depth state on these objects: `enabled`,
 
 ### `write`
 
-Stamps coverage. `materials` MUST be absent. The material MUST have this extension so
-rule 7 can swap to MToonXT.
+Stamps coverage. `materials` MUST be absent. The material does not need
+`VRMXT_materials_mtoonxt`.
 
 ### `inside` / `insideOverlay` / `outside`
 
 Clip this material to the union (OR) of listed writers. `materials` MUST be a
 non-empty array of in-range indices. Each listed material MUST have body `stencil.op`
-`write`. A self-index is unresolvable (rule 11).
+`write` on **either** `VRMXT_materials_stencil.stencil` **or** (deprecated) nested
+`VRMXT_materials_mtoonxt.stencil`. If both exist on the writer, the both-present
+rule applies to that writer. A self-index is unresolvable.
 
 `inside` uses the stock MToon depth test: closer fragments in the depth buffer occlude
 this reader. Iris on sclera uses `inside`.
@@ -209,12 +266,12 @@ the coverage region.
 
 ### Unresolvable objects
 
-Skip that extra object only (hub rule 11):
+Skip that extra object only (rule 7):
 
 - missing or unrecognized `op`
 - two `inside` / `insideOverlay` / `outside` lists share a writer index but the sorted
   lists are not equal
-- listed writer without body `op` `write`
+- listed writer without body `op` `write` on either attach
 - out-of-range index
 - `write` with `materials`
 - `inside` / `insideOverlay` / `outside` without `materials`
@@ -222,8 +279,10 @@ Skip that extra object only (hub rule 11):
 
 ## Examples
 
-Non-normative. Same ops as `mirabunny2026_2.stencil_2.vrm` (White `3`, Iris `1`,
-Brow `4`, Hair `16`).
+Non-normative. Canonical sibling JSON. Shipping exporters still nest the same `stencil`
+objects on `VRMXT_materials_mtoonxt`.
+
+Same ops as `mirabunny2026_2.stencil_2.vrm` (White `3`, Iris `1`, Brow `4`, Hair `16`).
 
 - Iris `inside` White: draw iris only on sclera coverage.
 - Hair-Highlight `outside` Brow: skip highlight on brow coverage.
@@ -236,7 +295,7 @@ Brow `4`, Hair `16`).
     {
       "name": "Iris_Eye-NoRim.NoOutline.MatcapTexture",
       "extensions": {
-        "VRMXT_materials_mtoonxt": {
+        "VRMXT_materials_stencil": {
           "specVersion": "1.0",
           "stencil": { "op": "inside", "materials": [3] },
           "outlineStencil": { "op": "same" }
@@ -246,7 +305,7 @@ Brow `4`, Hair `16`).
     {
       "name": "White-NoRim.NoOutline",
       "extensions": {
-        "VRMXT_materials_mtoonxt": {
+        "VRMXT_materials_stencil": {
           "specVersion": "1.0",
           "stencil": { "op": "write" }
         }
@@ -255,7 +314,7 @@ Brow `4`, Hair `16`).
     {
       "name": "Brow_Face-NoRim",
       "extensions": {
-        "VRMXT_materials_mtoonxt": {
+        "VRMXT_materials_stencil": {
           "specVersion": "1.0",
           "stencil": { "op": "write" },
           "outlineStencil": { "op": "write" }
@@ -265,7 +324,7 @@ Brow `4`, Hair `16`).
     {
       "name": "Hair-Highlight",
       "extensions": {
-        "VRMXT_materials_mtoonxt": {
+        "VRMXT_materials_stencil": {
           "specVersion": "1.0",
           "stencil": { "op": "outside", "materials": [4] },
           "outlineStencil": { "op": "same" }
@@ -290,7 +349,7 @@ through a leg).
     {
       "name": "Swimsuit",
       "extensions": {
-        "VRMXT_materials_mtoonxt": {
+        "VRMXT_materials_stencil": {
           "specVersion": "1.0",
           "stencil": { "op": "write" }
         }
@@ -299,7 +358,7 @@ through a leg).
     {
       "name": "Skeleton",
       "extensions": {
-        "VRMXT_materials_mtoonxt": {
+        "VRMXT_materials_stencil": {
           "specVersion": "1.0",
           "stencil": {
             "op": "insideOverlay",
@@ -322,7 +381,7 @@ object fields; export writes indices. Warudo uses JSON only.
 UniVRMXT Apply then leases a per-root GPU `Ref` offset so two loaded avatars do not
 share file-local 1 on the same camera stencil (`VrmxtMaterialsMtoonxtStencilRefs`).
 That offset is not serialized. See
-[Unity MToonXT stencil Ref offset](../../../../references/research/mtoonxt-stencil-ref-offset.md).
+[Unity MToonXT stencil Ref offset](../../../references/research/mtoonxt-stencil-ref-offset.md).
 
 ## GPU stencil consumer (non-normative)
 
@@ -347,13 +406,16 @@ when clip is off.
 
 Unity pass notes: BIRP ForwardAdd uses body clip; ShadowCaster has none. URP
 UniversalForward uses body clip; DepthOnly / DepthNormals / ShadowCaster have none.
-See [MToon10 stencil shader fork](../../../../references/research/mtoon10-stencil-shader-fork.md).
+See [MToon10 stencil shader fork](../../../references/research/mtoon10-stencil-shader-fork.md).
 
 ## Related
 
-- [VRMXT_materials_mtoonxt](README.md)
-- [MToonXT renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md) (non-normative)
-- [MToonXT zTest](../../../../references/research/mtoonxt-ztest.md) (non-normative)
-- [MToonXT zWrite](../../../../references/research/mtoonxt-zwrite.md) (non-normative)
-- [MToon10 stencil shader fork](../../../../references/research/mtoon10-stencil-shader-fork.md)
-- [Unity MToonXT stencil Ref offset](../../../../references/research/mtoonxt-stencil-ref-offset.md) (non-normative)
+- [VRMXT Conformance](../../core/vrmxt-conformance.md)
+- [VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md)
+- [VRMXT_materials_face_sdf](vrmxt-materials-face-sdf.md)
+- [Architecture Naming](../../../architecture.md#naming)
+- [MToonXT renderQueueOffset](../../../references/research/mtoonxt-render-queue.md) (non-normative)
+- [MToonXT zTest](../../../references/research/mtoonxt-ztest.md) (non-normative)
+- [MToonXT zWrite](../../../references/research/mtoonxt-zwrite.md) (non-normative)
+- [MToon10 stencil shader fork](../../../references/research/mtoon10-stencil-shader-fork.md)
+- [Unity MToonXT stencil Ref offset](../../../references/research/mtoonxt-stencil-ref-offset.md) (non-normative)

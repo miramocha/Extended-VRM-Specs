@@ -262,7 +262,7 @@ prop on preview helpers alongside its own `vrmxt_vfx_preview` lifecycle tag.
 
 ## MToonXT stencil
 
-Authoring for `VRMXT_materials_mtoonxt` `stencil` / `outlineStencil` is on the Blender material (`vrmxt_mtoonxt_settings`). Ops: `write`, `inside`, `insideOverlay`, `outside`, outline `same`. The stencil UI sits under **VRMXT Material** (same parent as materials override). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices. GPU `ref` / `comp` / `pass` are not stored. Face SDF, `zTest`, `zWrite`, and XT `renderQueueOffset` stay out of this add-on.
+Authoring for `VRMXT_materials_mtoonxt` `stencil` / `outlineStencil` is on the Blender material (`vrmxt_mtoonxt_settings`). Ops: `write`, `inside`, `insideOverlay`, `outside`, outline `same`. Field tables: [VRMXT_materials_stencil](../specs/extensions/materials/vrmxt-materials-stencil.md). The add-on still nests those objects on `VRMXT_materials_mtoonxt`; it does not emit `VRMXT_materials_stencil`. The stencil UI sits under **VRMXT Material** (same parent as materials override). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices. GPU `ref` / `comp` / `pass` are not stored. `VRMXT_materials_face_sdf`, `zTest`, `zWrite`, and XT `renderQueueOffset` stay out of this add-on.
 
 EEVEE has no stencil buffer; the viewport does not clip. The panel warns when a writer is Transparent (or Cutout vs Opaque) and a clip reader would draw earlier under Unity's mapped queues. Outline **Same as body** is hidden while body is Off; export drops outline `same` when body stencil is missing.
 
@@ -277,7 +277,7 @@ Hooks: `mtoonxt/import_hook.py`, `mtoonxt/export_hook.py`, registered from `hook
 - [x] Import indices → pointers; export pointers → indices
 - [x] Skip export when sibling MToon is missing; skip clip object when writers are not body `write`
 - [x] Warn when Unity queue would stamp a writer after a clip reader; hide / drop outline `same` when body is Off
-- [ ] Face SDF extras
+- [ ] `VRMXT_materials_face_sdf` extras
 
 ## Materials override
 

@@ -50,7 +50,7 @@ buffer (Three.js r163+).
 
 | Extension | Status |
 |-----------|--------|
-| `VRMXT_materials_mtoonxt` stencil | Claimed: map extras onto Three.js material stencil state. Face SDF later. `apps/viewer` Import + Create/edit + Export. |
+| `VRMXT_materials_mtoonxt` stencil | Claimed: map extras onto Three.js material stencil state. `VRMXT_materials_face_sdf` later. `apps/viewer` Import + Create/edit + Export. |
 | `VRMXT_sprite_particle` | Claimed: instanced camera-facing quads; `tryAttach` + viewer update loop |
 | Export write | Claimed for `apps/viewer` MToonXT stencil (GLB JSON patch). Never `extensionsRequired`. |
 
@@ -170,7 +170,9 @@ WebGL vs WebGPU material choice is **TBD**. Prefer one MVP path (likely WebGL
 
 ## MToonXT stencil (claimed)
 
-Spec: [VRMXT_materials_mtoonxt stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
+Spec: field tables on [VRMXT_materials_stencil](../specs/extensions/materials/vrmxt-materials-stencil.md).
+This library reads nested `VRMXT_materials_mtoonxt` `stencil` / `outlineStencil`. It
+does not emit `VRMXT_materials_stencil`.
 
 After stock MToon materials exist, read per-material `VRMXT_materials_mtoonxt` stencil /
 `outlineStencil` extras and set Three.js material stencil state so writer / reader
@@ -178,7 +180,7 @@ coverage matches the spec intention (`write`, `inside`, `insideOverlay`, `outsid
 outline `same`). GPU stencil requires `WebGLRenderer` constructed with stencil
 enabled.
 
-Face SDF stays later. lilToon / Poiyomi `VRMXT_materials_override` is out of scope
+`VRMXT_materials_face_sdf` stays later. lilToon / Poiyomi `VRMXT_materials_override` is out of scope
 in this library.
 
 ## Export
@@ -224,6 +226,8 @@ Minimum coverage:
 ## Related
 
 - [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
+- [VRMXT_materials_stencil](../specs/extensions/materials/vrmxt-materials-stencil.md)
+- [VRMXT_materials_face_sdf](../specs/extensions/materials/vrmxt-materials-face-sdf.md)
 - [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
 - [VRMXT three-vrm web viewer](../decisions/vrmxt-three-vrm-web-viewer.md)
 - [VRMXT web viewer](vrmxt-web-viewer.md)
@@ -246,4 +250,4 @@ Minimum coverage:
 | Unknown `specVersion` policy | TBD (shared with base spec) |
 | Trigger / play mode | TBD |
 | three.js export | Claimed for viewer stencil; other extras later |
-| Face SDF on Three.js | Later |
+| `VRMXT_materials_face_sdf` on Three.js | Later |

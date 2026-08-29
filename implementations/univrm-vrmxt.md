@@ -386,10 +386,11 @@ path is post-load re-read of the `.vrm` plus material swap. See
 ## MToonXT
 
 Spec: [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
-([stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)).
+([stencil](../specs/extensions/materials/vrmxt-materials-stencil.md)).
 
-UniVRMXT parses `materials[i].extensions.VRMXT_materials_mtoonxt`, attaches extras, and
-swaps to packaged `VRMXT/MToonXT10` or `VRMXT/Universal Render Pipeline/MToonXT10` when
+UniVRMXT parses `materials[i].extensions.VRMXT_materials_mtoonxt`, attaches nested
+clip extras, and swaps to packaged `VRMXT/MToonXT10` or
+`VRMXT/Universal Render Pipeline/MToonXT10` when
 `Shader.Find` (or host `ShaderResolveProvider`) resolves. After swap it restores MToon
 pass settings from `_AlphaMode` and applies compiled stencil (`op` + material indices).
 `insideOverlay` uses the same stencil mapping as `inside` and sets `_M_ZTest` Always
@@ -397,7 +398,7 @@ plus `_M_ZWrite` off (queue one slot after mapped). Always paints over earlier c
 in the stamp (avatar-opaque hands). Later cutout (`MASK`) or transparent draws can
 still cover the bones. A `MASK` overlay reader runs after Unity AlphaTest 2450.
 Tradeoffs and host redraw options:
-[`insideOverlay` tradeoffs](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs).
+[`insideOverlay` tradeoffs](../specs/extensions/materials/vrmxt-materials-stencil.md#insideoverlay-tradeoffs).
 `MtoonxtInspector` authors stencil ops and writer lists as Unity fields on the instance.
 The inspector warns when Write `_AlphaMode` is a later MToon bucket than a clip reader
 (Transparent Write vs Cutout or Opaque; Cutout Write vs Opaque).
