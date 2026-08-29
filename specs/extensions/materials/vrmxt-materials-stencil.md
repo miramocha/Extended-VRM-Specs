@@ -413,6 +413,7 @@ See [MToon10 stencil shader fork](../../../references/research/mtoon10-stencil-s
 - [VRMXT Conformance](../../core/vrmxt-conformance.md)
 - [VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md)
 - [VRMXT_materials_face_sdf](vrmxt-materials-face-sdf.md)
+- [VRMXT_materials_directional_dissolve](vrmxt-materials-directional-dissolve.md)
 - [Architecture Naming](../../../architecture.md#naming)
 - [MToonXT renderQueueOffset](../../../references/research/mtoonxt-render-queue.md) (non-normative)
 - [MToonXT zTest](../../../references/research/mtoonxt-ztest.md) (non-normative)

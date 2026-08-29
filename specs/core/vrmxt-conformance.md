@@ -68,7 +68,8 @@ A sibling extra on the same glTF object as a stock `VRMC_*` extension is still a
 underscore: `VRMXT_materials_mtoonxt` on `materials[i].extensions` beside
 `VRMC_materials_mtoon`; `VRMXT_springBonext` on root `extensions` beside
 `VRMC_springBone`. MToon feature extras use their own names on the same sit-site:
-`VRMXT_materials_stencil`, `VRMXT_materials_face_sdf`. Third-party replace names
+`VRMXT_materials_stencil`, `VRMXT_materials_face_sdf`,
+`VRMXT_materials_directional_dissolve`. Third-party replace names
 use `_override`: `VRMXT_materials_override`, `VRMXT_springBone_override`. See
 [Architecture Naming](../../architecture.md#naming).
 
@@ -90,8 +91,8 @@ cited by that capability specification.
 
 Partial support for a capability MUST be documented by the implementation profile. It
 MUST NOT be presented as full support for that capability. Claiming
-`VRMXT_materials_mtoonxt` does not claim `VRMXT_materials_stencil` or
-`VRMXT_materials_face_sdf`.
+`VRMXT_materials_mtoonxt` does not claim `VRMXT_materials_stencil`,
+`VRMXT_materials_face_sdf`, or `VRMXT_materials_directional_dissolve`.
 
 ## Versioning
 
@@ -108,6 +109,7 @@ are future work. They do not block experimental use of the family rules above.
 - [VRMXT_materials_mtoonxt](../extensions/materials/vrmxt-materials-mtoonxt/README.md)
 - [VRMXT_materials_stencil](../extensions/materials/vrmxt-materials-stencil.md)
 - [VRMXT_materials_face_sdf](../extensions/materials/vrmxt-materials-face-sdf.md)
+- [VRMXT_materials_directional_dissolve](../extensions/materials/vrmxt-materials-directional-dissolve.md)
 - [VRMXT_springBonext](../extensions/physics/vrmxt-springbonext/README.md)
 - [VRMXT_springBone_override](../extensions/physics/vrmxt-spring-bone-override.md)
 - [VRMXT_sprite_particle](../extensions/vfx/vrmxt-sprite-particle.md)

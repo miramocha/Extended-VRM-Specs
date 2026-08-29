@@ -20,8 +20,10 @@ Per-material glTF extension. Optional swap from stock VRM 1.0 MToon to an MToonX
 shader on the same `materials[]` entry as `VRMC_materials_mtoon`.
 
 Coverage clip canonical attach is [VRMXT_materials_stencil](../vrmxt-materials-stencil.md).
-Face shade lookup is [VRMXT_materials_face_sdf](../vrmxt-materials-face-sdf.md). Those
-are separate `extensionsUsed` names. Do not nest new MToon extras on this object.
+Face shade lookup is [VRMXT_materials_face_sdf](../vrmxt-materials-face-sdf.md).
+Directional dissolve is
+[VRMXT_materials_directional_dissolve](../vrmxt-materials-directional-dissolve.md).
+Those are separate `extensionsUsed` names. Do not nest new MToon extras on this object.
 
 This document is an Extended VRM draft. It is not a VRM Consortium specification.
 
@@ -76,7 +78,7 @@ This specification conforms to [VRMXT Conformance](../../../core/vrmxt-conforman
    - apply shade, outline, UV animation, and other stock MToon state from the sibling
      `VRMC_materials_mtoon` using the same mapping it already uses for stock MToon.
    Nested `stencil` / `outlineStencil` follow [Legacy nested stencil](#legacy-nested-stencil).
-   Face SDF is not an extra on this object.
+   Face SDF and directional dissolve are not extras on this object.
 9. When rule 7 does not hold, the implementation MUST keep stock MToon for that material
    and MUST NOT apply nested clip extras from this object.
 10. The skippable unit is this material's `VRMXT_materials_mtoonxt` object. Invalid data
@@ -92,7 +94,11 @@ This specification conforms to [VRMXT Conformance](../../../core/vrmxt-conforman
 14. When `VRMXT_materials_override` **applies** on the same material (engine selected,
     material definition resolved, required shader or parent present), a supporting
     implementation MUST use that override and MUST NOT swap to MToonXT on that material.
-    It MUST NOT apply nested clip on that material. If the override is absent, is for
+    It MUST NOT apply nested clip on that material. Sibling
+    [VRMXT_materials_stencil](../vrmxt-materials-stencil.md),
+    [VRMXT_materials_face_sdf](../vrmxt-materials-face-sdf.md), and
+    [VRMXT_materials_directional_dissolve](../vrmxt-materials-directional-dissolve.md)
+    on that material follow those specs' override-skip rules. If the override is absent, is for
     another engine, or fails to resolve, the implementation MUST run rules 7–9.
 15. The glTF file MUST NOT embed MToonXT shader source. Resolution is local to the
     consumer (shipped package, UMod, or equivalent).
@@ -116,9 +122,12 @@ flowchart TD
   mtoon --> stock
 ```
 
-Stencil and Face SDF are sibling extensions on the same material. Override Apply skips
-swap, [VRMXT_materials_stencil](../vrmxt-materials-stencil.md), and
-[VRMXT_materials_face_sdf](../vrmxt-materials-face-sdf.md) on that material.
+Stencil, Face SDF, and directional dissolve are sibling extensions on the same
+material. Override Apply skips swap,
+[VRMXT_materials_stencil](../vrmxt-materials-stencil.md),
+[VRMXT_materials_face_sdf](../vrmxt-materials-face-sdf.md), and
+[VRMXT_materials_directional_dissolve](../vrmxt-materials-directional-dissolve.md)
+on that material.
 
 ## Fields
 
@@ -203,8 +212,9 @@ That path is stencil Apply, not this load gate.
 - Core glTF material fields remain the portable base.
 - `VRMC_materials_mtoon` remains the VRM 1.0 toon material when present.
 - `VRMXT_materials_mtoonxt` is a sibling under `materials[i].extensions`. It does not
-  replace MToon JSON. It does not carry Face SDF.
-- `VRMXT_materials_stencil` and `VRMXT_materials_face_sdf` are separate siblings.
+  replace MToon JSON. It does not carry Face SDF or directional dissolve.
+- `VRMXT_materials_stencil`, `VRMXT_materials_face_sdf`, and
+  `VRMXT_materials_directional_dissolve` are separate siblings.
 - `VRMXT_materials_override` is a separate sibling. When it applies, it wins (rule 14).
 - `KHR_materials_unlit` and core PBR follow existing VRM 1.0 material precedence when
   `VRMC_materials_mtoon` is absent; this extension then does not apply (rule 3).
@@ -228,6 +238,7 @@ Face SDF open questions live on [VRMXT_materials_face_sdf](../vrmxt-materials-fa
 - [VRMXT_materials_override](../vrmxt-materials-override.md)
 - [VRMXT_materials_stencil](../vrmxt-materials-stencil.md)
 - [VRMXT_materials_face_sdf](../vrmxt-materials-face-sdf.md)
+- [VRMXT_materials_directional_dissolve](../vrmxt-materials-directional-dissolve.md)
 - [Architecture Naming](../../../../architecture.md#naming)
 - [VRMXT_springBonext](../../physics/vrmxt-springbonext/README.md) (same `…xt` role)
 - [MToonXT renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md) (non-normative)

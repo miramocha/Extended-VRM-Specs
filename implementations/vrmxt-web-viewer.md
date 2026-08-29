@@ -22,7 +22,8 @@ Standalone Vite host in [miramocha/three-vrmxt](https://github.com/miramocha/thr
 ships). Product decision:
 [VRMXT three-vrm web viewer](../decisions/vrmxt-three-vrm-web-viewer.md).
 
-This is a **view + stencil editor** surface. `VRMXT_materials_face_sdf` and materials override stay
+This is a **view + stencil editor** surface. `VRMXT_materials_face_sdf`,
+`VRMXT_materials_directional_dissolve`, and materials override stay
 out of this host. Sprite VFX plays when the file has `VRMXT_sprite_particle`.
 Create/edit/Export for stencil follow
 [VRMXT Editor](vrmxt-editor.md).
@@ -105,7 +106,7 @@ rebuilds the GLB.
 - Unity WebGL iframe ([superseded Unity WebGL notes](unity-webgl-vrmxt-viewer.md))
 - Desktop Unity Player features ([Unity Player](vrmxt-unity-player.md))
 - lilToon / Poiyomi in the browser
-- `VRMXT_materials_face_sdf`, materials-override authoring
+- `VRMXT_materials_face_sdf`, `VRMXT_materials_directional_dissolve`, materials-override authoring
 
 ## Related
 

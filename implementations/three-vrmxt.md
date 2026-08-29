@@ -50,7 +50,8 @@ buffer (Three.js r163+).
 
 | Extension | Status |
 |-----------|--------|
-| `VRMXT_materials_mtoonxt` stencil | Claimed: map extras onto Three.js material stencil state. `VRMXT_materials_face_sdf` later. `apps/viewer` Import + Create/edit + Export. |
+| `VRMXT_materials_mtoonxt` stencil | Claimed: map extras onto Three.js material stencil state. `VRMXT_materials_face_sdf` and `VRMXT_materials_directional_dissolve` later. `apps/viewer` Import + Create/edit + Export. |
+| `VRMXT_materials_directional_dissolve` | Not claimed. MiraSite `heightWipe.ts` is a world-Y host patch; it is not this extra on disk. |
 | `VRMXT_sprite_particle` | Claimed: instanced camera-facing quads; `tryAttach` + viewer update loop |
 | Export write | Claimed for `apps/viewer` MToonXT stencil (GLB JSON patch). Never `extensionsRequired`. |
 
@@ -180,7 +181,7 @@ coverage matches the spec intention (`write`, `inside`, `insideOverlay`, `outsid
 outline `same`). GPU stencil requires `WebGLRenderer` constructed with stencil
 enabled.
 
-`VRMXT_materials_face_sdf` stays later. lilToon / Poiyomi `VRMXT_materials_override` is out of scope
+`VRMXT_materials_face_sdf` and `VRMXT_materials_directional_dissolve` stay later. lilToon / Poiyomi `VRMXT_materials_override` is out of scope
 in this library.
 
 ## Export
@@ -228,6 +229,7 @@ Minimum coverage:
 - [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 - [VRMXT_materials_stencil](../specs/extensions/materials/vrmxt-materials-stencil.md)
 - [VRMXT_materials_face_sdf](../specs/extensions/materials/vrmxt-materials-face-sdf.md)
+- [VRMXT_materials_directional_dissolve](../specs/extensions/materials/vrmxt-materials-directional-dissolve.md)
 - [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
 - [VRMXT three-vrm web viewer](../decisions/vrmxt-three-vrm-web-viewer.md)
 - [VRMXT web viewer](vrmxt-web-viewer.md)
@@ -251,3 +253,4 @@ Minimum coverage:
 | Trigger / play mode | TBD |
 | three.js export | Claimed for viewer stencil; other extras later |
 | `VRMXT_materials_face_sdf` on Three.js | Later |
+| `VRMXT_materials_directional_dissolve` on Three.js | Later |

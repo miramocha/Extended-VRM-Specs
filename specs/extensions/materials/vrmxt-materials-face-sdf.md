@@ -18,8 +18,9 @@ status: draft
 
 Per-material glTF extension. Face shade lookup for a VRM 1.0 MToon material. Sibling
 of `VRMC_materials_mtoon` on the same `materials[]` entry. Independent of
-[VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md) and
-[VRMXT_materials_stencil](vrmxt-materials-stencil.md).
+[VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md),
+[VRMXT_materials_stencil](vrmxt-materials-stencil.md), and
+[VRMXT_materials_directional_dissolve](vrmxt-materials-directional-dissolve.md).
 
 This document is an Extended VRM draft. It is not a VRM Consortium specification.
 
@@ -141,5 +142,6 @@ Non-normative. Texture `4` is the Face SDF map.
 - [VRMXT Conformance](../../core/vrmxt-conformance.md)
 - [VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md)
 - [VRMXT_materials_stencil](vrmxt-materials-stencil.md)
+- [VRMXT_materials_directional_dissolve](vrmxt-materials-directional-dissolve.md)
 - [VRMC_materials_mtoon 1.0](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_materials_mtoon-1.0/README.md)
 - [Architecture Naming](../../../architecture.md#naming)

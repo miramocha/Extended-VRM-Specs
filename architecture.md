@@ -102,7 +102,7 @@ MUST NOT appear in `extensionsRequired`.
   | Role | Recipe | Materials | Spring |
   |------|--------|-----------|--------|
   | Family fork | `VRMXT_` + stock stem + `xt` (no extra underscore) | `VRMXT_materials_mtoonxt` (MToonXT shader swap) | `VRMXT_springBonext` |
-  | Feature extra | `VRMXT_` + domain + feature stem | `VRMXT_materials_stencil`, `VRMXT_materials_face_sdf` | (none yet) |
+  | Feature extra | `VRMXT_` + domain + feature stem | `VRMXT_materials_stencil`, `VRMXT_materials_face_sdf`, `VRMXT_materials_directional_dissolve` | (none yet) |
   | Third-party replace | `VRMXT_` + domain + `_override` | `VRMXT_materials_override` | `VRMXT_springBone_override` |
 
   Stock spring also uses Consortium
@@ -111,23 +111,23 @@ MUST NOT appear in `extensionsRequired`.
 
   Family fork stays in the VRM shading or spring family (MToonXT shader swap;
   springBonext solver). MToon **feature** extras (`VRMXT_materials_stencil`,
-  `VRMXT_materials_face_sdf`) are their own `VRMXT_*` names on
+  `VRMXT_materials_face_sdf`, `VRMXT_materials_directional_dissolve`) are their own `VRMXT_*` names on
   `materials[i].extensions`. Do not nest new MToon extras on `mtoonxt`. Nested
   `stencil` / `outlineStencil` on `mtoonxt` remain defined for shipped files; that
   attach is deprecated. `_override` selects an engine backend (lilToon, Poiyomi,
   MagicaCloth2, PhysBone). Override JSON stores ids and parameters; it MUST NOT
   embed host SDK component types. Override names use the domain (`materials`,
   `springBone`) because Apply replaces the slot's runtime (shader or solver).
-- Sit-site follows the stock object. MToon, MToonXT, stencil, Face SDF, and materials
-  override sit on `materials[i].extensions`. `VRMC_springBone`, `VRMXT_springBonext`, and
+- Sit-site follows the stock object. MToon, MToonXT, stencil, Face SDF, directional
+  dissolve, and materials override sit on `materials[i].extensions`. `VRMC_springBone`, `VRMXT_springBonext`, and
   `VRMXT_springBone_override` sit on root `extensions`.
   `VRMC_springBone_extended_collider` sits on
   `VRMC_springBone.colliders[i].extensions`. Springs have no glTF core object; XT
   and override index `VRMC_springBone.springs[]`. Do not write `VRMXT_*` on
   `springs[i].extensions` (stock export may drop unknown keys).
 - If `_override` Apply succeeds on that material or spring, skip the `…xt` fork and
-  the MToon feature extras (`VRMXT_materials_stencil`, `VRMXT_materials_face_sdf`)
-  for that item. Fail or absent override → run those gates → else stock `VRMC_*`.
+  the MToon feature extras (`VRMXT_materials_stencil`, `VRMXT_materials_face_sdf`,
+  `VRMXT_materials_directional_dissolve`) for that item. Fail or absent override → run those gates → else stock `VRMC_*`.
 - Inner JSON keys (fields inside the extension object) are unprefixed camelCase
   (`specVersion`, `stencil`, `outlineStencil`, `sdfTexture`). Do not prefix
   properties `VRMC_` or `VRMXT_`.
@@ -142,6 +142,8 @@ MUST NOT appear in `extensionsRequired`.
   `VRMXT_materials_stencil`.
   `specs/extensions/materials/vrmxt-materials-face-sdf.md` →
   `VRMXT_materials_face_sdf`.
+  `specs/extensions/materials/vrmxt-materials-directional-dissolve.md` →
+  `VRMXT_materials_directional_dissolve`.
 - Code types SHOULD use `Vrmxt*` / `vrmxt_*` for Extended types. Stock UniVRM/MToon10
   shader includes keep `vrmc_materials_mtoon_*.hlsl`.
 - ShaderLab product names may stay `VRMXT/...`. That is not a glTF key.
