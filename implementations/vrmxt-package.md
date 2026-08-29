@@ -1,7 +1,7 @@
 ---
 title: VRMXT Package implementation
 aliases:
-  - @vrmxt/package
+  - "@vrmxt/package"
   - VRMXTPKG SDK
 tags:
   - extended-vrm
