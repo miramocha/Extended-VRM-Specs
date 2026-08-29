@@ -46,7 +46,8 @@ Not started. Same Payload JSON; native geometry APIs. No requirement to produce 
 - Header/magic reject GLB
 - Encrypt/decrypt round-trip
 - Signature tamper
-- Expired session → 410
+- Expired **session** → 410
+- Static package loads without gateway; keys in index
 - No assembled GLB in tests that hook the loader
 - `GLTFExporter` / known VRM exporters fail or yield non-loadable output
 - Expression presets `blink` / `aa` / `oh` when present in source

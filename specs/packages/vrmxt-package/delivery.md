@@ -13,11 +13,22 @@ status: draft
 
 # VRMXT Package Delivery
 
-Provider-neutral HTTP contract for anonymous, time-limited access to protected packages.
-Conforms to [VRMXT Package Format](README.md). Transport adapters (Cloudflare, Node,
+Provider-neutral access to protected packages. Conforms to
+[VRMXT Package Format](README.md). Transport adapters (Cloudflare, Node,
 Vite middleware) are non-normative.
 
-## Roles
+Index field `delivery.profile`:
+
+| Value | Keys | Expiry |
+|-------|------|--------|
+| `session` (default if omitted) | Gateway wrap; not in the file | Session `expiresAt` (gateway clock). **The file does not expire.** |
+| `static` | `embeddedChunkKeys` in the signed index | None. File is self-contained. |
+
+The rest of this document is the **session** HTTP contract. `static` packages MUST NOT
+require these endpoints. A consumer MUST load `static` packages from the file alone
+after signature verification.
+
+## Roles (session)
 
 | Role | Owns |
 |------|------|
@@ -25,8 +36,16 @@ Vite middleware) are non-normative.
 | Gateway | Session, server time, key wrap, authorization |
 | Chunk store | Encrypted bytes; no long-lived public ACLs |
 
-The client MUST NOT receive reusable content keys or unsigned storage URLs that outlive
-the session.
+The session client MUST NOT receive reusable content keys or unsigned storage URLs that
+outlive the session.
+
+## Static profile
+
+No `POST /v1/session`. No TTL. Watermark variant MAY be chosen locally (any variant
+whose key is in `embeddedChunkKeys`). Forensic session binding does not apply.
+
+Distributors MUST assume the ciphertext is public. Use `session` when keys must stay
+off static hosts (GitHub Pages cannot run this gateway).
 
 ## Session
 

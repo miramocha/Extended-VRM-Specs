@@ -34,7 +34,7 @@ VRM Animation (`.vrma`) is out of scope for format version 1.
 | [Container](container.md) | Header, index, chunks, codecs |
 | [Payload](payload.md) | Scene graph, mesh, material, VRM 1.0 semantics |
 | [Protection](protection.md) | Signatures, encryption, key wrapping |
-| [Delivery](delivery.md) | Anonymous session, expiry, chunk fetch |
+| [Delivery](delivery.md) | Session gateway **or** static (non-expiring) packages |
 | [Runtime](runtime.md) | Incremental load, facade, anti-reexport |
 | [Watermark](watermark.md) | Forensic carrier variants |
 | [Security](security.md) | Threat model and residual attacks |
@@ -50,12 +50,16 @@ A native engine MAY implement Container + Payload only.
 | Container | [container.md](container.md) | Parse `.vrmxtpkg` |
 | Payload | [payload.md](payload.md) | Avatar semantics without reconstructing VRM bytes |
 | Protection | [protection.md](protection.md) | Encrypted distribution |
-| Delivery | [delivery.md](delivery.md) | Time-limited keys and private chunks |
+| Delivery | [delivery.md](delivery.md) | Time-limited keys **or** static embedded keys |
 | Runtime | [runtime.md](runtime.md) | Engine-specific construction rules |
 | Watermark | [watermark.md](watermark.md) | Optional forensic variants |
 
-Protection and Delivery MAY be omitted for local compiler tests. A production web
-distribution that claims protection MUST implement both.
+Index `delivery.profile` is `"session"` (default) or `"static"`.
+
+- **session:** content keys stay off the file; a gateway wraps them with a TTL. The `.vrmxtpkg` bytes do not expire; **wraps and chunk authorization** do.
+- **static:** content keys are embedded in the signed index. The file is self-contained and does not expire. Anyone who can fetch the file can decrypt. Use for local apps, GitHub Pages, and other hosts with no session service.
+
+A production web distribution that claims **session** protection MUST implement Protection and the HTTP Delivery contract. A **static** package MUST still set `ENCRYPTED` and MUST document that encryption is obfuscation, not access control.
 
 ## Relationship to VRM and VRMXT
 

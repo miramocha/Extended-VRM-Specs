@@ -34,7 +34,7 @@ Threat model for `.vrmxtpkg`. Non-secret. Conforms to
 True non-delivery of mesh data requires **remote rendering**. That is a different
 product.
 
-## Properties we claim (when Protection + Delivery are used)
+## Properties we claim (when Protection + **session** Delivery are used)
 
 | Claim | Mechanism |
 |-------|-----------|
@@ -43,6 +43,17 @@ product.
 | Keys not in the static file | Private key metadata |
 | Stock re-export fails | [Runtime](runtime.md) facade + attribute swizzle |
 | Leaks may be cohort-traceable | [Watermark](watermark.md) |
+
+## Properties we claim (when Protection + **static** Delivery are used)
+
+| Claim | Mechanism |
+|-------|-----------|
+| No public VRM/GLB header | Container magic, encrypted chunks |
+| File does not expire | No session; keys live in the signed index |
+| Stock re-export fails | Same runtime facade |
+
+Static packages do **not** claim that keys are absent from the download. Anyone with
+the `.vrmxtpkg` can decrypt.
 
 ## Properties we do not claim
 

@@ -20,7 +20,8 @@ Engine profiles add API names. Conforms to [VRMXT Package Format](README.md).
 ## Incremental construction
 
 1. Verify header, signature, and index ([Container](container.md)).
-2. Obtain keys if `ENCRYPTED` ([Delivery](delivery.md)).
+2. Obtain keys: `embeddedChunkKeys` when `delivery.profile` is `"static"`, otherwise
+   [Delivery](delivery.md) session wrap.
 3. Fetch chunks concurrently (suggested 4–12).
 4. Decrypt and authenticate one chunk at a time ([Protection](protection.md)).
 5. Decompress / meshopt / KTX2-decode into engine buffers.

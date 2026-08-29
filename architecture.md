@@ -97,7 +97,9 @@ MUST NOT appear in `extensionsRequired`.
 
 Optional **compiled distribution** is a separate file, [VRMXT Package](specs/packages/vrmxt-package/README.md)
 (`.vrmxtpkg`). It is not glTF, MUST NOT use `extensionsUsed`, and MUST NOT replace
-authoring `.vrm`. Stock VRM tools are not required to open it. Decision:
+authoring `.vrm`. Delivery is `session` (gateway TTL; file itself does not expire) or
+`static` (keys in the signed index; no expiry, no gateway). Stock VRM tools are not
+required to open it. Decision:
 [VRMXT Package container format](decisions/vrmxt-package-container.md).
 
 ### Naming

@@ -37,7 +37,7 @@ Public. No secret material.
 |----------|------|----------|---------|
 | `chunkSeal` | string | yes | `"aes-256-gcm"` |
 | `indexSign` | string | yes | `"ed25519"` |
-| `keyWrap` | string | yes | `"ecdh-p256-hkdf-sha256-aes-256-gcm"` |
+| `keyWrap` | string | yes | `"ecdh-p256-hkdf-sha256-aes-256-gcm"` (`session`) or `"embedded"` (`static`) |
 | `nonceSize` | integer | yes | `12` for AES-GCM |
 | `tagSize` | integer | yes | `16` |
 
@@ -54,7 +54,9 @@ For each encrypted chunk:
 AAD MUST be the UTF-8 string `vrmxtpkg:v1:` plus `chunk.id`.
 Changing AAD MUST fail authentication.
 
-## Key metadata (private)
+## Key metadata
+
+### `session` profile
 
 Not shipped in `.vrmxtpkg`. Held by the gateway / HSM:
 
@@ -65,22 +67,39 @@ Not shipped in `.vrmxtpkg`. Held by the gateway / HSM:
 | `variantKeys[]` | optional per watermark variant |
 | `signingPrivateKey` | Ed25519 for index (may be offline) |
 
+### `static` profile
+
+Content keys are copied into the **signed** index as `embeddedChunkKeys`.
+They NEVER expire. This is not authorization: the ciphertext is only a speed bump
+against opening the file as `.vrm` / GLB. WASM or minification MUST NOT be treated
+as protecting these keys.
+
+A `static` index MUST set `delivery.profile` to `"static"` and `protection.keyWrap`
+to `"embedded"`. A `session` index MUST NOT contain `embeddedChunkKeys`.
+
 ## Wrapping
 
-The browser generates an ephemeral P-256 key pair for the session
+**session:** The browser generates an ephemeral P-256 key pair
 ([Delivery](delivery.md)). The gateway wraps selected `chunkKeys` to that public key.
 Wrapped keys MUST be bound to `sessionId`, `packageId`, and expiry.
 
-A consumer MUST treat content keys as session-scoped. It SHOULD use non-extractable
+**static:** No wrap. The loader reads `embeddedChunkKeys` after signature verify.
+
+A consumer MUST treat content keys as sensitive RAM. It SHOULD use non-extractable
 `CryptoKey` objects where the platform allows. It MUST clear plaintext chunk buffers
 after GPU/runtime upload.
 
 ## Expiry
 
-Expiry is enforced by the **gateway clock**, not the client clock.
-After expiry, the gateway MUST refuse wrap and chunk fetch.
+The `.vrmxtpkg` file has no expiry field.
+
+**session:** Wrap/chunk authorization is enforced by the **gateway clock**, not the
+client clock. After session `expiresAt`, the gateway MUST refuse wrap and chunk fetch.
 A client that already holds plaintext or keys can keep using them; Protection does not
-revoke RAM. See [Delivery](delivery.md) and [Security](security.md).
+revoke RAM.
+
+**static:** There is no session. Keys in the file remain valid for the life of that
+file (until the distributor replaces it and rotates keys by recompiling).
 
 ## Compiler / test packages
 
@@ -91,7 +110,8 @@ unless the distributor accepts that anyone with the file can decode Payload.
 
 1. Encrypted production packages MUST set container flag `ENCRYPTED`.
 2. The signed index MUST NOT contain content keys, wrap keys, or raw nonces reused
-   across chunks.
+   across chunks, **unless** `delivery.profile` is `"static"` (then `embeddedChunkKeys`
+   is required and is not secret).
 3. Each chunk MUST use a unique nonce.
 4. A consumer MUST fail closed on GCM authentication failure.
 5. WASM or obfuscated JS MUST NOT be treated as a key-protection mechanism.

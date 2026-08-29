@@ -79,7 +79,9 @@ Root object. Additional properties MUST be ignored unless marked forbidden.
 | `payload` | object | yes | Descriptor ids; schema in [Payload](payload.md) |
 | `chunks` | object[] | yes | Non-empty list |
 | `watermark` | object | no | See [Watermark](watermark.md) |
-| `protection` | object | if `ENCRYPTED` | Algorithm ids only; **no keys** |
+| `delivery` | object | no | `{ "profile": "session" \| "static" }`. Omitted means `"session"` |
+| `embeddedChunkKeys` | object | if `static` | `chunkId` → base64 AES-256 content key |
+| `protection` | object | if `ENCRYPTED` | Algorithm ids; keys only when `static` |
 
 ### `chunks[]`
 
@@ -87,7 +89,7 @@ Root object. Additional properties MUST be ignored unless marked forbidden.
 |----------|------|----------|---------|
 | `id` | string | yes | Unique within package |
 | `kind` | string | yes | Kind enum below |
-| `codec` | string | yes | `identity`, `meshopt`, `ktx2`, `zstd` |
+| `codec` | string | yes | `identity`, `gzip`, `meshopt`, `ktx2`, `zstd` |
 | `byteLength` | integer | yes | Ciphertext length if encrypted, else plaintext |
 | `digest` | string | yes | `sha256:` plus 64 hex of **plaintext** after decrypt+decompress |
 | `offset` | integer | if not `SPLIT` | Offset from start of `.vrmxtpkg` |
@@ -118,6 +120,7 @@ Chunk bytes are fetched per [Delivery](delivery.md). `offset` MUST be omitted.
 | `codec` | Input after decrypt | Output |
 |---------|---------------------|--------|
 | `identity` | raw bytes | same |
+| `gzip` | gzip frame | raw |
 | `zstd` | zstd frame | raw |
 | `meshopt` | EXT_meshopt-style buffer | decoded vertex/index bytes defined by Payload |
 | `ktx2` | KTX2 file | GPU-ready image as defined by Payload |
@@ -129,8 +132,11 @@ A consumer MUST decode `codec` before hashing against `digest`.
 1. A file MUST NOT contain GLB magic at offset 0.
 2. A consumer MUST NOT concatenate chunks into a GLB / VRM byte stream.
 3. Chunk `id` values MUST match `payload` references.
-4. Production distributions that set `ENCRYPTED` MUST NOT embed content keys in the
+4. `session` packages that set `ENCRYPTED` MUST NOT embed content keys in the
    index or package file.
+5. `static` packages that set `ENCRYPTED` MUST embed `embeddedChunkKeys` for every
+   chunk id in `chunks[]`. Those keys do not expire. A consumer MUST treat the file
+   as decryptable by anyone who obtains it.
 
 ## Open questions
 
