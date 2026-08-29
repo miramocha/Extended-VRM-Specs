@@ -35,6 +35,7 @@ Optional `VRMXT_*` consumers:
 | VRM Posing Desktop consumer (planned) | Post-load VRMXT on [VRM Posing Desktop](https://store.steampowered.com/app/1895630/VRM_Posing_Desktop/); host UniVRM `0.129.3` (measured). See [profile](implementations/vrm-posing-desktop-vrmxt.md) |
 | Godot VRMXT addon (planned) | Optional Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm) |
 | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | Optional npm `@vrmxt/three-vrmxt` (fallback `@miramocha/three-vrmxt`) beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm). Peer `GLTFLoaderPlugin`. Vite `apps/viewer` local files; later Hub WXT. See [library](implementations/three-vrmxt.md), [web viewer](implementations/vrmxt-web-viewer.md), [decision](decisions/vrmxt-three-vrm-web-viewer.md) |
+| VRMXT Package SDK (planned) | npm `@vrmxt/package`: compile `.vrm` → `.vrmxtpkg`, session gateway, Three.js facade loader. Specs: [VRMXT Package](specs/packages/vrmxt-package/README.md). Not a glTF plugin. |
 | VRMXT → VRChat converter (planned) | Separate product. Offline Unity conversion of `.vrm` (`VRMC_*` + `VRMXT_*`) into a VRChat-ready avatar. Consumes the portable contract; does not put VRChat SDK types in the file schema. See [Animation controller standardization](decisions/animation-controller-standardization.md) |
 
 ## Architecture
@@ -68,6 +69,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VFX capability naming](decisions/vfx-capability-naming.md) | `VRMXT_sprite_particle` and candidate VFX family names | accepted |
 | [VRMXT desktop Player primary](decisions/vrmxt-desktop-player-primary.md) | Desktop Unity Player for preview/edit; drop Hub + Unity WebGL; three-vrm viewer is a separate consumer | accepted |
 | [VRMXT three-vrm web viewer](decisions/vrmxt-three-vrm-web-viewer.md) | Peer `three-vrmxt` + Vite local viewer; later Hub WXT; no in-browser lil/Poiyomi | accepted |
+| [VRMXT Package container format](decisions/vrmxt-package-container.md) | Sibling `.vrmxtpkg` compiled distribution; not a glTF extension | draft |
 | [VRoid Hub browser viewer architecture](decisions/vroid-hub-browser-viewer-architecture.md) | Historical Hub extension + Player WebGL; superseded | superseded |
 
 ## Drafts
@@ -83,6 +85,22 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [VRMXT_lattice](specs/extensions/deformation/vrmxt-lattice.md) | `VRMXT_lattice` (after-skin FFD cage) | draft |
 | [VRMXT_AnimationController](specs/extensions/animation/vrmxt-animation-controller.md) | Root flat FSM; bridge one-shots; packaging A | draft |
 | [VRMXT_AnimationClip](specs/extensions/animation/vrmxt-animation-clip.md) | Per-`animations[i]` metadata; required on controller-bound clips | draft |
+
+## Packages
+
+Sibling compiled containers (not glTF `extensionsUsed`). Index:
+[VRMXT Package Format](specs/packages/vrmxt-package/README.md).
+
+| Note | Topic | Status |
+|------|-------|--------|
+| [VRMXT Package](specs/packages/vrmxt-package/README.md) | `.vrmxtpkg` overview and profiles | draft |
+| [Container](specs/packages/vrmxt-package/container.md) | Magic `VRMXTPKG`, index, chunks | draft |
+| [Payload](specs/packages/vrmxt-package/payload.md) | `vrm1` descriptors; no GLB assembly | draft |
+| [Protection](specs/packages/vrmxt-package/protection.md) | AES-GCM, Ed25519, key wrap | draft |
+| [Delivery](specs/packages/vrmxt-package/delivery.md) | Anonymous session and expiry | draft |
+| [Runtime](specs/packages/vrmxt-package/runtime.md) | Incremental load, exporter facade | draft |
+| [Watermark](specs/packages/vrmxt-package/watermark.md) | Forensic carrier variants | draft |
+| [Security](specs/packages/vrmxt-package/security.md) | Threat model | draft |
 
 ## Examples
 
@@ -107,6 +125,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [Unity WebGL VRMXT viewer](implementations/unity-webgl-vrmxt-viewer.md) | Historical Player WebGL / Hub notes | superseded |
 | [Godot VRMXT](implementations/godot-vrmxt.md) | Godot / godot-vrm consumer (`VRMXT_sprite_particle` planned) | draft |
 | [three-vrmxt](implementations/three-vrmxt.md) | Three.js library: MToonXT stencil Apply + viewer edit/export; sprite VFX planned; [web viewer](implementations/vrmxt-web-viewer.md) | draft |
+| [VRMXT Package](implementations/vrmxt-package.md) | Compiled `.vrmxtpkg` SDK (`@vrmxt/package`); not a `GLTFLoaderPlugin` | draft |
 | [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | Unreal / VRM4U consumer (`VRMXT_materials_override` planned) | draft |
 | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) | UniVRM / Extended-UniVRM ScriptedImporter hooks (upstream propose) | draft |
 | [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hook API (prefs, exclude prop, upstream propose) | draft |
