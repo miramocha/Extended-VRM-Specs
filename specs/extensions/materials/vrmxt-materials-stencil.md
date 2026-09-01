@@ -182,9 +182,10 @@ Stamps coverage. `materials` MUST be absent. The material does not need
 
 Clip this material to the union (OR) of listed writers. `materials` MUST be a
 non-empty array of in-range indices. Each listed material MUST have body `stencil.op`
-`write` on **either** `VRMXT_materials_stencil.stencil` **or** (deprecated) nested
-`VRMXT_materials_mtoonxt.stencil`. If both exist on the writer, the both-present
-rule applies to that writer. A self-index is unresolvable.
+`write`. Resolve that `write` on `VRMXT_materials_stencil.stencil` when the writer
+has this extension; otherwise use (deprecated) nested
+`VRMXT_materials_mtoonxt.stencil`. Dual attach on the writer follows
+[rule 11](#normative-requirements): ignore nested clip. A self-index is unresolvable.
 
 `inside` uses the stock MToon depth test: closer fragments in the depth buffer occlude
 this reader. Iris on sclera uses `inside`.
@@ -271,7 +272,7 @@ Skip that extra object only (rule 7):
 - missing or unrecognized `op`
 - two `inside` / `insideOverlay` / `outside` lists share a writer index but the sorted
   lists are not equal
-- listed writer without body `op` `write` on either attach
+- listed writer without body `op` `write` on the attach [rule 11](#normative-requirements) selects
 - out-of-range index
 - `write` with `materials`
 - `inside` / `insideOverlay` / `outside` without `materials`
