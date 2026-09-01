@@ -291,8 +291,11 @@ omitted here; see the Unity and Unreal profile notes for fuller single-slot exam
 - Core glTF material fields remain the portable base (base color, alpha, normals,
   emissive, double-sided).
 - `VRMC_materials_mtoon` remains the VRM 1.0 toon material extension when present.
-- `VRMXT_materials_mtoonxt` is a sibling for MToon extras (Face SDF, stencil) and an
-  MToonXT shader swap. Spec:
+- `VRMXT_materials_mtoonxt` is a sibling for MToonXT shader swap. Nested
+  `stencil` / `outlineStencil` on that object are deprecated. Canonical clip is
+  [VRMXT_materials_stencil](vrmxt-materials-stencil.md). Face shade lookup is
+  [VRMXT_materials_face_sdf](vrmxt-materials-face-sdf.md). Directional dissolve is
+  [VRMXT_materials_directional_dissolve](vrmxt-materials-directional-dissolve.md). Spec:
   [VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md). When this override **applies**
   (engine selected, material resolved, shader or parent present), it wins: do not swap
   that material to MToonXT. If this override is absent or fails to resolve, the consumer

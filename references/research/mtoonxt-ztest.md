@@ -15,7 +15,7 @@ status: draft
 
 Non-normative. Not a [VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 extra. Clip-region overdraw in the extra is
-[`stencil.op`](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
+[`stencil.op`](../../specs/extensions/materials/vrmxt-materials-stencil.md)
 `insideOverlay`. UniVRMXT may still read a `zTest` string on the parent object (hub
 rule 12: unrecognized keys ignored by other consumers).
 
@@ -35,4 +35,4 @@ over the whole scene. Soft-alpha hair stencil still cuts hard holes. See
 
 - [VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 - [MToonXT zWrite](mtoonxt-zwrite.md)
-- [Stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
+- [Stencil](../../specs/extensions/materials/vrmxt-materials-stencil.md)

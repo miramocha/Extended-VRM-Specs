@@ -138,7 +138,7 @@ Stencil is on two of twelve materials:
 }
 ```
 
-Field table: [stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
+Field table: [stencil](../specs/extensions/materials/vrmxt-materials-stencil.md).
 
 ### lilToon override
 

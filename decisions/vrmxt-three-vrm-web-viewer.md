@@ -74,8 +74,8 @@ that seam and keeps stock VRM load working when the VRMXT package is absent.
 Local Vite ingest proves MToonXT stencil on Three.js without OAuth, Hub CSP, or a
 desktop shell. Hub WXT can reuse `viewer-core` once file view works.
 
-Unity megashaders stay on desktop Player / Warudo. Browser MToonXT is stencil (and
-later Face SDF) on three-vrm MToon material state.
+Unity megashaders stay on desktop Player / Warudo. Browser MToonXT is nested
+stencil on three-vrm MToon material state. `VRMXT_materials_face_sdf` is later.
 
 ## Alternatives considered
 

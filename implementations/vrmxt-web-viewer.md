@@ -22,7 +22,8 @@ Standalone Vite host in [miramocha/three-vrmxt](https://github.com/miramocha/thr
 ships). Product decision:
 [VRMXT three-vrm web viewer](../decisions/vrmxt-three-vrm-web-viewer.md).
 
-This is a **view + stencil editor** surface. Face SDF and materials override stay
+This is a **view + stencil editor** surface. `VRMXT_materials_face_sdf`,
+`VRMXT_materials_directional_dissolve`, and materials override stay
 out of this host. Sprite VFX plays when the file has `VRMXT_sprite_particle`.
 Create/edit/Export for stencil follow
 [VRMXT Editor](vrmxt-editor.md).
@@ -44,7 +45,7 @@ Create/edit/Export for stencil follow
 | Capability | v1 | Later |
 |------------|----|-------|
 | Stock VRM 1.0 | View | — |
-| `VRMXT_materials_mtoonxt` stencil | View + Apply onto Three.js material stencil state; inspector Create/edit; Download VRM (JSON+BIN patch) | Face SDF |
+| `VRMXT_materials_mtoonxt` stencil | View + Apply onto Three.js material stencil state; inspector Create/edit; Download VRM (JSON+BIN patch) | `VRMXT_materials_face_sdf` |
 | `VRMXT_sprite_particle` | View (library attach + `apps/viewer` update loop) | Authoring |
 | `VRMXT_materials_override` (lil / Poiyomi) | — | Out of scope in-browser |
 | Create/edit portable fields | Stencil / `outlineStencil` only | Other `VRMXT_*` |
@@ -90,8 +91,8 @@ Do not persist the file to a server. Do not call VRoid Hub APIs from this app.
 ## MToonXT apply
 
 Stencil extras follow the portable spec
-([stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)). Mapping
-is Three.js material stencil state, not Unity ShaderLab. Face SDF is later.
+([stencil](../specs/extensions/materials/vrmxt-materials-stencil.md)). Mapping
+is Three.js material stencil state, not Unity ShaderLab. `VRMXT_materials_face_sdf` is later.
 
 If the extra is absent, keep stock three-vrm MToon.
 
@@ -105,7 +106,7 @@ rebuilds the GLB.
 - Unity WebGL iframe ([superseded Unity WebGL notes](unity-webgl-vrmxt-viewer.md))
 - Desktop Unity Player features ([Unity Player](vrmxt-unity-player.md))
 - lilToon / Poiyomi in the browser
-- Face SDF, materials-override authoring
+- `VRMXT_materials_face_sdf`, `VRMXT_materials_directional_dissolve`, materials-override authoring
 
 ## Related
 
