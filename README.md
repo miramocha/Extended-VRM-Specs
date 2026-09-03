@@ -49,7 +49,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 
 | Note | Outcome | Status |
 |------|---------|--------|
-| [Getting started in Blender](tutorials/getting-started-blender.md) | Install Extended VRM + VRMXT from GitHub Releases | draft |
+| [Getting started in Blender](tutorials/getting-started-blender.md) | Install VRM format 4.6.0+ and VRMXT | draft |
 | [Getting started in Unity](tutorials/getting-started-unity.md) | Install Extended UniVRM + UniVRMXT via UPM git URLs | draft |
 | [Getting started in Warudo](tutorials/getting-started-warudo.md) | Subscribe Workshop plugins and load a Character | draft |
 | [Blender materials override](tutorials/blender-materials-override.md) | Author `VRMXT_materials_override` | draft |
