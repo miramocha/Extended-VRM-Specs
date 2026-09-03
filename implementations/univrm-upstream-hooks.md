@@ -28,11 +28,10 @@ ScriptedImporter extension API (`IVrm10ImportExtension` /
 `Vrm10ImportExtensionRegistry`) — not UniVRMXT-specific. The plan is to propose that
 hook surface upstream so stock UniVRM hosts can load optional packages without this fork.
 
-Same pattern on Blender:
-[Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender)
-ships generic VRM1 hooks to propose to
-[saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender)
-— see [blender-extension-hooks.md](blender-extension-hooks.md).
+Blender already has the matching host in stock
+[VRM Add-on for Blender](https://github.com/saturday06/VRM-Addon-for-Blender)
+**4.6.0** (`Vrm1ImportUserExtension` / `Vrm1ExportUserExtension`). See
+[blender-extension-hooks.md](blender-extension-hooks.md).
 
 Related: [UniVRMXT](univrm-vrmxt.md), UniVRMXT
 [architecture.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/architecture.md),

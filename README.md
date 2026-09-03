@@ -13,14 +13,14 @@ status: draft
 Specifications and design notes for Extended VRM. Implementations target
 [UniVRM](https://github.com/vrm-c/UniVRM), VRM4U, Godot (godot-vrm), Three.js
 (three-vrm), and the
-[Blender add-on](https://github.com/miramocha/Extended-VRM-Addon-for-Blender);
-this repository defines portable file behavior.
+[Blender add-on](https://github.com/saturday06/VRM-Addon-for-Blender)
+**4.6.0+**; this repository defines portable file behavior.
 
-Host forks that carry **generic** extension hooks (to propose upstream; not VRMXT-specific):
+Stock VRM 1.0 third-party hooks (Blender) and UniVRM fork hooks (Unity):
 
-| Fork | Upstream | Hooks doc |
+| Host | Upstream | Hooks doc |
 |------|----------|-----------|
-| [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender) | [Blender Extension Hooks](implementations/blender-extension-hooks.md) |
+| [VRM Add-on for Blender 4.6.0+](https://github.com/saturday06/VRM-Addon-for-Blender/releases/tag/v4.6.0) | same | [Blender Extension Hooks](implementations/blender-extension-hooks.md) |
 | [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM) | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) |
 
 Optional `VRMXT_*` consumers:
@@ -49,7 +49,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 
 | Note | Outcome | Status |
 |------|---------|--------|
-| [Getting started in Blender](tutorials/getting-started-blender.md) | Install Extended VRM + VRMXT from GitHub Releases | draft |
+| [Getting started in Blender](tutorials/getting-started-blender.md) | Install VRM format 4.6.0+ and VRMXT | draft |
 | [Getting started in Unity](tutorials/getting-started-unity.md) | Install Extended UniVRM + UniVRMXT via UPM git URLs | draft |
 | [Getting started in Warudo](tutorials/getting-started-warudo.md) | Subscribe Workshop plugins and load a Character | draft |
 | [Blender materials override](tutorials/blender-materials-override.md) | Author `VRMXT_materials_override` | draft |
@@ -112,7 +112,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 | [three-vrmxt](implementations/three-vrmxt.md) | Three.js library: MToonXT stencil Apply + viewer edit/export; sprite VFX planned; [web viewer](implementations/vrmxt-web-viewer.md) | draft |
 | [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | Unreal / VRM4U consumer (`VRMXT_materials_override` planned) | draft |
 | [UniVRM upstream hooks](implementations/univrm-upstream-hooks.md) | UniVRM / Extended-UniVRM ScriptedImporter hooks (upstream propose) | draft |
-| [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Blender / Extended-VRM-Addon-for-Blender VRM1 hook API (prefs, exclude prop, upstream propose) | draft |
+| [Blender Extension Hooks](implementations/blender-extension-hooks.md) | Stock VRM Add-on for Blender 4.6.0+ `Vrm1ImportUserExtension` / `Vrm1ExportUserExtension` | draft |
 | [Blender VRMXT](implementations/blender-vrmxt.md) | Blender VRMXT extension (`VRMXT_sprite_particle` + `VRMXT_materials_override`; `VRMXT_materials_mtoonxt` stencil authoring) | draft |
 
 ## References

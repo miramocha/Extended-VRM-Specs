@@ -19,9 +19,10 @@ status: draft
 
 Non-normative research note. Summarizes core glTF 2.0 morph targets (Blender
 shape keys / Unity blend shapes), how they relate to weight animation, and
-current support in Extended-VRM-Addon-for-Blender, Extended-UniVRM,
-VRMXT-Extension-for-Blender, and UniVRMXT. Checked against those repos as of
-2026-08-06.
+current support in the VRM Add-on for Blender, Extended-UniVRM,
+VRMXT-Extension-for-Blender, and UniVRMXT. Checked against those trees as of
+2026-08-06 (Blender column: Extended fork snapshot of the VRM add-on morph
+path; host is now stock [VRM format 4.6.0+](https://github.com/saturday06/VRM-Addon-for-Blender/releases/tag/v4.6.0)).
 
 **Finding:** Morph **geometry** is § Morph Targets (`primitives[].targets`,
 optional default `mesh.weights` / `node.weights`). Multi-stop weight changes
@@ -167,18 +168,18 @@ authoring checks.
 
 ## Implementation status (2026-08-06)
 
-Checked in-tree forks. VRMXT packages do not implement morph I/O; they leave it
+Checked in-tree hosts. VRMXT packages do not implement morph I/O; they leave it
 to the host VRM/glTF stack.
 
-| Capability | Extended-VRM-Addon-for-Blender | VRMXT-Extension-for-Blender | Extended-UniVRM (UniGLTF / VRM / VRM10) | UniVRMXT |
-|------------|--------------------------------|-----------------------------|----------------------------------------|----------|
+| Capability | VRM Add-on for Blender | VRMXT-Extension-for-Blender | Extended-UniVRM (UniGLTF / VRM / VRM10) | UniVRMXT |
+|------------|------------------------|-----------------------------|----------------------------------------|----------|
 | Static morph targets (import + export) | Yes | No | Yes | No |
 | VRM expression ↔ morph binds | Yes (0.x + 1.0) | No | Yes (0.x + 1.0) | No |
 | Keyframed mesh `path: "weights"` **import** | Partial: stock Blender glTF importer; failed anim import may strip **all** `animations` | No | Partial: UniGLTF yes (`LoadAnimation` default true → `blendShape.*`, needs `targetNames`); VRM10 `.vrm` ScriptedImporter default off — Project Settings **Import glTF animations** (Extended-UniVRM) | No |
 | Keyframed mesh `weights` **export** | Partial: VRM 1.0 only if **Export glTF Animations** on (default off); VRM 0.x custom exporter writes no `animations` | No | Partial: glTF export dialog yes (`EditorAnimationExporter`); typical `.vrm` / VRM10 avatar export passes no `IAnimationExporter` | No |
 | VRMA expression animation | Yes: expression preview ↔ proxy `translation` | No | Yes: same pattern; not mesh `weights` | No |
 
-### Extended-VRM-Addon-for-Blender notes
+### VRM Add-on for Blender notes
 
 - Mesh shape keys come from Blender’s `import_scene.gltf` / `export_scene.gltf`.
 - Addon writes VRM `morphTargetBinds` / 0.x blendShape binds and may set static

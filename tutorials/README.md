@@ -39,7 +39,7 @@ flowchart LR
 
 | Note | What you will do | Status |
 |------|------------------|--------|
-| [Getting started in Blender](getting-started-blender.md) | Install Extended VRM + VRMXT from GitHub Releases | draft |
+| [Getting started in Blender](getting-started-blender.md) | Install VRM format 4.6.0+ and VRMXT | draft |
 | [Getting started in Unity](getting-started-unity.md) | Install Extended UniVRM + UniVRMXT via UPM git URLs | draft |
 | [Getting started in Warudo](getting-started-warudo.md) | Subscribe Workshop plugins and load a Character | draft |
 | [Blender materials override](blender-materials-override.md) | Point a material at a Unity shader | draft |
