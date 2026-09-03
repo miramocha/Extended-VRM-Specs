@@ -43,8 +43,8 @@ Stock VRM import builds `node index → Object/Bone` maps and then discards them
 Stock VRM export builds the final maps only inside `add_vrm_extension_to_glb()`.
 Bone-referenced `VRMXT_*` needs those maps.
 
-Ordinary glTF2 user extensions run too early (before VRM postprocess) and do not
-receive them. These VRM1 hooks run after stock `VRMC_*` is written.
+Ordinary glTF2 user extensions run before VRM postprocess and miss those maps.
+Import `post_import_hook` is after the file is loaded and stock VRM is on Blender IDs; export `pre_save_hook` is after stock `VRMC_*` is written in `add_vrm_extension_to_glb()`.
 
 ## Host requirements
 
