@@ -97,11 +97,12 @@ MUST NOT appear in `extensionsRequired`.
 
 - Serialized glTF extension names authored in this family MUST use `VRMXT_*`. Do not
   invent `VRMC_*` names. `VRMC_` is VRM Consortium only.
-- Two optional `VRMXT_*` roles per stock capability:
+- Three optional `VRMXT_*` roles per stock capability:
 
   | Role | Recipe | Materials | Spring |
   |------|--------|-----------|--------|
-  | Family fork | `VRMXT_` + stock stem + `xt` (no extra underscore) | `VRMXT_materials_mtoonxt` | `VRMXT_springBonext` |
+  | Family fork | `VRMXT_` + stock stem + `xt` (no extra underscore) | `VRMXT_materials_mtoonxt` (MToonXT shader swap) | `VRMXT_springBonext` |
+  | Feature extra | `VRMXT_` + domain + feature stem | `VRMXT_materials_face_sdf`, `VRMXT_materials_directional_dissolve` | (none yet) |
   | Third-party replace | `VRMXT_` + domain + `_override` | `VRMXT_materials_override` | `VRMXT_springBone_override` |
 
   Stock spring also uses Consortium
@@ -113,8 +114,10 @@ MUST NOT appear in `extensionsRequired`.
   PhysBone). Override JSON stores ids and parameters; it MUST NOT embed host SDK
   component types. Override names use the domain (`materials`, `springBone`) because
   Apply replaces the slot's runtime (shader or solver).
-- Sit-site follows the stock object. MToon, MToonXT per-material extras, and materials
-  override sit on `materials[i].extensions`. MToonXT MAY also use its root extension
+- Sit-site follows the stock object. MToon, MToonXT shader-swap markers, Face SDF,
+  directional dissolve, and materials override sit on `materials[i].extensions`.
+  Face SDF and dissolve remain separate extensions, not nested MToonXT fields.
+  MToonXT MAY also use its root extension
   object for a cross-material `stencil` graph. `VRMC_springBone`,
   `VRMXT_springBonext`, and
   `VRMXT_springBone_override` sit on root `extensions`.
@@ -122,10 +125,12 @@ MUST NOT appear in `extensionsRequired`.
   `VRMC_springBone.colliders[i].extensions`. Springs have no glTF core object; XT
   and override index `VRMC_springBone.springs[]`. Do not write `VRMXT_*` on
   `springs[i].extensions` (stock export may drop unknown keys).
-- If `_override` Apply succeeds on that material or spring, skip the `…xt` fork for
-  that item. Fail or absent override → run the `…xt` gate → else stock `VRMC_*`.
+- If `_override` Apply succeeds on that material or spring, skip the `…xt` fork and
+  the MToon feature extras (`VRMXT_materials_face_sdf`,
+  `VRMXT_materials_directional_dissolve`) for that item. Fail or absent override → run those gates → else stock `VRMC_*`.
 - Inner JSON keys (fields inside the extension object) are unprefixed camelCase
-  (`specVersion`, `stencil`, `faceSdf`). Do not prefix properties `VRMC_` or `VRMXT_`.
+  (`specVersion`, `stencil`, `writers`, `readers`, `sdfTexture`). Do not prefix
+  properties `VRMC_` or `VRMXT_`.
 - Repo path stem maps to the glTF name by replacing hyphens with underscores:
   `specs/extensions/vfx/vrmxt-sprite-particle.md` → `VRMXT_sprite_particle`.
   A folder `vrmxt-materials-mtoonxt/` is the same stem (multi-page spec).
@@ -133,6 +138,12 @@ MUST NOT appear in `extensionsRequired`.
   `specs/extensions/physics/vrmxt-springbonext/` → `VRMXT_springBonext`.
   `specs/extensions/physics/vrmxt-spring-bone-override.md` →
   `VRMXT_springBone_override`.
+  `specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md` defines the root
+  `stencil` field of `VRMXT_materials_mtoonxt`, not a separate extension name.
+  `specs/extensions/materials/vrmxt-materials-face-sdf.md` →
+  `VRMXT_materials_face_sdf`.
+  `specs/extensions/materials/vrmxt-materials-directional-dissolve.md` →
+  `VRMXT_materials_directional_dissolve`.
 - Code types SHOULD use `Vrmxt*` / `vrmxt_*` for Extended types. Stock UniVRM/MToon10
   shader includes keep `vrmc_materials_mtoon_*.hlsl`.
 - ShaderLab product names may stay `VRMXT/...`. That is not a glTF key.
@@ -163,10 +174,10 @@ parallel Extended-only format.
 
 | Host | Stock VRM I/O | Extended authoring package | Import `VRMXT_*` | Export `VRMXT_*` |
 |------|---------------|----------------------------|------------------|------------------|
-| Blender | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | [Blender VRMXT](implementations/blender-vrmxt.md) | Same (Addon Preferences enable hooks) |
+| Blender | [VRM Add-on for Blender](https://github.com/saturday06/VRM-Addon-for-Blender) 4.6.0+ | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | [Blender VRMXT](implementations/blender-vrmxt.md) | Same (`Vrm1ExportUserExtension.pre_save_hook`) |
 | Unity (package / Editor) | [UniVRM](https://github.com/vrm-c/UniVRM) / [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | [UniVRMXT](implementations/univrm-vrmxt.md) | Same via Extended-UniVRM export hooks (Project Settings gate) |
 | Unity (Player app) | UniVRM in [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Same Player (depends on UniVRMXT; desktop edit) | Planned | Planned (desktop) |
-| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): v1 Apply `VRMXT_materials_mtoonxt` stencil; `VRMXT_*` import planned | Planned (not v1) |
+| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): legacy material-operation Apply and viewer Create/edit; root graph not established | Legacy stencil Export (GLB JSON patch) |
 | Unreal | VRM4U | VRM4U VRMXT package (planned) | Planned: [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | **TBD** |
 | Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VRMXT](implementations/godot-vrmxt.md) | **TBD** |
 | Other | Any VRM 1.0 tool | Optional Extended package | Implement specs | Implement specs |
@@ -180,25 +191,23 @@ hosts. They do not import or export `VRMXT_*`. They produce maps consumed by sto
 
 | Piece | Repo | Role |
 |-------|------|------|
-| Stock Blender VRM add-on | [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender) (fork of [saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender); generic hooks to propose upstream) | Import/export `VRMC_*`, build node/bone maps |
-| VRM1 extension hooks | Same add-on: `io_scene_vrm.extension_hooks` | After stock maps exist, call registered third-party callbacks when Addon Preferences enable import/export hooks (default off) |
-| VRMXT Blender extension | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Registers hooks; authors and serializes `VRMXT_*` plus `VRMXT_materials_mtoonxt` stencil |
+| Stock Blender VRM add-on | [saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender) **4.6.0+** | Import/export `VRMC_*`, build node/bone maps, invoke third-party classes |
+| VRM1 user extensions | Same add-on: `Vrm1ImportUserExtension` / `Vrm1ExportUserExtension` on enabled add-on roots | After stock maps exist; always on when the class is present |
+| VRMXT Blender extension | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Root-module hook classes; authors and serializes `VRMXT_*` plus `VRMXT_materials_mtoonxt` stencil |
 
-Hooks exist because glTF2 user extensions run too early to receive final VRM bone
-and object index maps. Details:
+Ordinary glTF2 user extensions miss final VRM bone and object maps. Details:
 [Blender Extension Hooks](implementations/blender-extension-hooks.md).
 
 Blender flow (non-normative):
 
-1. User builds a VRM 1.0 avatar with the stock VRM add-on.
+1. User builds a VRM 1.0 avatar with VRM format 4.6.0+.
 2. Optional: enable the VRMXT Blender extension and author Extended data (emitters,
    overrides, MToonXT stencil, …).
-3. Export writes stock `VRMC_*` first. When export extension hooks are enabled in
-   Addon Preferences, hook callbacks append `VRMXT_*`, `VRMXT_materials_mtoonxt` when
-   present, and `extensionsUsed` entries.
+3. Export writes stock `VRMC_*` first. `pre_save_hook` appends `VRMXT_*`,
+   `VRMXT_materials_mtoonxt` when present, and `extensionsUsed` entries.
 4. Result is one `.vrm` / `.glb`. No second file format.
 
-Without the VRMXT Blender extension, export stays stock VRM. Hooks stay idle.
+Without the VRMXT Blender extension, export stays stock VRM.
 
 ### Unity (shipping with Extended-UniVRM)
 
@@ -301,8 +310,10 @@ support is a separate npm package:
 3. The VRMXT plugin runs in `afterRoot`: MToonXT stencil on materials (v1); later
    `VRMXT_sprite_particle` emitters on nodes from `parser.getDependencies('node')`.
 4. Missing extension or missing package → no Extended objects; avatar still valid.
-5. First-party v1 host: [web viewer](implementations/vrmxt-web-viewer.md) (`apps/viewer`).
-   Construct `WebGLRenderer` with `stencil: true`. Edit/export is planned, not claimed.
+5. First-party host: [web viewer](implementations/vrmxt-web-viewer.md) (`apps/viewer`).
+   Construct `WebGLRenderer` with `stencil: true`. Stencil Create/edit/Export is
+   claimed for the retired material-operation format, not the current root graph;
+   Hub WXT stays view-first.
 
 Do not fork pixiv/three-vrm or patch `VRMLoaderPlugin` as the only path.
 

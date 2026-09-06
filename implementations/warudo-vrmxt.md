@@ -43,7 +43,7 @@ After Character **Source** loads a VRM 1.0 `.vrm`, attach:
 1. `VRMXT_sprite_particle` → ParticleSystem children
 2. `VRMXT_materials_override` → unity-slot shader/properties/bindings on matching mats
 3. `VRMXT_materials_mtoonxt` → swap stock MToon to MToonXT when the shader UMod is present
-   (override still wins when it applies; stencil; Face SDF not applied)
+   (override still wins when it applies; nested stencil; `VRMXT_materials_face_sdf` not applied)
 
 | Item | Value |
 |------|-------|

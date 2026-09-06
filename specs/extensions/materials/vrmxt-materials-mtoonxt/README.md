@@ -16,9 +16,14 @@ status: draft
 
 # VRMXT_materials_mtoonxt
 
-Material-family glTF extension. It carries per-material extras next to stock
-`VRMC_materials_mtoon` and an optional root relationship graph for portable stencil
-presentation that spans several materials.
+Material-family glTF extension. It carries per-material shader-swap markers next to
+stock `VRMC_materials_mtoon` and an optional root relationship graph for portable
+stencil presentation that spans several materials.
+
+Face shade lookup and directional dissolve remain separate extensions:
+[VRMXT_materials_face_sdf](../vrmxt-materials-face-sdf.md) and
+[VRMXT_materials_directional_dissolve](../vrmxt-materials-directional-dissolve.md).
+Do not nest those features on this object.
 
 The extras object is named `VRMXT_materials_mtoonxt`. This document is an Extended VRM
 draft. It is not a VRM Consortium specification.
@@ -72,14 +77,13 @@ This specification conforms to [VRMXT Conformance](../../../core/vrmxt-conforman
 8. When rule 7 holds, the implementation MUST:
    - replace the stock MToon shader on that material with MToonXT;
    - apply shade, outline, UV animation, and other stock MToon state from the sibling
-     `VRMC_materials_mtoon` using the same mapping it already uses for stock MToon;
-   - then apply supported per-material extras such as `faceSdf`.
+     `VRMC_materials_mtoon` using the same mapping it already uses for stock MToon.
+   Face SDF and directional dissolve follow their separate extension contracts.
 9. When rule 7 does not hold, the implementation MUST keep stock MToon for that material
    and MUST NOT apply extras.
 10. The skippable unit is this material's `VRMXT_materials_mtoonxt` object. Invalid data
     there MUST NOT make the glTF or VRM 1.0 asset invalid.
-11. If a per-material extra such as `faceSdf` is missing, unknown, or unresolvable,
-    the implementation MUST skip that object only. Invalid root stencil entries are
+11. Unknown per-material fields MUST NOT prevent the shader swap. Invalid root stencil entries are
     skipped independently according to [Stencil](stencil.md).
 12. Unrecognized properties on the extension object MUST be ignored.
 13. This extension MUST NOT duplicate `VRMC_materials_mtoon` fields. Shade color, shading
@@ -88,14 +92,12 @@ This specification conforms to [VRMXT Conformance](../../../core/vrmxt-conforman
 14. When `VRMXT_materials_override` **applies** on the same material (engine selected,
     material definition resolved, required shader or parent present), a supporting
     implementation MUST use that override and MUST NOT swap to MToonXT on that material.
+    Face SDF and directional dissolve follow their own override-skip rules.
     If the override is absent, is for another engine, or fails to resolve, the
     implementation MUST run rules 7–9.
 15. The glTF file MUST NOT embed MToonXT shader source. Resolution is local to the
     consumer (shipped package, UMod, or equivalent).
-16. An exporter that emits `faceSdf.sdfTexture` MUST register the referenced image
-    through its normal glTF texture export path so the index resolves in the output
-    file.
-17. Root `stencil` entries are independent of the MToonXT shader swap gate in rule
+16. Root `stencil` entries are independent of the MToonXT shader swap gate in rule
     7. A consumer MAY implement their portable presentation with another compatible
     shader or render pipeline while stock MToon remains the material baseline.
 
@@ -123,11 +125,11 @@ flowchart TD
 | Property | Type | Required | Page |
 |----------|------|----------|------|
 | `specVersion` | string | yes | this page; `"1.0"` for this draft |
-| `faceSdf` | object | no | [Face SDF](face-sdf.md) |
 
 The root extension object contains `specVersion` and optional
-[`stencil`](stencil.md), an array of writer/reader entries. `faceSdf` remains
-per-material. There is no per-material stencil or separate outline-stencil format.
+[`stencil`](stencil.md), an array of writer/reader entries. Face SDF and dissolve
+have their own per-material extensions. There is no per-material stencil or
+separate outline-stencil format.
 
 ## Attachment example
 
@@ -147,7 +149,7 @@ Non-normative. Material 0 is a writer and material 1 is its reader.
 
 Material entries referenced by the graph must contain `VRMC_materials_mtoon`.
 They do not need a duplicate per-material `VRMXT_materials_mtoonxt` marker.
-See [Stencil](stencil.md) for the full schema and [Face SDF](face-sdf.md) for that extra.
+See [Stencil](stencil.md) for the full schema.
 
 ## Optional consumer interpretation
 
@@ -174,17 +176,15 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 - Core glTF material fields remain the portable base.
 - `VRMC_materials_mtoon` remains the VRM 1.0 toon material when present.
 - `VRMXT_materials_mtoonxt` is a sibling under `materials[i].extensions`. It does not
-  replace MToon JSON.
+  replace MToon JSON. Its root `stencil` graph is separate from material markers.
+- `VRMXT_materials_face_sdf` and `VRMXT_materials_directional_dissolve` remain
+  separate per-material extensions; they are not nested MToonXT fields.
 - `VRMXT_materials_override` is a separate sibling. When it applies, it wins (rule 14).
 - `KHR_materials_unlit` and core PBR follow existing VRM 1.0 material precedence when
   `VRMC_materials_mtoon` is absent; this extension then does not apply (rule 3).
 
 ## Open questions
 
-- [ ] Face SDF UV layout (azimuth vs spherical) and left/right bake convention
-- [ ] Whether SDF fully replaces N·L or only remaps it before shift/toony
-- [ ] `softness` filter (smoothstep width vs mip)
-- [ ] Extra `faceSdf` fields: tint, second UV, blend-with-NdotL
 - [x] Depth / shadow / DepthNormals / Built-in ForwardAdd stencil — BIRP ForwardAdd = body; ShadowCaster off. URP DepthOnly / DepthNormals / ShadowCaster off.
 - [x] URP `XRMotionVectors` stencil bit 0 — fork omits that pass
 - [ ] Extra shade bands, face clip/mask, anisotropic highlight
@@ -201,7 +201,8 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 - [Architecture Naming](../../../../architecture.md#naming)
 - [VRMXT_springBonext](../../physics/vrmxt-springbonext/README.md) (same `…xt` role)
 - [Stencil](stencil.md)
-- [Face SDF](face-sdf.md)
+- [VRMXT_materials_face_sdf](../vrmxt-materials-face-sdf.md)
+- [VRMXT_materials_directional_dissolve](../vrmxt-materials-directional-dissolve.md)
 - [MToonXT renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md) (non-normative)
 - [MToonXT zTest](../../../../references/research/mtoonxt-ztest.md) (non-normative)
 - [MToonXT zWrite](../../../../references/research/mtoonxt-zwrite.md) (non-normative)

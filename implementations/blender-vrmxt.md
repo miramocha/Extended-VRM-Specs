@@ -26,13 +26,13 @@ and [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoo
 stencil (one root-level writer/reader graph).
 Support belongs in
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender),
-which registers on VRM1 hooks from
-[Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender)
-(see [Blender Extension Hooks](blender-extension-hooks.md)). VRM 1.0 only.
+which exposes `Vrm1ImportUserExtension` / `Vrm1ExportUserExtension` for
+[VRM Add-on for Blender](https://github.com/saturday06/VRM-Addon-for-Blender)
+**4.6.0+** (see [Blender Extension Hooks](blender-extension-hooks.md)). VRM 1.0 only.
 
 ## Supported Blender versions
 
-VRMXT extension declares the same window as Extended VRM:
+VRMXT extension declares the same window as stock VRM format 4.6.x:
 
 | Manifest field | Value | Meaning |
 |----------------|-------|---------|
@@ -75,10 +75,10 @@ store duplicate `localPosition` / `localRotation` on the emitter property group.
 
 ### VRM 1 import seam
 
-Preferred path for a **separate** Blender add-on: register a callback with
-`io_scene_vrm.extension_hooks` (see [Blender Extension Hooks](blender-extension-hooks.md)).
-The callback runs at the end of `Vrm1Importer.load_gltf_extensions()` with frozen node
-and image maps.
+Preferred path for a **separate** Blender add-on: `Vrm1ImportUserExtension` on
+the add-on root (see [Blender Extension Hooks](blender-extension-hooks.md)).
+The host calls `post_import_hook` after full VRM 1.0 import with frozen JSON and
+index → Blender ID maps.
 
 In-tree path: same timing, code lives beside the existing
 `extensions.VRMC_springBone` load:
@@ -104,8 +104,8 @@ load/save (in-tree or via hooks) is required.
 
 ### VRM 1 export seam
 
-Preferred separate-add-on path: register an export hook after stock `VRMC_*` writing
-(see [Blender Extension Hooks](blender-extension-hooks.md)).
+Preferred separate-add-on path: `Vrm1ExportUserExtension.pre_save_hook` after stock
+`VRMC_*` writing (see [Blender Extension Hooks](blender-extension-hooks.md)).
 
 In-tree path: same timing inside `Vrm1Exporter.add_vrm_extension_to_glb()` after bone
 and object index maps exist:
@@ -198,13 +198,12 @@ Rules:
 - Property groups remain the export source of truth. Do not read GeoNodes state
   back into emitters.
 - Each preview helper is an **Empty** named `VRMXT_sprite_particle_{name}`, parented to
-  the attach node, tagged `vrmxt_vfx_preview=1` (VRMXT lifecycle) and
-  `vrm_exclude_from_export=1` (host export filter). Preview helpers are viewport-only;
-  they MUST NOT become the serialized attach node. Empties cannot host Geometry Nodes,
-  so a child mesh `VRMXT_sprite_particle_{name}_geo` (also tagged, `hide_select`) carries
-  the `VRMXT_SpriteParticle` modifier.
-- Helpers use `hide_render=True`. Extended VRM `export_objects` skips any object
-  with `vrm_exclude_from_export` so they do not become avatar meshes in the GLB.
+  the attach node, tagged `vrmxt_vfx_preview=1` (VRMXT lifecycle). Preview helpers are
+  viewport-only; they MUST NOT become the serialized attach node. Empties cannot host
+  Geometry Nodes, so a child mesh `VRMXT_sprite_particle_{name}_geo` (also tagged,
+  `hide_select`) carries the `VRMXT_SpriteParticle` modifier.
+- Helpers use `hide_render=True`. VRMXT unlinks tagged objects from collections during
+  stock `EXPORT_SCENE_OT_vrm.execute` so they do not become avatar meshes in the GLB.
 - Simulation Nodes require Blender 4.2+ (already the VRMXT add-on window).
 
 #### Legacy particle systems
@@ -229,7 +228,7 @@ Minimum coverage (mirror existing importer/exporter and spring-bone editor tests
 | Empty `emitters` | Valid file; no required extension entry |
 | UI operators | Add / remove / reorder update the collection; preview rebuilds |
 | Preview clear | Tagged helpers removed; property groups unchanged |
-| Preview export isolation | Objects with `vrm_exclude_from_export` omitted from host `export_objects` |
+| Preview export isolation | `export_preview_omit` unlinks `vrmxt_vfx_preview` objects for `EXPORT_SCENE_OT_vrm.execute` |
 
 Exact test module paths: `tests/test_format_vfx.py`, `tests/test_vfx_property_adapters.py`,
 `tests/test_vfx_geonodes_preview.py`, and hook tests in the VRMXT repo.
@@ -244,10 +243,10 @@ Non-normative; [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-
 - Tests: `tests/test_format_vfx.py`, `tests/test_vfx_property_adapters.py`,
   `tests/test_vfx_geonodes_preview.py`, `tests/test_hooks_registration.py`
 
-Host hooks remain in Extended-VRM-Addon-for-Blender (`extension_hooks.py`).
-Host `export_objects` skips objects tagged `vrm_exclude_from_export`
-(`EXCLUDE_FROM_EXPORT_CUSTOM_PROP` in `extension_hooks.py`). VRMXT sets that
-prop on preview helpers alongside its own `vrmxt_vfx_preview` lifecycle tag.
+Host is stock VRM format 4.6.0+ (`Vrm1ImportUserExtension` /
+`Vrm1ExportUserExtension`). VRMXT unlinks objects tagged `vrmxt_vfx_preview`
+before stock gather (`vfx/export_preview_omit.py`). Property groups remain the
+export source of truth.
 
 ### Open questions
 

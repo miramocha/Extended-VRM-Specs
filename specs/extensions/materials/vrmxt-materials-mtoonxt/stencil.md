@@ -24,6 +24,8 @@ per-material `stencil` / `outlineStencil` shorthand and the draft root
 `stencilRelationships` field. Importers MUST NOT treat those retired forms as aliases;
 exporters MUST emit only the format defined here. Re-export existing authored scenes
 with an updated exporter, or explicitly migrate draft assets before importing them.
+The proposed separate `VRMXT_materials_stencil` extension is superseded by this
+root graph as well; it is not an alternate attachment or an import alias.
 
 ## Scope
 

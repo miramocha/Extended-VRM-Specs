@@ -50,9 +50,10 @@ buffer (Three.js r163+).
 
 | Extension | Status |
 |-----------|--------|
-| `VRMXT_materials_mtoonxt` stencil | Claimed: map extras onto Three.js material stencil state. Face SDF later. |
-| `VRMXT_sprite_particle` | Planned |
-| Export write | Planned (Editor contract; never `extensionsRequired`) |
+| `VRMXT_materials_mtoonxt` stencil | Claimed: map extras onto Three.js material stencil state. `VRMXT_materials_face_sdf` later. `apps/viewer` Import + Create/edit + Export. |
+| `VRMXT_materials_directional_dissolve` | Not claimed. MiraSite `heightWipe.ts` is a world-Y host patch; it is not this extra on disk. |
+| `VRMXT_sprite_particle` | Claimed: instanced camera-facing quads; `tryAttach` + viewer update loop |
+| Export write | Claimed for `apps/viewer` MToonXT stencil (GLB JSON patch). Never `extensionsRequired`. |
 
 Host stack is **Three.js**. Typical renderers:
 
@@ -106,7 +107,7 @@ Plugin behavior (mirror `VRMSpringBoneLoaderPlugin`):
 
 1. `afterRoot(gltf)`:
    - Apply `VRMXT_materials_mtoonxt` stencil when present (v1).
-   - If `json.extensionsUsed` lacks `VRMXT_sprite_particle`, skip emitters (planned).
+   - If `json.extensionsUsed` lacks `VRMXT_sprite_particle`, skip emitters.
    - Read `json.extensions.VRMXT_sprite_particle`.
    - Require `specVersion` `"1.0"` for this draft; other versions: **TBD**.
    - `const nodes = await gltf.parser.getDependencies('node')`.
@@ -156,7 +157,7 @@ Field meaning and units follow the base spec.
 | Spec field | Three.js target (MVP candidates) | Notes |
 |------------|----------------------------------|-------|
 | Attach node | Parent for particle drawable | Origin and orientation from node world transform |
-| emitter drawable | `THREE.Points`, instanced quads, or small custom billboard system | **TBD** which default |
+| emitter drawable | `THREE.InstancedMesh` of camera-facing quads | World-space spawn; size in meters |
 | `emissionRate` | Spawner rate in updater | particles / second |
 | `maxParticles` | Buffer / pool size | Cap ≥ 1 |
 | `lifetime` | Per-particle life | Seconds |
@@ -168,27 +169,33 @@ Field meaning and units follow the base spec.
 WebGL vs WebGPU material choice is **TBD**. Prefer one MVP path (likely WebGL
 `Points` + `PointsMaterial` or textured quads) before a NodeMaterial variant.
 
-## MToonXT stencil (claimed)
+## MToonXT stencil (legacy implementation)
 
-Spec: [VRMXT_materials_mtoonxt stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
+Spec: field tables on [MToonXT stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
+The implementation described below reads the retired nested
+`VRMXT_materials_mtoonxt` `stencil` / `outlineStencil` format. These notes do not
+claim support for the current root graph. That requires updating its parser,
+authoring, renderer mapping, and exporter together.
 
 After stock MToon materials exist, read per-material `VRMXT_materials_mtoonxt` stencil /
 `outlineStencil` extras and set Three.js material stencil state so writer / reader
-coverage matches the spec intention (`write`, `inside`, `insideOverlay`, `outside`,
+coverage matches the former material-operation intention (`write`, `inside`, `insideOverlay`, `outside`,
 outline `same`). GPU stencil requires `WebGLRenderer` constructed with stencil
 enabled.
 
-Face SDF stays later. lilToon / Poiyomi `VRMXT_materials_override` is out of scope
+`VRMXT_materials_face_sdf` and `VRMXT_materials_directional_dissolve` stay later. lilToon / Poiyomi `VRMXT_materials_override` is out of scope
 in this library.
 
 ## Export
 
-Planned. When a host writes files, follow [VRMXT Editor](vrmxt-editor.md): append
-supported extras, list them in `extensionsUsed`, never in `extensionsRequired`.
-v1 `apps/viewer` does not write.
+`apps/viewer` writes MToonXT stencil extras. Follow [VRMXT Editor](vrmxt-editor.md):
+list `VRMXT_materials_mtoonxt` in `extensionsUsed`, never in `extensionsRequired`.
+Download keeps the original BIN chunk and patches JSON. Loose `.gltf` (not GLB) is
+not written. Unresolvable legacy clip objects are dropped on export. Current Blender
+and Unity exporters instead emit the root graph; this viewer path is not equivalent.
 
-Until web export ships, prefer Blender or UniVRMXT for authoring
-([Blender VRMXT](blender-vrmxt.md)).
+Sprite VFX and other extras stay unwritten here. Blender or UniVRMXT still cover
+those ([Blender VRMXT](blender-vrmxt.md)).
 
 If sprite VFX export is added: write root `extensions.VRMXT_sprite_particle` and add
 that name to `extensionsUsed` only.
@@ -223,6 +230,9 @@ Minimum coverage:
 ## Related
 
 - [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
+- [MToonXT stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
+- [VRMXT_materials_face_sdf](../specs/extensions/materials/vrmxt-materials-face-sdf.md)
+- [VRMXT_materials_directional_dissolve](../specs/extensions/materials/vrmxt-materials-directional-dissolve.md)
 - [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)
 - [VRMXT three-vrm web viewer](../decisions/vrmxt-three-vrm-web-viewer.md)
 - [VRMXT web viewer](vrmxt-web-viewer.md)
@@ -239,10 +249,11 @@ Minimum coverage:
 | Topic | Status |
 |-------|--------|
 | npm package name | `@vrmxt/three-vrmxt`; fallback `@miramocha/three-vrmxt` |
-| `Points` vs instanced quad default | TBD |
+| `Points` vs instanced quad default | Instanced quads |
 | WebGPU / NodeMaterial particle path | TBD |
-| `userData` key name for manager | TBD |
+| `userData` key name for manager | `gltf.userData.vrmxt.spriteParticles` |
 | Unknown `specVersion` policy | TBD (shared with base spec) |
 | Trigger / play mode | TBD |
-| three.js export | Planned (not v1 viewer) |
-| Face SDF on Three.js | Later |
+| three.js export | Claimed for viewer stencil; other extras later |
+| `VRMXT_materials_face_sdf` on Three.js | Later |
+| `VRMXT_materials_directional_dissolve` on Three.js | Later |

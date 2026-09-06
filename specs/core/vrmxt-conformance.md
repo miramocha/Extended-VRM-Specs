@@ -67,17 +67,22 @@ A sibling extra on the same glTF object as a stock `VRMC_*` extension is still a
 `VRMXT_*` name. Family-fork names append `xt` to the stock stem with no extra
 underscore: `VRMXT_materials_mtoonxt` on `materials[i].extensions` beside
 `VRMC_materials_mtoon`; `VRMXT_springBonext` on root `extensions` beside
-`VRMC_springBone`. Third-party replace names use `_override`:
-`VRMXT_materials_override`, `VRMXT_springBone_override`. See
+`VRMC_springBone`. MToonXT also permits a root `stencil` graph spanning materials.
+Other MToon feature extras use their own names on the material sit-site:
+`VRMXT_materials_face_sdf`,
+`VRMXT_materials_directional_dissolve`. Third-party replace names
+use `_override`: `VRMXT_materials_override`, `VRMXT_springBone_override`. See
 [Architecture Naming](../../architecture.md#naming).
 
 Properties inside an extension object are unprefixed camelCase (`specVersion`,
-`stencil`, `faceSdf`). They MUST NOT use a `VRMC_` or `VRMXT_` property prefix.
+`stencil`, `writers`, `readers`, `sdfTexture`). They MUST NOT use a `VRMC_` or `VRMXT_`
+property prefix.
 
-Engine override extensions and family-fork `…xt` extensions are separate `VRMXT_*`
-names. Family extras MUST NOT be written as unknown fields inside stock `VRMC_*`
-objects. When an `_override` Apply succeeds on a material or spring, a supporting
-implementation MUST skip the `…xt` fork for that item.
+Engine override extensions, family-fork `…xt` extensions, and MToon feature extras
+are separate `VRMXT_*` names. Family extras MUST NOT be written as unknown fields
+inside stock `VRMC_*` objects. When an `_override` Apply succeeds on a material or
+spring, a supporting implementation MUST skip the `…xt` fork and the MToon feature
+extras for that item.
 
 ## Capability support
 
@@ -86,7 +91,10 @@ A consumer claiming support for a capability MUST implement every normative frag
 cited by that capability specification.
 
 Partial support for a capability MUST be documented by the implementation profile. It
-MUST NOT be presented as full support for that capability.
+MUST NOT be presented as full support for that capability. Claiming
+`VRMXT_materials_mtoonxt` shader-swap support alone does not establish support for
+its root stencil graph; profiles MUST disclose that distinction. It also does not
+claim `VRMXT_materials_face_sdf` or `VRMXT_materials_directional_dissolve`.
 
 ## Versioning
 
@@ -101,6 +109,9 @@ are future work. They do not block experimental use of the family rules above.
 
 - [VRMXT_materials_override](../extensions/materials/vrmxt-materials-override.md)
 - [VRMXT_materials_mtoonxt](../extensions/materials/vrmxt-materials-mtoonxt/README.md)
+- [MToonXT stencil](../extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
+- [VRMXT_materials_face_sdf](../extensions/materials/vrmxt-materials-face-sdf.md)
+- [VRMXT_materials_directional_dissolve](../extensions/materials/vrmxt-materials-directional-dissolve.md)
 - [VRMXT_springBonext](../extensions/physics/vrmxt-springbonext/README.md)
 - [VRMXT_springBone_override](../extensions/physics/vrmxt-spring-bone-override.md)
 - [VRMXT_sprite_particle](../extensions/vfx/vrmxt-sprite-particle.md)

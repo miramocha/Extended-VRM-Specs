@@ -138,7 +138,9 @@ Stencil is on two of twelve materials:
 }
 ```
 
-Field table: [stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
+These asset excerpts use retired material operations. The current
+[stencil format](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
+is a root writer/reader graph; these excerpts are not current-format templates.
 
 ### lilToon override
 
