@@ -197,7 +197,9 @@ UniVRMXT (`MtoonxtInspector`), not in the shader UMods. `insideOverlay` Always c
 paint over avatar-opaque hands in the swimsuit stamp. Cutout or Transparent objects
 that draw after the overlay pass and win depth can hide those pixels. A Cutout overlay
 reader runs after default AlphaTest.
-[`insideOverlay` tradeoffs](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs).
+[current stencil contract](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
+These material-op notes describe the older Warudo integration; they are not the current
+wire format. A Warudo consumer must adopt the root graph to support the revised draft.
 
 ## Plugin setting
 
@@ -341,4 +343,3 @@ MToonXT shader (BIRP): https://steamcommunity.com/sharedfiles/filedetails/?id=37
 - Tutorials: [Getting started in Warudo](../tutorials/getting-started-warudo.md),
   [patch export](../tutorials/warudo-patch-export.md)
 - Example: [MToonXT stencil and lilToon materials override in Warudo](../examples/mtoonxt-liltoon-override-warudo.md)
-

@@ -23,7 +23,7 @@ Blender add-on implementation profile for
 [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
 [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md),
 and [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
-stencil (material shorthand plus root stencil relationships).
+stencil (one root-level writer/reader graph).
 Support belongs in
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender),
 which registers on VRM1 hooks from
@@ -262,27 +262,28 @@ prop on preview helpers alongside its own `vrmxt_vfx_preview` lifecycle tag.
 
 ## MToonXT stencil
 
-Authoring for the `VRMXT_materials_mtoonxt` `stencil` / `outlineStencil` shorthand is on the Blender material (`vrmxt_mtoonxt_settings`). Ops: `write`, `inside`, `insideOverlay`, `outside`, outline `same`. The stencil UI sits under **VRMXT Material** (same parent as materials override). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices.
+The root `extensions.VRMXT_materials_mtoonxt.stencil` array is the only stencil
+format. Scene authoring stores writer and reader material pointers, color,
+presentation, and independent depth controls. Both the Material and Scene panels
+edit this same graph. Body and outline follow the same presentation rules.
 
-Root `stencilRelationships` authoring is stored on the Scene. Each relationship holds writer and reader material pointers plus the portable color, presentation, and depth fields, including independent `writersWriteColor` and `writersWriteDepth` controls. Import appends relationships for newly imported materials without deleting relationships already in the Scene. Export resolves pointers through the host's final `materials[]` map and omits duplicate serialized relationships. Embedded hosts can supply the same data through `integration.register_embedded()` callbacks without registering standalone RNA or panels.
+Import resolves glTF material indices into pointers and appends the imported graph
+without deleting relationships for other avatars. Export resolves pointers through
+the official VRM export hook's final material map and coalesces equivalent records.
+Every participant requires sibling `VRMC_materials_mtoon`; invalid entries are
+skipped individually. GPU references and pass operations are consumer state, not
+serialized authoring data.
 
-GPU stencil references and pass operations are consumer state and are not stored. Face SDF and XT `renderQueueOffset` stay out of this add-on.
+The former per-material `stencil` / `outlineStencil` operations and root
+`stencilRelationships` name are not aliases. Older draft files require explicit
+migration or re-export. Embedded hosts can supply the graph through
+`integration.register_embedded()`; standalone authoring, import and export do not
+depend on BVT. Optional preview is provided by a consumer such as BVES.
 
-EEVEE has no stencil buffer; the viewport does not clip. The panel warns when a writer is Transparent (or Cutout vs Opaque) and a clip reader would draw earlier under Unity's mapped queues. Outline **Same as body** is hidden while body is Off; export drops outline `same` when body stencil is missing.
-
-Export requires sibling `VRMC_materials_mtoon` on the same material (hub rule 3). If a clip list points at a material that is not body `write`, that stencil object is omitted; other extras on the material still export.
-
-Hooks: `mtoonxt/import_hook.py`, `mtoonxt/export_hook.py`, registered from `hooks/vrm1_hooks.py` after materials override. Format: `format/mtoonxt.py`. Panel / ops: `mtoonxt/panel.py`, `mtoonxt/ops.py`, `mtoonxt/draw_order.py`. Authoring only; GPU clip is a Unity consumer (UniVRMXT apply; Warudo UMods).
-
-### Checklist
-
-- [x] Parse / serialize `specVersion` `1.0` stencil objects; skip invalid `op` / lists
-- [x] Material PropertyGroups + **VRMXT Material** stencil panel
-- [x] Parse / serialize root `stencilRelationships`; Scene authoring panel and embedded host callbacks
-- [x] Import indices → pointers; export pointers → indices
-- [x] Skip export when sibling MToon is missing; skip clip object when writers are not body `write`
-- [x] Warn when Unity queue would stamp a writer after a clip reader; hide / drop outline `same` when body is Off
-- [ ] Face SDF extras
+Hooks: `mtoonxt/import_hook.py`, `mtoonxt/export_hook.py`, registered from
+`hooks/vrm1_hooks.py`. Format: `format/mtoonxt.py`.
+See the [stencil specification](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
+and [scenario matrix](../examples/stencil-parity-matrix.md).
 
 ## Materials override
 

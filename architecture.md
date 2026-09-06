@@ -115,7 +115,7 @@ MUST NOT appear in `extensionsRequired`.
   Apply replaces the slot's runtime (shader or solver).
 - Sit-site follows the stock object. MToon, MToonXT per-material extras, and materials
   override sit on `materials[i].extensions`. MToonXT MAY also use its root extension
-  object for a cross-material `stencilRelationships` graph. `VRMC_springBone`,
+  object for a cross-material `stencil` graph. `VRMC_springBone`,
   `VRMXT_springBonext`, and
   `VRMXT_springBone_override` sit on root `extensions`.
   `VRMC_springBone_extended_collider` sits on

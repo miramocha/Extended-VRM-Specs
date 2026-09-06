@@ -34,9 +34,9 @@ extension identity, conformance, and load gate.
 |------|-------|
 | Extension name | `VRMXT_materials_mtoonxt` |
 | Target | VRM 1.0 (`VRMC_vrm` 1.0) only |
-| Attachment | `materials[i].extensions.VRMXT_materials_mtoonxt`; optional root `extensions.VRMXT_materials_mtoonxt` for `stencilRelationships` |
+| Attachment | `materials[i].extensions.VRMXT_materials_mtoonxt`; optional root `extensions.VRMXT_materials_mtoonxt` for `stencil` |
 | Required sibling | `VRMC_materials_mtoon` on the same material |
-| Root `extensions` | optional `stencilRelationships`; see [Stencil relationships](stencil-relationships.md) |
+| Root `extensions` | optional `stencil`; see [Stencil](stencil.md) |
 | Stock importer | no required change |
 | Consumer package | optional; swaps to an MToonXT shader when that shader is installed |
 
@@ -56,7 +56,7 @@ This specification conforms to [VRMXT Conformance](../../../core/vrmxt-conforman
 2. A per-material extension object appears on a glTF `materials[]` entry under
    `extensions.VRMXT_materials_mtoonxt`. A root object MAY appear at
    `extensions.VRMXT_materials_mtoonxt` only for fields defined by
-   [Stencil relationships](stencil-relationships.md).
+   [Stencil](stencil.md).
 3. The same material MUST also contain `extensions.VRMC_materials_mtoon`. If that sibling
    is missing, a supporting implementation MUST ignore `VRMXT_materials_mtoonxt` on that
    material and keep stock VRM 1.0 material import.
@@ -73,17 +73,14 @@ This specification conforms to [VRMXT Conformance](../../../core/vrmxt-conforman
    - replace the stock MToon shader on that material with MToonXT;
    - apply shade, outline, UV animation, and other stock MToon state from the sibling
      `VRMC_materials_mtoon` using the same mapping it already uses for stock MToon;
-   - then apply extras defined by this extension (`faceSdf`, `stencil`,
-     `outlineStencil`).
+   - then apply supported per-material extras such as `faceSdf`.
 9. When rule 7 does not hold, the implementation MUST keep stock MToon for that material
    and MUST NOT apply extras.
 10. The skippable unit is this material's `VRMXT_materials_mtoonxt` object. Invalid data
     there MUST NOT make the glTF or VRM 1.0 asset invalid.
-11. If an extra object (`faceSdf`, `stencil`, or `outlineStencil`) is missing, unknown,
-    or unresolvable, the implementation MUST skip that object only. It MUST still attempt
-    the shader swap when rule 7 holds and remaining extras are usable. Stencil
-    `op` / `materials` failure cases are on
-    [stencil](stencil.md).
+11. If a per-material extra such as `faceSdf` is missing, unknown, or unresolvable,
+    the implementation MUST skip that object only. Invalid root stencil entries are
+    skipped independently according to [Stencil](stencil.md).
 12. Unrecognized properties on the extension object MUST be ignored.
 13. This extension MUST NOT duplicate `VRMC_materials_mtoon` fields. Shade color, shading
     shift, shading toony, rim, matcap, outline width, UV animation, and related stock
@@ -98,7 +95,7 @@ This specification conforms to [VRMXT Conformance](../../../core/vrmxt-conforman
 16. An exporter that emits `faceSdf.sdfTexture` MUST register the referenced image
     through its normal glTF texture export path so the index resolves in the output
     file.
-17. Root `stencilRelationships` are independent of the MToonXT shader swap gate in rule
+17. Root `stencil` entries are independent of the MToonXT shader swap gate in rule
     7. A consumer MAY implement their portable presentation with another compatible
     shader or render pipeline while stock MToon remains the material baseline.
 
@@ -127,43 +124,30 @@ flowchart TD
 |----------|------|----------|------|
 | `specVersion` | string | yes | this page; `"1.0"` for this draft |
 | `faceSdf` | object | no | [Face SDF](face-sdf.md) |
-| `stencil` | object | no | [Stencil](stencil.md) |
-| `outlineStencil` | object | no | [Stencil](stencil.md) |
 
 The root extension object contains `specVersion` and optional
-[`stencilRelationships`](stencil-relationships.md). It does not contain per-material
-`faceSdf`, `stencil`, or `outlineStencil` objects.
+[`stencil`](stencil.md), an array of writer/reader entries. `faceSdf` remains
+per-material. There is no per-material stencil or separate outline-stencil format.
 
 ## Attachment example
 
-Non-normative. Writer material with no clip list.
+Non-normative. Material 0 is a writer and material 1 is its reader.
 
 ```json
 {
-  "extensionsUsed": [
-    "VRMC_vrm",
-    "VRMC_materials_mtoon",
-    "VRMXT_materials_mtoonxt"
-  ],
-  "materials": [
-    {
-      "name": "White",
-      "extensions": {
-        "VRMC_materials_mtoon": {
-          "specVersion": "1.0"
-        },
-        "VRMXT_materials_mtoonxt": {
-          "specVersion": "1.0",
-          "stencil": { "op": "write" }
-        }
-      }
+  "extensionsUsed": ["VRMXT_materials_mtoonxt"],
+  "extensions": {
+    "VRMXT_materials_mtoonxt": {
+      "specVersion": "1.0",
+      "stencil": [{"writers": [0], "readers": [1]}]
     }
-  ]
+  }
 }
 ```
 
-Clip-inside, `insideOverlay`, and Face SDF examples: [stencil](stencil.md),
-[Face SDF](face-sdf.md).
+Material entries referenced by the graph must contain `VRMC_materials_mtoon`.
+They do not need a duplicate per-material `VRMXT_materials_mtoonxt` marker.
+See [Stencil](stencil.md) for the full schema and [Face SDF](face-sdf.md) for that extra.
 
 ## Optional consumer interpretation
 
@@ -205,7 +189,7 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 - [x] URP `XRMotionVectors` stencil bit 0 — fork omits that pass
 - [ ] Extra shade bands, face clip/mask, anisotropic highlight
 - [x] Blender authoring (material pointers → indices) — VRMXT-Extension-for-Blender 0.2.4; [Blender VRMXT](../../../../implementations/blender-vrmxt.md#mtoonxt-stencil)
-- [x] `stencil.op` `insideOverlay` authoring and Apply (UniVRMXT, Blender)
+- [x] Root stencil authoring, import and export (UniVRMXT, Blender)
 - [ ] Catalog JSON for `VRMXT/MToonXT10`
 - [ ] Stable `specVersion` policy after the first accepted property set
 
@@ -217,7 +201,6 @@ Unity maps those extras onto fork properties `_M_Stencil*` and `_M_OutlineStenci
 - [Architecture Naming](../../../../architecture.md#naming)
 - [VRMXT_springBonext](../../physics/vrmxt-springbonext/README.md) (same `…xt` role)
 - [Stencil](stencil.md)
-- [Stencil relationships](stencil-relationships.md)
 - [Face SDF](face-sdf.md)
 - [MToonXT renderQueueOffset](../../../../references/research/mtoonxt-render-queue.md) (non-normative)
 - [MToonXT zTest](../../../../references/research/mtoonxt-ztest.md) (non-normative)

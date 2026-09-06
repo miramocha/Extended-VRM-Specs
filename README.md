@@ -76,7 +76,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 |------|-------------------|--------|
 | [VRMXT Conformance](specs/core/vrmxt-conformance.md) | Shared `VRMXT_*` family requirements | draft |
 | [VRMXT_materials_override](specs/extensions/materials/vrmxt-materials-override.md) | `VRMXT_materials_override` | draft |
-| [VRMXT_materials_mtoonxt](specs/extensions/materials/vrmxt-materials-mtoonxt/README.md) | `VRMXT_materials_mtoonxt` ([stencil](specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md), [stencil relationships](specs/extensions/materials/vrmxt-materials-mtoonxt/stencil-relationships.md), [Face SDF](specs/extensions/materials/vrmxt-materials-mtoonxt/face-sdf.md)) | draft |
+| [VRMXT_materials_mtoonxt](specs/extensions/materials/vrmxt-materials-mtoonxt/README.md) | `VRMXT_materials_mtoonxt` ([stencil](specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md), [Face SDF](specs/extensions/materials/vrmxt-materials-mtoonxt/face-sdf.md)) | draft |
 | [VRMXT_springBone_override](specs/extensions/physics/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
 | [VRMXT_springBonext](specs/extensions/physics/vrmxt-springbonext/README.md) | `VRMXT_springBonext` (identity / load gate; extras TBD) | draft |
 | [VRMXT_sprite_particle](specs/extensions/vfx/vrmxt-sprite-particle.md) | Portable sprite particle emitters | draft |

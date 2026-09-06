@@ -13,10 +13,10 @@ status: draft
 [Watch the Blender / Unity comparisons](https://tdw46.github.io/BVT-Stencil-Matrix/).
 
 This non-normative matrix accompanies the
-[portable relationship contract](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil-relationships.md).
+[stencil contract](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
 It defines each showcase's settings, control variant and implementation constraints.
-The relationship graph remains additive to legacy per-material stencil authoring;
-a supporting consumer applies the authoritative graph once, not again as shorthand.
+The root `stencil` graph is the sole stencil format. Each consumer applies it once;
+there is no parallel per-material stencil authoring format.
 
 ## Reading the settings
 

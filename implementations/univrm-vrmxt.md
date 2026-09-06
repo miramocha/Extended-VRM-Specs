@@ -388,28 +388,29 @@ path is post-load re-read of the `.vrm` plus material swap. See
 Spec: [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 ([stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)).
 
-UniVRMXT parses `materials[i].extensions.VRMXT_materials_mtoonxt`, attaches extras, and
-swaps to packaged `VRMXT/MToonXT10` or `VRMXT/Universal Render Pipeline/MToonXT10` when
-`Shader.Find` (or host `ShaderResolveProvider`) resolves. After swap it restores MToon
-pass settings from `_AlphaMode` and applies compiled stencil (`op` + material indices).
-`insideOverlay` uses the same stencil mapping as `inside` and sets `_M_ZTest` Always
-plus `_M_ZWrite` off (queue one slot after mapped). Always paints over earlier color
-in the stamp (avatar-opaque hands). Later cutout (`MASK`) or transparent draws can
-still cover the bones. A `MASK` overlay reader runs after Unity AlphaTest 2450.
-Tradeoffs and host redraw options:
-[`insideOverlay` tradeoffs](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md#insideoverlay-tradeoffs).
-`MtoonxtInspector` authors stencil ops and writer lists as Unity fields on the instance.
-The inspector warns when Write `_AlphaMode` is a later MToon bucket than a clip reader
-(Transparent Write vs Cutout or Opaque; Cutout Write vs Opaque).
-**Add MToonXT extras** (material inspector or avatar component) creates those pairs on a
-loaded avatar after the material uses `VRMXT/MToonXT10`.
-Export remaps MToonXT shaders to stock MToon10 on the export copy (UniVRMXT
-PreHierarchy). UniVRM then writes sibling `VRMC_materials_mtoon`. UniVRMXT writes
-`VRMXT_materials_mtoonxt`.
-Experimental `zTest` / `zWrite` are still parsed on apply ([research](../references/research/mtoonxt-ztest.md)); they are not inspector fields. Skip the swap when
-`VRMXT_materials_override` would apply on that material. Warudo UMod `Shader.Find` is
-null; those hosts load the same ShaderLab names from `mira.shaders.mtoonxt.birp` /
-`mira.shaders.mtoonxt.urp`.
+UniVRMXT parses the root `extensions.VRMXT_materials_mtoonxt.stencil` array and
+binds writer/reader indices to imported materials. Participants require sibling
+`VRMC_materials_mtoon`; they do not require per-material MToonXT stencil markers.
+
+The avatar's `VrmxtMaterialsMtoonxtInstance` stores material pointers and portable
+presentation/depth controls. Its **Stencil** inspector and the material inspector
+edit this same graph. Import compiles primary stencil passes, native lit secondary
+material layers, and colorless auxiliary coverage as needed by the
+[13-row matrix](../examples/stencil-parity-matrix.md). Native layers retain lighting
+and shadow reception; source alpha, double-sidedness, skinning, and bounds remain
+authoritative. Compound URP modes require equivalent renderer coverage phases.
+
+Export strips generated layers from UniVRM's temporary copy, maps MToonXT back to
+stock MToon for ordinary material serialization, then resolves graph pointers
+through the final material index map and writes one root `stencil` array.
+Neither importer nor exporter depends on BVT. Former material `stencil` /
+`outlineStencil` operations and the old root `stencilRelationships` name are
+not aliases; older draft assets need explicit migration or re-export.
+
+Experimental per-material `zTest` / `zWrite` parsing is independent of stencil
+([research](../references/research/mtoonxt-ztest.md)). Material overrides retain
+their precedence rules. Warudo hosts whose `Shader.Find` cannot resolve packaged
+shaders must supply the corresponding MToonXT shaders through their host resolver.
 
 ## Related
 
