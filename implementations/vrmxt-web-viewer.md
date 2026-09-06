@@ -90,9 +90,10 @@ Do not persist the file to a server. Do not call VRoid Hub APIs from this app.
 
 ## MToonXT apply
 
-Stencil extras follow the portable spec
-([stencil](../specs/extensions/materials/vrmxt-materials-stencil.md)). Mapping
-is Three.js material stencil state, not Unity ShaderLab. `VRMXT_materials_face_sdf` is later.
+The viewer implementation below uses the retired per-material stencil operations.
+It must adopt the [root stencil graph](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
+before claiming current-spec support. Its mapping is Three.js material stencil
+state, not Unity ShaderLab. `VRMXT_materials_face_sdf` is later.
 
 If the extra is absent, keep stock three-vrm MToon.
 

@@ -292,8 +292,9 @@ omitted here; see the Unity and Unreal profile notes for fuller single-slot exam
   emissive, double-sided).
 - `VRMC_materials_mtoon` remains the VRM 1.0 toon material extension when present.
 - `VRMXT_materials_mtoonxt` is a sibling for MToonXT shader swap. Nested
-  `stencil` / `outlineStencil` on that object are deprecated. Canonical clip is
-  [VRMXT_materials_stencil](vrmxt-materials-stencil.md). Face shade lookup is
+  `stencil` / `outlineStencil` on that object are retired, not import aliases.
+  Canonical clip is the root graph in
+  [MToonXT stencil](vrmxt-materials-mtoonxt/stencil.md). Face shade lookup is
   [VRMXT_materials_face_sdf](vrmxt-materials-face-sdf.md). Directional dissolve is
   [VRMXT_materials_directional_dissolve](vrmxt-materials-directional-dissolve.md). Spec:
   [VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md). When this override **applies**

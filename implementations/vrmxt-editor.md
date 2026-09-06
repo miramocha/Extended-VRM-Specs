@@ -196,16 +196,18 @@ Catalogs: [Materials Override Catalogs](../references/materials-override-catalog
 ### `VRMXT_materials_mtoonxt`
 
 Spec: [vrmxt-materials-mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
-([stencil](../specs/extensions/materials/vrmxt-materials-stencil.md)). Blender ships
-nested stencil authoring on `VRMXT_materials_mtoonxt`. `VRMXT_materials_face_sdf` stays
-out of the add-on. No host emits `VRMXT_materials_stencil` yet.
+([stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)). Blender and
+UniVRMXT author, import, and export the root `VRMXT_materials_mtoonxt.stencil` graph.
+`VRMXT_materials_face_sdf` remains a separate feature outside the Blender add-on.
+The other hosts listed below still describe legacy material-operation paths;
+they do not establish current root-graph support.
 
 | Op | Blender | UniVRMXT | Unity Player (planned) | Warudo | three-vrmxt viewer |
 |----|---------|----------|------------------------|--------|--------------------|
-| Import | Done (glTF indices → material pointers) | Done (parse/apply `op` + indices) | parse/swap compiled stencil after override Apply | parse/swap compiled stencil after override Apply | Done (parse extras on load) |
-| Create/edit | Done (**VRMXT Material** stencil panel; ops `write` / `inside` / `insideOverlay` / `outside` / outline `same`) | Done (`MtoonxtInspector` **Add MToonXT extras** + stencil ops / writer dropdowns; avatar instance list) | — | — (no stencil authoring) | Done (inspector **MToonXT stencil**; same ops; MToon sibling required) |
-| Preview | — (no EEVEE clip; panel warns when Unity queue would stamp a writer after a clip reader) | Done (packaged `VRMXT/MToonXT10`) | Done (shader from UniVRMXT UPM) | Done (UMods `mira.shaders.mtoonxt.birp` / `.urp`) | Done (Three.js material stencil; `WebGLRenderer` `stencil: true`) |
-| Export | Done (pointers → indices; skip clip object when writers are not body `write`; sibling MToon required) | Partial (re-export attached extras with Extended-UniVRM export hooks) | Planned | — | Done (GLB JSON patch + original BIN; skip unresolvable clip; never `extensionsRequired`) |
+| Import | Done (root graph indices → material pointers) | Done (root graph parsing and runtime compilation) | Root graph integration unverified | Legacy only | Legacy only |
+| Create/edit | Done (Material and Scene panels edit the same graph) | Done (material and avatar inspectors edit the same graph) | — | — | Legacy material-operation inspector |
+| Preview | Optional BVES/BVT consumer; not required for I/O | Built-in graph rendering; compound URP coverage needs a renderer feature | Root graph integration unverified | Legacy UMod rendering | Legacy Three.js stencil rendering |
+| Export | Done (root graph pointers → indices through official VRM hooks) | Done (root graph through Extended-UniVRM hooks) | Planned | — | Legacy JSON patch only |
 | Profile | [Blender → MToonXT stencil](blender-vrmxt.md#mtoonxt-stencil) | [UniVRMXT → MToonXT](univrm-vrmxt.md#mtoonxt) | [Unity Player](vrmxt-unity-player.md) | [Warudo VRMXT](warudo-vrmxt.md) | [VRMXT web viewer](vrmxt-web-viewer.md) |
 
 ### Draft capabilities (no shipping editor yet)

@@ -76,8 +76,8 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 |------|-------------------|--------|
 | [VRMXT Conformance](specs/core/vrmxt-conformance.md) | Shared `VRMXT_*` family requirements | draft |
 | [VRMXT_materials_override](specs/extensions/materials/vrmxt-materials-override.md) | `VRMXT_materials_override` | draft |
-| [VRMXT_materials_mtoonxt](specs/extensions/materials/vrmxt-materials-mtoonxt/README.md) | `VRMXT_materials_mtoonxt` (MToonXT shader swap; nested stencil deprecated) | draft |
-| [VRMXT_materials_stencil](specs/extensions/materials/vrmxt-materials-stencil.md) | `VRMXT_materials_stencil` (coverage clip; shipping tools still nest on mtoonxt) | draft |
+| [VRMXT_materials_mtoonxt](specs/extensions/materials/vrmxt-materials-mtoonxt/README.md) | `VRMXT_materials_mtoonxt` (MToonXT shader swap and root stencil graph) | draft |
+| [MToonXT stencil](specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md) | Root `VRMXT_materials_mtoonxt.stencil` writer/reader graph | draft |
 | [VRMXT_materials_face_sdf](specs/extensions/materials/vrmxt-materials-face-sdf.md) | `VRMXT_materials_face_sdf` (Face SDF; no shipping Apply) | draft |
 | [VRMXT_materials_directional_dissolve](specs/extensions/materials/vrmxt-materials-directional-dissolve.md) | `VRMXT_materials_directional_dissolve` (axis/plane clip; no shipping Apply) | draft |
 | [VRMXT_springBone_override](specs/extensions/physics/vrmxt-spring-bone-override.md) | `VRMXT_springBone_override` | draft |
@@ -91,6 +91,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 
 | Note | Topic | Status |
 |------|-------|--------|
+| [Stencil parity matrix](examples/stencil-parity-matrix.md) | 13 Blender/Unity showcases, exact controls, runtime settings and validation limits; [watch videos](https://tdw46.github.io/BVT-Stencil-Matrix/) | recorded review checkpoint |
 | [MToonXT stencil and lilToon materials override in Warudo](examples/mtoonxt-liltoon-override-warudo.md) | Stock MToon, MToonXT stencil, lilToon override | draft |
 
 ## Implementation profiles

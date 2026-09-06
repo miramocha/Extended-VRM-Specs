@@ -102,34 +102,34 @@ MUST NOT appear in `extensionsRequired`.
   | Role | Recipe | Materials | Spring |
   |------|--------|-----------|--------|
   | Family fork | `VRMXT_` + stock stem + `xt` (no extra underscore) | `VRMXT_materials_mtoonxt` (MToonXT shader swap) | `VRMXT_springBonext` |
-  | Feature extra | `VRMXT_` + domain + feature stem | `VRMXT_materials_stencil`, `VRMXT_materials_face_sdf`, `VRMXT_materials_directional_dissolve` | (none yet) |
+  | Feature extra | `VRMXT_` + domain + feature stem | `VRMXT_materials_face_sdf`, `VRMXT_materials_directional_dissolve` | (none yet) |
   | Third-party replace | `VRMXT_` + domain + `_override` | `VRMXT_materials_override` | `VRMXT_springBone_override` |
 
   Stock spring also uses Consortium
   [`VRMC_springBone_extended_collider`](https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_springBone_extended_collider-1.0)
   on each collider for plane and inside shapes. That is not a `VRMXT_*` name.
 
-  Family fork stays in the VRM shading or spring family (MToonXT shader swap;
-  springBonext solver). MToon **feature** extras (`VRMXT_materials_stencil`,
-  `VRMXT_materials_face_sdf`, `VRMXT_materials_directional_dissolve`) are their own `VRMXT_*` names on
-  `materials[i].extensions`. Do not nest new MToon extras on `mtoonxt`. Nested
-  `stencil` / `outlineStencil` on `mtoonxt` remain defined for shipped files; that
-  attach is deprecated. `_override` selects an engine backend (lilToon, Poiyomi,
-  MagicaCloth2, PhysBone). Override JSON stores ids and parameters; it MUST NOT
-  embed host SDK component types. Override names use the domain (`materials`,
-  `springBone`) because Apply replaces the slot's runtime (shader or solver).
-- Sit-site follows the stock object. MToon, MToonXT, stencil, Face SDF, directional
-  dissolve, and materials override sit on `materials[i].extensions`. `VRMC_springBone`, `VRMXT_springBonext`, and
+  Family fork stays in the VRM shading or spring family (MToonXT shader; springBonext
+  solver). `_override` selects an engine backend (lilToon, Poiyomi, MagicaCloth2,
+  PhysBone). Override JSON stores ids and parameters; it MUST NOT embed host SDK
+  component types. Override names use the domain (`materials`, `springBone`) because
+  Apply replaces the slot's runtime (shader or solver).
+- Sit-site follows the stock object. MToon, MToonXT shader-swap markers, Face SDF,
+  directional dissolve, and materials override sit on `materials[i].extensions`.
+  Face SDF and dissolve remain separate extensions, not nested MToonXT fields.
+  MToonXT MAY also use its root extension
+  object for a cross-material `stencil` graph. `VRMC_springBone`,
+  `VRMXT_springBonext`, and
   `VRMXT_springBone_override` sit on root `extensions`.
   `VRMC_springBone_extended_collider` sits on
   `VRMC_springBone.colliders[i].extensions`. Springs have no glTF core object; XT
   and override index `VRMC_springBone.springs[]`. Do not write `VRMXT_*` on
   `springs[i].extensions` (stock export may drop unknown keys).
 - If `_override` Apply succeeds on that material or spring, skip the `…xt` fork and
-  the MToon feature extras (`VRMXT_materials_stencil`, `VRMXT_materials_face_sdf`,
+  the MToon feature extras (`VRMXT_materials_face_sdf`,
   `VRMXT_materials_directional_dissolve`) for that item. Fail or absent override → run those gates → else stock `VRMC_*`.
 - Inner JSON keys (fields inside the extension object) are unprefixed camelCase
-  (`specVersion`, `stencil`, `outlineStencil`, `sdfTexture`). Do not prefix
+  (`specVersion`, `stencil`, `writers`, `readers`, `sdfTexture`). Do not prefix
   properties `VRMC_` or `VRMXT_`.
 - Repo path stem maps to the glTF name by replacing hyphens with underscores:
   `specs/extensions/vfx/vrmxt-sprite-particle.md` → `VRMXT_sprite_particle`.
@@ -138,8 +138,8 @@ MUST NOT appear in `extensionsRequired`.
   `specs/extensions/physics/vrmxt-springbonext/` → `VRMXT_springBonext`.
   `specs/extensions/physics/vrmxt-spring-bone-override.md` →
   `VRMXT_springBone_override`.
-  `specs/extensions/materials/vrmxt-materials-stencil.md` →
-  `VRMXT_materials_stencil`.
+  `specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md` defines the root
+  `stencil` field of `VRMXT_materials_mtoonxt`, not a separate extension name.
   `specs/extensions/materials/vrmxt-materials-face-sdf.md` →
   `VRMXT_materials_face_sdf`.
   `specs/extensions/materials/vrmxt-materials-directional-dissolve.md` →
@@ -177,7 +177,7 @@ parallel Extended-only format.
 | Blender | [VRM Add-on for Blender](https://github.com/saturday06/VRM-Addon-for-Blender) 4.6.0+ | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | [Blender VRMXT](implementations/blender-vrmxt.md) | Same (`Vrm1ExportUserExtension.pre_save_hook`) |
 | Unity (package / Editor) | [UniVRM](https://github.com/vrm-c/UniVRM) / [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | [UniVRMXT](implementations/univrm-vrmxt.md) | Same via Extended-UniVRM export hooks (Project Settings gate) |
 | Unity (Player app) | UniVRM in [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Same Player (depends on UniVRMXT; desktop edit) | Planned | Planned (desktop) |
-| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): Apply `VRMXT_materials_mtoonxt` stencil; viewer Create/edit | Viewer stencil Export (GLB JSON patch) |
+| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): legacy material-operation Apply and viewer Create/edit; root graph not established | Legacy stencil Export (GLB JSON patch) |
 | Unreal | VRM4U | VRM4U VRMXT package (planned) | Planned: [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | **TBD** |
 | Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VRMXT](implementations/godot-vrmxt.md) | **TBD** |
 | Other | Any VRM 1.0 tool | Optional Extended package | Implement specs | Implement specs |
@@ -312,7 +312,8 @@ support is a separate npm package:
 4. Missing extension or missing package → no Extended objects; avatar still valid.
 5. First-party host: [web viewer](implementations/vrmxt-web-viewer.md) (`apps/viewer`).
    Construct `WebGLRenderer` with `stencil: true`. Stencil Create/edit/Export is
-   claimed; Hub WXT stays view-first.
+   claimed for the retired material-operation format, not the current root graph;
+   Hub WXT stays view-first.
 
 Do not fork pixiv/three-vrm or patch `VRMLoaderPlugin` as the only path.
 

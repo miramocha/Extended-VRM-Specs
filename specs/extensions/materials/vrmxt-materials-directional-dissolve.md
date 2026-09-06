@@ -20,7 +20,7 @@ Per-material glTF extension. Axis/plane clip with an optional glowing lip on a V
 1.0 MToon material. Sibling of `VRMC_materials_mtoon` on the same `materials[]`
 entry. Independent of
 [VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md),
-[VRMXT_materials_stencil](vrmxt-materials-stencil.md), and
+[MToonXT stencil](vrmxt-materials-mtoonxt/stencil.md), and
 [VRMXT_materials_face_sdf](vrmxt-materials-face-sdf.md).
 
 This document is an Extended VRM draft. It is not a VRM Consortium specification.
@@ -115,7 +115,7 @@ When `enabled` is true, for each fragment of that material's **color** pass:
    `edgeColor * edgeGain * band^2` to the lit RGB **after** MToon shade and
    **before** writing the fragment.
 
-[VRMXT_materials_stencil](vrmxt-materials-stencil.md) still applies to fragments
+[MToonXT stencil](vrmxt-materials-mtoonxt/stencil.md) still applies to fragments
 that survive this discard.
 
 Outline, shadow, and depth passes: **TBD**. A consumer MAY apply the same discard
@@ -162,7 +162,7 @@ them onto this extra.
 
 - [VRMXT Conformance](../../core/vrmxt-conformance.md)
 - [VRMXT_materials_mtoonxt](vrmxt-materials-mtoonxt/README.md)
-- [VRMXT_materials_stencil](vrmxt-materials-stencil.md)
+- [MToonXT stencil](vrmxt-materials-mtoonxt/stencil.md)
 - [VRMXT_materials_face_sdf](vrmxt-materials-face-sdf.md)
 - [VRMC_materials_mtoon 1.0](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_materials_mtoon-1.0/README.md)
 - [Architecture Naming](../../../architecture.md#naming)

@@ -12,119 +12,57 @@ type: guide
 status: draft
 ---
 
-# Unity MToonXT stencil
+# Author stencil in Unity
 
-Set **Stencil** and **Outline stencil** on a material that already uses MToon
-1.0, then switch the shader to MToonXT so the Scene view can clip. Export
-writes those settings into the `.vrm`.
+Stencil is one avatar-level writer/reader graph, stored at
+`extensions.VRMXT_materials_mtoonxt.stencil`. The same graph is used by Blender
+VRMXT; neither import nor export requires BVT.
 
-Finish [Getting started in Unity](getting-started-unity.md) first.
+## Workflow
 
-## What you'll need
+1. Import a VRM 1.0 avatar using Extended-UniVRM and UniVRMXT. Imported stencil
+   graphs appear on the root `VrmxtMaterialsMtoonxtInstance` component.
+2. Open **Stencil** on that component. For new authoring, register the avatar's
+   MToonXT materials with **Register MToonXT materials**.
+3. Add a graph entry and assign non-empty, disjoint **Writers** and **Readers**
+   material lists. Both lists refer to avatar materials, not helper overlay clones.
+4. Choose presentation and depth controls using the
+   [scenario matrix](../examples/stencil-parity-matrix.md). Keep the source
+   material's alpha mode, textures, and double-sidedness appropriate to the effect.
+5. Export VRM 1.0 with **Enable VRM Export Extensions** enabled. The exporter
+   resolves material references through its final glTF material map and writes the
+   root graph; it does not emit per-material stencil operations.
+6. Reimport the exported VRM to validate the portable result.
 
-Load a VRM 1.0 avatar into the scene and select it (a mesh on the avatar is
-enough). Built-In uses `VRMXT/MToonXT10`. URP uses
-`VRMXT/Universal Render Pipeline/MToonXT10`.
+The material inspector's **MToonXT stencil** section edits the same root graph,
+not an independent material format. Body and outline follow the graph together.
 
-## Steps
+## Choosing an effect
 
-1. If the material sits nested under the `.vrm` in Project, extract it first.
-   Select the `.vrm`, open the importer inspector **Materials** tab, and click
-   **Extract Materials And Textures ...**. Edit the extracted `.mat` files in
-   the `YourAvatar.vrm1.Materials` folder next to the VRM. Nested materials stay
-   greyed out, and reimport wipes shader edits on them.
-2. On the material, set **Shader** to the MToonXT name for your pipeline. Stock
-   MToon has no stencil block.
-3. Open the material inspector. If it says there are no stencil settings yet,
-   click **Add MToonXT extras**. You can also select the avatar root, find the
-   `VrmxtMaterialsMtoonxtInstance` component, and click **Add extras from MToonXT
-   materials**.
-4. Set **Stencil** to **Off**, **Write**, **Clip inside**, **Clip inside overlay**,
-   or **Clip outside**.
-5. Set **Outline stencil**. Use **Same as body** to copy the body clip onto the
-   outline. Leave it **Off** while **Stencil** is **Off**.
-6. For **Clip inside**, **Clip inside overlay**, or **Clip outside**, assign
-   **Write** materials under **Clip against writers** (drag slots; Size grows the
-   list). Export skips other targets.
-7. If the inspector warns that Write may draw too late, the **Write** material
-   is Transparent against Cutout or Opaque clip, or Cutout against Opaque clip.
-   Switch Write to the same MToon mode or an earlier one (prefer Opaque), or
-   export knowing clip can miss.
-8. Export as VRM 1.0. Keep **Project Settings → VRM10 → Enable VRM Export
-   Extensions** on.
+- **M02 — Show through a reader:** reveal a writer through an occluding reader,
+  while retaining its ordinary appearance elsewhere.
+- **M03/M04 — Inside-only:** clip a writer to the reader silhouette, for example
+  animated HUD graphics constrained to a visor lens.
+- **M07 — Translucent aura:** preserve source alpha while disabling writer depth
+  and self-occlusion as specified by the row.
+- **M08 — Hidden-reader coverage:** keep the reader's entire projected silhouette
+  eligible even behind other geometry, without revealing the reader's color.
 
-The material must already be MToon, then MToonXT. If a materials override
-applies on that material, MToonXT (and this clip) is skipped.
+These controls describe different coverage and depth rules, not merely different
+artwork. Use each row's control variant to isolate the changed rule.
 
-## Example: eyebrows in front of hair
+## Limits and migration
 
-Front hair that sits closer to the camera than the face covers the
-eyebrows. Set the brow material to **Write**, then clip hair so it skips those
-pixels.
+Built-in compound modes use native material layers for lit writer passes and
+colorless auxiliary coverage. Equivalent compound URP coverage requires a renderer
+feature. Closed-surface overlay culling is not a general nearest-surface solution
+for open or concave double-sided meshes.
 
-1. Select the eyebrow material. Set **Stencil** to **Write**. If that material
-   draws an outline, set **Outline stencil** to **Write** so the outline is
-   marked too.
-2. Select each hair material that covers the brows (base hair, front hair,
-   highlight — whatever actually overlaps). Set **Stencil** to **Clip
-   outside**.
-3. Under **Clip against writers**, assign the eyebrow material. Left and right
-   brow materials both **Write**: add both; hair skips pixels from every
-   material in the list.
-4. If that hair uses outline, set **Outline stencil** to **Same as body** so
-   the outline skips the same pixels.
-5. Repeat 2–4 for every overlapping hair material. One brow on **Write** and
-   several hair materials is the usual setup. Do not clip the brow to the hair.
-6. If the inspector warns that the **Write** material is Transparent, switch the
-   brow to Opaque or Cutout so it draws before the hair, or export knowing clip
-   can miss.
-7. Export as VRM 1.0 with export extensions on.
+The former per-material `stencil` / `outlineStencil` operations and root
+`stencilRelationships` name are retired, not aliases. Older draft assets must be
+explicitly migrated or re-exported.
 
-The Game view and Scene view clip the hair once MToonXT is on the mesh.
+## References
 
-MToon **Transparent** hair still counts every drawn pixel as solid, so the hole
-is a hard edge. **Cutout** hair already has that hard alpha, so front hair over
-solid brows looks OK. Fuzzy **Transparent** hair can look like a sharp hole.
-
-## Example: iris inside sclera
-
-The iris mesh is usually a disc that sticks out past the white of the eye. Set
-the sclera to **Write**, then clip iris so it draws only on those pixels.
-
-VRoid often names the sclera **White**.
-
-1. Select the sclera material. Set **Stencil** to **Write**. Leave **Outline
-   stencil** on **Off**. Outline **Write** would count pixels past the white.
-2. Select the iris material. Set **Stencil** to **Clip inside**.
-3. Under **Clip against writers**, assign the sclera. Separate left and right
-   whites: add both; iris uses every material in the list.
-4. If the iris uses outline, set **Outline stencil** to **Same as body**.
-5. Do not clip the sclera to the iris.
-6. Export as VRM 1.0 with export extensions on.
-
-## Example: skeleton on swimsuit
-
-Show bones only on swimsuit pixels. Leave body **Stencil** **Off** so the mesh
-stays solid (no hole through a leg).
-
-1. Select the swimsuit material. Set **Stencil** to **Write**.
-2. Select the skeleton material. Set **Stencil** to **Clip inside overlay**.
-3. Under **Clip against writers**, assign the swimsuit. Set **Outline stencil**
-   to **Same as body** if the skeleton draws an outline.
-4. Leave skin / body **Stencil** **Off**.
-5. Export as VRM 1.0 with export extensions on.
-
-The Game view and Scene view overlay the bones once MToonXT is on the mesh.
-
-An Opaque mesh that already covered those swimsuit pixels (a cube, a hand, a
-material that is not MToonXT) shows bones on the overlap. Cutout and Transparent
-draws run after an Opaque overlay, so those objects can hide the bones. If a
-Cutout prop covers the skeleton, set only the skeleton material to Cutout. Overlay
-then runs after default cutout (Unity AlphaTest 2450). Swimsuit can stay Opaque
-**Write**. Leave skin Opaque. The iris example uses **Clip inside**, so the face
-can still cover the card.
-
-## Related
-
-- [VRMXT_materials_mtoonxt stencil](../specs/extensions/materials/vrmxt-materials-stencil.md#insideoverlay-tradeoffs)
-  (field tables). Shipping export still nests on `VRMXT_materials_mtoonxt`.
+- [Stencil specification](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
+- [Visual matrix](https://tdw46.github.io/BVT-Stencil-Matrix/)

@@ -17,7 +17,7 @@ status: draft
 
 Non-normative research. Lives under `references/research/` only.
 
-Portable coverage-clip JSON is [VRMXT_materials_stencil](../../specs/extensions/materials/vrmxt-materials-stencil.md).
+Portable coverage-clip JSON is [MToonXT stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
 Face SDF is [VRMXT_materials_face_sdf](../../specs/extensions/materials/vrmxt-materials-face-sdf.md).
 Shipped writers still nest `stencil` / `outlineStencil` on
 [`VRMXT_materials_mtoonxt`](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md).
@@ -284,7 +284,7 @@ ShaderLab names via `ModHost.Assets.Load`. Inspector GUI is UniVRMXT-only
 ## Related
 
 - [VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
-- [MToonXT stencil](../../specs/extensions/materials/vrmxt-materials-stencil.md)
+- [MToonXT stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
 - [VRMXT_materials_override](../../specs/extensions/materials/vrmxt-materials-override.md)
 - [UniVRMXT materials override](../../implementations/univrm-vrmxt.md#materials-override)
 - [VRMC_materials_mtoon 1.0](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_materials_mtoon-1.0/README.md)

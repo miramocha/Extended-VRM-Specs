@@ -169,15 +169,17 @@ Field meaning and units follow the base spec.
 WebGL vs WebGPU material choice is **TBD**. Prefer one MVP path (likely WebGL
 `Points` + `PointsMaterial` or textured quads) before a NodeMaterial variant.
 
-## MToonXT stencil (claimed)
+## MToonXT stencil (legacy implementation)
 
-Spec: field tables on [VRMXT_materials_stencil](../specs/extensions/materials/vrmxt-materials-stencil.md).
-This library reads nested `VRMXT_materials_mtoonxt` `stencil` / `outlineStencil`. It
-does not emit `VRMXT_materials_stencil`.
+Spec: field tables on [MToonXT stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
+The implementation described below reads the retired nested
+`VRMXT_materials_mtoonxt` `stencil` / `outlineStencil` format. These notes do not
+claim support for the current root graph. That requires updating its parser,
+authoring, renderer mapping, and exporter together.
 
 After stock MToon materials exist, read per-material `VRMXT_materials_mtoonxt` stencil /
 `outlineStencil` extras and set Three.js material stencil state so writer / reader
-coverage matches the spec intention (`write`, `inside`, `insideOverlay`, `outside`,
+coverage matches the former material-operation intention (`write`, `inside`, `insideOverlay`, `outside`,
 outline `same`). GPU stencil requires `WebGLRenderer` constructed with stencil
 enabled.
 
@@ -189,7 +191,8 @@ in this library.
 `apps/viewer` writes MToonXT stencil extras. Follow [VRMXT Editor](vrmxt-editor.md):
 list `VRMXT_materials_mtoonxt` in `extensionsUsed`, never in `extensionsRequired`.
 Download keeps the original BIN chunk and patches JSON. Loose `.gltf` (not GLB) is
-not written. Unresolvable clip objects are dropped on export, same as Blender.
+not written. Unresolvable legacy clip objects are dropped on export. Current Blender
+and Unity exporters instead emit the root graph; this viewer path is not equivalent.
 
 Sprite VFX and other extras stay unwritten here. Blender or UniVRMXT still cover
 those ([Blender VRMXT](blender-vrmxt.md)).
@@ -227,7 +230,7 @@ Minimum coverage:
 ## Related
 
 - [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
-- [VRMXT_materials_stencil](../specs/extensions/materials/vrmxt-materials-stencil.md)
+- [MToonXT stencil](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
 - [VRMXT_materials_face_sdf](../specs/extensions/materials/vrmxt-materials-face-sdf.md)
 - [VRMXT_materials_directional_dissolve](../specs/extensions/materials/vrmxt-materials-directional-dissolve.md)
 - [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md)

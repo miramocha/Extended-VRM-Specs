@@ -14,9 +14,10 @@ status: draft
 # MToonXT zTest (Unity experiment)
 
 Non-normative. Not a [VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
-extra. Clip-region overdraw in the extra is
-[`stencil.op`](../../specs/extensions/materials/vrmxt-materials-stencil.md)
-`insideOverlay`. UniVRMXT may still read a `zTest` string on the parent object (hub
+extra. Current clip-region show-through uses the root graph's
+[`showWritersThroughOccluders`](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md).
+The retired material operation was `insideOverlay`. UniVRMXT may still read a
+`zTest` string on the parent object (hub
 rule 12: unrecognized keys ignored by other consumers).
 
 Forward / outline / add depth compare. Omit or `"lessEqual"` matches stock MToon.
@@ -35,4 +36,4 @@ over the whole scene. Soft-alpha hair stencil still cuts hard holes. See
 
 - [VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 - [MToonXT zWrite](mtoonxt-zwrite.md)
-- [Stencil](../../specs/extensions/materials/vrmxt-materials-stencil.md)
+- [Stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)

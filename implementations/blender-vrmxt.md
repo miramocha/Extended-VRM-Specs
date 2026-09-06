@@ -23,7 +23,7 @@ Blender add-on implementation profile for
 [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
 [VRMXT_materials_override](../specs/extensions/materials/vrmxt-materials-override.md),
 and [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
-stencil (`stencil` / `outlineStencil` on the material).
+stencil (one root-level writer/reader graph).
 Support belongs in
 [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender),
 which exposes `Vrm1ImportUserExtension` / `Vrm1ExportUserExtension` for
@@ -261,22 +261,28 @@ export source of truth.
 
 ## MToonXT stencil
 
-Authoring for `VRMXT_materials_mtoonxt` `stencil` / `outlineStencil` is on the Blender material (`vrmxt_mtoonxt_settings`). Ops: `write`, `inside`, `insideOverlay`, `outside`, outline `same`. Field tables: [VRMXT_materials_stencil](../specs/extensions/materials/vrmxt-materials-stencil.md). The add-on still nests those objects on `VRMXT_materials_mtoonxt`; it does not emit `VRMXT_materials_stencil`. The stencil UI sits under **VRMXT Material** (same parent as materials override). Import maps glTF `materials[]` indices to material pointers. Export writes those pointers back as indices. GPU `ref` / `comp` / `pass` are not stored. `VRMXT_materials_face_sdf`, `zTest`, `zWrite`, and XT `renderQueueOffset` stay out of this add-on.
+The root `extensions.VRMXT_materials_mtoonxt.stencil` array is the only stencil
+format. Scene authoring stores writer and reader material pointers, color,
+presentation, and independent depth controls. Both the Material and Scene panels
+edit this same graph. Body and outline follow the same presentation rules.
 
-EEVEE has no stencil buffer; the viewport does not clip. The panel warns when a writer is Transparent (or Cutout vs Opaque) and a clip reader would draw earlier under Unity's mapped queues. Outline **Same as body** is hidden while body is Off; export drops outline `same` when body stencil is missing.
+Import resolves glTF material indices into pointers and appends the imported graph
+without deleting relationships for other avatars. Export resolves pointers through
+the official VRM export hook's final material map and coalesces equivalent records.
+Every participant requires sibling `VRMC_materials_mtoon`; invalid entries are
+skipped individually. GPU references and pass operations are consumer state, not
+serialized authoring data.
 
-Export requires sibling `VRMC_materials_mtoon` on the same material (hub rule 3). If a clip list points at a material that is not body `write`, that stencil object is omitted; other extras on the material still export.
+The former per-material `stencil` / `outlineStencil` operations and root
+`stencilRelationships` name are not aliases. Older draft files require explicit
+migration or re-export. Embedded hosts can supply the graph through
+`integration.register_embedded()`; standalone authoring, import and export do not
+depend on BVT. Optional preview is provided by a consumer such as BVES.
 
-Hooks: `mtoonxt/import_hook.py`, `mtoonxt/export_hook.py`, registered from `hooks/vrm1_hooks.py` after materials override. Format: `format/mtoonxt.py`. Panel / ops: `mtoonxt/panel.py`, `mtoonxt/ops.py`, `mtoonxt/draw_order.py`. Authoring only; GPU clip is a Unity consumer (UniVRMXT apply; Warudo UMods).
-
-### Checklist
-
-- [x] Parse / serialize `specVersion` `1.0` stencil objects; skip invalid `op` / lists
-- [x] Material PropertyGroups + **VRMXT Material** stencil panel
-- [x] Import indices → pointers; export pointers → indices
-- [x] Skip export when sibling MToon is missing; skip clip object when writers are not body `write`
-- [x] Warn when Unity queue would stamp a writer after a clip reader; hide / drop outline `same` when body is Off
-- [ ] `VRMXT_materials_face_sdf` extras
+Hooks: `mtoonxt/import_hook.py`, `mtoonxt/export_hook.py`, registered from
+`hooks/vrm1_hooks.py`. Format: `format/mtoonxt.py`.
+See the [stencil specification](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
+and [scenario matrix](../examples/stencil-parity-matrix.md).
 
 ## Materials override
 

@@ -28,5 +28,5 @@ stencil clip.
 
 - [VRMXT_materials_mtoonxt](../../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 - [MToonXT zTest](mtoonxt-ztest.md)
-- [Stencil](../../specs/extensions/materials/vrmxt-materials-stencil.md)
+- [Stencil](../../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil.md)
 - [renderQueueOffset](mtoonxt-render-queue.md)
