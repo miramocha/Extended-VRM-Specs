@@ -122,6 +122,27 @@ MUST NOT be approximated by a misleading shorthand.
 
 ## Non-normative Unity mapping
 
+The [13-scenario parity matrix](../../../../examples/stencil-parity-matrix.md)
+maps every presentation control to a distinct showcase and focused control variant.
+Its runtime recipes and recorded results are non-normative implementation evidence,
+not new schema fields or proof that every consumer satisfies every requirement.
+
+Alpha blending, culling, stencil qualification and depth publication are separate
+concerns. In particular, `writersWriteDepth: false` MUST NOT force opaque color.
+For reader-qualified show-through blending (M07), the consumer MUST retain reader
+color beneath translucent writer color. Split ordinary-depth and show-through writer
+passes must use complementary coverage, avoiding duplicate alpha contributions from
+those two presentation passes at the same pixel. This does not prohibit intentionally
+layered writer faces when self-occlusion is disabled or change ordinary reader clipping.
+Disabling `readersWriteDepth` does not disable its depth test. `readerDepthTest: always`
+can expose reader color; `ignoreOccludedReaderAreas: false` only broadens the mask
+used to qualify writer presentation. These are deliberately different controls.
+
+`writersSelfOcclude: true` describes the intended nearest-face result; a consumer's
+back-face-culling approximation is not general conformance for arbitrary topology.
+Implementations SHOULD disclose restrictions such as camera-locked ordering,
+unavailable render phases, unsupported alpha ordering or active-pass culling changes.
+
 An implementation can compile the relationship into ordinary stencil passes:
 
 - visible reader mask: `Comp Always`, `Pass Replace`
@@ -160,6 +181,7 @@ geometry only on reader `0`, self-occludes, and publishes depth.
 
 ## Related
 
+- [Scenario settings, Unity profile and validation limits](../../../../examples/stencil-parity-matrix.md)
 - [VRMXT_materials_mtoonxt](README.md)
 - [Per-material stencil shorthand](stencil.md)
 - [VRMXT Conformance](../../../core/vrmxt-conformance.md)

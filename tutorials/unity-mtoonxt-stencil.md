@@ -20,6 +20,17 @@ writes those settings into the `.vrm`.
 
 Finish [Getting started in Unity](getting-started-unity.md) first.
 
+## Portable relationship workflow
+
+The following material-level instructions describe legacy shorthand. The newer
+root `stencilRelationships` graph carries cross-material presentation intent and
+is compiled on import by UniVRMXT. Do not manually layer the shorthand on top of an
+already imported graph. Read the [13-scenario matrix](../examples/stencil-parity-matrix.md)
+for exact controls, native-lit Built-in pass recipes, alpha/depth independence,
+shadow ownership, and per-row validation limits. Compound coverage has not been
+validated in URP. Published example videos do not imply arbitrary-camera or
+arbitrary-topology support.
+
 ## What you'll need
 
 Load a VRM 1.0 avatar into the scene and select it (a mesh on the avatar is

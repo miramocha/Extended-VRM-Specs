@@ -88,6 +88,7 @@ Creator how-tos (non-normative). Index: [tutorials/](tutorials/README.md).
 
 | Note | Topic | Status |
 |------|-------|--------|
+| [Stencil parity matrix](examples/stencil-parity-matrix.md) | 13 Blender/Unity showcases, exact controls, runtime settings and validation limits; [watch videos](https://tdw46.github.io/BVT-Stencil-Matrix/) | recorded review checkpoint |
 | [MToonXT stencil and lilToon materials override in Warudo](examples/mtoonxt-liltoon-override-warudo.md) | Stock MToon, MToonXT stencil, lilToon override | draft |
 
 ## Implementation profiles

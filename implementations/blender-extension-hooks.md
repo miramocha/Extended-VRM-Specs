@@ -15,6 +15,26 @@ status: draft
 
 # Blender Extension Hooks
 
+## Current VRMXT integration: official VRM 4.6.0+ hooks
+
+The current Blender VRMXT fork and BVT use the official enabled-add-on discovery
+surface: top-level `Vrm1ImportUserExtension.post_import_hook` and
+`Vrm1ExportUserExtension.pre_save_hook`. They receive JSON/BIN chunks, the armature
+and final index-to-Blender-data maps. Import JSON is read-only; export JSON/BIN are
+mutable. Embedded BVT exposes these classes at its own add-on root and delegates
+portable metadata ownership to the same VRMXT package as standalone installations.
+Use the ordinary VRM 1.0 import/export commands; no custom exporter or completed-GLB
+rewrite is involved. The official API is documented in the
+[VRM development guide](https://vrm-addon-for-blender.info/en-us/development/).
+
+The `io_scene_vrm.extension_hooks` registration functions and opt-in preferences
+described below belong to the **historical host fork**, not this current route.
+Do not tell users to enable those fork-only preferences for the official API.
+The [parity matrix](../examples/stencil-parity-matrix.md) was exported through the
+official hook route and checks exported graphs against actual Unity imports.
+
+## Historical fork API reference
+
 API and implementation notes for the public VRM 1.0 import/export hooks in
 [Extended-VRM-Addon-for-Blender](https://github.com/miramocha/Extended-VRM-Addon-for-Blender).
 Third-party Blender add-ons use this surface to read or write root glTF extensions

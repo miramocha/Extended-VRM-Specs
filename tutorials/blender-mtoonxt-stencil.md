@@ -15,8 +15,17 @@ status: draft
 # Blender MToonXT stencil
 
 Set **Stencil** and **Outline stencil** on a material that already uses MToon
-1.0. Clip shows up in a VRMXT-supported app (Warudo, VRMXT Player, etc) that
-has MToonXT shaders. The Blender viewport will not clip.
+1.0. The standalone VRMXT extension authors metadata; native EEVEE does not preview
+these stencil relationships. Beyond VTuber Tools supplies a separate True MToon
+stencil preview. Only a consumer implementing the relevant mode can reproduce it;
+do not infer support in every VRMXT app from the Unity Built-in recordings.
+
+For portable root relationships rather than the legacy shorthand below, see the
+[13-scenario matrix](../examples/stencil-parity-matrix.md). It covers independent
+color/depth writes, occluded reader coverage, transparent aura blending and advanced
+writer/reader depth tests. BVT mirrors its UI to VRMXT-owned properties. Use stock
+VRM Add-on 4.6.0+ and the ordinary VRM 1.0 export command; the official
+`Vrm1ExportUserExtension.pre_save_hook` writes the final material-index graph.
 
 Finish [Getting started in Blender](getting-started-blender.md) first. This
 panel is stencil only.
