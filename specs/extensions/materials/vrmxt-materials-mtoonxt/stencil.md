@@ -1,7 +1,7 @@
 ---
 title: VRMXT_materials_mtoonxt stencil
 aliases:
-  - MToonXT stencil relationship graph
+  - MToonXT stencil graph
   - portable stencil presentation
 tags:
   - extended-vrm
@@ -41,16 +41,16 @@ The root object MUST contain `specVersion: "1.0"`. A file that uses this object 
 list `VRMXT_materials_mtoonxt` in `extensionsUsed` and MUST NOT list it in
 `extensionsRequired`.
 
-## Relationship schema
+## Stencil schema
 
-Every array element describes one writer/reader relationship. Defaults are part of the
+Every array element describes one writer/reader entry. Defaults are part of the
 file contract so exporters MAY omit properties whose value equals the default.
 
 | Property | Type | Required | Default | Meaning |
 |----------|------|----------|---------|---------|
-| `writers` | integer array | yes | — | Non-empty, unique material indices presented as the relationship subject. |
-| `readers` | integer array | yes | — | Non-empty, unique material indices whose screen coverage controls the relationship. |
-| `comparison` | string | no | `outside` | Reader test for the ordinary writer-first relationship: `inside` or `outside`. |
+| `writers` | integer array | yes | — | Non-empty, unique material indices presented as the stencil subject. |
+| `readers` | integer array | yes | — | Non-empty, unique material indices whose screen coverage controls the stencil. |
+| `comparison` | string | no | `outside` | Reader test for the ordinary writer-first stencil: `inside` or `outside`. |
 | `showWritersThroughOccluders` | boolean | no | `false` | Ignore intervening scene depth on reader-qualified writer pixels while retaining ordinary depth elsewhere. |
 | `writersOnlyInsideReaders` | boolean | no | `false` | Present writers only inside the reader screen silhouette. |
 | `writersOnlyOutsideReaders` | boolean | no | `false` | Present writers only outside the reader screen silhouette. With show-through enabled, material silhouettes reject the writer and clear background remains eligible. |
@@ -64,10 +64,10 @@ file contract so exporters MAY omit properties whose value equals the default.
 
 `writersOnlyInsideReaders` and `writersOnlyOutsideReaders` MUST NOT both be `true`.
 A material index MUST be in range and MUST NOT appear in both arrays of the same
-relationship. Unknown or invalid relationship entries are skipped individually.
-Exporters SHOULD combine relationships that have the same writer set and identical
+entry. Unknown or invalid stencil entries are skipped individually.
+Exporters SHOULD combine entries that have the same writer set and identical
 presentation fields by unioning their reader arrays. Consumers MUST treat such equivalent
-rows as one relationship so one writer material is not assigned competing stencil
+rows as one entry so one writer material is not assigned competing stencil
 references.
 
 Depth comparisons are `never`, `less`, `equal`, `lessEqual`, `greater`, `notEqual`,
@@ -95,11 +95,11 @@ implementation.
    multiple writer faces overlap. `writersWriteDepth` remains independent; enabling it
    MUST NOT silently re-enable self-occlusion during color presentation.
 6. `writersWriteColor: false` MUST suppress writer body and outline color while preserving
-   the relationship's stencil writes. `writersWriteDepth` independently controls whether
+   the entry's stencil writes. `writersWriteDepth` independently controls whether
    those accepted writer fragments publish depth. This supports invisible avatar masks,
    such as a moving control plane that reveals or hides selected hair materials.
-7. Body and outline passes that participate in a relationship MUST use the same
-   relationship, including color suppression and depth/coverage qualification. Stencil
+7. Body and outline passes that participate in an entry MUST use the same
+   entry, including color suppression and depth/coverage qualification. Stencil
    does not enable an outline when the material's MToon outline is disabled.
 
 ## Non-normative Unity mapping
@@ -125,7 +125,7 @@ back-face-culling approximation is not general conformance for arbitrary topolog
 Implementations SHOULD disclose restrictions such as camera-locked ordering,
 unavailable render phases, unsupported alpha ordering or active-pass culling changes.
 
-An implementation can compile the relationship into ordinary stencil passes:
+An implementation can compile the stencil into ordinary stencil passes:
 
 - visible reader mask: `Comp Always`, `Pass Replace`
 - reader-qualified subject: `Comp Equal`, `Pass Keep`

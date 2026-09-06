@@ -267,7 +267,7 @@ presentation, and independent depth controls. Both the Material and Scene panels
 edit this same graph. Body and outline follow the same presentation rules.
 
 Import resolves glTF material indices into pointers and appends the imported graph
-without deleting relationships for other avatars. Export resolves pointers through
+without deleting entries for other avatars. Export resolves pointers through
 the official VRM export hook's final material map and coalesces equivalent records.
 Every participant requires sibling `VRMC_materials_mtoon`; invalid entries are
 skipped individually. GPU references and pass operations are consumer state, not
