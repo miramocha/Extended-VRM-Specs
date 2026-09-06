@@ -12,13 +12,11 @@ status: draft
 
 [Watch the Blender / Unity comparisons](https://tdw46.github.io/BVT-Stencil-Matrix/).
 
-This non-normative, 13-scenario matrix accompanies the
+This non-normative matrix accompanies the
 [portable relationship contract](../specs/extensions/materials/vrmxt-materials-mtoonxt/stencil-relationships.md).
-It records authoring intent, controls, implementation constraints and evidence as of
-2026-09-06. It is not an expansion of the JSON schema or a claim that every engine
-implements every mode. The relationship graph remains **additive** to legacy
-per-material stencil authoring; a supporting consumer applies the authoritative graph
-once, not again as a second shorthand effect.
+It defines each showcase's settings, control variant and implementation constraints.
+The relationship graph remains additive to legacy per-material stencil authoring;
+a supporting consumer applies the authoritative graph once, not again as shorthand.
 
 ## Reading the settings
 
@@ -66,7 +64,7 @@ test isolating self-occlusion from depth publication.
 
 ## Unity Built-in reproduction profile
 
-The recorded consumer is UniVRMXT in Unity 2022.3.22f1, Built-in, Linear color space.
+The examples use UniVRMXT in Unity 2022.3, Built-in, Linear color space.
 Queues below describe the first compiled relationship; reference allocation and
 later queue offsets are implementation state, not serialized specification values.
 Pass and depth failures retain stencil (`Keep`).
@@ -88,56 +86,34 @@ Pass and depth failures retain stencil (`Keep`).
 Colored auxiliary passes use extra material/submesh slots on the **original renderer**
 so native lights and received shadows are initialized. Only colorless coverage uses
 retained command buffers. Do not fix shadows by substituting unlit manual draws,
-duplicating renderer objects or expanding bounds. A skinned mesh is positioned by its
-bones/bindposes; moving its renderer transform is not a reliable geometry test.
-
-The M02 closed-box recipe uses Cull Back on the auxiliary overlay with S enabled;
+duplicating renderer objects or expanding bounds.
+The M02 overlay uses Cull Back with S enabled;
 its duplicate ShadowCaster is disabled and the base remains the caster. It does not
 prove a nearest-surface solution for open, concave or layered translucent writers.
 Source double-sidedness and the active pass's culling must be inspected separately:
 the current A02/A03 exports say `doubleSided=false`, while their active Unity stencil
 variants use Cull Off. These camera-locked examples do **not** certify culling parity.
 
-## Capture contract and progress
+## Comparison setup and limitations
 
-M01–M03 and M05–M10/A01–A03 have 24 configured/control exports, 48 real capture
-streams (96 frames, 24 fps), and 38 encoded comparison videos. M04 retains its separate
-approved animated-visor recordings. All 24 graph/material-target transport checks
-passed; the batch's 38 videos and 147 HTML references passed local validation.
+The paired videos use matched camera framing, clip planes, posed geometry,
+directional lighting, black ambient and solid background. Different shaders and
+rasterizers can still produce localized differences. A separate companion timeline
+drives animation; the videos do not imply animation timing embedded in VRM.
 
-Camera framing, clip planes, posed geometry, timeline, white directional lighting,
-black ambient and solid background are matched. Coordinate conversion is explicit;
-the Blender Sun surface-to-light direction is opposite its emission direction.
-Matching these inputs does not make different shader/rasterization implementations
-bit-identical. Sampled RGB differences are measurements, not a visual pass threshold.
-VRM carries geometry/materials/morph targets; a **separate companion timeline** drives
-the showcase animation. Do not describe these clips as native VRM animation export.
+A02/A03 use a single atlas, far-to-near face ordering and a locked camera; they do
+not support arbitrary-camera self-occlusion. Their active-pass culling differs from
+the source's double-sided setting, as noted above. M09/M10/A03 ornaments have no
+outlines, and the examples do not establish general cast-shadow behavior.
+M05/M06 use one textured writer; independent multi-writer interactions require
+separate handling. Compound URP coverage requires an equivalent renderer feature.
 
-| Scope | Current evidence / acceptance |
-| --- | --- |
-| M01–M03 | Fresh matched pairs recorded 2026-09-06; new recordings await individual review. Older Blender approvals remain attached to the older media. |
-| M02 supplemental | Mira Bunny closed-box native-lighting/self-occlusion setup user-approved; not a blanket topology or all-angle approval. |
-| M04 | Animated visor HUD and paired recordings user-approved. Supersedes the earlier unfinished visor/shadow proposal. |
-| M05–M06 | Recorded; broad positive batch feedback, no separate exhaustive conformance sign-off. |
-| M07 | Corrected transparent blend and replacement magical aura explicitly user-approved. |
-| M08–M10, A01–A03 | Redesigned, exported, imported and recorded; retained as review candidates, not blanket conformance passes. |
-
-The A02/A03 projections use a single atlas, far-to-near face ordering and vertical
-bobbing from a locked camera. They do not demonstrate arbitrary-camera self-occlusion.
-M09/M10/A03 ornaments have no generated MToon outlines; those captures do not newly
-validate outline or cast-shadow behavior. M05/M06 use a single textured writer;
-earlier multi-writer interference is not claimed resolved by that fixture change.
-Compound URP coverage requires an equivalent renderer feature and was not tested.
-Separate UniVRM spring-bone subasset identity warnings remain open; stencil checks
-do not validate physics or collider references after reimport.
-
-## Review assets and attribution
+## Videos and attribution
 
 The [published matrix](https://tdw46.github.io/BVT-Stencil-Matrix/) keeps controls,
 paired videos, content-hash cache revisions and row-specific limitations together.
 Visible videos autoplay muted and loop; off-screen videos pause. Open comparison
-links use the standalone looping player. Raw client `.blend`/VRM assets and source
-texture atlases are not part of the publication.
+links use the standalone looping player. Source models and texture atlases are not distributed.
 
 M08 uses adapted skeletal anatomy from Z-Anatomy / BodyParts3D. Attribution and
 license notices accompany the review site; this is a stylized graphics fixture, not
