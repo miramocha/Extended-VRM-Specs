@@ -17,7 +17,7 @@ status: draft
 # VRMXT_materials_mtoonxt
 
 Material-family glTF extension. It carries per-material shader-swap markers next to
-stock `VRMC_materials_mtoon` and an optional root relationship graph for portable
+stock `VRMC_materials_mtoon` and an optional root stencil graph for portable
 stencil presentation that spans several materials.
 
 Face shade lookup and directional dissolve remain separate extensions:

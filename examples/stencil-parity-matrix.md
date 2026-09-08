@@ -65,7 +65,7 @@ test isolating self-occlusion from depth publication.
 ## Unity Built-in reproduction profile
 
 The examples use UniVRMXT in Unity 2022.3, Built-in, Linear color space.
-Queues below describe the first compiled relationship; reference allocation and
+Queues below describe the first compiled entry; reference allocation and
 later queue offsets are implementation state, not serialized specification values.
 Pass and depth failures retain stencil (`Keep`).
 
