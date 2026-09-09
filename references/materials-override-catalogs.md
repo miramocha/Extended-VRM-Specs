@@ -62,8 +62,8 @@ documented sync step). No runtime network fetch. No Specs git submodule required
 
 | Consumer | Vendored location (proposed) | Use |
 |----------|------------------------------|-----|
-| [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | `io_scene_vrmxt/materials_override/catalogs/*.json` | Authoring UI |
-| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | e.g. `Runtime/MaterialsOverride/Catalogs/` or `Editor/.../Catalogs/` | Editor authoring / validation / common-props helper |
+| [VRMXT-Extension-for-Blender](https://github.com/vrmxt/VRMXT-Extension-for-Blender) | `io_scene_vrmxt/materials_override/catalogs/*.json` | Authoring UI |
+| [UniVRMXT](https://github.com/vrmxt/UniVRMXT) | e.g. `Runtime/MaterialsOverride/Catalogs/` or `Editor/.../Catalogs/` | Editor authoring / validation / common-props helper |
 
 Warudo applies overrides at runtime with its own inspector; it does **not** vendor these
 catalogs.

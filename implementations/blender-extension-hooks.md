@@ -24,7 +24,7 @@ classes on their **root module**. After stock VRM node maps exist, the host call
 those methods with glTF JSON, BIN, and index → Blender ID maps.
 
 Primary consumer:
-[VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender)
+[VRMXT-Extension-for-Blender](https://github.com/vrmxt/VRMXT-Extension-for-Blender)
 (`io_scene_vrmxt`). Spec examples: [VRMXT_sprite_particle](../specs/extensions/vfx/vrmxt-sprite-particle.md),
 [VRMXT_lattice](../specs/extensions/deformation/vrmxt-lattice.md).
 
@@ -76,7 +76,7 @@ are truncated. Exceptions in the callback are logged and **swallowed**; stock I/
 continues.
 
 Reference:
-[VRMXT `hooks/vrm1_hooks.py`](https://github.com/miramocha/VRMXT-Extension-for-Blender/blob/main/src/io_scene_vrmxt/hooks/vrm1_hooks.py)
+[VRMXT `hooks/vrm1_hooks.py`](https://github.com/vrmxt/VRMXT-Extension-for-Blender/blob/main/src/io_scene_vrmxt/hooks/vrm1_hooks.py)
 and `io_scene_vrmxt/__init__.py`.
 
 ## Invoke sites

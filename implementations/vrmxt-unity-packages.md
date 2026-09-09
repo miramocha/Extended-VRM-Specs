@@ -16,7 +16,7 @@ status: draft
 # VRMXT Unity packages
 
 Map of Unity-space repos and UPM ids for Extended VRM. Portable `VRMXT_*` contract
-stays in [Extended-VRM-Specs](https://github.com/miramocha/Extended-VRM-Specs). This
+stays in [Extended-VRM-Specs](https://github.com/vrmxt/Extended-VRM-Specs). This
 page is the dependency index for Unity hosts only.
 
 ## Package and app map
@@ -25,7 +25,7 @@ page is the dependency index for Unity hosts only.
 |-------|------|----------------|------|
 | [UniVRM](https://github.com/vrm-c/UniVRM) | Upstream UPM | `com.vrmc.gltf`, `com.vrmc.vrm` | Stock VRM 1.0 load / export |
 | [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | Fork | UniVRM-compatible | Optional import/export extension registries (propose upstream) |
-| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | UPM | `com.vrmxt.univrmxt` | Parse / attach / sync `VRMXT_*`; materials Apply / Transfer; VFX; MToonXT BIRP/URP forks |
+| [UniVRMXT](https://github.com/vrmxt/UniVRMXT) | UPM | `com.vrmxt.univrmxt` | Parse / attach / sync `VRMXT_*`; materials Apply / Transfer; VFX; MToonXT BIRP/URP forks |
 | [VRMXT-Unity-Shader-Plugins](https://github.com/miramocha/VRMXT-Unity-Shader-Plugins) | UPM (deprecated) | `com.vrmxt.unity.shader-plugins` | Transitional Player inventory / warm C#; supersede with Player AssetBundle packs + in-pack config |
 | VRMXT Unity Player | App (private repo today) | Unity `2021.3.45f2` | Desktop view / edit / export; UniVRMXT (incl. `VRMXT/MToonXT10`) + shader-plugins. Profile: [vrmxt-unity-player.md](vrmxt-unity-player.md) |
 | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo UMod | `mira.vrmxt` | Runtime consumer; vendored or linked UniVRMXT paths |
@@ -115,7 +115,7 @@ Extended UniVRM, then UniVRMXT. Exact steps:
   "dependencies": {
     "com.vrmc.gltf": "https://github.com/miramocha/Extended-UniVRM.git?path=/Packages/UniGLTF",
     "com.vrmc.vrm": "https://github.com/miramocha/Extended-UniVRM.git?path=/Packages/VRM10",
-    "com.vrmxt.univrmxt": "https://github.com/miramocha/UniVRMXT.git"
+    "com.vrmxt.univrmxt": "https://github.com/vrmxt/UniVRMXT.git"
   }
 }
 ```

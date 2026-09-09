@@ -25,7 +25,7 @@ do not expose those classes.
 | Package | Releases |
 |---------|----------|
 | VRM format 4.6.0+ | [VRM Add-on for Blender](https://github.com/saturday06/VRM-Addon-for-Blender/releases/tag/v4.6.0) |
-| VRMXT | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender/releases/) |
+| VRMXT | [VRMXT-Extension-for-Blender](https://github.com/vrmxt/VRMXT-Extension-for-Blender/releases/) |
 
 If you install from GitHub, download a `.zip` and do not unzip it. The Blender
 Get Extensions catalog is fine when the listed VRM format version is **4.6.0**

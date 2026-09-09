@@ -39,10 +39,10 @@ stock VRM when Extended packages are absent.
 
 | Host | Package | Primary role today |
 |------|---------|--------------------|
-| Blender | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) on [VRM Add-on for Blender](https://github.com/saturday06/VRM-Addon-for-Blender) 4.6.0+ | Full DCC authoring + I/O |
-| Unity (package) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) + [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) for hooks | Library: Editor import/attach, materials apply, VFX re-export; catalog authoring UI later |
+| Blender | [VRMXT-Extension-for-Blender](https://github.com/vrmxt/VRMXT-Extension-for-Blender) on [VRM Add-on for Blender](https://github.com/saturday06/VRM-Addon-for-Blender) 4.6.0+ | Full DCC authoring + I/O |
+| Unity (package) | [UniVRMXT](https://github.com/vrmxt/UniVRMXT) + [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) for hooks | Library: Editor import/attach, materials apply, VFX re-export; catalog authoring UI later |
 | Unity (player app) | [VRMXT Unity Player](vrmxt-unity-player.md) (planned; depends on UniVRMXT) | Desktop drag-drop view + edit + export |
-| Three.js (web viewer) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) `apps/viewer` | Local-file view + MToonXT stencil Apply / Create/edit / Export. [Profile](vrmxt-web-viewer.md) |
+| Three.js (web viewer) | [three-vrmxt](https://github.com/vrmxt/three-vrmxt) `apps/viewer` | Local-file view + MToonXT stencil Apply / Create/edit / Export. [Profile](vrmxt-web-viewer.md) |
 | Three.js (Hub WXT) | Same repo, later | View-only planned. [Profile](vrmxt-hub-extension.md). Not an editor host |
 | Warudo | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Runtime apply + materials-override **patch** export (source-preserving) |
 

@@ -16,7 +16,7 @@ status: draft
 
 # VRMXT web viewer
 
-Standalone Vite host in [miramocha/three-vrmxt](https://github.com/miramocha/three-vrmxt)
+Standalone Vite host in [miramocha/three-vrmxt](https://github.com/vrmxt/three-vrmxt)
 (`apps/viewer`). Loads a local `.vrm` / `.glb` with `@pixiv/three-vrm` plus
 [`@vrmxt/three-vrmxt`](three-vrmxt.md) (or `@miramocha/three-vrmxt` if that npm name
 ships). Product decision:
@@ -117,4 +117,4 @@ rebuilds the GLB.
 - [VRMXT Editor](vrmxt-editor.md)
 - [VRMXT Unity Player](vrmxt-unity-player.md)
 - [Architecture](../architecture.md)
-- [miramocha/three-vrmxt](https://github.com/miramocha/three-vrmxt)
+- [miramocha/three-vrmxt](https://github.com/vrmxt/three-vrmxt)

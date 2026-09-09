@@ -25,7 +25,7 @@ Unity implementation profile for
 and stencil apply ship in this package, with Built-in and URP `VRMXT/MToonXT10` forks under
 `Runtime/Shaders/MToonxt/`. Warudo loads the same ShaderLab names from shader UMods
 (`mira.shaders.mtoonxt.birp` / `.urp`) because UMod `Shader.Find` is null.
-Support belongs in [UniVRMXT](https://github.com/miramocha/UniVRMXT)
+Support belongs in [UniVRMXT](https://github.com/vrmxt/UniVRMXT)
 (`com.vrmxt.univrmxt`), an optional UPM package that depends on stock
 [UniVRM](https://github.com/vrm-c/UniVRM). UniVRM source changes are not required.
 
@@ -69,7 +69,7 @@ velocity, optional texture). Rectangular `size` uses `startSize3D` with
 `scalingMode = Local` on an identity-scale particle child so world-meter dimensions do
 not inherit the referenced node's scale.
 Offsets live on the resolved node (helper Empty / Transform), not on emitter fields.
-See UniVRMXT [vfx-particle-mapping.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/vfx-particle-mapping.md).
+See UniVRMXT [vfx-particle-mapping.md](https://github.com/vrmxt/UniVRMXT/blob/main/docs/vfx-particle-mapping.md).
 
 ### Export
 
@@ -420,7 +420,7 @@ shaders must supply the corresponding MToonXT shaders through their host resolve
 - Backend research: [Engine particle capability](../references/engine-particle-capability.md)
   (`ParticleSystem` required; VFX Graph optional)
 - Upstream hooks / AssetDatabase workaround: [univrm-upstream-hooks.md](univrm-upstream-hooks.md)
-- UniVRMXT: https://github.com/miramocha/UniVRMXT
+- UniVRMXT: https://github.com/vrmxt/UniVRMXT
 - Planned app (not this package): [VRMXT Unity Player](vrmxt-unity-player.md)
 - [Blender VRMXT](blender-vrmxt.md)
 - [Warudo VRMXT](warudo-vrmxt.md)
