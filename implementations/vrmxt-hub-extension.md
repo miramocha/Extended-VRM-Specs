@@ -29,7 +29,7 @@ Unity WebGL on Hub is **superseded**. Historical notes:
 - [Unity WebGL VRMXT viewer](unity-webgl-vrmxt-viewer.md)
 
 Those docs described a Unity Player iframe. This profile uses Three.js and
-`packages/viewer-core` from [miramocha/three-vrmxt](https://github.com/miramocha/three-vrmxt).
+`packages/viewer-core` from [miramocha/three-vrmxt](https://github.com/vrmxt/three-vrmxt).
 
 This host is **view-only**. It is not a [VRMXT Editor](vrmxt-editor.md) host.
 

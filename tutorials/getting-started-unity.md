@@ -25,7 +25,7 @@ These packages are not on Unity's registry.
 |---------|---------|
 | Extended UniVRM (glTF) | `https://github.com/miramocha/Extended-UniVRM.git?path=/Packages/UniGLTF` |
 | Extended UniVRM (VRM 1.0) | `https://github.com/miramocha/Extended-UniVRM.git?path=/Packages/VRM10` |
-| UniVRMXT | `https://github.com/miramocha/UniVRMXT.git` |
+| UniVRMXT | `https://github.com/vrmxt/UniVRMXT.git` |
 
 ## Install
 

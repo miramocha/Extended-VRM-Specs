@@ -19,7 +19,7 @@ status: draft
 # VRMXT Unity Player
 
 **Application** project: desktop drag-and-drop view / edit of VRM 1.0 + `VRMXT_*`.
-Separate from the [UniVRMXT](https://github.com/miramocha/UniVRMXT) UPM library.
+Separate from the [UniVRMXT](https://github.com/vrmxt/UniVRMXT) UPM library.
 
 Product decision:
 [VRMXT desktop Player primary](../decisions/vrmxt-desktop-player-primary.md)
@@ -51,7 +51,7 @@ product path and MUST NOT claim Warudo-parity megashader support. Historical not
 
 | Piece | Repo |
 |-------|------|
-| Format, runtime attach, materials authoring helpers, export hooks | [UniVRMXT](https://github.com/miramocha/UniVRMXT) (`com.vrmxt.univrmxt`) |
+| Format, runtime attach, materials authoring helpers, export hooks | [UniVRMXT](https://github.com/vrmxt/UniVRMXT) (`com.vrmxt.univrmxt`) |
 | Stock VRM 1.0 load | UniVRM (versions compatible with `2021.3.45f2`) |
 | Player app (desktop) | VRMXT Unity Player (do not nest inside UniVRMXT or Extended-UniVRM) |
 | Megashader warm (interim) | `com.vrmxt.unity.shader-plugins` (deprecated); planned StreamingAssets packs + in-pack config |

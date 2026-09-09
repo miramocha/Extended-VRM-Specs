@@ -95,9 +95,9 @@ VFX taxonomy needed by documentation and tooling.
 - Exporters must preserve helper nodes referenced by VRMXT extensions even when they
   have no mesh, skin, or camera.
 - Existing experimental implementations and fixtures need the schema refactor tracked
-  in [issue #14](https://github.com/miramocha/Extended-VRM-Specs/issues/14).
+  in [issue #14](https://github.com/vrmxt/Extended-VRM-Specs/issues/14).
 - Remaining specification work is tracked in
-  [issue #13](https://github.com/miramocha/Extended-VRM-Specs/issues/13).
+  [issue #13](https://github.com/vrmxt/Extended-VRM-Specs/issues/13).
 
 ## Related
 

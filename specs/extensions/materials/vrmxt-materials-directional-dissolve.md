@@ -166,4 +166,4 @@ them onto this extra.
 - [VRMXT_materials_face_sdf](vrmxt-materials-face-sdf.md)
 - [VRMC_materials_mtoon 1.0](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_materials_mtoon-1.0/README.md)
 - [Architecture Naming](../../../architecture.md#naming)
-- [MiraSite height wipe refactor](https://github.com/miramocha/Extended-VRM-Specs/issues/47) (non-normative)
+- [MiraSite height wipe refactor](https://github.com/vrmxt/Extended-VRM-Specs/issues/47) (non-normative)

@@ -70,8 +70,8 @@ Godot draw-pass meshes, and Three.js sprites or instanced quads.
 - Implementation profiles map `texture` / `size` / `color` directly.
 - Trail, ribbon, and mesh-particle drafts will redefine appearance fields if needed.
 - Spec and consumer migration tracked in
-  [issue #13](https://github.com/miramocha/Extended-VRM-Specs/issues/13) and
-  [issue #14](https://github.com/miramocha/Extended-VRM-Specs/issues/14).
+  [issue #13](https://github.com/vrmxt/Extended-VRM-Specs/issues/13) and
+  [issue #14](https://github.com/vrmxt/Extended-VRM-Specs/issues/14).
 
 ## Related
 

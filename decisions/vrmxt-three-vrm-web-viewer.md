@@ -45,7 +45,7 @@ three-vrm plus portable MToonXT extras mapped onto Three.js material stencil sta
 
 1. Register `packages/three-vrmxt` as a peer `GLTFLoaderPlugin` beside pixiv
    `VRMLoaderPlugin`. Repo:
-   [miramocha/three-vrmxt](https://github.com/miramocha/three-vrmxt) (public). Local
+   [miramocha/three-vrmxt](https://github.com/vrmxt/three-vrmxt) (public). Local
    checkout: `D:\MiraGameDev\three-vrmxt`. pnpm workspace.
 2. Publishable library: `packages/three-vrmxt` as **`@vrmxt/three-vrmxt`**. If the npm
    org is unavailable, publish **`@miramocha/three-vrmxt`**. Peers: `three`,
@@ -111,4 +111,4 @@ stencil on three-vrm MToon material state. `VRMXT_materials_face_sdf` is later.
 - [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 - [Extended VRM Architecture](../architecture.md)
 - [pixiv/three-vrm](https://github.com/pixiv/three-vrm)
-- [miramocha/three-vrmxt](https://github.com/miramocha/three-vrmxt)
+- [miramocha/three-vrmxt](https://github.com/vrmxt/three-vrmxt)

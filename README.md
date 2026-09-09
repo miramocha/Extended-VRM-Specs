@@ -27,14 +27,14 @@ Optional `VRMXT_*` consumers:
 
 | Repo | Role |
 |------|------|
-| [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Blender authoring / I/O via VRM1 hooks |
-| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity UPM package on [UniVRM](https://github.com/vrm-c/UniVRM) |
+| [VRMXT-Extension-for-Blender](https://github.com/vrmxt/VRMXT-Extension-for-Blender) | Blender authoring / I/O via VRM1 hooks |
+| [UniVRMXT](https://github.com/vrmxt/UniVRMXT) | Unity UPM package on [UniVRM](https://github.com/vrm-c/UniVRM) |
 | [VRMXT-Unity-Shader-Plugins](https://github.com/miramocha/VRMXT-Unity-Shader-Plugins) | Unity UPM `com.vrmxt.unity.shader-plugins` — deprecated transitional Player warm/inventory; supersede with AB packs + in-pack config |
 | [VRMXT Plugin for Warudo](https://github.com/miramocha/VRMXT-Plugin-for-Warudo) | Warudo consumer plugin (vendored UniVRMXT VFX + materials override; UMod). Install: [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3767350210) |
 | VRMXT Unity Player (planned) | Separate Unity `2021.3.45f2` desktop app: drag-drop view/edit/export; Warudo-aligned megashaders. Today UniVRMXT + shader-plugins; planned StreamingAssets packs. See [player profile](implementations/vrmxt-unity-player.md), [Unity packages map](implementations/vrmxt-unity-packages.md), [desktop Player primary](decisions/vrmxt-desktop-player-primary.md) |
 | VRM Posing Desktop consumer (planned) | Post-load VRMXT on [VRM Posing Desktop](https://store.steampowered.com/app/1895630/VRM_Posing_Desktop/); host UniVRM `0.129.3` (measured). See [profile](implementations/vrm-posing-desktop-vrmxt.md) |
 | Godot VRMXT addon (planned) | Optional Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm) |
-| [three-vrmxt](https://github.com/miramocha/three-vrmxt) | Optional npm `@vrmxt/three-vrmxt` (fallback `@miramocha/three-vrmxt`) beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm). Peer `GLTFLoaderPlugin`. Vite `apps/viewer` local files; later Hub WXT. See [library](implementations/three-vrmxt.md), [web viewer](implementations/vrmxt-web-viewer.md), [decision](decisions/vrmxt-three-vrm-web-viewer.md) |
+| [three-vrmxt](https://github.com/vrmxt/three-vrmxt) | Optional npm `@vrmxt/three-vrmxt` (fallback `@miramocha/three-vrmxt`) beside [@pixiv/three-vrm](https://github.com/pixiv/three-vrm). Peer `GLTFLoaderPlugin`. Vite `apps/viewer` local files; later Hub WXT. See [library](implementations/three-vrmxt.md), [web viewer](implementations/vrmxt-web-viewer.md), [decision](decisions/vrmxt-three-vrm-web-viewer.md) |
 | VRMXT → VRChat converter (planned) | Separate product. Offline Unity conversion of `.vrm` (`VRMC_*` + `VRMXT_*`) into a VRChat-ready avatar. Consumes the portable contract; does not put VRChat SDK types in the file schema. See [Animation controller standardization](decisions/animation-controller-standardization.md) |
 
 ## Architecture

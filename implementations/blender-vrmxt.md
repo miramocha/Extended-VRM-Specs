@@ -25,7 +25,7 @@ Blender add-on implementation profile for
 and [VRMXT_materials_mtoonxt](../specs/extensions/materials/vrmxt-materials-mtoonxt/README.md)
 stencil (one root-level writer/reader graph).
 Support belongs in
-[VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender),
+[VRMXT-Extension-for-Blender](https://github.com/vrmxt/VRMXT-Extension-for-Blender),
 which exposes `Vrm1ImportUserExtension` / `Vrm1ExportUserExtension` for
 [VRM Add-on for Blender](https://github.com/saturday06/VRM-Addon-for-Blender)
 **4.6.0+** (see [Blender Extension Hooks](blender-extension-hooks.md)). VRM 1.0 only.
@@ -235,7 +235,7 @@ Exact test module paths: `tests/test_format_vfx.py`, `tests/test_vfx_property_ad
 
 ### Likely code touch points
 
-Non-normative; [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender):
+Non-normative; [VRMXT-Extension-for-Blender](https://github.com/vrmxt/VRMXT-Extension-for-Blender):
 
 - `src/io_scene_vrmxt/vfx/` (property groups, import/export hooks, GeoNodes preview)
 - `src/io_scene_vrmxt/hooks/vrm1_hooks.py`

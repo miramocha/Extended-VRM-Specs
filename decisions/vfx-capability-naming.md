@@ -76,8 +76,8 @@ against `VRMXT_vfx_*` prefixes.
   `VRMXT_sprite_particle`.
 - Persistent billboard and mesh-particle remain naming-only until drafted.
 - Spec and consumer migration tracked in
-  [issue #13](https://github.com/miramocha/Extended-VRM-Specs/issues/13) and
-  [issue #14](https://github.com/miramocha/Extended-VRM-Specs/issues/14).
+  [issue #13](https://github.com/vrmxt/Extended-VRM-Specs/issues/13) and
+  [issue #14](https://github.com/vrmxt/Extended-VRM-Specs/issues/14).
 
 ## Related
 

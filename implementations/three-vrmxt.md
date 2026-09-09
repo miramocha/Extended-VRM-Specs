@@ -20,7 +20,7 @@ status: draft
 # three-vrmxt
 
 Three.js consumer library for Extended VRM. Repo:
-[miramocha/three-vrmxt](https://github.com/miramocha/three-vrmxt) (pnpm workspace).
+[miramocha/three-vrmxt](https://github.com/vrmxt/three-vrmxt) (pnpm workspace).
 Publish `packages/three-vrmxt` as **`@vrmxt/three-vrmxt`** (fallback
 **`@miramocha/three-vrmxt`** if the npm org is missing). Peers: `three`,
 `@pixiv/three-vrm`.
@@ -242,7 +242,7 @@ Minimum coverage:
 - [Godot VRMXT](godot-vrmxt.md)
 - [Blender VRMXT](blender-vrmxt.md)
 - [pixiv/three-vrm](https://github.com/pixiv/three-vrm)
-- [miramocha/three-vrmxt](https://github.com/miramocha/three-vrmxt)
+- [miramocha/three-vrmxt](https://github.com/vrmxt/three-vrmxt)
 
 ## Open questions
 

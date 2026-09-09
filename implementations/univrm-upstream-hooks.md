@@ -34,8 +34,8 @@ Blender already has the matching host in stock
 [blender-extension-hooks.md](blender-extension-hooks.md).
 
 Related: [UniVRMXT](univrm-vrmxt.md), UniVRMXT
-[architecture.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/architecture.md),
-[vfx-particle-mapping.md](https://github.com/miramocha/UniVRMXT/blob/main/docs/vfx-particle-mapping.md).
+[architecture.md](https://github.com/vrmxt/UniVRMXT/blob/main/docs/architecture.md),
+[vfx-particle-mapping.md](https://github.com/vrmxt/UniVRMXT/blob/main/docs/vfx-particle-mapping.md).
 
 ## Symptoms
 
@@ -95,7 +95,7 @@ convenience only.
 ## Current workaround (UniVRMXT MVP)
 
 Two Editor paths; runtime unchanged. Attach/decode code is shared in
-[UniVRMXT](https://github.com/miramocha/UniVRMXT).
+[UniVRMXT](https://github.com/vrmxt/UniVRMXT).
 
 ### Editor + Extended-UniVRM (import hooks)
 

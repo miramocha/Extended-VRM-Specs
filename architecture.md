@@ -30,9 +30,9 @@ integration seams only.
 3. Extended behavior is optional. Consumers MAY ignore every `VRMXT_*` extension
    and still treat the file as ordinary VRM 1.0.
 4. Extended support ships as an optional add-on package on each engine (for
-   example [UniVRMXT](https://github.com/miramocha/UniVRMXT) on Unity, a
+   example [UniVRMXT](https://github.com/vrmxt/UniVRMXT) on Unity, a
    separate Godot addon beside [godot-vrm](https://github.com/V-Sekai/godot-vrm),
-   or [three-vrmxt](https://github.com/miramocha/three-vrmxt) beside
+   or [three-vrmxt](https://github.com/vrmxt/three-vrmxt) beside
    [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)).
    Baseline avatar import keeps the stock VRM loader; replacing or forking that
    loader is not required.
@@ -174,10 +174,10 @@ parallel Extended-only format.
 
 | Host | Stock VRM I/O | Extended authoring package | Import `VRMXT_*` | Export `VRMXT_*` |
 |------|---------------|----------------------------|------------------|------------------|
-| Blender | [VRM Add-on for Blender](https://github.com/saturday06/VRM-Addon-for-Blender) 4.6.0+ | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | [Blender VRMXT](implementations/blender-vrmxt.md) | Same (`Vrm1ExportUserExtension.pre_save_hook`) |
-| Unity (package / Editor) | [UniVRM](https://github.com/vrm-c/UniVRM) / [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | [UniVRMXT](implementations/univrm-vrmxt.md) | Same via Extended-UniVRM export hooks (Project Settings gate) |
+| Blender | [VRM Add-on for Blender](https://github.com/saturday06/VRM-Addon-for-Blender) 4.6.0+ | [VRMXT-Extension-for-Blender](https://github.com/vrmxt/VRMXT-Extension-for-Blender) | [Blender VRMXT](implementations/blender-vrmxt.md) | Same (`Vrm1ExportUserExtension.pre_save_hook`) |
+| Unity (package / Editor) | [UniVRM](https://github.com/vrm-c/UniVRM) / [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | [UniVRMXT](https://github.com/vrmxt/UniVRMXT) | [UniVRMXT](implementations/univrm-vrmxt.md) | Same via Extended-UniVRM export hooks (Project Settings gate) |
 | Unity (Player app) | UniVRM in [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Same Player (depends on UniVRMXT; desktop edit) | Planned | Planned (desktop) |
-| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/miramocha/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): legacy material-operation Apply and viewer Create/edit; root graph not established | Legacy stencil Export (GLB JSON patch) |
+| Three.js | [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | [three-vrmxt](https://github.com/vrmxt/three-vrmxt) | [three-vrmxt](implementations/three-vrmxt.md): legacy material-operation Apply and viewer Create/edit; root graph not established | Legacy stencil Export (GLB JSON patch) |
 | Unreal | VRM4U | VRM4U VRMXT package (planned) | Planned: [VRM4U VRMXT](implementations/vrm4u-vrmxt.md) | **TBD** |
 | Godot | [godot-vrm](https://github.com/V-Sekai/godot-vrm) | godot-vrmxt (planned) | Planned: [Godot VRMXT](implementations/godot-vrmxt.md) | **TBD** |
 | Other | Any VRM 1.0 tool | Optional Extended package | Implement specs | Implement specs |
@@ -193,7 +193,7 @@ hosts. They do not import or export `VRMXT_*`. They produce maps consumed by sto
 |-------|------|------|
 | Stock Blender VRM add-on | [saturday06/VRM-Addon-for-Blender](https://github.com/saturday06/VRM-Addon-for-Blender) **4.6.0+** | Import/export `VRMC_*`, build node/bone maps, invoke third-party classes |
 | VRM1 user extensions | Same add-on: `Vrm1ImportUserExtension` / `Vrm1ExportUserExtension` on enabled add-on roots | After stock maps exist; always on when the class is present |
-| VRMXT Blender extension | [VRMXT-Extension-for-Blender](https://github.com/miramocha/VRMXT-Extension-for-Blender) | Root-module hook classes; authors and serializes `VRMXT_*` plus `VRMXT_materials_mtoonxt` stencil |
+| VRMXT Blender extension | [VRMXT-Extension-for-Blender](https://github.com/vrmxt/VRMXT-Extension-for-Blender) | Root-module hook classes; authors and serializes `VRMXT_*` plus `VRMXT_materials_mtoonxt` stencil |
 
 Ordinary glTF2 user extensions miss final VRM bone and object maps. Details:
 [Blender Extension Hooks](implementations/blender-extension-hooks.md).
@@ -214,7 +214,7 @@ Without the VRMXT Blender extension, export stays stock VRM.
 | Piece | Repo | Role |
 |-------|------|------|
 | Stock / fork UniVRM | [UniVRM](https://github.com/vrm-c/UniVRM) or [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) | Stock `VRMC_*` I/O; Extended fork adds generic import/export extension registries |
-| UniVRMXT | [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Soft-detects those registries; authors and serializes `VRMXT_sprite_particle` and `VRMXT_materials_override` |
+| UniVRMXT | [UniVRMXT](https://github.com/vrmxt/UniVRMXT) | Soft-detects those registries; authors and serializes `VRMXT_sprite_particle` and `VRMXT_materials_override` |
 
 Unity flow (non-normative):
 
@@ -244,10 +244,10 @@ a host-native avatar package. When the same package also supports editor export,
 
 | Consumer | Host | Integration style |
 |----------|------|-------------------|
-| [UniVRMXT](https://github.com/miramocha/UniVRMXT) | Unity + [UniVRM](https://github.com/vrm-c/UniVRM) | Optional UPM package. Parse extension JSON; attach after `Vrm10` load. Runtime does not replace UniVRM. |
+| [UniVRMXT](https://github.com/vrmxt/UniVRMXT) | Unity + [UniVRM](https://github.com/vrm-c/UniVRM) | Optional UPM package. Parse extension JSON; attach after `Vrm10` load. Runtime does not replace UniVRM. |
 | [VRMXT Unity Player](implementations/vrmxt-unity-player.md) (planned) | Unity app | Desktop view/edit/export; Warudo-aligned pin. Depends on UniVRMXT; interim shader-plugins, planned StreamingAssets megashader packs. See [desktop Player primary](decisions/vrmxt-desktop-player-primary.md), [Player Shader AssetBundles](references/vrmxt-player-shader-assetbundles.md). |
 | Godot VRMXT addon (planned) | Godot + [godot-vrm](https://github.com/V-Sekai/godot-vrm) | Optional addon. Register `GLTFDocumentExtension` beside stock VRM plugins; runtime attach when `EditorPlugin` is absent. Does not replace godot-vrm. |
-| [three-vrmxt](https://github.com/miramocha/three-vrmxt) | Three.js + [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | Optional npm `@vrmxt/three-vrmxt`. Peer `GLTFLoaderPlugin` beside `VRMLoaderPlugin`; `tryAttach`. Vite [web viewer](implementations/vrmxt-web-viewer.md) is the v1 host. Later Hub WXT. Does not replace three-vrm. |
+| [three-vrmxt](https://github.com/vrmxt/three-vrmxt) | Three.js + [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) | Optional npm `@vrmxt/three-vrmxt`. Peer `GLTFLoaderPlugin` beside `VRMLoaderPlugin`; `tryAttach`. Vite [web viewer](implementations/vrmxt-web-viewer.md) is the v1 host. Later Hub WXT. Does not replace three-vrm. |
 | VRM4U path | Unreal + VRM4U | Optional profile docs under `implementations/`; stock VRM4U load remains baseline. |
 | VRMXT → VRChat converter (planned) | Unity + VRChat Avatar SDK | Separate product. Offline conversion: read `.vrm`, emit VRChat-ready prefab / Animator setup. Consumes `VRMXT_*` (+ stock VRM); schema does not embed VRChat SDK types. See [animation controller standardization](decisions/animation-controller-standardization.md). |
 | VRoid Hub + Unity WebGL (superseded) | — | Not a product path. See [desktop Player primary](decisions/vrmxt-desktop-player-primary.md). Planned Three.js Hub: [Hub extension](implementations/vrmxt-hub-extension.md). Historical: [old ADR](decisions/vroid-hub-browser-viewer-architecture.md). |
@@ -279,7 +279,7 @@ descriptor wrapping still runs inside a project that already has UniVRM.
 
 Implementation notes:
 [UniVRMXT](implementations/univrm-vrmxt.md),
-package [architecture](https://github.com/miramocha/UniVRMXT/blob/main/docs/architecture.md).
+package [architecture](https://github.com/vrmxt/UniVRMXT/blob/main/docs/architecture.md).
 
 ### Godot / godot-vrm
 

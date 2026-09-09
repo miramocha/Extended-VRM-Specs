@@ -24,7 +24,7 @@ A VRM 1.0 Character in Warudo can load stock MToon, MToonXT stencil, or a Unity 
 
 [Extended-UniVRM](https://github.com/miramocha/Extended-UniVRM) forks [vrm-c/UniVRM](https://github.com/vrm-c/UniVRM). Extra glTF extensions can import and export through hooks meant for upstream UniVRM. The fork does not define `VRMXT_*` itself.
 
-[UniVRMXT](https://github.com/miramocha/UniVRMXT) (`com.vrmxt.univrmxt`) is a Unity package. It reads `VRMXT_*` from the file and applies them to the avatar. Stock UniVRM still loads VRM 1.0. Writing `VRMXT_*` on export needs those fork hooks.
+[UniVRMXT](https://github.com/vrmxt/UniVRMXT) (`com.vrmxt.univrmxt`) is a Unity package. It reads `VRMXT_*` from the file and applies them to the avatar. Stock UniVRM still loads VRM 1.0. Writing `VRMXT_*` on export needs those fork hooks.
 
 `VRMXT_*` is listed in `extensionsUsed` only (not `extensionsRequired`). One `.vrm` / `.glb`.
 
