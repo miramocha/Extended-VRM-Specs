@@ -93,6 +93,15 @@ MUST NOT appear in `extensionsRequired`.
 | Unknown extensions | Stock importers ignore unknown extension objects per glTF rules. |
 | Target | Current drafts target VRM 1.0 (`VRMC_vrm` 1.0). VRM 0.0 is out of scope unless a spec says otherwise. |
 
+### VRMXT Package
+
+Optional **compiled distribution** is a separate file, [VRMXT Package](specs/packages/vrmxt-package/README.md)
+(`.vrmxtpkg`). It is not glTF, MUST NOT use `extensionsUsed`, and MUST NOT replace
+authoring `.vrm`. Delivery is `session` (gateway TTL; file itself does not expire) or
+`static` (keys in the signed index; no expiry, no gateway). Stock VRM tools are not
+required to open it. Decision:
+[VRMXT Package container format](decisions/vrmxt-package-container.md).
+
 ### Naming
 
 - Serialized glTF extension names authored in this family MUST use `VRMXT_*`. Do not
